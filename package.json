@@ -1,0 +1,50 @@
+{
+  "name": "createjs-accessibility-tester",
+  "version": "1.0.0",
+  "description": "Test and sample webapp for the Createjs Accessibility Module",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "rm -rf dist && NODE_ENV=production webpack",
+    "start": "webpack-dev-server --no-inline --port 8007 --host 0.0.0.0",
+    "start_reload": "webpack-dev-server --port 8007 --host 0.0.0.0",
+    "clobber": "rm -rf node_modules/ && npm cache clean --force"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CurriculumAssociates/createjs-accessibility-tester.git"
+  },
+  "keywords": [
+    "createjs",
+    "accessibility",
+    "508",
+    "wcag",
+    "aria"
+  ],
+  "author": {
+    "name": "Curriculum Associates",
+    "email": "opensource@cainc.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "6.24.0",
+    "babel-loader": "7.1.4",
+    "babel-preset-es2015": "6.24.0",
+    "babel-preset-react": "6.24.1",
+    "createjs-accessibility": "git+ssh://git@github.com/CurriculumAssociates/createjs-accessibility.git#master",
+    "file-loader": "1.1.11",
+    "html-loader": "0.5.5",
+    "html-webpack-plugin": "3.0.7",
+    "image-webpack-loader": "3.2.0",
+    "webpack": "4.7.0",
+    "webpack-cli": "2.1.3",
+    "webpack-dev-server": "3.1.4"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "jquery": "3.2.1",
+    "keycodes-enum": "0.0.2",
+    "lodash": "4.17.10",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  }
+}
