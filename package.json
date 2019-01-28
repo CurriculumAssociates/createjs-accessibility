@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.cainc.com/mnewcomb/createjs-accessibility.git"
+    "url": "https://github.com/CurriculumAssociates/createjs-accessibility.git"
   },
   "keywords": [
     "createjs",
@@ -20,8 +20,8 @@
     "aria"
   ],
   "author": {
-    "name": "Matt Newcomb",
-    "email": "mnewcomb@cainc.com"
+    "name": "Curriculum Associates",
+    "email": "opensource@cainc.com"
   },
   "license": "ISC",
   "devDependencies": {
