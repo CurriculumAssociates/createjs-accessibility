@@ -118,4 +118,4 @@ const AccessibilityModule = {
   setupStage,
 };
 
-export default AccessibilityModule;
+export { AccessibilityModule as default };
