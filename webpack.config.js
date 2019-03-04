@@ -7,7 +7,7 @@ var config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'createjs-accessibility.js',
     library: '',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'umd'
   },
   externals: [ nodeExternals() ],
   module: {
