@@ -57,6 +57,7 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
+    "createjs": "^1.0.1",
     "keycodes-enum": "^0.0.2",
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",

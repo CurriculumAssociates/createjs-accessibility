@@ -62,12 +62,11 @@
     "object-curly-newline" : "off"
   },
     "settings": {
-      "import/core-modules": [ "createjs-accessibility", "createjs", "TimelineMax", "dictionary-en-us"],
+      "import/core-modules": ["createjs", "TimelineMax"],
       "import/resolver": {
         "node": {
           "moduleDirectory": [
           "node_modules",
-          "assets",
           "src"
           ]
         }
