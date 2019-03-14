@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import createjs from 'createjs';
 import KeyCodes from 'keycodes-enum';
-import InputTagData from './InputTagData.js';
+import InputTagData from './InputTagData';
 
 export default class RadioData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
@@ -15,6 +16,8 @@ export default class RadioData extends InputTagData {
    * Sets the value of the radio button
    * @access private
    */
+
+
   set value(value) {
     this._reactProps.value = value;
   }
@@ -82,6 +85,7 @@ export default class RadioData extends InputTagData {
    * Keydown listener for when the radio button is pressed
    * @access private
    */
+
   _onRadioKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);

@@ -1,5 +1,5 @@
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
+
+import AccessibilityObject from './AccessibilityObject';
 
 export default class TimerData extends AccessibilityObject {
   /**

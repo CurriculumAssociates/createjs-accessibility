@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import InputTagData from './InputTagData.js';
+import createjs from 'createjs';
+import InputTagData from './InputTagData';
 
 export default class SingleLineTextBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
@@ -13,11 +12,11 @@ export default class SingleLineTextBoxData extends InputTagData {
     this._reactProps.onSelect = this._onSelect;
   }
 
-  addChild(displayObject) {
+  addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) {
+  addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
 

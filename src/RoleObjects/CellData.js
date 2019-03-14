@@ -1,4 +1,4 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 export default class CellData extends SectionData {
   constructor(displayObject, role, domIdPrefix) {
@@ -7,6 +7,7 @@ export default class CellData extends SectionData {
     this.colspan = 1;
     this.rowspan = 1;
   }
+
   /**
    * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
    * @access public

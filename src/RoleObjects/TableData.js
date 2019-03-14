@@ -1,5 +1,5 @@
-import SectionData from './SectionData.js';
-import { ROLES } from '../Roles.js';
+import SectionData from './SectionData';
+import { ROLES } from '../Roles';
 
 export default class TableData extends SectionData {
   addChild(displayObject) {

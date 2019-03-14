@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 /**
  * Class for role objects that use the a HTML tag.

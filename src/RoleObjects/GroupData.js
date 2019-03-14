@@ -1,5 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 export default class GroupData extends SectionData {
   /**

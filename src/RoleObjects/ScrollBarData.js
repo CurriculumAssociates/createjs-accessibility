@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import RangeData from './RangeData.js';
+import createjs from 'createjs';
 import KeyCodes from 'keycodes-enum';
+import RangeData from './RangeData';
 
 export default class ScrollBarData extends RangeData {
   constructor(displayObject, role, domIdPrefix) {
@@ -45,19 +46,17 @@ export default class ScrollBarData extends RangeData {
         event.scrollTop = this._scrollAmt;
         this._displayObject.dispatchEvent(event);
       }
-    } else {
-      if (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right) {
-        e.stopPropagation();
-        e.preventDefault();
-        if (e.keyCode === KeyCodes.left) {
-          this._scrollAmt -= this.incrementor;
-        } else {
-          this._scrollAmt += this.incrementor;
-        }
-        const event = new createjs.Event('scroll', false, e.cancelable);
-        event.scrollLeft = this._scrollAmt;
-        this._displayObject.dispatchEvent(event);
+    } else if (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right) {
+      e.stopPropagation();
+      e.preventDefault();
+      if (e.keyCode === KeyCodes.left) {
+        this._scrollAmt -= this.incrementor;
+      } else {
+        this._scrollAmt += this.incrementor;
       }
+      const event = new createjs.Event('scroll', false, e.cancelable);
+      event.scrollLeft = this._scrollAmt;
+      this._displayObject.dispatchEvent(event);
     }
   }
 }

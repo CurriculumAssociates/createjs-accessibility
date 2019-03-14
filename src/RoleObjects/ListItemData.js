@@ -1,4 +1,4 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 /**
  * Class for role objects that use the li HTML tag.

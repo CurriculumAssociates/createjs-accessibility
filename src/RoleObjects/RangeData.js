@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class RangeData extends AccessibilityObject {
   /**
@@ -70,6 +70,6 @@ export default class RangeData extends AccessibilityObject {
   * @access public
   */
   get valuetext() {
-    this._reactProps['aria-valuetext'];
+    return this._reactProps['aria-valuetext'];
   }
 }

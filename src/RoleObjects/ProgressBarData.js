@@ -6,7 +6,7 @@ export default class ProgressData extends RangeData {
   }
 
   get valueMax() {
-    this._reactProps.max;
+    return this._reactProps.max;
   }
 
   set valueNow(value) {
@@ -14,6 +14,6 @@ export default class ProgressData extends RangeData {
   }
 
   get valueNow() {
-    this._reactProps.value;
+    return this._reactProps.value;
   }
 }

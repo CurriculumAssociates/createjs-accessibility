@@ -1,5 +1,7 @@
-import RangeData from './RangeData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import createjs from 'createjs';
+import RangeData from './RangeData';
 
 export default class SpinButtonData extends RangeData {
   constructor(displayObject, role, domIdPrefix) {

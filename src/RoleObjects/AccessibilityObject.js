@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import { ROLES } from '../Roles.js';
-
+import { createjs } from 'createjs';
 /**
  * Container for the accessibility information for a DisplayObject.
  */
@@ -151,12 +150,31 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Sets the keyboard shortcut to click the DisplayObject
+   * The translate attribute specifies whether the content of an element should be translated or not.
    * @access public
    * @param {String} keycode - string containing the letter to use for the keyboard shortcut
    */
   set accessKey(keycode) {
-   this._reactProps.accessKey = keycode;
+    this._reactProps.accessKey = keycode;
+  }
+
+  /**
+   * The translate attribute specifies whether the content of an element should be translated or not.
+   * @access public
+   * @returns {String} string containing the letter to use for the keyboard shortcut
+   */
+  get accessKey() {
+    return this._reactProps.accessKey;
+  }
+
+
+  /**
+   * Sets the keyboard shortcut to click the DisplayObject
+   * @access public
+   * @param {String} str - "yes" or "no" Specifies that the content of the element should be translated or not
+   */
+  set translate(str) {
+    this._reactProps.translate = str;
   }
 
   /**
@@ -164,8 +182,107 @@ export default class AccessibilityObject {
    * @access public
    * @returns {String} string containing the letter to use for the keyboard shortcut
    */
-  get accessKey() {
-    return this._reactProps.accessKey;
+  get translate() {
+    return this._reactProps.translate;
+  }
+
+
+  /**
+   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * @access public
+   * @param { boolean } bool
+   */
+  set spellcheck(bool) {
+    this._reactProps.spellCheck = bool;
+  }
+
+
+  /**
+   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * @access public
+   * @returns {boolean} boolean: true or false
+   */
+  get spellcheck() {
+    return this._reactProps.spellCheck;
+  }
+
+
+  /**
+   * The contenteditable attribute specifies whether the content of an element is editable or not.
+   * @access public
+   * @param { boolean } bool true or false
+   */
+  set contenteditable(bool) {
+    this._reactProps.contentEditable = bool;
+  }
+
+  /**
+   * The contenteditable attribute specifies whether the content of an element is editable or not.
+   * @access public
+   * @returns {boolean} true or false
+   */
+  get contenteditable() {
+    return this._reactProps.contentEditable;
+  }
+
+
+  /**
+   * Sets the title for the DisplayObject
+   * @access public
+   * @param {String} title - string mouse hover show text of title as tooltip
+   */
+  set title(title) {
+    this._reactProps.title = title;
+  }
+
+  /**
+   * Retrieves the title for the DisplayObject
+   * @access public
+   * @returns {String} string mouse hover show text of title as tooltip
+   */
+  get title() {
+    return this._reactProps.title;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @returns {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   */
+  get lang() {
+    return this._reactProps.lang;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @param {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   */
+  set lang(lang) {
+    this._reactProps.lang = lang;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @param {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction
+   * auto: Let the browser figure out the text direction, based on the content
+   */
+
+  set dir(direction) {
+    this._reactProps.dir = direction;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @returns {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction, auto: Let the browser figure out the text direction, based on the content
+   */
+
+  get dir() {
+    return this._reactProps.dir;
   }
 
   /**
@@ -555,7 +672,8 @@ export default class AccessibilityObject {
 
   /**
    * Retrieves the React props for the element translation of this object.
-   * @access package
+   * @access public
+   * @return { object } reactProps
    */
   get reactProps() {
     return this._reactProps;
@@ -594,7 +712,7 @@ export default class AccessibilityObject {
    * @param {Number} index - number to use as the tab index
    */
   set tabIndex(index) {
-   this._reactProps.tabIndex = index;
+    this._reactProps.tabIndex = index;
   }
 
   /**
@@ -636,7 +754,7 @@ export default class AccessibilityObject {
 
   /**
    * Makes the DOM entry visible immediately.  This does not affect the value used during the next render of the accessibility tree.
-   * @access package
+   * @access public
    */
   _forceShow() {
     document.getElementById(this._domId).style.display = '';
@@ -644,14 +762,12 @@ export default class AccessibilityObject {
 
   /**
    * Finds the index into this.children for the specified DOM id
-   * @access package
+   * @access public
    * @param {String} id - DOM id of the element to find
    * @returns {Number} index into this.children.  -1 if no match is found
    */
   _domIdToChildIndex(id) {
-    return _.findIndex(this._children, (displayObject) => {
-      return id === displayObject.accessible._domId;
-    });
+    return _.findIndex(this._children, displayObject => id === displayObject.accessible._domId);
   }
 
   /**

@@ -1,5 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
-import GroupData from './GroupData.js';
+import GroupData from './GroupData';
 
 export default class ToolBarData extends GroupData {
   /**

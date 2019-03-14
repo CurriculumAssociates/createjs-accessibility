@@ -1,11 +1,11 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class OptionData extends AccessibilityObject {
-  addChild(displayObject) {
+  addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) {
+  addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
 

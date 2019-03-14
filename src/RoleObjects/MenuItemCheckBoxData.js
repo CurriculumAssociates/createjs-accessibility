@@ -1,8 +1,4 @@
-import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
-import MenuItemData from './MenuItemData.js';
+import MenuItemData from './MenuItemData';
 
 export default class MenuItemCheckBoxData extends MenuItemData {
   constructor(displayObject, role, domIdPrefix) {

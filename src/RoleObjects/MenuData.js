@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class MenuData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -23,11 +23,11 @@ export default class MenuData extends SelectData {
     }
     super.addChildAt(displayObject, index);
   }
-
   /**
    * Listener to use for keydown events
    * @access package
    */
+
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.up || evt.keyCode === KeyCodes.down) {
       const targetId = evt.target.id;

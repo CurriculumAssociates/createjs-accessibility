@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import MenuItemData from './MenuItemData.js';
+import MenuItemData from './MenuItemData';
 
 export default class MenuItemRadioData extends MenuItemData {
   constructor(displayObject, role, domIdPrefix) {

@@ -1,5 +1,6 @@
-import AccessibilityObject from './AccessibilityObject.js';
-import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import createjs from 'createjs';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class ButtonData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {

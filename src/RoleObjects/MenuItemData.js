@@ -1,7 +1,8 @@
 import _ from 'lodash';
+import createjs from 'createjs';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
+import { ROLES } from '../Roles';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class MenuItemData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -35,7 +36,8 @@ export default class MenuItemData extends AccessibilityObject {
 
   /**
    * Informs a menu label of which DisplayObject is the submenu
-   * @access package
+   * @access public
+   * @param { Object } displayObject
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
@@ -99,6 +101,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for when the item manages opening a menu
    * @access private
+   * @param { object } evt
    */
   _subMenuOpenerKeyDown(evt) {
     const toggleMenu = evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space || (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
@@ -121,6 +124,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for an entry in a popup menu
    * @access private
+   * @param { object } evt
    */
   _menuItemKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {

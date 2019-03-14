@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
+import createjs from 'createjs';
+import { ROLES } from '../Roles';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class MultiLineTextBoxData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -13,11 +13,11 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
     this._reactProps.onSelect = this._onSelect;
   }
 
-  addChild(displayObject) {
+  addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) {
+  addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
 

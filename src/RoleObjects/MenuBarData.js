@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class MenuBarData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -28,6 +28,7 @@ export default class MenuBarData extends SelectData {
    * Listener to use for keydown events
    * @access package
    */
+
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
       // close a menu if any are open

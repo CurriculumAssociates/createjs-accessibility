@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import createjs from 'createjs';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class MultiSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {

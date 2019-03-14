@@ -1,4 +1,4 @@
-import ButtonData from './ButtonData.js';
+import ButtonData from './ButtonData';
 
 /**
  *   This contains only setters/getters for SwitchData class.

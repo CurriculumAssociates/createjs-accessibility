@@ -1,5 +1,7 @@
-import CompositeData from './CompositeData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import createjs from 'createjs';
+import CompositeData from './CompositeData';
 
 export default class TabListData extends CompositeData {
   constructor(displayObject, role, domIdPrefix) {
@@ -61,9 +63,10 @@ export default class TabListData extends CompositeData {
   }
 
   /**
-   * Keydown listener for when the tablist is pressed
-   * @access private
-   */
+  * Keydown listener for when the tablist is pressed
+  * @access private
+  */
+
   _onTabListKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);

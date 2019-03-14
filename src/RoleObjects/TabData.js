@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import createjs from 'createjs';
 import KeyCodes from 'keycodes-enum';
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class TabData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -75,10 +76,13 @@ export default class TabData extends AccessibilityObject {
     return this._reactProps['aria-selected'];
   }
 
+
   /**
-   * Keydown listener for when the radio button is pressed
-   * @access private
-   */
+  * Keydown listener for when the radio button is pressed
+  * @access private
+  */
+
+
   _onTabKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);

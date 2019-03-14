@@ -1,7 +1,7 @@
-import TableData from './TableData.js';
-import { ROLES } from '../Roles.js';
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
+import createjs from 'createjs';
+import TableData from './TableData';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
@@ -64,7 +64,7 @@ export default class GridData extends TableData {
 
   onKeyDown(event) {
     if ([KeyCodes.up, KeyCodes.down, KeyCodes.right, KeyCodes.left, KeyCodes.home, KeyCodes.end].indexOf(event.keyCode) !== -1) {
-      const target = event.target;
+      const { target } = event;
       const rowArr = this._children[0].accessible._children;
       let rowIndex = this.getRowIndex(target);
       let colIndex = this.getColIndex(target);

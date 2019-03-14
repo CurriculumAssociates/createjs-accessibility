@@ -1,4 +1,4 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 /**
  * Class for role objects that use the ol HTML tag.  This contains only setters/getters for fields that are common to all ol tags regardless of the type attribute.

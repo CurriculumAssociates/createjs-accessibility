@@ -1,24 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AccessibilityTranslator from './AccessibilityTranslator.js';
-import { createAccessibilityObjectForRole } from './RoleObjectFactory.js';
-import { ROLES } from './Roles.js';
+import _ from 'lodash';
+import AccessibilityTranslator from './AccessibilityTranslator';
+import { createAccessibilityObjectForRole } from './RoleObjectFactory';
+import { ROLES } from './Roles';
 
 /**
  * Positions the AccessibilityTranslator below the specified stage.
  * @param {createjs.Stage} stage
  * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
+ * @return { object}
  */
 function positionElemUnderStage(stage, getComponentRef) {
   // true to put the tranlated DOM next to the canvas (useful for debugging the module), false for the translated DOM to go under it
   const debugPos = false;
 
-  const canvas = stage.canvas;
+  const { canvas } = stage;
 
   const canvasStyle = getComputedStyle(canvas);
 
   const canvasCss = {
-    border: canvasStyle['border'],
+    border: canvasStyle.border,
     boxSizing: canvasStyle['box-sizing'],
     marginLeft: canvasStyle['margin-left'],
     marginTop: canvasStyle['margin-top'],
@@ -39,7 +41,7 @@ function positionElemUnderStage(stage, getComponentRef) {
   const moduleStyle = _.merge({
     overflow: 'hidden',
     position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width')) : 'auto',
+    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width'), 10) : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
   }, canvasCss, canvasDimensions);
@@ -95,6 +97,7 @@ function resize(stage) {
  * Takes either an array or a single object and creates the accessibility object for each with the
  * config that's passed
  * @param {Array | Object} configObjects
+ * @return {object}
  */
 function register(configObjects) {
   let objects = configObjects;
@@ -103,9 +106,7 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(objectConfig => {
-    createAccessibilityObjectForRole(objectConfig);
-  });
+  const accessiblityObjects = objects.map(objectConfig => createAccessibilityObjectForRole(objectConfig));
 
   return accessiblityObjects.length > 1 ? accessiblityObjects : accessiblityObjects[0];
 }

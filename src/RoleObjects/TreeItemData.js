@@ -1,5 +1,7 @@
-import ListItemData from './ListItemData.js';
 import KeyCodes from 'keycodes-enum';
+import createjs from 'createjs';
+import _ from 'lodash';
+import ListItemData from './ListItemData';
 
 /**
  * Class for role objects that are child items for tree role.
@@ -85,6 +87,7 @@ export default class TreeItemData extends ListItemData {
    * Keydown listener for an tree item
    * @access private
    */
+
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {
       const event = new createjs.Event('keyboardClick', false, evt.cancelable);

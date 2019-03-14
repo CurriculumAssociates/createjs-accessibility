@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 /**
  * Base class for role objects that use the input HTML tag.  This contains only setters/getters for fields that are common to all input tags regardless of the type attribute.

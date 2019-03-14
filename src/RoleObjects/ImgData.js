@@ -1,4 +1,4 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 /**
  * Base class for role objects that use the img HTML tag.  This contains only setters/getters for fields that are common to all img tags regardless of the type attribute.
