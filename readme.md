@@ -9,9 +9,9 @@ The translation of DisplayObjects to HTML is necessary for accessibility support
 This module's accessibility support is based around WCAG 2.1, though there are considerations outside the scope of this module that are needed for a particular webpage to meet the standard (e.g. contrast ratio, supported orientations).  For what the module can provide to meet that standard, it does so by using HTML5 semantic markup as much as possible and following WAI-ARIA 1.1.  The module does have more roles than WAI-ARIA specifies due to trying to use semantic markup which can sometimes lead to multiple tag options.  For example instead of having just a "heading" role, the module has roles "heading1" through "heading6" which it translates to the "h1" through "h6" tags.  It also provides additional roles that translate to the different format text tags (e.g. bold, emphasize, code).
 
 ## Install
-This can be added to your project via npm: `npm install CurriculumAssociates/createjs-accessibility`
+This can be added to your project via npm: `npm install @curriculumassociates/createjs-accessibility --save`
 
-Then in ES6, the module can be imported by doing: `import AccessibilityModule from 'CurriculumAssociates/createjs-accessibility';`
+Then in ES6, the module can be imported by doing: `import AccessibilityModule from '@curriculumassociates/createjs-accessibility';`
 
 ## Usage
 
@@ -119,9 +119,9 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | spin button | increment | | the value of the spin button should increase |
 | | decrement | | the value of the spin button should decrease |
 | | change | `value`: number representing the new value | the value of the spin button has changed |
-| tab | click | | clicking event from keyboard interaction |
-| tab list | click | | clicking event from keyboard interaction |
-| tree item | click | | clicking event from keyboard interaction |
+| tab | keyboardClick | | clicking event from keyboard interaction |
+| tab list | keyboardClick | | clicking event from keyboard interaction |
+| tree item | keyboardClick | | clicking event from keyboard interaction |
 
 ### Test app and reference implementation
 There is an open source companion test app for this module at https://github.com/CurriculumAssociates/createjs-accessibility-tester.  The intent behind that app is to both test changes to this module and provide a reference implementation for the various roles.  Some roles (e.g. menubar) require a particular structure to work correctly, and this test app shows them in that structure and functional.  Please see that repo for additional details.
