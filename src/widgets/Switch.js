@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Switch extends createjs.Container {
   constructor(width, height, tabIndex, callBack = _.noop) {

@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const tabHeight = 50;
 export default class TabPanel extends createjs.Container {

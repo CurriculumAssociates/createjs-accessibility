@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import TabPanel from './TabPanel';
 
 /**

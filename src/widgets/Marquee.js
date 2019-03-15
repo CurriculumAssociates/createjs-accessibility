@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const CONTENT_AREA_WIDTH = 800;
 const CONTENT_AREA_HEIGHT = 600;

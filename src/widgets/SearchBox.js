@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import SingleLineTextInput from './SingleLineTextInput.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class SearchBox extends SingleLineTextInput {
   constructor(width, height, tabIndex, listArr, placeholderText) {

@@ -1,5 +1,5 @@
 import Img from './Img.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Figure extends createjs.Container {
   constructor(option, caption) {

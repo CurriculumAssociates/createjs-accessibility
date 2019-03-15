@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const ITEM_PADDING = 25;
 export default class Feed extends createjs.Container {

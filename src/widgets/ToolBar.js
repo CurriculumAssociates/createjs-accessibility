@@ -1,4 +1,5 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
+
 const ITEM_PADDING = 50;
 
 export default class ToolBar extends createjs.Container {

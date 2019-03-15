@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class TreeGridRow extends createjs.Container {
   constructor(data, index, rowWidth, rowHeight, cellCount, tabIndex) {

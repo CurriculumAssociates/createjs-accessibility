@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import Button from './Button.js';
 
 export default class SpinButton extends createjs.Container {

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Button extends createjs.Container {
   constructor(options, tabIndex, callBack = _.noop) {

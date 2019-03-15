@@ -1,6 +1,6 @@
 import Button from './Button.js';
 import Link from './Link.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Dialog extends createjs.Container {
   constructor(btnData, width, height, tabIndex) {

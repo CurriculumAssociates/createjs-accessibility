@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Radio from './Radio.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class RadioGroup extends createjs.Container {
   constructor({ radioData, name, tabIndex, callBack = _.noop }) {

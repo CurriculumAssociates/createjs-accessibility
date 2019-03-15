@@ -1,11 +1,10 @@
 import _ from 'lodash';
-
 import Radio from './Radio.js';
 import MenuItem from './MenuItem.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 /**
- * See https://www.w3.org/TR/wai-aria/#menuitemcheckbox
+ * See https://www.w3.org/TR/wai-aria/#menuitemradio
  */
 
 export default class MenuItemRadio extends MenuItem {

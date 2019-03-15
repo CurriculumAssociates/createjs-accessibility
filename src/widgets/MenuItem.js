@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 /**
  * See https://www.w3.org/TR/wai-aria/roles#menuitem

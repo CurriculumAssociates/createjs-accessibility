@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import MenuItem from './MenuItem.js';
 import CheckBox from './CheckBox.js';
 

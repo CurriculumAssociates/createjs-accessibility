@@ -1,4 +1,4 @@
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import TreeGridRow from './TreeGridRow.js';
 
 const OFFSET = 20;

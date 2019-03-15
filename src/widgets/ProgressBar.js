@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class ProgressBar extends createjs.Container {
   constructor({ valueMax = 100, value = 0, width = 400, height = 8, onProgress = _.noop } = {}) {

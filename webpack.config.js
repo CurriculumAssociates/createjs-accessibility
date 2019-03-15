@@ -69,9 +69,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   config.mode = 'development';
   config.devtool = 'eval-source-map';
-  config.resolve.alias = {
-    'createjs-accessibility': path.resolve(__dirname, 'node_modules/createjs-accessibility/src/index.js'),
-  };
 }
 
 module.exports = config;

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
 import MenuItem from './MenuItem.js';
 import Button from './Button.js';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Draggable extends createjs.Container {
   constructor(options, dropArr, tabIndex, callBack) {

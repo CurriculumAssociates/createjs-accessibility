@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import AccessibilityModule from 'createjs-accessibility';
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Table extends createjs.Container {
   constructor({ headersData, data, showBorders = true, cellHeight = 100 }) {
@@ -39,7 +39,7 @@ export default class Table extends createjs.Container {
       const row = this._createContainer(this.totalWidth, this.cellHeight);
       this.addChild(row);
       AccessibilityModule.register({
-        displayObject: row, 
+        displayObject: row,
         parent: this,
         role: AccessibilityModule.ROLES.ROW,
       });
