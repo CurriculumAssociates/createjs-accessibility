@@ -49,15 +49,25 @@ import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
 
 /**
- * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to the provided DisplayObject for annotating the DisplayObject with accessibility information.
+ * Adds the appropriate AccessibilityObject or one of its subclasses for the given
+   role to the provided DisplayObject for annotating the DisplayObject with
+   accessibility information.
  * @param {object} config
- * @param {createjs.DisplayObject} config.displayObject - DisplayObject to add accessibility annotations to
- * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
- * @param {number} [config.containerIndex] - An optional value for the layer index to add the DisplayObject
- * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM id in the translated display object.  Defaults to 'acc_'
- * @param {Function} [config.onFocus] - Optional callback when the DisplayObject is brought into focus
- * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard is clicked while the DisplayObject is in focus
- * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current DisplayObject to as a child. Note the order of registration is important, the parent object will need to be registered with the module before the child.
+ * @param {createjs.DisplayObject} config.displayObject - DisplayObject to add
+  accessibility annotations to
+ * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the
+  DisplayObject performs
+ * @param {number} [config.containerIndex] - An optional value for the layer index
+  to add the DisplayObject
+ * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use
+  for the DOM id in the translated display object.  Defaults to 'acc_'
+ * @param {Function} [config.onFocus] - Optional callback when the DisplayObject
+  is brought into focus
+ * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard
+  is clicked while the DisplayObject is in focus
+ * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current
+  DisplayObject to as a child. Note the order of registration is important, the parent
+  object will need to be registered with the module before the child.
  */
 function createAccessibilityObjectForRole(config) {
   const {
@@ -84,6 +94,7 @@ function createAccessibilityObjectForRole(config) {
   }
 
   let accessibilityObject;
+
   switch (role) {
     // roles resulting in AccessibilityObject in alphabetical order by enum entry
     case ROLES.FOOTER:
@@ -165,12 +176,12 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new GroupData(displayObject, role, domIdPrefix);
       break;
 
-    case ROLES.HEADING1: // eslint-disable-line
-    case ROLES.HEADING2: // eslint-disable-line
-    case ROLES.HEADING3: // eslint-disable-line
-    case ROLES.HEADING4: // eslint-disable-line
-    case ROLES.HEADING5: // eslint-disable-line
-    case ROLES.HEADING6: // eslint-disable-line
+    case ROLES[`HEADING${1}`]:
+    case ROLES[`HEADING${2}`]:
+    case ROLES[`HEADING${3}`]:
+    case ROLES[`HEADING${4}`]:
+    case ROLES[`HEADING${5}`]:
+    case ROLES[`HEADING${6}`]:
       accessibilityObject = new HeadingData(displayObject, role, domIdPrefix);
       break;
 

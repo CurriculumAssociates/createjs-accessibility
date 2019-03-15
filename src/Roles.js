@@ -115,6 +115,7 @@ const ROLES = {
   FORMAT_TEXT_UNDERLINE: 'underline',
   FORMAT_TEXT_VARIABLE: 'variable',
 };
+
 Object.freeze(ROLES);
 
 // roles not present in here use <div>
@@ -192,6 +193,7 @@ const ROLE_TAG_MAPPING = {
   complementary: 'aside',
   timer: 'time',
 };
+
 Object.freeze(ROLE_TAG_MAPPING);
 
 /**
@@ -201,10 +203,12 @@ Object.freeze(ROLE_TAG_MAPPING);
  */
 function getTagNameForDisplayObject(displayObject) {
   const role = _.get(displayObject, 'accessible.role', ROLES.NONE);
+
   let tagName = ROLE_TAG_MAPPING[role] || 'div';
 
   if (role === ROLES.MENUITEM && displayObject.accessible.parent.role === ROLES.MENUITEM) {
-    // the DisplayObject is for a popup menu (e.g. child of a menu bar), so this DisplayObject is grouping the label and menu
+    // the DisplayObject is for a popup menu (e.g. child of a menu bar),
+    // so this DisplayObject is grouping the label and menu
     tagName = 'span';
   }
 

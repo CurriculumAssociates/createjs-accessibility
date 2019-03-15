@@ -1,7 +1,7 @@
 {
   "env": {
-      "browser": true,
-      "es6": true
+    "browser": true,
+    "es6": true
   },
   "extends": "airbnb",
   "parser": "babel-eslint",
@@ -14,27 +14,30 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-      "ecmaFeatures": {
-          "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+    "ecmaFeatures": {
+      "jsx": true,
+      "globalReturn": true,
+      "impliedStrict": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "plugins": [
-      "react"
+    "react"
   ],
   "rules": {
-    "consistent-return": "off",
+    "array-bracket-newline": "warn",
+    "consistent-return": "warn",
     "no-plusplus": "off",
-    "no-mixed-operators": "off",
-    "no-bitwise": "off",
+    "no-mixed-operators": "warn",
+    "no-bitwise": "warn",
     "no-underscore-dangle": "off",
-    "no-multiple-empty-lines": "off",
+    "no-multiple-empty-lines": "warn",
     "no-unused-expressions": "off",
     "no-new": "warn",
     "no-eval": "warn",
     "no-lone-blocks": "off",
-    "no-return-assign": "off",
+    "no-return-assign": "warn",
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "prefer-rest-params": "warn",
@@ -43,7 +46,6 @@
     "react/no-unused-prop-types": "off",
     "react/no-deprecated": "off",
     "react/prefer-stateless-function": "warn",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": ["error", "always-multiline"],
     "valid-jsdoc": ["error", {
       "requireReturn": false,
@@ -51,25 +53,33 @@
       "requireReturnDescription": false
     }],
     "no-restricted-properties": ["off", {
-        "object": "Math",
-        "property": "pow"
+      "object": "Math",
+      "property": "pow"
     }],
-    "no-continue": "off",
-    "max-len": "off",
+    "no-continue": "warn",
+    "max-len": "warn",
     "no-param-reassign": "off",
-    "new-cap": "off",
-    "no-use-before-define": "off",
-    "object-curly-newline" : "off"
+    "new-cap": "warn",
+    "no-use-before-define": "warn",
+    "object-curly-newline": "warn",
+    "no-multi-spaces": "warn",
+    "arrow-spacing": ["error", {
+      "before": true,
+      "after": true
+    }],
+    "space-in-parens": "warn",
+    "react/jsx-filename-extension":  [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": "off"
   },
-    "settings": {
-      "import/core-modules": ["createjs", "TimelineMax"],
-      "import/resolver": {
-        "node": {
-          "moduleDirectory": [
+  "settings": {
+    "import/core-modules": ["createjs", "TimelineMax"],
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
           "node_modules",
           "src"
-          ]
-        }
+        ]
       }
     }
+  }
 }

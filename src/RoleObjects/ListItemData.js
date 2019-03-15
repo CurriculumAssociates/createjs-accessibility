@@ -16,7 +16,8 @@ export default class ListItemData extends SectionData {
   /**
    * Retrieves the value of the list item
    * @access public
-   * @returns {number} number representing the value of the list item, undefined if this field is unset
+   * @returns {number} number representing the value of the list item, undefined
+   if this field is unset
    */
   get value() {
     return this._reactProps.value;

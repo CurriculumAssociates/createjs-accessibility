@@ -4,7 +4,15 @@ import PropTypes from 'prop-types';
 import { ROLES, getTagNameForDisplayObject } from './Roles';
 
 /**
- * Update process for translating accessibility information for a stage to a DOM approach that is available to assistive technologies.  Applications should create an instance of this for each stage and provide instances with different parent nodes.  Since the drawing order may not always be convient for accessibility, this manages a separate tree of DisplayObjects.  After the instance is created, the setter for 'root' should be used to specify which DisplayObject will serve as the root of the accessibility tree and other DisplayObjects can be added to that to be included in the accessibility output.  This also helps minimize the processing done by this class along with reduce its output to the DOM.
+ * Update process for translating accessibility information for a stage to a
+  DOM approach that is available to assistive technologies.  Applications should
+  create an instance of this for each stage and provide instances with different
+  parent nodes.  Since the drawing order may not always be convient for accessibility,
+  this manages a separate tree of DisplayObjects.  After the instance is created,
+  the setter for 'root' should be used to specify which DisplayObject will serve
+  as the root of the accessibility tree and other DisplayObjects can be added to
+  that to be included in the accessibility output.  This also helps minimize
+  the processing done by this class along with reduce its output to the DOM.
  */
 export default class AccessibilityTranslator extends React.Component {
   /**
@@ -14,7 +22,7 @@ export default class AccessibilityTranslator extends React.Component {
    */
   static get propTypes() {
     return {
-      stage: PropTypes.object.isRequired, // eslint-disable-line
+      stage: PropTypes.object.isRequired,
     };
   }
 
@@ -26,7 +34,8 @@ export default class AccessibilityTranslator extends React.Component {
 
   /**
    * Sets the DisplayObject to use as the root of the accessibility tree.
-   * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root of the accessibility tree
+   * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root
+    of the accessibility tree
    */
   set root(displayObject) {
     if (!displayObject.accessible) {
@@ -44,7 +53,10 @@ export default class AccessibilityTranslator extends React.Component {
   }
 
   /**
-   * Starts the update of the accessibility DOM.  This should be called each time the accessibility information for all DisplayObjects has been completed (e.g. just after drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
+   * Starts the update of the accessibility DOM.
+   * This should be called each time the accessibility information for all DisplayObjects
+   * has been completed (e.g. just after drawing a frame) to make sure that the canvas
+   * and accessibility DOM are in sync.
    */
   update() {
     this.forceUpdate();
@@ -61,7 +73,13 @@ export default class AccessibilityTranslator extends React.Component {
     const children = displayObject.accessible.children || [];
 
     let { text } = displayObject.accessible;
-    if (role === ROLES.MENUBAR || role === ROLES.MENU || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO) && children.length > 0)) {
+    const {
+      MENUBAR, MENU, MENUITEM, MENUITEMCHECKBOX, MENUITEMRADIO,
+    } = ROLES;
+
+    if (role === MENUBAR || role === MENU
+      || ((role === MENUITEM || role === MENUITEMCHECKBOX || role === MENUITEMRADIO)
+      && children.length > 0)) {
       text = null;
     }
 
@@ -75,10 +93,14 @@ export default class AccessibilityTranslator extends React.Component {
       width: 1,
       height: 1,
     };
+
     try {
       const bounds = displayObject.getBounds();
+
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
-      const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width, bounds.y + bounds.height);
+      const lowerRight = displayObject.localToGlobal(bounds.x
+        + bounds.width, bounds.y + bounds.height);
+
       posParentSpace.x = posGlobalSpace.x - parentBoundsInGlobalSpace.x;
       posParentSpace.y = posGlobalSpace.y - parentBoundsInGlobalSpace.y;
       posParentSpace.width = lowerRight.x - posGlobalSpace.x;
@@ -88,6 +110,7 @@ export default class AccessibilityTranslator extends React.Component {
     }
 
     const childElements = [];
+
     if (text) {
       childElements.push(text);
     }
@@ -108,6 +131,7 @@ export default class AccessibilityTranslator extends React.Component {
         padding: 0,
       },
     }, displayObject.accessible.reactProps);
+
     if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
     }
@@ -125,16 +149,19 @@ export default class AccessibilityTranslator extends React.Component {
     if (!displayObject.visible && props['aria-hidden'] === undefined) {
       props['aria-hidden'] = true;
     }
-
-    return React.createElement(tagName, props, ...childElements);
+    return React.createElement(tagName, props, ...childElements); // eslint-disable-line
   }
 
   render() {
     let back = null;
+
     if (this._root) {
       const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
+
       back = (
-        <div ref={(elem) => { this.rootElem = elem; }}>
+        <div
+          ref={(elem) => { this.rootElem = elem; }}
+        >
           { tree }
         </div>
       );

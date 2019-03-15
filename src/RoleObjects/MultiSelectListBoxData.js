@@ -70,11 +70,13 @@ export default class MultiSelectListBoxData extends SelectData {
   /**
    * Sets which form the element belongs to
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.  null or undefined to clear it
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that
+    represents the form.  null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== ROLES.FORM)) {
-      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
+    const { FORM } = ROLES;
+    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== FORM)) {
+      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${FORM}`);
     }
     this._form = displayObject;
     this._reactProps.form = displayObject ? displayObject.accessible.domId : undefined;
@@ -195,10 +197,12 @@ export default class MultiSelectListBoxData extends SelectData {
    * @param {SyntheticEvent} evt - React event
    */
   _onListBoxChanged(evt) {
-    // todo: imporove list box support for different browsers.  In IE10 after it gets focus using the arrow keys changes the value, so that works fine currently.  In Chrome, the first up/down arrow key will open the drop down then subsequent ones will alter the selection, but the onChange event doesn't happen until the list box is closed. etc.
     const event = new createjs.Event('valueChanged', false, false);
-    event.selectedValues = _.filter(evt.target.options, option => option.selected).map(option => option.value);
-    event.selectedDisplayObjects = _.map(event.selectedValues, val => _.find(this.children, child => child.accessible.value === val));
+
+    event.selectedValues = _.filter(evt.target.options,
+      option => option.selected).map(option => option.value);
+    event.selectedDisplayObjects = _.map(event.selectedValues,
+      val => _.find(this.children, child => child.accessible.value === val));
     this.selected = event.selectedDisplayObjects;
     this._displayObject.dispatchEvent(event);
   }

@@ -14,59 +14,61 @@ export default class SpinButtonData extends RangeData {
 
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
-    this._reactProps.onKeyDown = this._onKeyDown; // the keydown listener is needed for this role to function per WAI-ARIA practices even when using a semantic tag/attribute
+    // the keydown listener is needed for this role to function per WAI-ARIA
+    // practices even when using a semantic tag/attribute
+    this._reactProps.onKeyDown = this._onKeyDown;
   }
 
   /**
-  * Set value
-  * @access public
-  * @param {Number} val - current value
-  */
+   * Set value
+   * @access public
+   * @param {Number} val - current value
+   */
   set value(val) {
     this._reactProps.value = val;
   }
 
   /**
-  * get value
-  * @access public
-  * @returns {Number}  current value
-  */
+   * get value
+   * @access public
+   * @returns {Number}  current value
+   */
   get value() {
     return this._reactProps.value;
   }
 
   /**
-  * Set min value
-  * @access public
-  * @param {Number} val - min value
-  */
+   * Set min value
+   * @access public
+   * @param {Number} val - min value
+   */
   set min(val) {
     this._reactProps.min = val;
   }
 
   /**
-  * get min value
-  * @access public
-  * @returns {Number}  min value
-  */
+   * get min value
+   * @access public
+   * @returns {Number}  min value
+   */
   get min() {
     return this._reactProps.min;
   }
 
   /**
-  * Set max value
-  * @access public
-  * @param {Number} val - max value
-  */
+   * Set max value
+   * @access public
+   * @param {Number} val - max value
+   */
   set max(val) {
     this._reactProps.max = val;
   }
 
   /**
-  * get max value
-  * @access public
-  * @returns {Number} - max value
-  */
+   * get max value
+   * @access public
+   * @returns {Number} - max value
+   */
   get max() {
     return this._reactProps.max;
   }
@@ -114,12 +116,14 @@ export default class SpinButtonData extends RangeData {
       this._displayObject.dispatchEvent('decrement');
     } else if (evt.keyCode === KeyCodes.home && this.min !== undefined) {
       const event = new createjs.Event('change', false, false);
+
       event.value = this.min;
       this._displayObject.dispatchEvent(event);
       evt.stopPropagation();
       evt.preventDefault();
     } else if (evt.keyCode === KeyCodes.end && this.max !== undefined) {
       const event = new createjs.Event('change', false, false);
+
       event.value = this.max;
       this._displayObject.dispatchEvent(event);
       evt.stopPropagation();
@@ -129,6 +133,7 @@ export default class SpinButtonData extends RangeData {
 
   _onChange(evt) {
     const event = new createjs.Event('change', false, false);
+
     event.value = parseInt(evt.target.value, 10);
     this._displayObject.dispatchEvent(event);
   }

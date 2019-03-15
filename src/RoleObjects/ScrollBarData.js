@@ -43,6 +43,7 @@ export default class ScrollBarData extends RangeData {
           this._scrollAmt += this.incrementor;
         }
         const event = new createjs.Event('scroll', false, e.cancelable);
+
         event.scrollTop = this._scrollAmt;
         this._displayObject.dispatchEvent(event);
       }
@@ -55,6 +56,7 @@ export default class ScrollBarData extends RangeData {
         this._scrollAmt += this.incrementor;
       }
       const event = new createjs.Event('scroll', false, e.cancelable);
+
       event.scrollLeft = this._scrollAmt;
       this._displayObject.dispatchEvent(event);
     }

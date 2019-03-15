@@ -11,7 +11,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Sets an element's column index or position with respect to the total number
+   of columns within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -20,7 +21,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Gives an element's column index or position with respect to the total number
+   of columns within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -29,7 +31,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Sets an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Sets an element's row index or position with respect to the total number of
+   rows within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -38,7 +41,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Gives an element's row index or position with respect to the total number of
+   rows within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -47,7 +51,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Sets an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Sets an element's row index or position with respect to the total number of
+   rows within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -56,7 +61,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Gives an element's row index or position with respect to the total number of
+   rows within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -73,6 +79,7 @@ export default class RowData extends GroupData {
     if (evt.keyCode === KeyCodes.enter) {
       const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       const skipPreventDefault = this._displayObject.dispatchEvent(event);
+
       if (!skipPreventDefault) {
         evt.preventDefault();
       }

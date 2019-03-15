@@ -78,14 +78,14 @@ export default class TabData extends AccessibilityObject {
 
 
   /**
-  * Keydown listener for when the radio button is pressed
-  * @access private
-  */
-
-
+   * Keydown listener for when the radio button is pressed
+   * @access private
+   * @param {object} e
+   */
   _onTabKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);
+
       this._displayObject.dispatchEvent(event);
     }
   }

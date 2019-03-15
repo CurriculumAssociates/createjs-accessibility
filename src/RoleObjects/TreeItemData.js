@@ -16,7 +16,8 @@ export default class TreeItemData extends ListItemData {
   /**
    * Sets the position in the current set of items
    * @access public
-   * @param {Number} num - One based index for the position in the current set of items.  Or undefined to clear the field
+   * @param {Number} num - One based index for the position in the current
+   set of items.  Or undefined to clear the field
    */
   set positionInSet(num) {
     this._reactProps['aria-posinset'] = num;
@@ -86,12 +87,13 @@ export default class TreeItemData extends ListItemData {
   /**
    * Keydown listener for an tree item
    * @access private
+   * @param {object} evt
    */
-
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {
       const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       const skipPreventDefault = this._displayObject.dispatchEvent(event);
+
       if (!skipPreventDefault) {
         evt.preventDefault();
       }

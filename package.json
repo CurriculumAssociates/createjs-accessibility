@@ -5,7 +5,7 @@
   "main": "dist/createjs-accessibility.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
-    "lint": "eslint --fix --color src",
+    "lint": "eslint --color src",
     "start": "rm -rf dist && NODE_ENV=development webpack",
     "clobber": "rm -rf node_modules/ && npm cache clean --force"
   },

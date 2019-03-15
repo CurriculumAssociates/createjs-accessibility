@@ -3,7 +3,8 @@ import KeyCodes from 'keycodes-enum';
 import InputTagData from './InputTagData';
 
 /**
- * Base class for role objects that use the img HTML tag.  This contains only setters/getters for fields that are common to all img tags regardless of the type attribute.
+ * Base class for role objects that use the img HTML tag.  This contains only
+ setters/getters for fields that are common to all img tags regardless of the type attribute.
  */
 export default class CheckBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {

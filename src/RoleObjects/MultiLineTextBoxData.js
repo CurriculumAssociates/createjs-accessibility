@@ -78,11 +78,13 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
   /**
    * Sets which form the textarea belongs to
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.  null or undefined to clear it
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that
+   represents the form.  null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== ROLES.FORM)) {
-      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
+    const { FORM } = ROLES;
+    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== FORM)) {
+      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${FORM}`);
     }
     this._form = displayObject;
     this._reactProps.form = displayObject ? displayObject.accessible.domId : undefined;
@@ -259,6 +261,7 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
     this._reactProps.value = evt.target.value;
 
     const event = new createjs.Event('valueChanged', false, false);
+
     event.newValue = this._reactProps.value;
     this._displayObject.dispatchEvent(event);
   }
@@ -270,6 +273,7 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);
+
     event.selectionStart = evt.currentTarget.selectionStart;
     event.selectionEnd = evt.currentTarget.selectionEnd;
     event.selectionDirection = evt.currentTarget.selectionDirection;

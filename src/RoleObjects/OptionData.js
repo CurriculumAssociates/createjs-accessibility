@@ -30,7 +30,8 @@ export default class OptionData extends AccessibilityObject {
   /**
    * Sets the position in the current set of items
    * @access public
-   * @param {Number} num - One based index for the position in the current set of items.  Or undefined to clear the field
+   * @param {Number} num - One based index for the position in the current set
+    of items.  Or undefined to clear the field
    */
   set positionInSet(num) {
     this._reactProps['aria-posinset'] = num;

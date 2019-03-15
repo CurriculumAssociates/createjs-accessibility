@@ -173,6 +173,7 @@ export default class SingleLineTextBoxData extends InputTagData {
     this._reactProps.value = evt.target.value;
 
     const event = new createjs.Event('valueChanged', false, false);
+
     event.newValue = this._reactProps.value;
     this._displayObject.dispatchEvent(event);
   }
@@ -184,6 +185,7 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);
+
     event.selectionStart = evt.currentTarget.selectionStart;
     event.selectionEnd = evt.currentTarget.selectionEnd;
     event.selectionDirection = evt.currentTarget.selectionDirection;

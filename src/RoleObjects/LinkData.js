@@ -52,7 +52,8 @@ export default class LinkData extends AccessibilityObject {
   /**
    * Retrieves the hreflang of the link item
    * @access public
-   * @returns {String} the language of the text in the linked document, undefined if this field is unset
+   * @returns {String} the language of the text in the linked document, undefined
+    if this field is unset
    */
   get hreflang() {
     return this._reactProps.hrefLang;
@@ -70,7 +71,8 @@ export default class LinkData extends AccessibilityObject {
   /**
    * Retrieves the media of the link item
    * @access public
-   * @returns {String} what device the linked document is optimized for, undefined if this field is unset
+   * @returns {String} what device the linked document is optimized for,
+    undefined if this field is unset
    */
   get media() {
     return this._reactProps.media;
@@ -79,7 +81,8 @@ export default class LinkData extends AccessibilityObject {
   /**
    * Sets the rel of the link item
    * @access public
-   * @param {String} rel - Specifies the relationship between the current document and the linked document
+   * @param {String} rel - Specifies the relationship between the current document
+   and the linked document
    */
   set rel(rel) {
     this._reactProps.rel = rel;
@@ -88,7 +91,8 @@ export default class LinkData extends AccessibilityObject {
   /**
    * Retrieves the rel of the link item
    * @access public
-   * @returns {String} the relationship between the current document and the linked document, undefined if this field is unset
+   * @returns {String} the relationship between the current document and the
+   linked document, undefined if this field is unset
    */
   get rel() {
     return this._reactProps.rel;

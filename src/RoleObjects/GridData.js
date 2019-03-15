@@ -9,6 +9,7 @@ export default class GridData extends TableData {
     _.bindAll(this, 'onKeyDown');
     this._reactProps.onKeyDown = this.onKeyDown;
   }
+
   /**
    *  hierarchical level of the grid within other structures
    * @access public
@@ -31,7 +32,8 @@ export default class GridData extends TableData {
   /**
    *  user may select more then one item from the current grid
    * @access public
-   * @param {boolean} val - aria-multiselectable is set to true, multiple items in the grid can be selected. The default value is false
+   * @param {boolean} val - aria-multiselectable is set to true,
+   multiple items in the grid can be selected. The default value is false
    */
   set multiselectable(val) {
     this._reactProps['aria-multiselectable'] = val;
@@ -40,7 +42,8 @@ export default class GridData extends TableData {
   /**
    *  user may select more then one item from the current grid
    * @access public
-   * @param {boolean} val - aria-multiselectable is set to true, multiple items in the grid can be selected. The default value is false
+   * @param {boolean} val - aria-multiselectable is set to true,
+   multiple items in the grid can be selected. The default value is false
    */
   get multiselectable() {
     return this._reactProps['aria-multiselectable'];
@@ -63,10 +66,17 @@ export default class GridData extends TableData {
   }
 
   onKeyDown(event) {
-    if ([KeyCodes.up, KeyCodes.down, KeyCodes.right, KeyCodes.left, KeyCodes.home, KeyCodes.end].indexOf(event.keyCode) !== -1) {
+    if ([KeyCodes.up,
+      KeyCodes.down,
+      KeyCodes.right,
+      KeyCodes.left,
+      KeyCodes.home,
+      KeyCodes.end].indexOf(event.keyCode) !== -1) {
       const { target } = event;
       const rowArr = this._children[0].accessible._children;
+
       let rowIndex = this.getRowIndex(target);
+
       let colIndex = this.getColIndex(target);
       const currentRowData = rowArr[rowIndex];
       const isExpandable = currentRowData.expandedArrow && currentRowData.expandedArrow.visible;
@@ -74,11 +84,13 @@ export default class GridData extends TableData {
       const rowClick = (e) => {
         const evt = new createjs.Event('keyboardClick', false, e.cancelable);
         const skipPreventDefault = currentRowData.dispatchEvent(evt);
+
         if (!skipPreventDefault) {
           e.preventDefault();
         }
         e.stopPropagation();
       };
+
       switch (event.keyCode) {
         case KeyCodes.up:
           rowIndex--;
@@ -105,6 +117,7 @@ export default class GridData extends TableData {
       const getTarget = () => {
         if (rowArr[rowIndex]) {
           const colArr = rowArr[rowIndex].accessible._children;
+
           if (colArr[colIndex]) {
             return colArr[colIndex];
           }
@@ -113,6 +126,7 @@ export default class GridData extends TableData {
         return null;
       };
       const nextTarget = getTarget();
+
       if (nextTarget) {
         nextTarget.accessible.requestFocus();
       }

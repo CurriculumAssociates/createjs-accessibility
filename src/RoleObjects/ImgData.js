@@ -1,7 +1,9 @@
 import SectionData from './SectionData';
 
 /**
- * Base class for role objects that use the img HTML tag.  This contains only setters/getters for fields that are common to all img tags regardless of the type attribute.
+ * Base class for role objects that use the img HTML tag.
+  This contains only setters/getters for fields that are common to all
+  img tags regardless of the type attribute.
  */
 export default class ImgData extends SectionData {
   /**
@@ -70,7 +72,8 @@ export default class ImgData extends SectionData {
   /**
    * Retrieves the ismap property of an image
    * @access public
-   * @returns {Boolean} whether or not this image is part of an image map, undefined if this field is unset
+   * @returns {Boolean} whether or not this image is part of an image map,
+    undefined if this field is unset
    */
   get ismap() {
     return this._reactProps.ismap;
@@ -142,7 +145,8 @@ export default class ImgData extends SectionData {
   /**
    * Retrieves the srcset of an image
    * @access public
-   * @returns {String} the URL of an image to use in different situations, undefined if this field is unset
+   * @returns {String} the URL of an image to use in different situations,
+    undefined if this field is unset
    */
   get srcset() {
     return this._reactProps.srcset;
@@ -160,7 +164,8 @@ export default class ImgData extends SectionData {
   /**
    * Retrieves the usemap property of an image
    * @access public
-   * @returns {String} the name of the map to use to make the image a client-side image map, undefined if this field is unset
+   * @returns {String} the name of the map to use to make the image a client-side
+   image map, undefined if this field is unset
    */
   get usemap() {
     return this._reactProps.usemap;

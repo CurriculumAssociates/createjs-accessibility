@@ -11,14 +11,18 @@ export default class MenuBarData extends SelectData {
   }
 
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM,
+      ROLES.MENUITEMCHECKBOX,
+      ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
     }
     super.addChild(displayObject);
   }
 
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM,
+      ROLES.MENUITEMCHECKBOX,
+      ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
     }
     super.addChildAt(displayObject, index);
@@ -33,6 +37,7 @@ export default class MenuBarData extends SelectData {
     if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
       // close a menu if any are open
       let index = _.findIndex(this._children, menu => menu.accessible.expanded);
+
       if (index !== -1) {
         this._children[index]._label.dispatchEvent('closeMenu');
       }
@@ -44,9 +49,11 @@ export default class MenuBarData extends SelectData {
         index = (index + 1) % this._children.length;
       }
       const nextMenu = this._children[index];
+
       nextMenu._label.dispatchEvent('openMenu');
 
       const firstSubMenuItem = nextMenu.accessible._subMenu.accessible.children[0];
+
       nextMenu.accessible._subMenu.accessible._forceShow();
       firstSubMenuItem.accessible.requestFocus();
 
