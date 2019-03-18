@@ -16,7 +16,7 @@ Then in ES6, the module can be imported by doing: `import AccessibilityModule fr
 ## Usage
 
 ### Registering DisplayObject(s)
-DisplayObjects that are to be translated to the DOM need to be registered with the module so that the additional annotation needed for accessibility support can be supplied. Registering adds an `AccessibilityObject` instance (or one of its subtypes) to the `.accessible` field to the DisplayObject, which can be used to get or set the various pieces of accessibility information that are relevant to that role.  If the role used for the DisplayObject needs to be changed, then it needs to be re-registered with the module using the new role, which will result in a new `AccessibilityObject` instance (or one of its subtypes) being attached to the DisplayObject overwriting the `.accessible` field's value.
+DisplayObjects that are to be translated to the DOM need to be registered with the module so that the additional annotation needed for accessibility support can be supplied. Registering adds an `AccessibilityObject` (or one of its subtypes) instance to the `.accessible` field to the DisplayObject, which can be used to get or set the various pieces of accessibility information that are relevant to that role.  If the role used for the DisplayObject needs to be changed, then it needs to be re-registered with the module using the new role, which will result in a new `AccessibilityObject` instance (or one of its subtypes) being attached to the DisplayObject overwriting the `.accessible` field's value.
 
 `AccessibilityModule.register` allows for registering 1 or multiple DisplayObjects with the module.  It takes either an object containing accessibility configuration data for a DisplayObject or an array of those as an argument.  The configuration data needed is the DisplayObject and the desired role.  Optionally the configuration data can include the parent DisplayObject in the accessibility tree (that has already been registered with the module), the index into the parent's accessibility child order to add the DisplayObject, focus and keyboardClick event handlers, and an object containing initial values to use for the various fields that the AccessibilityObject (or subclass) has.  For example:
 ```
@@ -122,6 +122,15 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | tab | keyboardClick | | clicking event from keyboard interaction |
 | tab list | keyboardClick | | clicking event from keyboard interaction |
 | tree item | keyboardClick | | clicking event from keyboard interaction |
+
+### HTML and ARIA attributes
+After registering a DisplayObject with CAM, an `AccessibilityObject` (or one of its subtypes) instance is used to add an `.accessible` field to the DisplayObject.  In addition to providing functions for managing children in the accessibility tree and requesting focus, these classes also provide getters and setters for the ARIA attributes relevant to the role the DisplayObject was registered with.  Also, since CAM translates the DisplayObjects to HTML elements, there are also getters and setters for the relevant HTML as well (so long as it is still relevant to the particular role).  Since the distinction between whether a non-ARIA HTML attribute or ARIA attribute should be used depends on which HTML tag is used, CAM abstracts away this distinction by naming all these properties without mentioning ARIA and using camelCase.
+
+| Role | Attribute | Type | Values | Default | Description | Reference |
+|---|---|---|---|---|---|---|
+| All | accessKey | string | single printable character | Keyboard shortcut (when combined with browser specific keys for activating access keys) to click the display object | https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey |
+| | atomic | boolean | true if ATs should present the region as a whole, false for parts | false | Indicates whether the entire section of the DOM should be presented at once by ATs or can be done in smaller increments | https://www.w3.org/TR/wai-aria-1.1/#aria-atomic |
+
 
 ### Test app and reference implementation
 There is an open source companion test app for this module at https://github.com/CurriculumAssociates/createjs-accessibility-tester.  The intent behind that app is to both test changes to this module and provide a reference implementation for the various roles.  Some roles (e.g. menubar) require a particular structure to work correctly, and this test app shows them in that structure and functional.  Please see that repo for additional details.
