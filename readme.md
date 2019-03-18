@@ -128,7 +128,7 @@ After registering a DisplayObject with CAM, an `AccessibilityObject` (or one of 
 
 | Role | Attribute | Type | Values | Default | Description | Reference |
 |---|---|---|---|---|---|---|
-| All | accessKey | string | single printable character | Keyboard shortcut (when combined with browser specific keys for activating access keys) to click the display object | https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey |
+| All | accessKey | string | single printable character | | Keyboard shortcut (when combined with browser specific keys for activating access keys) to click the display object | https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey |
 | | atomic | boolean | true if ATs should present the region as a whole, false for parts | false | Indicates whether the entire section of the DOM should be presented at once by ATs or can be done in smaller increments | https://www.w3.org/TR/wai-aria-1.1/#aria-atomic |
 
 
