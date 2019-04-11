@@ -85,7 +85,6 @@ function createAccessibilityObjectForRole(config) {
   let accessibilityObject;
   switch (role) {
     // roles resulting in AccessibilityObject in alphabetical order by enum entry
-    case ROLES.FOOTER:
     case ROLES.FIGCAPTION:
     case ROLES.FORMAT_TEXT_BOLD:
     case ROLES.FORMAT_TEXT_CODE:

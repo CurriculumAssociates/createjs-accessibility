@@ -41,7 +41,7 @@ export default class AccessibilityObject {
      * string that describes the DisplayObject for the AT
      * @access public
      */
-    this.text = displayObject.text;
+    this.text = undefined;
   }
 
   /**
