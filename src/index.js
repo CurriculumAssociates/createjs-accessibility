@@ -15,34 +15,31 @@ function positionElemUnderStage(stage, getComponentRef) {
 
   const canvas = stage.canvas;
 
-  const canvasStyle = getComputedStyle(canvas);
+  const {
+    height,
+    width,
+    border,
+    boxSizing,
+    margin,
+    padding,
+    transform,
+    transformOrigin } = getComputedStyle(canvas);
 
-  const canvasCss = {
-    border: canvasStyle['border'],
-    boxSizing: canvasStyle['box-sizing'],
-    marginLeft: canvasStyle['margin-left'],
-    marginTop: canvasStyle['margin-top'],
-    paddingLeft: canvasStyle['padding-left'],
-  };
-
-  const canvasDimensions = {
-    height: canvas.getAttribute('height'),
-    width: canvas.getAttribute('width'),
-  };
-  if (canvasDimensions.height.indexOf('px') === -1) {
-    canvasDimensions.height = `${canvasDimensions.height}px`;
-  }
-  if (canvasDimensions.width.indexOf('px') === -1) {
-    canvasDimensions.width = `${canvasDimensions.width}px`;
-  }
-
-  const moduleStyle = _.merge({
+  const moduleStyle = {
     overflow: 'hidden',
     position: 'absolute',
     left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width')) : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
-  }, canvasCss, canvasDimensions);
+    height,
+    width,
+    border,
+    boxSizing,
+    margin,
+    padding,
+    transform,
+    transformOrigin,
+  };
 
   return (
     <div style={moduleStyle}>

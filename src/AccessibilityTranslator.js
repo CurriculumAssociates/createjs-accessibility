@@ -81,10 +81,10 @@ export default class AccessibilityTranslator extends React.Component {
       const bounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
       const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width, bounds.y + bounds.height);
-      posParentSpace.x = posGlobalSpace.x - parentBoundsInGlobalSpace.x;
-      posParentSpace.y = posGlobalSpace.y - parentBoundsInGlobalSpace.y;
-      posParentSpace.width = lowerRight.x - posGlobalSpace.x;
-      posParentSpace.height = lowerRight.y - posGlobalSpace.y;
+      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
     } catch (err) {
       // ignore, this is mainly for the case of undefined bounds
     }
