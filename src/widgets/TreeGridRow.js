@@ -75,6 +75,9 @@ export default class TreeGridRow extends createjs.Container {
           displayObject: cell,
           parent: this,
           role: AccessibilityModule.ROLES.COLUMNHEADER,
+          accessibleOptions: {
+            text: data,
+          },
         });
       } else {
         cell = this._createCell({ data, index, fontSize: 14 });
@@ -82,6 +85,9 @@ export default class TreeGridRow extends createjs.Container {
           displayObject: cell,
           parent: this,
           role: AccessibilityModule.ROLES.GRIDCELL,
+          accessibleOptions: {
+            text: data,
+          },
         });
       }
       cell.set({

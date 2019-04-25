@@ -17,6 +17,9 @@ export default class FormatText extends createjs.Container {
       displayObject: prefix,
       parent: this,
       role: ROLES.SPAN,
+      accessibleOptions: {
+        text: prefix.text,
+      },
     });
 
     const label = new createjs.Text(value, `${fontType} ${fontSize} ${fontFamily}`);
@@ -25,6 +28,9 @@ export default class FormatText extends createjs.Container {
       displayObject: label,
       parent: this,
       role,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     label.set({ x: prefix.getBounds().width, y: prefix.getBounds().y });
     label.fontSize = fontSize.split('px')[0];

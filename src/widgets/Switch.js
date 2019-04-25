@@ -56,6 +56,9 @@ export default class Switch extends createjs.Container {
       displayObject: this.offText,
       parent: this,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: this.offText.text,
+      },
     });
 
     this.onCircle = new createjs.Shape();
@@ -75,6 +78,9 @@ export default class Switch extends createjs.Container {
       displayObject: this.onText,
       parent: this,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: this.onText.text,
+      },
     });
   }
 

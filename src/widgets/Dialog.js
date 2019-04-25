@@ -27,6 +27,9 @@ export default class Dialog extends createjs.Container {
       displayObject: titleText,
       parent: this,
       role: AccessibilityModule.ROLES.HEADING1,
+      accessibleOptions: {
+        text: titleText.text,
+      },
     });
     this.accessible.labelledBy = titleText;
 
@@ -39,6 +42,9 @@ export default class Dialog extends createjs.Container {
       displayObject: descriptionText,
       parent: this,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: descriptionText.text,
+      },
     });
     this.accessible.describedBy = descriptionText;
 
@@ -60,16 +66,20 @@ export default class Dialog extends createjs.Container {
       displayObject: accessibilityDefinition,
       parent: this,
       role: AccessibilityModule.ROLES.DEFINITION,
+      accessibleOptions: {
+        text: accessibilityDefinition.text,
+      },
     });
 
     AccessibilityModule.register({
-      accessibleOptions: {
-        name: 'Accessibility',
-        labelledBy: accessibilityDefinition,
-      },
       displayObject: accessibilityTerm,
       parent: this,
       role: AccessibilityModule.ROLES.TERM,
+      accessibleOptions: {
+        name: 'Accessibility',
+        labelledBy: accessibilityDefinition,
+        text: accessibilityTerm.text,
+      },
     });
 
     const options = {

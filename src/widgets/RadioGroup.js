@@ -29,6 +29,9 @@ export default class RadioGroup extends createjs.Container {
         displayObject: labelText,
         parent: this,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: labelText.text,
+        },
       });
       this.radioOption.push(radio);
     });

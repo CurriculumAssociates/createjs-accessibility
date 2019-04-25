@@ -28,6 +28,9 @@ export default class Figure extends createjs.Container {
       displayObject: figCaption,
       parent: this,
       role: AccessibilityModule.ROLES.FIGCAPTION,
+      accessibleOptions: {
+        text: figCaption.text,
+      },
     });
     figCaption.x = img.x + (option.width - figCaption.getBounds().width) / 2;
     figCaption.y = img.y + option.height;

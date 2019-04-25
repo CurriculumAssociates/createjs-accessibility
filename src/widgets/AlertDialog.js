@@ -38,6 +38,9 @@ export default class AlertDialog extends createjs.Container {
       displayObject: alertLabel,
       parent: dialogBox,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: alertLabel.text,
+      },
     });
     dialogBox.addChild(alertLabel);
     dialogBox.accessible.addChild(alertLabel);

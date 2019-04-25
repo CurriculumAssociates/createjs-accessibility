@@ -54,6 +54,9 @@ export default class Table extends createjs.Container {
           displayObject: cell,
           parent: row,
           role: ROLE,
+          accessibleOptions: {
+            text: data,
+          },
         });
       });
 

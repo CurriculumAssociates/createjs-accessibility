@@ -82,6 +82,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: headerText,
       role: AccessibilityModule.ROLES.HEADING1,
+      accessibleOptions: {
+        text: headerText.text,
+      },
     });
     this._headerArea.accessible.addChild(headerText);
     this._headerArea.setBounds(0, 0, 800, HEADER_HEIGHT);
@@ -121,6 +124,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: contentinfo,
       role: AccessibilityModule.ROLES.HEADING3,
+      accessibleOptions: {
+        text: contentinfo.text,
+      },
     });
     this._footerArea.accessible.addChild(contentinfo);
 
@@ -145,6 +151,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: timeLabel,
       role: AccessibilityModule.ROLES.SPAN,
+      accessibleOptions: {
+        text: timeLabel.text,
+      },
     });
     currentTime.addChild(timeLabel);
     currentTime.accessible.addChild(timeLabel);
@@ -155,6 +164,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: timer,
       role: AccessibilityModule.ROLES.TIMER,
+      accessibleOptions: {
+        text: timer.text,
+      },
     });
     currentTime.accessible.addChild(timer);
     currentTime.x = 10;
@@ -315,6 +327,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: testDisplayObject1,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: testDisplayObject1.text,
+      },
     });
     this._contentArea.addChild(testDisplayObject1);
 
@@ -324,6 +339,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: testDisplayObject2,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: testDisplayObject2.text,
+      },
     });
   }
 
@@ -435,6 +453,9 @@ export default class AppWindow extends createjs.Container {
       AccessibilityModule.register({
         displayObject: label,
         role: AccessibilityModule.ROLES.STATUS,
+        accessibleOptions: {
+          text: label.text,
+        },
       });
       this._contentArea.accessible.addChild(label);
 
@@ -451,6 +472,9 @@ export default class AppWindow extends createjs.Container {
         displayObject: percent,
         parent: this._contentArea,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: percent.text,
+        },
       });
 
       progressBar.startProgress();
@@ -464,6 +488,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: title,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: title.text,
+      },
     });
 
     const labelGroup1 = new createjs.Text('Pizza Crust', 'bold 24px Arial', '#000');
@@ -472,6 +499,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: labelGroup1,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: labelGroup1.text,
+      },
     });
 
     const radioGroup1 = new RadioGroup({ radioData: PizzaCrustData, name: 'Pizza Crust', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect) });
@@ -491,6 +521,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: labelGroup2,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: labelGroup2.text,
+      },
     });
 
     const radioGroup2 = new RadioGroup({ radioData: PizzaDeliveryData, name: 'Pizza Delivery', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect) });
@@ -543,6 +576,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: label,
       parent: form,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     form.addChild(label);
     const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
@@ -581,6 +617,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: label,
       parent: form,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     form.addChild(label);
 
@@ -612,6 +651,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: label,
       parent: form,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     form.addChild(label);
 
@@ -652,6 +694,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: label,
       parent: form,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     form.addChild(label);
 
@@ -695,6 +740,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: alertLabel,
       parent: alert,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: alertLabel.text,
+      },
     });
     alert.accessible.addChild(alertLabel);
     alert.addChild(alertLabel);
@@ -711,6 +759,9 @@ export default class AppWindow extends createjs.Container {
         displayObject: label,
         parent: form,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: label.text,
+        },
       });
 
       form.addChild(label);
@@ -855,12 +906,12 @@ export default class AppWindow extends createjs.Container {
     openingLine.x = 50;
     openingLine.y = 50;
     AccessibilityModule.register({
-      accessibleOptions: {
-        text: openingLine.text,
-      },
       displayObject: openingLine,
       parent: document,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: openingLine.text,
+      },
     });
     document.addChild(openingLine);
 
@@ -953,6 +1004,9 @@ export default class AppWindow extends createjs.Container {
         displayObject: label,
         parent: this._contentArea,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: label.text,
+        },
       });
 
       checkBox.label = label.text;
@@ -967,6 +1021,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: total,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: total.text,
+      },
     });
     this._contentArea.accessible.addChild(total);
 
@@ -976,6 +1033,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: selected,
       role: AccessibilityModule.ROLES.LOG,
+      accessibleOptions: {
+        text: selected.text,
+      },
     });
     this._contentArea.accessible.addChild(selected);
   }
@@ -999,6 +1059,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: dragText,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: dragText.text,
+      },
     });
 
     // Createing drop zones
@@ -1103,6 +1166,9 @@ export default class AppWindow extends createjs.Container {
       displayObject: testDisplayObject,
       parent: this._contentArea,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: testDisplayObject.text,
+      },
     });
     this._contentArea.addChild(testDisplayObject);
 
@@ -1168,29 +1234,30 @@ export default class AppWindow extends createjs.Container {
       'reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme\n' +
       'downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours\n' +
       'previous were out of sight of land. Look at the crowds of water-gazers there.', '16px Arial');
-    AccessibilityModule.register({
-      displayObject: secondParagraph,
-      role: AccessibilityModule.ROLES.NONE,
-    });
 
     const quoteInfo = new createjs.Text('The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".', 'bold 16px Arial');
-    AccessibilityModule.register({
-      displayObject: quoteInfo,
-      role: AccessibilityModule.ROLES.NOTE,
-    });
 
     AccessibilityModule.register([
       {
         displayObject: openingParagraph,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: openingParagraph.text,
+        },
       },
       {
         displayObject: secondParagraph,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: secondParagraph.text,
+        },
       },
       {
         displayObject: quoteInfo,
         role: AccessibilityModule.ROLES.NOTE,
+        accessibleOptions: {
+          text: quoteInfo.text,
+        },
       },
     ]);
 
@@ -1220,6 +1287,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: summary,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: summary.text,
+      },
     });
 
     complementary.addChild(summary);
@@ -1253,6 +1323,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: heading,
       role: AccessibilityModule.ROLES.HEADING3,
+      accessibleOptions: {
+        text: heading.text,
+      },
     });
     region.accessible.addChild(heading);
     region.accessible.labelledBy = heading;
@@ -1563,6 +1636,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: description,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: description.text,
+      },
     });
     tabPanel.accessible.addChild(description);
     tabPanel.description = description;
@@ -1592,12 +1668,18 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: openingParagraph,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: openingParagraph.text,
+      },
     });
 
     const reference1 = new createjs.Text('The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".', 'bold 16px Arial');
     AccessibilityModule.register({
       displayObject: reference1,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: reference1.text,
+      },
     });
 
     const secondParagraph = new createjs.Text(
@@ -1609,12 +1691,18 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: secondParagraph,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: secondParagraph.text,
+      },
     });
 
     const reference2 = new createjs.Text('The above quotes are from "DRACULA (Chap. I: JONATHAN HARKER’S JOURNAL) by Bram Stoker".', 'bold 16px Arial');
     AccessibilityModule.register({
       displayObject: reference2,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: reference2.text,
+      },
     });
 
     const thirdParagraph = new createjs.Text(
@@ -1624,12 +1712,18 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: thirdParagraph,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: thirdParagraph.text,
+      },
     });
 
     const reference3 = new createjs.Text(' The above quotes are from "D-99 a science-fiction novel (CHAPTER SIX) by H. B. FYFE".', 'bold 16px Arial');
     AccessibilityModule.register({
       displayObject: reference3,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: reference3.text,
+      },
     });
 
     let article = new Article({ position: 1, size: 3 });
@@ -1826,6 +1920,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: label,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
     });
     this.alphaControlContainer.accessible.addChild(label);
     const callBack = () => {
@@ -1857,6 +1954,9 @@ export default class AppWindow extends createjs.Container {
       AccessibilityModule.register({
         displayObject: labelValue,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: labelValue.text,
+        },
       });
       this.colorSliderContainer.accessible.addChild(labelValue);
 
@@ -1911,6 +2011,9 @@ export default class AppWindow extends createjs.Container {
         displayObject: textObj,
         parent: this._contentArea,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: textObj.text,
+        },
       });
 
       // Bullets
@@ -1977,6 +2080,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: btnText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: btnText.text,
+      },
     });
     const linkData = {
       href: 'https://www.w3.org/TR/wai-aria-1.1/#button',
@@ -1989,6 +2095,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: radioText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: radioText.text,
+      },
     });
     const radioLinkData = {
       href: 'https://www.w3.org/TR/wai-aria-1.1/#radio',
@@ -2007,6 +2116,9 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: checkBoxText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: checkBoxText.text,
+      },
     });
     const checkBoxLinkData = {
       href: 'https://www.w3.org/TR/wai-aria-1.1/#checkbox',
@@ -2019,16 +2131,25 @@ export default class AppWindow extends createjs.Container {
     AccessibilityModule.register({
       displayObject: labelText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: labelText.text,
+      },
     });
     const linkText = new createjs.Text('Link ', '14px Arial');
     AccessibilityModule.register({
       displayObject: linkText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: linkText.text,
+      },
     });
     const interactionText = new createjs.Text('Interaction ', '14px Arial');
     AccessibilityModule.register({
       displayObject: interactionText,
       role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: interactionText.text,
+      },
     });
 
     const row1 = [
@@ -2289,6 +2410,9 @@ export default class AppWindow extends createjs.Container {
         displayObject: label,
         parent: this.transformControlContainer,
         role: AccessibilityModule.ROLES.NONE,
+        accessibleOptions: {
+          text: label.text,
+        },
       });
     }
     label.set({ x, y });
