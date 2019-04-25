@@ -113,9 +113,7 @@ export default class AccessibilityTranslator extends React.Component {
     if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO  || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
     }
-    if (!displayObject.mouseEnabled && (displayObject.hasEventListener('click')
-      || displayObject.hasEventListener('mousedown')
-      || displayObject.hasEventListener('pressup'))) {
+    if (displayObject.accessible.disabledWithInference) {
       props.disabled = 'disabled';
       props['aria-disabled'] = true;
     }
