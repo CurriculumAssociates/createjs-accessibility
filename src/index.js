@@ -66,8 +66,18 @@ function setupStage(stage, parentElement, onReady = () => {}) {
 
   ReactDOM.render(moduleNode, parentElement, () => {
     stage.accessibilityTranslator = component;
+    stage.accessibilityRootElement = parentElement;
     onReady();
   });
+}
+
+/**
+ * Cleanup and unmount React node that tracks accessibility support for a Stage.
+ * @param {!createjs.Stage} stage - CreateJS Stage to cleanup
+ */
+function releaseStage(stage) {
+  const accessibilityRoot = stage.accessibilityRootElement;
+  ReactDOM.unmountComponentAtNode(accessibilityRoot);
 }
 
 /**
@@ -113,6 +123,7 @@ const AccessibilityModule = {
   resize,
   ROLES,
   setupStage,
+  releaseStage,
 };
 
 export { AccessibilityModule as default };
