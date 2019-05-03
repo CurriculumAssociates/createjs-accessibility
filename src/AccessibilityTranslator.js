@@ -85,6 +85,14 @@ export default class AccessibilityTranslator extends React.Component {
       posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y) * (1 / displayObject.stage.scaleY);
       posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
       posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      if (posParentSpace.width < 0) {
+        posParentSpace.width = -posParentSpace.width;
+        posParentSpace.x -= posParentSpace.width;
+      }
+      if (posParentSpace.height < 0) {
+        posParentSpace.height = -posParentSpace.height;
+        posParentSpace.y -= posParentSpace.height;
+      }
     } catch (err) {
       // ignore, this is mainly for the case of undefined bounds
     }
