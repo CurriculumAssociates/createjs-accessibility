@@ -120,6 +120,9 @@ export default class AccessibilityObject {
   requestFocus() {
     const elem = document.getElementById(this._domId);
     if (elem) {
+      if (getComputedStyle(elem).display === 'none') {
+        this._forceShow();
+      }
       elem.focus();
     }
   }
