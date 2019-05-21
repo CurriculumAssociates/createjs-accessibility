@@ -7,13 +7,11 @@ import { ROLES } from '../Roles.js';
 export default class AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     _.bindAll(this, '_onKeyDown', '_onKeyUp');
-
     this._displayObject = displayObject;
     this._children = [];
     this._role = role;
     this._domId = domIdPrefix + displayObject.id;
     this._areKeyEventsEnabled = false;
-
     /**
      * Fields with relatively fixed values that should go into the React props for the element translation of this object.  This is done as an object for easy merging with the rest of the props
      * @access private
@@ -23,6 +21,7 @@ export default class AccessibilityObject {
       id: this.domId,
       onFocus: (evt) => {
         const cancelled = this._displayObject.dispatchEvent('focus', false, true);
+
         if (cancelled) {
           evt.stopPropagation();
           evt.preventDefault();
@@ -51,6 +50,7 @@ export default class AccessibilityObject {
    * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to add as a child in the accessibility tree
    */
   addChild(displayObject) {
+
     if (!displayObject.accessible) {
       throw new Error('DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree');
     }
@@ -679,9 +679,11 @@ export default class AccessibilityObject {
   _onKeyDown(evt) {
     const event = new createjs.Event('keydown', false, evt.cancelable);
     event.keyCode = evt.keyCode;
-    const cancelled = this._displayObject.dispatchEvent(event);
-    if (cancelled) {
+    this._displayObject.dispatchEvent(event);
+    if (event.propagationStopped) {
       evt.stopPropagation();
+    }
+    if (event.defaultPrevented) {
       evt.preventDefault();
     }
   }
@@ -694,9 +696,11 @@ export default class AccessibilityObject {
   _onKeyUp(evt) {
     const event = new createjs.Event('keyup', false, evt.cancelable);
     event.keyCode = evt.keyCode;
-    const cancelled = this._displayObject.dispatchEvent(event);
-    if (cancelled) {
+    this._displayObject.dispatchEvent(event);
+    if (event.propagationStopped) {
       evt.stopPropagation();
+    }
+    if (event.defaultPrevented) {
       evt.preventDefault();
     }
   }
