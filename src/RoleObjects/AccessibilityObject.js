@@ -120,9 +120,15 @@ export default class AccessibilityObject {
   requestFocus() {
     const elem = document.getElementById(this._domId);
     if (elem) {
-      if (getComputedStyle(elem).display === 'none') {
+      // handle elements that won't be visible until the next render pass
+      if (this.visibleWithInference && getComputedStyle(elem).display === 'none') {
         this._forceShow();
       }
+      // handle elements that won't be enabled until the next render pass
+      if (this.enabled && elem.getAttribute('disabled') !== null) {
+        elem.removeAttribute('disabled');
+      }
+
       elem.focus();
     }
   }
