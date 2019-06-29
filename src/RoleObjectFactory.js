@@ -110,6 +110,7 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.HEADING5:
     case ROLES.HEADING6:
     case ROLES.MAIN:
+    case ROLES.MATH:
     case ROLES.NONE:
     case ROLES.PARAGRAPH:
     case ROLES.PRESENTATION:
