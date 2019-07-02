@@ -1,4 +1,5 @@
 import { ROLES } from './Roles.js';
+import CompositeData from './CompositeData.js';
 
 // role objects in alphabetical order by class name
 import AccessibilityObject from './RoleObjects/AccessibilityObject.js';
@@ -123,6 +124,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     // rest of the roles in alphabetical order by its class entry
+
+    case ROLES.APPLICATION:
+      accessibilityObject = new CompositeData(displayObject, role, domIdPrefix);
+      break;
+
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);
       break;
