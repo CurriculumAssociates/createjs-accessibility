@@ -110,7 +110,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.HEADING5:
     case ROLES.HEADING6:
     case ROLES.MAIN:
-    case ROLES.MATH:
     case ROLES.NONE:
     case ROLES.PARAGRAPH:
     case ROLES.PRESENTATION:
@@ -119,6 +118,8 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TABLEBODY:
     case ROLES.TABLEFOOT:
     case ROLES.TABLEHEAD:
+    case ROLES.MATH:
+    
       accessibilityObject = new AccessibilityObject(displayObject, role, domIdPrefix);
       break;
 
