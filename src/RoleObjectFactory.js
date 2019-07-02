@@ -118,8 +118,7 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TABLEBODY:
     case ROLES.TABLEFOOT:
     case ROLES.TABLEHEAD:
-    case ROLES.MATH:
-    
+
       accessibilityObject = new AccessibilityObject(displayObject, role, domIdPrefix);
       break;
 
@@ -265,6 +264,8 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TERM:
     case ROLES.TOOLTIP:
     case ROLES.UNORDEREDLIST:
+    case ROLES.MATH:
+    
       accessibilityObject = new SectionData(displayObject, role, domIdPrefix);
       break;
 
