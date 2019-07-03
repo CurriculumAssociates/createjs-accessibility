@@ -118,7 +118,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.SEARCH:
     case ROLES.TABLEBODY:
     case ROLES.TABLEFOOT:
-    case ROLES.APPLICATION:
     case ROLES.TABLEHEAD:
       accessibilityObject = new AccessibilityObject(displayObject, role, domIdPrefix);
       break;
