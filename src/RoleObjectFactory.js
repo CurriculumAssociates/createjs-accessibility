@@ -1,5 +1,5 @@
 import { ROLES } from './Roles.js';
-import CompositeData from './CompositeData.js';
+import CompositeData from './RoleObjects/CompositeData.js';
 
 // role objects in alphabetical order by class name
 import AccessibilityObject from './RoleObjects/AccessibilityObject.js';
