@@ -15,6 +15,10 @@ export default class SpinButtonData extends RangeData {
     this._reactProps.onKeyDown = this._onKeyDown; // the keydown listener is needed for this role to function per WAI-ARIA practices even when using a semantic tag/attribute
   }
 
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
+  }
+
   /**
   * Set value
   * @access public

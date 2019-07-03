@@ -212,7 +212,8 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new MultiSelectListBoxData(displayObject, role, domIdPrefix);
       break;
 
-    case ROLES.OPTION:
+    case ROLES.SINGLESELECTOPTION:
+    case ROLES.MULTISELECTOPTION:
       accessibilityObject = new OptionData(displayObject, role, domIdPrefix);
       break;
 
