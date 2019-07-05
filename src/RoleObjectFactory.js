@@ -16,6 +16,7 @@ import GroupData from './RoleObjects/GroupData.js';
 import HeadingData from './RoleObjects/HeadingData.js';
 import LinkData from './RoleObjects/LinkData.js';
 import ListItemData from './RoleObjects/ListItemData.js';
+import MathData from './RoleObjects/MathData.js';
 import MenuBarData from './RoleObjects/MenuBarData.js';
 import MenuData from './RoleObjects/MenuData.js';
 import MenuItemData from './RoleObjects/MenuItemData.js';
@@ -184,6 +185,9 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new ListItemData(displayObject, role, domIdPrefix);
       break;
 
+    case ROLES.MATH:
+        accessibilityObject = new MathData(displayObject, role, domIdPrefix);
+      break;
     case ROLES.MENU:
       accessibilityObject = new MenuData(displayObject, role, domIdPrefix);
       break;
@@ -263,7 +267,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TERM:
     case ROLES.TOOLTIP:
     case ROLES.UNORDEREDLIST:
-    case ROLES.MATH:
       accessibilityObject = new SectionData(displayObject, role, domIdPrefix);
       break;
 
