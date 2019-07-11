@@ -45,8 +45,11 @@ import TreeGrid from './TreeGrid.js';
 import FormatText from './FormatText.js';
 import AlertDialog from './AlertDialog.js';
 import Marquee from './Marquee.js';
+import PlainTextMath from './PlainTextMath.js'
 
 import imgTestSrc from './media/Curriculum-Associates-Logo-964x670.png';
+import formulaImg from './media/formula1.png'
+import formula_img from './media/formula2.png'
 
 const MENU_HEIGHT = 20;
 const OPTION_WIDTH = 100;
@@ -62,7 +65,7 @@ export default class AppWindow extends createjs.Container {
       '_showListTestCase', '_showArticleTestCase', '_showCheckBoxTestCase', '_showSearchTestCase',
       '_showSliderTestCase', '_showMenuItemCheckBoxTestCase', '_showMenuItemRadioTestCase',
       '_showRadioGroupAndProgressBarTestCase', '_showGridTestCase', '_showTreeTestCase',
-      '_showFeedTestCase', '_showTreeGridTestCase', '_showTextFormatCase'
+      '_showFeedTestCase', '_showTreeGridTestCase', '_showTextFormatCase' ,'_mathTextCase'
     );
     AccessibilityModule.register({
       displayObject: this,
@@ -230,6 +233,7 @@ export default class AppWindow extends createjs.Container {
           { name: 'Feed', listener: this._showFeedTestCase },
           { name: 'TreeGrid', listener: this._showTreeGridTestCase },
           { name: 'Text Format', listener: this._showTextFormatCase },
+          { name: 'Math', listener: this._mathTextCase },
         ],
       },
       group2: {
@@ -2604,6 +2608,41 @@ export default class AppWindow extends createjs.Container {
     });
     this._contentArea.addChild(tree);
     this._contentArea.accessible.addChild(tree);
+  }
+
+  _mathTextCase() {
+    this._clearScreen();
+    
+    const options = {
+      src: formulaImg,
+      label: '(a+b)^{2}=a^{2}+2ab+b^{2}',
+      cjsScaleX: 1,
+      cjsScaleY: 1,
+    };
+    const mathText = new PlainTextMath(options);
+    mathText.x = 200;
+    mathText.y = 200;
+    this._contentArea.addChild(mathText);
+    this._contentArea.accessible.addChild(mathText);
+
+    const option1 = {
+      src: formula_img,
+      label: 'a^{2}+b^{2}=c^{2}',
+      cjsScaleX: 1,
+      cjsScaleY: 1,
+    };
+    const mathml= '<math xmlns ="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo> = </mo><msup><mi>c</mi><mn>2</mn></msup> </mrow></math>';
+    const text = new PlainTextMath(option1);
+    text.x= 200;
+    text.y = 250;
+    this._contentArea.addChild(text);
+    AccessibilityModule.register({
+      displayObject: text,
+      role: AccessibilityModule.ROLES.MATH,
+    });
+    this._contentArea.accessible.addChild(text);
+    text.accessible.mathML = mathml;
+
   }
 
   _showTextFormatCase() {
