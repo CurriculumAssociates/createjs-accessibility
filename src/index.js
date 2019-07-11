@@ -1,52 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _ from 'lodash';
-import AccessibilityTranslator from './AccessibilityTranslator';
-import { createAccessibilityObjectForRole } from './RoleObjectFactory';
-import { ROLES } from './Roles';
+import AccessibilityTranslator from './AccessibilityTranslator.js';
+import { createAccessibilityObjectForRole } from './RoleObjectFactory.js';
+import { ROLES } from './Roles.js';
 
 /**
  * Positions the AccessibilityTranslator below the specified stage.
  * @param {createjs.Stage} stage
  * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
- * @return { object}
  */
 function positionElemUnderStage(stage, getComponentRef) {
-  // true to put the tranlated DOM next to the canvas (useful for debugging the module),
-  // false for the translated DOM to go under it
+  // true to put the tranlated DOM next to the canvas (useful for debugging the module), false for the translated DOM to go under it
   const debugPos = false;
 
-  const { canvas } = stage;
+  const canvas = stage.canvas;
 
-  const canvasStyle = getComputedStyle(canvas);
+  const {
+    height,
+    width,
+    border,
+    boxSizing,
+    margin,
+    padding,
+    transform,
+    transformOrigin } = getComputedStyle(canvas);
 
-  const canvasCss = {
-    border: canvasStyle.border,
-    boxSizing: canvasStyle['box-sizing'],
-    marginLeft: canvasStyle['margin-left'],
-    marginTop: canvasStyle['margin-top'],
-    paddingLeft: canvasStyle['padding-left'],
-  };
-
-  const canvasDimensions = {
-    height: canvas.getAttribute('height'),
-    width: canvas.getAttribute('width'),
-  };
-
-  if (canvasDimensions.height.indexOf('px') === -1) {
-    canvasDimensions.height = `${canvasDimensions.height}px`;
-  }
-  if (canvasDimensions.width.indexOf('px') === -1) {
-    canvasDimensions.width = `${canvasDimensions.width}px`;
-  }
-
-  const moduleStyle = _.merge({
+  const moduleStyle = {
     overflow: 'hidden',
     position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width'), 10) : 'auto',
+    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width')) : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
-  }, canvasCss, canvasDimensions);
+    height,
+    width,
+    border,
+    boxSizing,
+    margin,
+    padding,
+    transform,
+    transformOrigin,
+  };
 
   return (
     <div style={moduleStyle}>
@@ -59,14 +52,13 @@ function positionElemUnderStage(stage, getComponentRef) {
  * Setup accessibility support for a Stage. The AccessibilityTranslator instance will be
  * attached to the provided stage by adding an "accessibilityTranslator" member to the stage.
  * @param {!createjs.Stage} stage - CreateJS Stage to attach the translator
- * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the
-    DOM translation will be added
+ * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the DOM translation will be added
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const moduleNode = positionElemUnderStage(stage, (c) => { component = c; });
+  const moduleNode = positionElemUnderStage(stage, c => component = c);
 
   if (_.isString(parentElement)) {
     parentElement = document.getElementById(parentElement);
@@ -74,8 +66,18 @@ function setupStage(stage, parentElement, onReady = () => {}) {
 
   ReactDOM.render(moduleNode, parentElement, () => {
     stage.accessibilityTranslator = component;
+    stage.accessibilityRootElement = parentElement;
     onReady();
   });
+}
+
+/**
+ * Cleanup and unmount React node that tracks accessibility support for a Stage.
+ * @param {!createjs.Stage} stage - CreateJS Stage to cleanup
+ */
+function releaseStage(stage) {
+  const accessibilityRoot = stage.accessibilityRootElement;
+  ReactDOM.unmountComponentAtNode(accessibilityRoot);
 }
 
 /**
@@ -87,7 +89,6 @@ function setupStage(stage, parentElement, onReady = () => {}) {
 function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
     const reactParent = stage.accessibilityTranslator.rootElem.parentElement;
-
     positionElemUnderStage(reactParent, stage);
   } else {
     // handle this function being called before React sets the ref for rootElem
@@ -101,7 +102,6 @@ function resize(stage) {
  * Takes either an array or a single object and creates the accessibility object for each with the
  * config that's passed
  * @param {Array | Object} configObjects
- * @return {object}
  */
 function register(configObjects) {
   let objects = configObjects;
@@ -110,9 +110,9 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(
-    objectConfig => createAccessibilityObjectForRole(objectConfig)
-  );
+  const accessiblityObjects = objects.map(objectConfig => {
+    createAccessibilityObjectForRole(objectConfig);
+  });
 
   return accessiblityObjects.length > 1 ? accessiblityObjects : accessiblityObjects[0];
 }
@@ -123,6 +123,7 @@ const AccessibilityModule = {
   resize,
   ROLES,
   setupStage,
+  releaseStage,
 };
 
 export { AccessibilityModule as default };

@@ -12,19 +12,20 @@ export default class OptionData extends AccessibilityObject {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false otherwise
+   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
-    this._reactProps.disabled = enable ? undefined : 'disabled';
+    this._reactProps.disabled = enable !== false ? undefined : 'disabled';
+    super.enabled = enable;
   }
 
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false otherwise
+   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
    */
   get enabled() {
-    return this._reactProps.disabled !== 'disabled';
+    return super.enabled;
   }
 
   /**

@@ -1,73 +1,64 @@
-import _ from 'lodash';
-import { ROLES } from './Roles';
+import { ROLES } from './Roles.js';
+import CompositeData from './RoleObjects/CompositeData.js';
 
 // role objects in alphabetical order by class name
-import AccessibilityObject from './RoleObjects/AccessibilityObject';
-import ArticleData from './RoleObjects/ArticleData';
-import ButtonData from './RoleObjects/ButtonData';
-import CellData from './RoleObjects/CellData';
-import CheckBoxData from './RoleObjects/CheckBoxData';
-import DialogData from './RoleObjects/DialogData';
-import DocumentData from './RoleObjects/DocumentData';
-import FormData from './RoleObjects/FormData';
-import ImgData from './RoleObjects/ImgData';
-import GridData from './RoleObjects/GridData';
-import GridCellData from './RoleObjects/GridCellData';
-import GroupData from './RoleObjects/GroupData';
-import HeadingData from './RoleObjects/HeadingData';
-import LinkData from './RoleObjects/LinkData';
-import ListItemData from './RoleObjects/ListItemData';
-import MenuBarData from './RoleObjects/MenuBarData';
-import MenuData from './RoleObjects/MenuData';
-import MenuItemData from './RoleObjects/MenuItemData';
-import MenuItemCheckBoxData from './RoleObjects/MenuItemCheckBoxData';
-import MenuItemRadioData from './RoleObjects/MenuitemRadioData';
-import MultiLineTextBoxData from './RoleObjects/MultiLineTextBoxData';
-import MultiSelectListBoxData from './RoleObjects/MultiSelectListBoxData';
-import OptionData from './RoleObjects/OptionData';
-import OrderedListData from './RoleObjects/OrderedListData';
-import ProgressData from './RoleObjects/ProgressBarData';
-import RadioData from './RoleObjects/RadioData';
-import RadioGroupData from './RoleObjects/RadioGroupData';
-import RowData from './RoleObjects/RowData';
-import ScrollBarData from './RoleObjects/ScrollBarData';
-import SearchBoxData from './RoleObjects/SearchBoxData';
-import SectionData from './RoleObjects/SectionData';
-import SeparatorData from './RoleObjects/SeparatorData';
-import SingleLineTextBoxData from './RoleObjects/SingleLineTextBoxData';
-import SingleSelectListBoxData from './RoleObjects/SingleSelectListBoxData';
-import SliderData from './RoleObjects/SliderData';
-import SpinButtonData from './RoleObjects/SpinButtonData';
-import SwitchData from './RoleObjects/SwitchData';
-import TabData from './RoleObjects/TabData';
-import TableData from './RoleObjects/TableData';
-import TableHeaderData from './RoleObjects/TableHeaderData';
-import TabListData from './RoleObjects/TabListData';
-import TimerData from './RoleObjects/TimerData';
-import TreeData from './RoleObjects/TreeData';
-import TreeItemData from './RoleObjects/TreeItemData';
-import ToolBarData from './RoleObjects/ToolBarData';
+import AccessibilityObject from './RoleObjects/AccessibilityObject.js';
+import ArticleData from './RoleObjects/ArticleData.js';
+import ButtonData from './RoleObjects/ButtonData.js';
+import CellData from './RoleObjects/CellData.js';
+import CheckBoxData from './RoleObjects/CheckBoxData.js';
+import DialogData from './RoleObjects/DialogData.js';
+import DocumentData from './RoleObjects/DocumentData.js';
+import FormData from './RoleObjects/FormData.js';
+import ImgData from './RoleObjects/ImgData.js';
+import GridData from './RoleObjects/GridData.js';
+import GridCellData from './RoleObjects/GridCellData.js';
+import GroupData from './RoleObjects/GroupData.js';
+import HeadingData from './RoleObjects/HeadingData.js';
+import LinkData from './RoleObjects/LinkData.js';
+import ListItemData from './RoleObjects/ListItemData.js';
+import MathData from './RoleObjects/MathData.js';
+import MenuBarData from './RoleObjects/MenuBarData.js';
+import MenuData from './RoleObjects/MenuData.js';
+import MenuItemData from './RoleObjects/MenuItemData.js';
+import MenuItemCheckBoxData from './RoleObjects/MenuItemCheckBoxData.js';
+import MenuItemRadioData from './RoleObjects/MenuitemRadioData.js';
+import MultiLineTextBoxData from './RoleObjects/MultiLineTextBoxData.js';
+import MultiSelectListBoxData from './RoleObjects/MultiSelectListBoxData.js';
+import OptionData from './RoleObjects/OptionData.js';
+import OrderedListData from './RoleObjects/OrderedListData.js';
+import ProgressData from './RoleObjects/ProgressBarData.js';
+import RadioData from './RoleObjects/RadioData.js';
+import RadioGroupData from './RoleObjects/RadioGroupData.js';
+import RowData from './RoleObjects/RowData.js';
+import ScrollBarData from './RoleObjects/ScrollBarData.js';
+import SearchBoxData from './RoleObjects/SearchBoxData.js';
+import SectionData from './RoleObjects/SectionData.js';
+import SeparatorData from './RoleObjects/SeparatorData.js';
+import SingleLineTextBoxData from './RoleObjects/SingleLineTextBoxData.js';
+import SingleSelectListBoxData from './RoleObjects/SingleSelectListBoxData.js';
+import SliderData from './RoleObjects/SliderData.js';
+import SpinButtonData from './RoleObjects/SpinButtonData.js';
+import SwitchData from './RoleObjects/SwitchData.js';
+import TabData from './RoleObjects/TabData.js';
+import TableData from './RoleObjects/TableData.js';
+import TableHeaderData from './RoleObjects/TableHeaderData.js';
+import TabListData from './RoleObjects/TabListData.js';
+import TimerData from './RoleObjects/TimerData.js';
+import TreeData from './RoleObjects/TreeData.js';
+import TreeItemData from './RoleObjects/TreeItemData.js';
+import ToolBarData from './RoleObjects/ToolBarData.js';
 
 /**
- * Adds the appropriate AccessibilityObject or one of its subclasses for the given
-   role to the provided DisplayObject for annotating the DisplayObject with
-   accessibility information.
- * @param {object} config
- * @param {createjs.DisplayObject} config.displayObject - DisplayObject to add
-  accessibility annotations to
- * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the
-  DisplayObject performs
- * @param {number} [config.containerIndex] - An optional value for the layer index
-  to add the DisplayObject
- * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use
-  for the DOM id in the translated display object.  Defaults to 'acc_'
- * @param {Function} [config.onFocus] - Optional callback when the DisplayObject
-  is brought into focus
- * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard
-  is clicked while the DisplayObject is in focus
- * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current
-  DisplayObject to as a child. Note the order of registration is important, the parent
-  object will need to be registered with the module before the child.
+ * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to the provided DisplayObject for annotating the DisplayObject with accessibility information.
+ * @param {config}
+ * @param {createjs.DisplayObject} config.displayObject - DisplayObject to add accessibility annotations to
+ * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
+ * @param {number} [config.containerIndex] - An optional value for the layer index to add the DisplayObject
+ * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM id in the translated display object.  Defaults to 'acc_'
+ * @param {Function} [config.onFocus] - Optional callback when the DisplayObject is brought into focus
+ * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard is clicked while the DisplayObject is in focus
+ * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current DisplayObject to as a child. Note the order of registration is important, the parent object will need to be registered with the module before the child.
  */
 function createAccessibilityObjectForRole(config) {
   const {
@@ -94,10 +85,8 @@ function createAccessibilityObjectForRole(config) {
   }
 
   let accessibilityObject;
-
   switch (role) {
     // roles resulting in AccessibilityObject in alphabetical order by enum entry
-    case ROLES.FOOTER:
     case ROLES.FIGCAPTION:
     case ROLES.FORMAT_TEXT_BOLD:
     case ROLES.FORMAT_TEXT_CODE:
@@ -135,6 +124,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     // rest of the roles in alphabetical order by its class entry
+
+    case ROLES.APPLICATION:
+      accessibilityObject = new CompositeData(displayObject, role, domIdPrefix);
+      break;
+
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);
       break;
@@ -176,12 +170,12 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new GroupData(displayObject, role, domIdPrefix);
       break;
 
-    case ROLES[`HEADING${1}`]:
-    case ROLES[`HEADING${2}`]:
-    case ROLES[`HEADING${3}`]:
-    case ROLES[`HEADING${4}`]:
-    case ROLES[`HEADING${5}`]:
-    case ROLES[`HEADING${6}`]:
+    case ROLES.HEADING1:
+    case ROLES.HEADING2:
+    case ROLES.HEADING3:
+    case ROLES.HEADING4:
+    case ROLES.HEADING5:
+    case ROLES.HEADING6:
       accessibilityObject = new HeadingData(displayObject, role, domIdPrefix);
       break;
 
@@ -197,6 +191,9 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new ListItemData(displayObject, role, domIdPrefix);
       break;
 
+    case ROLES.MATH:
+        accessibilityObject = new MathData(displayObject, role, domIdPrefix);
+      break;
     case ROLES.MENU:
       accessibilityObject = new MenuData(displayObject, role, domIdPrefix);
       break;
