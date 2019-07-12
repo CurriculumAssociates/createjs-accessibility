@@ -191,6 +191,7 @@ const ROLE_TAG_MAPPING = {
   contentinfo: 'footer',
   complementary: 'aside',
   timer: 'time',
+  main: 'main'
 };
 Object.freeze(ROLE_TAG_MAPPING);
 
