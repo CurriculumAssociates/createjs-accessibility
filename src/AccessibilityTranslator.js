@@ -81,10 +81,18 @@ export default class AccessibilityTranslator extends React.Component {
       const bounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
       const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width, bounds.y + bounds.height);
-      posParentSpace.x = posGlobalSpace.x - parentBoundsInGlobalSpace.x;
-      posParentSpace.y = posGlobalSpace.y - parentBoundsInGlobalSpace.y;
-      posParentSpace.width = lowerRight.x - posGlobalSpace.x;
-      posParentSpace.height = lowerRight.y - posGlobalSpace.y;
+      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      if (posParentSpace.width < 0) {
+        posParentSpace.width = -posParentSpace.width;
+        posParentSpace.x -= posParentSpace.width;
+      }
+      if (posParentSpace.height < 0) {
+        posParentSpace.height = -posParentSpace.height;
+        posParentSpace.y -= posParentSpace.height;
+      }
     } catch (err) {
       // ignore, this is mainly for the case of undefined bounds
     }
@@ -113,9 +121,7 @@ export default class AccessibilityTranslator extends React.Component {
     if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO  || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
     }
-    if (!displayObject.mouseEnabled && (displayObject.hasEventListener('click')
-      || displayObject.hasEventListener('mousedown')
-      || displayObject.hasEventListener('pressup'))) {
+    if (displayObject.accessible.disabledWithInference) {
       props.disabled = 'disabled';
       props['aria-disabled'] = true;
     }

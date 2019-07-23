@@ -1,4 +1,5 @@
 import { ROLES } from './Roles.js';
+import CompositeData from './RoleObjects/CompositeData.js';
 
 // role objects in alphabetical order by class name
 import AccessibilityObject from './RoleObjects/AccessibilityObject.js';
@@ -16,6 +17,7 @@ import GroupData from './RoleObjects/GroupData.js';
 import HeadingData from './RoleObjects/HeadingData.js';
 import LinkData from './RoleObjects/LinkData.js';
 import ListItemData from './RoleObjects/ListItemData.js';
+import MathData from './RoleObjects/MathData.js';
 import MenuBarData from './RoleObjects/MenuBarData.js';
 import MenuData from './RoleObjects/MenuData.js';
 import MenuItemData from './RoleObjects/MenuItemData.js';
@@ -89,7 +91,6 @@ function createAccessibilityObjectForRole(config) {
   let accessibilityObject;
   switch (role) {
     // roles resulting in AccessibilityObject in alphabetical order by enum entry
-    case ROLES.FOOTER:
     case ROLES.FIGCAPTION:
     case ROLES.FORMAT_TEXT_BOLD:
     case ROLES.FORMAT_TEXT_CODE:
@@ -127,6 +128,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     // rest of the roles in alphabetical order by its class entry
+
+    case ROLES.APPLICATION:
+      accessibilityObject = new CompositeData(displayObject, role, domIdPrefix);
+      break;
+
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);
       break;
@@ -189,6 +195,9 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new ListItemData(displayObject, role, domIdPrefix);
       break;
 
+    case ROLES.MATH:
+        accessibilityObject = new MathData(displayObject, role, domIdPrefix);
+      break;
     case ROLES.MENU:
       accessibilityObject = new MenuData(displayObject, role, domIdPrefix);
       break;
