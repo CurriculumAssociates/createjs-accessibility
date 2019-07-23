@@ -395,7 +395,7 @@ export default class AccessibilityObject {
   /**
    * Sets whether additional content will be displayed by interacting with the DisplayObject
    * @access public
-   * @param {boolean} popup - true if the DisplayObject has a popup, false otherwise.  undefined to unset the field.
+   * @param {string} popup - see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup for valid values.  undefined to unset the field.
    */
   set hasPopUp(popup) {
     this._reactProps['aria-haspopup'] = popup;
@@ -404,7 +404,7 @@ export default class AccessibilityObject {
   /**
    * Retrieves whether additional content will be displayed by interacting with the DisplayObject
    * @access public
-   * @returns {boolean} true if the DisplayObject has a popup, false otherwise.  undefined if this field is unset.
+   * @returns {string} see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup for valid values.  undefined if this field is unset.
    */
   get hasPopUp() {
     return this._reactProps['aria-haspopup'];
