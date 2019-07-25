@@ -3,7 +3,7 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 const VERT_PAD = 2;
 
 export default class Option extends createjs.Container {
-  constructor(label, width, height) {
+  constructor(label, width, height, singleSelect) {
     super();
     AccessibilityModule.register({
       accessibleOptions: {
@@ -11,7 +11,7 @@ export default class Option extends createjs.Container {
         value: label,
       },
       displayObject: this,
-      role: AccessibilityModule.ROLES.OPTION,
+      role: singleSelect ? AccessibilityModule.ROLES.SINGLESELECTOPTION : AccessibilityModule.ROLES.MULTISELECTOPTION,
     });
 
     this.selected = false;
