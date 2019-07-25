@@ -1,5 +1,5 @@
-import InputTagData from './InputTagData.js';
-import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import InputTagData from './InputTagData';
 
 /**
  * Class for the slider role

@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class RangeData extends AccessibilityObject {
   /**
@@ -56,7 +56,8 @@ export default class RangeData extends AccessibilityObject {
   }
 
   /**
-  * If the valuetext attribute is set, authors SHOULD also set the value attribute, unless that value is unknown
+  * If the valuetext attribute is set, authors SHOULD also set the value attribute,
+    unless that value is unknown
   * Set the human readable text alternative of aria-valuenow for a range widget.
   * @access public
   * @param {String} val - text value
@@ -70,6 +71,6 @@ export default class RangeData extends AccessibilityObject {
   * @access public
   */
   get valuetext() {
-    this._reactProps['aria-valuetext'];
+    return this._reactProps['aria-valuetext'];
   }
 }

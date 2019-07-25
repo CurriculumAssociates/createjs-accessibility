@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import InputTagData from './InputTagData.js';
+import InputTagData from './InputTagData';
 
 export default class RadioData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {

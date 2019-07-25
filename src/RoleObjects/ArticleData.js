@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import DocumentData from './DocumentData.js';
+import DocumentData from './DocumentData';
 
 export default class ArticleData extends DocumentData {
   /**

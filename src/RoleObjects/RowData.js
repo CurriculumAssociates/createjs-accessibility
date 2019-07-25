@@ -1,5 +1,6 @@
-import GroupData from './GroupData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import GroupData from './GroupData';
 
 export default class RowData extends GroupData {
   constructor(displayObject, role, domIdPrefix) {
@@ -7,8 +8,10 @@ export default class RowData extends GroupData {
     _.bindAll(this, 'onKeyDown');
     this._reactProps.onKeyDown = this.onKeyDown;
   }
+
   /**
-   * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Sets an element's column index or position with respect to the total number
+     of columns within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -17,7 +20,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Gives an element's column index or position with respect to the total number of
+     columns within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -26,7 +30,8 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Sets an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Sets an element's row index or position with respect to the total number of
+     rows within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -35,15 +40,18 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Gives an element's row index or position with respect to the total number of rows
+    within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
   get rowindex() {
     return this._reactProps['aria-rowindex'];
   }
+
   /**
-   * Sets an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Sets an element's row index or position with respect to the total number of rows
+    within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -52,13 +60,15 @@ export default class RowData extends GroupData {
   }
 
   /**
-   * Gives an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Gives an element's row index or position with respect to the total number of rows
+    within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
   get level() {
     return this._reactProps['aria-level'];
   }
+
   /**
    * Keydown listener for an row item
    * @access private

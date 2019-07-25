@@ -1,18 +1,19 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class OptionData extends AccessibilityObject {
-  addChild(displayObject) {
+  addChild(displayObject) { // eslint-disable-line
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) {
+  addChildAt(displayObject, index) { // eslint-disable-line
     throw new Error(`${this.role} cannot have children`);
   }
 
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled,
+   false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -22,7 +23,8 @@ export default class OptionData extends AccessibilityObject {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled,
+    false if the element is disabled.  undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;
@@ -31,7 +33,8 @@ export default class OptionData extends AccessibilityObject {
   /**
    * Sets the position in the current set of items
    * @access public
-   * @param {Number} num - One based index for the position in the current set of items.  Or undefined to clear the field
+   * @param {Number} num - One based index for the position in the current
+    set of items.  Or undefined to clear the field
    */
   set positionInSet(num) {
     this._reactProps['aria-posinset'] = num;

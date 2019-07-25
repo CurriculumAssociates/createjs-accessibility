@@ -1,14 +1,12 @@
 import _ from 'lodash';
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 export default class MathData extends SectionData {
-  constructor(displayObject, role, domIdPrefix) {
-    super(displayObject, role, domIdPrefix);
+  set mathML(mathML) {
+    this._reactProps.dangerouslySetInnerHTML = { __html: mathML };
   }
-  set mathML(mathML){
-    this._reactProps.dangerouslySetInnerHTML = {__html:mathML};
-  }
-  get mathML(){
+
+  get mathML() {
     return _.get(this._reactProps.dangerouslySetInnerHTML, '__html');
   }
 }

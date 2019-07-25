@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
+import { ROLES } from '../Roles';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class MultiLineTextBoxData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -13,11 +12,11 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
     this._reactProps.onSelect = this._onSelect;
   }
 
-  addChild(displayObject) {
+  addChild(displayObject) { // eslint-disable-line
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) {
+  addChildAt(displayObject, index) { // eslint-disable-line
     throw new Error(`${this.role} cannot have children`);
   }
 
@@ -60,7 +59,8 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled,
+   * false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -70,7 +70,8 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled, false if the element is disabled.
+   * undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;
@@ -79,10 +80,12 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
   /**
    * Sets which form the textarea belongs to
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.  null or undefined to clear it
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.
+   * null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== ROLES.FORM)) {
+    if (displayObject && (!displayObject.accessible
+      || displayObject.accessible.role !== ROLES.FORM)) {
       throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
     }
     this._form = displayObject;

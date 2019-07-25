@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class TabData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {

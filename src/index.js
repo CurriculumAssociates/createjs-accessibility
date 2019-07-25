@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AccessibilityTranslator from './AccessibilityTranslator.js';
-import { createAccessibilityObjectForRole } from './RoleObjectFactory.js';
-import { ROLES } from './Roles.js';
+import _ from 'lodash';
+import AccessibilityTranslator from './AccessibilityTranslator';
+import { createAccessibilityObjectForRole } from './RoleObjectFactory';
+import { ROLES } from './Roles';
 
 /**
  * Positions the AccessibilityTranslator below the specified stage.
@@ -10,10 +11,11 @@ import { ROLES } from './Roles.js';
  * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
  */
 function positionElemUnderStage(stage, getComponentRef) {
-  // true to put the tranlated DOM next to the canvas (useful for debugging the module), false for the translated DOM to go under it
+  // true to put the tranlated DOM next to the canvas (useful for debugging the module),
+  // false for the translated DOM to go under it
   const debugPos = false;
 
-  const canvas = stage.canvas;
+  const { canvas } = stage;
 
   const {
     height,
@@ -23,12 +25,13 @@ function positionElemUnderStage(stage, getComponentRef) {
     margin,
     padding,
     transform,
-    transformOrigin } = getComputedStyle(canvas);
+    transformOrigin,
+  } = getComputedStyle(canvas);
 
   const moduleStyle = {
     overflow: 'hidden',
     position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width')) : 'auto',
+    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width'), 10) : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
     height,
@@ -52,13 +55,14 @@ function positionElemUnderStage(stage, getComponentRef) {
  * Setup accessibility support for a Stage. The AccessibilityTranslator instance will be
  * attached to the provided stage by adding an "accessibilityTranslator" member to the stage.
  * @param {!createjs.Stage} stage - CreateJS Stage to attach the translator
- * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the DOM translation will be added
+ * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the DOM
+  translation will be added
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const moduleNode = positionElemUnderStage(stage, c => component = c);
+  const moduleNode = positionElemUnderStage(stage, (c) => { component = c; });
 
   if (_.isString(parentElement)) {
     parentElement = document.getElementById(parentElement);
@@ -110,9 +114,9 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(objectConfig => {
-    createAccessibilityObjectForRole(objectConfig);
-  });
+  const accessiblityObjects = objects.map(
+    objectConfig => createAccessibilityObjectForRole(objectConfig),
+  );
 
   return accessiblityObjects.length > 1 ? accessiblityObjects : accessiblityObjects[0];
 }

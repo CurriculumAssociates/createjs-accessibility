@@ -1,5 +1,6 @@
-import RangeData from './RangeData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import RangeData from './RangeData';
 
 export default class SpinButtonData extends RangeData {
   constructor(displayObject, role, domIdPrefix) {
@@ -12,7 +13,9 @@ export default class SpinButtonData extends RangeData {
 
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
-    this._reactProps.onKeyDown = this._onKeyDown; // the keydown listener is needed for this role to function per WAI-ARIA practices even when using a semantic tag/attribute
+    // the keydown listener is needed for this role to function per WAI-ARIA practices
+    // even when using a semantic tag/attribute
+    this._reactProps.onKeyDown = this._onKeyDown;
   }
 
   /**

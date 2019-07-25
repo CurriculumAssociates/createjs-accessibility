@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class MultiSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -51,7 +51,8 @@ export default class MultiSelectListBoxData extends SelectData {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled,
+   * false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -61,7 +62,8 @@ export default class MultiSelectListBoxData extends SelectData {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled,
+   * false if the element is disabled.  undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;
@@ -70,10 +72,12 @@ export default class MultiSelectListBoxData extends SelectData {
   /**
    * Sets which form the element belongs to
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.  null or undefined to clear it
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.
+   * null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== ROLES.FORM)) {
+    if (displayObject && (!displayObject.accessible
+      || displayObject.accessible.role !== ROLES.FORM)) {
       throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
     }
     this._form = displayObject;
@@ -195,10 +199,16 @@ export default class MultiSelectListBoxData extends SelectData {
    * @param {SyntheticEvent} evt - React event
    */
   _onListBoxChanged(evt) {
-    // todo: imporove list box support for different browsers.  In IE10 after it gets focus using the arrow keys changes the value, so that works fine currently.  In Chrome, the first up/down arrow key will open the drop down then subsequent ones will alter the selection, but the onChange event doesn't happen until the list box is closed. etc.
+    // todo: imporove list box support for different browsers.
+    // In IE10 after it gets focus using the arrow keys changes the value,
+    // so that works fine currently.  In Chrome, the first up/down arrow key
+    // will open the drop down then subsequent ones will alter the selection,
+    // but the onChange event doesn't happen until the list box is closed. etc.
     const event = new createjs.Event('valueChanged', false, false);
-    event.selectedValues = _.filter(evt.target.options, option => option.selected).map(option => option.value);
-    event.selectedDisplayObjects = _.map(event.selectedValues, val => _.find(this.children, child => child.accessible.value === val));
+    event.selectedValues = _.filter(evt.target.options,
+      option => option.selected).map(option => option.value);
+    event.selectedDisplayObjects = _.map(event.selectedValues,
+      val => _.find(this.children, child => child.accessible.value === val));
     this.selected = event.selectedDisplayObjects;
     this._displayObject.dispatchEvent(event);
   }

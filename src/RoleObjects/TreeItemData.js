@@ -1,5 +1,6 @@
-import ListItemData from './ListItemData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import ListItemData from './ListItemData';
 
 /**
  * Class for role objects that are child items for tree role.
@@ -14,7 +15,8 @@ export default class TreeItemData extends ListItemData {
   /**
    * Sets the position in the current set of items
    * @access public
-   * @param {Number} num - One based index for the position in the current set of items.  Or undefined to clear the field
+   * @param {Number} num - One based index for the position in the current set of items.
+    Or undefined to clear the field
    */
   set positionInSet(num) {
     this._reactProps['aria-posinset'] = num;

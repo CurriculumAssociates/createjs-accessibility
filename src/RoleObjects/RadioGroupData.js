@@ -1,4 +1,4 @@
-import SelectData from './SelectData.js';
+import SelectData from './SelectData';
 
 export default class RadioGroupData extends SelectData {
   /**
