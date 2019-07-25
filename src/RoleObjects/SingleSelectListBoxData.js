@@ -2,6 +2,7 @@ import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
 import { ROLES } from '../Roles';
 import SelectData from './SelectData';
+
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
