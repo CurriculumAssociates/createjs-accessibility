@@ -1,20 +1,37 @@
 import _ from 'lodash';
+import KeyCodes from 'keycodes-enum';
 import { ROLES } from '../Roles';
 import SelectData from './SelectData';
 
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onListBoxChanged');
-    this._reactProps.onChange = this._onListBoxChanged;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    // the keydown listener is needed for this role to function per WAI-ARIA practices
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.OPTION}`);
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
     }
     super.addChild(displayObject);
   }
@@ -23,8 +40,8 @@ export default class SingleSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.OPTION}`);
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
     }
     super.addChildAt(displayObject, index);
   }
@@ -51,7 +68,7 @@ export default class SingleSelectListBoxData extends SelectData {
    * Sets whether the element is enabled
    * @access public
    * @param {boolean} enable - true if the element should be enabled,
-    false if the element should be disabled.  undefined to unset the field.
+     false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -62,7 +79,7 @@ export default class SingleSelectListBoxData extends SelectData {
    * Retrieves whether the element is enabled
    * @access public
    * @returns {boolean} true if the element is enabled, false if the element is disabled.
-   * undefined if the field is unset.
+     undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;
@@ -72,7 +89,7 @@ export default class SingleSelectListBoxData extends SelectData {
    * Sets which form the element belongs to
    * @access public
    * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.
-   * null or undefined to clear it
+    null or undefined to clear it
    */
   set form(displayObject) {
     if (displayObject && (!displayObject.accessible
@@ -143,8 +160,8 @@ export default class SingleSelectListBoxData extends SelectData {
    * @param {createjs.DisplayObject} displayObject - selected option
    */
   set selected(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-      throw new Error(`Selected value must have a role of ${ROLES.OPTION}`);
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
+      throw new Error(`Selected value must have a role of ${ROLES.SINGLESELECTOPTION}`);
     }
     if (!displayObject.accessible.value) {
       throw new Error('The selected option must have its value field populated');
@@ -191,21 +208,54 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   /**
-   * React event handler for when the value of the tag changes
+   * React event handler for key presses
    * @access private
    * @param {SyntheticEvent} evt - React event
    */
-  _onListBoxChanged(evt) {
-    // todo: imporove list box support for different browsers.  In IE10 after
-    // it gets focus using the arrow keys changes the value, so that works fine currently.
-    // In Chrome, the first up/down arrow key will open the drop down then subsequent
-    // ones will alter the selection, but the onChange event doesn't happen until the
-    // list box is closed. etc.
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+    }
+
+    if (evt.keyCode === KeyCodes.down) {
+      const index = this._getSelectionIndex() + 1;
+      if (index < this.children.length) {
+        this.selected = this.children[index];
+        this._onListBoxChanged();
+      }
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.up) {
+      const index = this._getSelectionIndex() - 1;
+      if (index >= 0) {
+        this.selected = this.children[index];
+        this._onListBoxChanged();
+      }
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.home) {
+      const selectedChild = this.children[0];
+      this.selected = selectedChild;
+      this._onListBoxChanged();
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.end) {
+      this.selected = this.children[this.children.length - 1];
+      this._onListBoxChanged();
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+  }
+
+  _getSelectionIndex() {
+    return _.findIndex(this.children, child => child === this.selected);
+  }
+
+  _onListBoxChanged() {
+    this.active = this.selected;
     const event = new createjs.Event('valueChanged', false, false);
-    event.selectedValue = _.find(evt.target.options, option => option.selected).value;
-    event.selectedDisplayObject = _.find(this.children,
-      child => child.accessible.value === event.selectedValue);
-    this.selected = event.selectedDisplayObject;
+    event.selectedValue = this.selectedValue;
+    event.selectedDisplayObject = this.selected;
     this._displayObject.dispatchEvent(event);
   }
 }
