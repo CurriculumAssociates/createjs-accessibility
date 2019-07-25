@@ -1,3 +1,4 @@
+
 import AccessibilityObject from './AccessibilityObject';
 
 export default class CompositeData extends AccessibilityObject {
@@ -6,7 +7,7 @@ export default class CompositeData extends AccessibilityObject {
    * @access public
    * @param {createjs.DisplayObject} displayObject - DisplayObject that is the active
     descendant of this one.  undefined to unset the field.
-   */
+  */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {
       throw new Error('DisplayObject being set as the active descendant must have accessibility information');

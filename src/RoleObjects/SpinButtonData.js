@@ -18,6 +18,10 @@ export default class SpinButtonData extends RangeData {
     this._reactProps.onKeyDown = this._onKeyDown;
   }
 
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
+  }
+
   /**
   * Set value
   * @access public

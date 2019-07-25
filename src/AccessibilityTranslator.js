@@ -141,6 +141,10 @@ export default class AccessibilityTranslator extends React.Component {
       || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM
       || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
+    } else if (role === ROLES.SINGLESELECTLISTBOX) {
+      props.role = 'listbox';
+    } else if (role === ROLES.SINGLESELECTOPTION) {
+      props.role = 'option';
     }
     if (displayObject.accessible.disabledWithInference) {
       props.disabled = 'disabled';

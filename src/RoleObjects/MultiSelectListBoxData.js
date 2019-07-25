@@ -14,8 +14,8 @@ export default class MultiSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.OPTION}`);
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`);
     }
     super.addChild(displayObject);
   }
@@ -24,8 +24,8 @@ export default class MultiSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.OPTION}`);
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`);
     }
     super.addChildAt(displayObject, index);
   }
@@ -145,8 +145,8 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   set selected(displayObjects) {
     displayObjects.forEach((displayObject) => {
-      if (!displayObject.accessible || displayObject.accessible.role !== ROLES.OPTION) {
-        throw new Error(`Selected value must have a role of ${ROLES.OPTION}`);
+      if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
+        throw new Error(`Selected value must have a role of ${ROLES.MULTISELECTOPTION}`);
       }
       if (!displayObject.accessible.value) {
         throw new Error('The selected option must have its value field populated');
