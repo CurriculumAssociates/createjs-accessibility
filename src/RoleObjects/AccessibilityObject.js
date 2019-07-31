@@ -193,7 +193,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * The spellcheck attribute specifies whether the element is to have its spelling
+   * and grammar checked or not.
    * @access public
    * @param { boolean } bool
    */
@@ -202,7 +203,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * The spellcheck attribute specifies whether the element is to have its spelling and
+   * grammar checked or not.
    * @access public
    * @returns {boolean} boolean: true or false
    */
@@ -264,7 +266,8 @@ export default class AccessibilityObject {
    * The dir attribute specifies the text direction of the element's content.
    * @access public
    * @returns {String} direction
-   * ltr: Left-to-right text direction, rtl: Right-to-left text direction, auto: Let the browser figure out the text direction, based on the content
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction, auto: Let the browser
+   * figure out the text direction, based on the content
    */
   get dir() {
     return this._reactProps.dir;
