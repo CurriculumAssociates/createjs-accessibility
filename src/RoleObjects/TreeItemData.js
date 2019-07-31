@@ -86,6 +86,7 @@ export default class TreeItemData extends ListItemData {
   /**
    * Keydown listener for an tree item
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {

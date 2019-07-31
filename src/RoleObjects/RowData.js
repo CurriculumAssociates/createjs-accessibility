@@ -11,7 +11,7 @@ export default class RowData extends GroupData {
 
   /**
    * Sets an element's column index or position with respect to the total number
-     of columns within a table, grid, or treegrid.
+   * of columns within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -21,7 +21,7 @@ export default class RowData extends GroupData {
 
   /**
    * Gives an element's column index or position with respect to the total number of
-     columns within a table, grid, or treegrid.
+   * columns within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -31,7 +31,7 @@ export default class RowData extends GroupData {
 
   /**
    * Sets an element's row index or position with respect to the total number of
-     rows within a table, grid, or treegrid.
+   * rows within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -41,7 +41,7 @@ export default class RowData extends GroupData {
 
   /**
    * Gives an element's row index or position with respect to the total number of rows
-    within a table, grid, or treegrid.
+   *  within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -51,7 +51,7 @@ export default class RowData extends GroupData {
 
   /**
    * Sets an element's row index or position with respect to the total number of rows
-    within a table, grid, or treegrid.
+   * within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -61,7 +61,7 @@ export default class RowData extends GroupData {
 
   /**
    * Gives an element's row index or position with respect to the total number of rows
-    within a table, grid, or treegrid.
+   * within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -72,6 +72,7 @@ export default class RowData extends GroupData {
   /**
    * Keydown listener for an row item
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   onKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {

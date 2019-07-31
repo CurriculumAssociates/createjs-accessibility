@@ -7,8 +7,9 @@ import { ROLES } from './Roles';
 
 /**
  * Positions the AccessibilityTranslator below the specified stage.
- * @param {createjs.Stage} stage
+ * @param {createjs.Stage} stage - createjs stage that has been registered for accessibility
  * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
+ * @returns {Object} tranlated DOM next to the canvas
  */
 function positionElemUnderStage(stage, getComponentRef) {
   // true to put the tranlated DOM next to the canvas (useful for debugging the module),
@@ -56,7 +57,7 @@ function positionElemUnderStage(stage, getComponentRef) {
  * attached to the provided stage by adding an "accessibilityTranslator" member to the stage.
  * @param {!createjs.Stage} stage - CreateJS Stage to attach the translator
  * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the DOM
-  translation will be added
+ * translation will be added
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
  */
@@ -105,7 +106,8 @@ function resize(stage) {
 /**
  * Takes either an array or a single object and creates the accessibility object for each with the
  * config that's passed
- * @param {Array | Object} configObjects
+ * @param {Array | Object} configObjects Takes either an array or a single object
+ * @returns {Object} returns accessibility object
  */
 function register(configObjects) {
   let objects = configObjects;

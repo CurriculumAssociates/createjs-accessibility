@@ -11,11 +11,11 @@ export default class SingleLineTextBoxData extends InputTagData {
     this._reactProps.onSelect = this._onSelect;
   }
 
-  addChild(displayObject) { // eslint-disable-line
+  addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
-  addChildAt(displayObject, index) { // eslint-disable-line
+  addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
 

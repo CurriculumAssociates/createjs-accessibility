@@ -57,7 +57,7 @@ export default class RangeData extends AccessibilityObject {
 
   /**
   * If the valuetext attribute is set, authors SHOULD also set the value attribute,
-    unless that value is unknown
+  * unless that value is unknown
   * Set the human readable text alternative of aria-valuenow for a range widget.
   * @access public
   * @param {String} val - text value

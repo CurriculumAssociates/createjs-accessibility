@@ -150,7 +150,7 @@ const ROLE_TAG_MAPPING = {
   searchbox: 'input',
   slider: 'input',
   spinbutton: 'input',
-  switch: 'button',
+  'switch': 'button',
   table: 'table',
   tableBody: 'tbody',
   tableFoot: 'tfoot',

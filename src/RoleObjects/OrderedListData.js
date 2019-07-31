@@ -19,7 +19,7 @@ export default class OrderedListData extends SectionData {
    * Retrieves whether reversed is enabled
    * @access public
    * @returns {boolean} true if reversed is enabled, false otherwise, undefined
-     if this field is unset
+   *  if this field is unset
    */
   get reversed() {
     return this._reactProps.reversed;
@@ -38,7 +38,7 @@ export default class OrderedListData extends SectionData {
    * Retrieves the starting value of the ordered list
    * @access public
    * @returns {number} number representing the starting position of the list,
-      undefined if this field is unset
+   * undefined if this field is unset
    */
   get start() {
     return this._reactProps.start;

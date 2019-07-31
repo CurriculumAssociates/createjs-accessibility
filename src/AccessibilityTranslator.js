@@ -5,14 +5,14 @@ import { ROLES, getTagNameForDisplayObject } from './Roles';
 
 /**
  * Update process for translating accessibility information for a stage to a DOM approach
-  that is available to assistive technologies.  Applications should create an instance
-  of this for each stage and provide instances with different parent nodes.  Since the
-  drawing order may not always be convient for accessibility, this manages a separate
-  tree of DisplayObjects.  After the instance is created, the setter for 'root' should
-  be used to specify which DisplayObject will serve as the root of the accessibility tree
-  and other DisplayObjects can be added to that to be included in the accessibility output.
-  This also helps minimize the processing done by this class along with reduce
-  its output to the DOM.
+ * that is available to assistive technologies.  Applications should create an instance
+ * of this for each stage and provide instances with different parent nodes.  Since the
+ * drawing order may not always be convient for accessibility, this manages a separate
+ * tree of DisplayObjects.  After the instance is created, the setter for 'root' should
+ * be used to specify which DisplayObject will serve as the root of the accessibility tree
+ * and other DisplayObjects can be added to that to be included in the accessibility output.
+ * This also helps minimize the processing done by this class along with reduce
+ * its output to the DOM.
  */
 export default class AccessibilityTranslator extends React.Component {
   /**
@@ -55,8 +55,8 @@ export default class AccessibilityTranslator extends React.Component {
 
   /**
    * Starts the update of the accessibility DOM.  This should be called each time
-    the accessibility information for all DisplayObjects has been completed(e.g. just after
-    drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
+   * the accessibility information for all DisplayObjects has been completed(e.g. just after
+   * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
   update() {
     this.forceUpdate();
@@ -66,7 +66,6 @@ export default class AccessibilityTranslator extends React.Component {
     if (!displayObject.accessible) {
       return;
     }
-    let label; // eslint-disable-line
     const { accessible } = displayObject;
     const { role } = accessible;
     const tagName = getTagNameForDisplayObject(displayObject);
@@ -76,7 +75,6 @@ export default class AccessibilityTranslator extends React.Component {
     if (role === ROLES.MENUBAR || role === ROLES.MENU
       || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX
       || role === ROLES.MENUITEMRADIO) && children.length > 0)) {
-      label = text;
       text = null;
     }
 
@@ -158,6 +156,7 @@ export default class AccessibilityTranslator extends React.Component {
     if (!displayObject.visible && props['aria-hidden'] === undefined) {
       props['aria-hidden'] = true;
     }
+
     return React.createElement(tagName, props, ...childElements);
   }
 

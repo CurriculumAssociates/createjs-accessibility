@@ -30,7 +30,7 @@ export default class TabListData extends CompositeData {
   /**
    * @access public
    * @param {boolean} val - true if more than one tab in the tablist may be selected at a time.
-   false if only one tab can be selected.
+   * false if only one tab can be selected.
    */
   set multiselectable(val) {
     this._reactProps['aria-multiselectable'] = val;
@@ -39,7 +39,7 @@ export default class TabListData extends CompositeData {
   /**
    * @access public
    * @param {boolean} val - true if more than one tab in the tablist may be selected at a time.
-   false if only one tab can be selected.
+   * false if only one tab can be selected.
    */
   get multiselectable() {
     return this._reactProps['aria-multiselectable'];
@@ -67,6 +67,7 @@ export default class TabListData extends CompositeData {
   /**
    * Keydown listener for when the tablist is pressed
    * @access private
+   * @param {SyntheticEvent} e - React event
    */
   _onTabListKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {

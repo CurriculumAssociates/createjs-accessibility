@@ -38,6 +38,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Informs a menu label of which DisplayObject is the submenu
    * @access package
+   * @param {Object} displayObject - accessibility DisplayObject
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
@@ -105,6 +106,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for when the item manages opening a menu
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   _subMenuOpenerKeyDown(evt) {
     const toggleMenu = evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space
@@ -129,6 +131,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for an entry in a popup menu
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   _menuItemKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {

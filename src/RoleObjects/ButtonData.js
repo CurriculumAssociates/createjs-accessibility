@@ -42,7 +42,7 @@ export default class ButtonData extends AccessibilityObject {
   * Sets whether the element should get expanded on page load
   * @access public
   * @param {boolean} val - true if button expanded, false if button not expanded,
-  undefined if the field is unset
+  *  undefined if the field is unset
   */
   set expanded(val) {
     this._reactProps['aria-expanded'] = val;
@@ -52,7 +52,7 @@ export default class ButtonData extends AccessibilityObject {
   * Retrieves whether button expanded
   * @access public
   * @returns {boolean} true if button expanded, false if button not expanded,
-  undefined if the field is unset
+  *  undefined if the field is unset
   */
   get expanded() {
     return this._reactProps['aria-expanded'];
@@ -80,7 +80,7 @@ export default class ButtonData extends AccessibilityObject {
    * Sets whether the element is enabled
    * @access public
    * @param {boolean} enable - true if the element should be enabled,
-   false if the element should be disabled.  undefined to unset the field.
+   *  false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -91,7 +91,7 @@ export default class ButtonData extends AccessibilityObject {
    * Retrieves whether the element is enabled
    * @access public
    * @returns {boolean} true if the element is enabled, false if the element is disabled.
-   undefined if the field is unset.
+   * undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;

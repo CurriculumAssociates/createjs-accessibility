@@ -14,6 +14,7 @@ export default class RadioData extends InputTagData {
   /**
    * Sets the value of the radio button
    * @access private
+   * @param {String} value - value of the radio button
    */
   set value(value) {
     this._reactProps.value = value;
@@ -81,6 +82,7 @@ export default class RadioData extends InputTagData {
   /**
    * Keydown listener for when the radio button is pressed
    * @access private
+   * @param {SyntheticEvent} e - React event
    */
   _onRadioKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {

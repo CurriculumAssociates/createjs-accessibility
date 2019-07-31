@@ -9,7 +9,7 @@ export default class TreeData extends SelectData {
   /**
    * @access public
    * @param {boolean} value - true if more than 1 element can be selected at a time,
-   false for only 1 at a time, undefined to unset this field
+   * false for only 1 at a time, undefined to unset this field
    */
   set multiselectable(value) {
     this._reactProps['aria-multiselectable'] = value;
@@ -18,7 +18,7 @@ export default class TreeData extends SelectData {
   /**
    * @access public
    * @returns {boolean} true if more than 1 element can be selected at a time,
-   false for only 1 at a time, undefined if this field is unset
+   * false for only 1 at a time, undefined if this field is unset
    */
   get multiselectable() {
     return this._reactProps['aria-multiselectable'];
@@ -27,7 +27,7 @@ export default class TreeData extends SelectData {
   /**
    * @access public
    * @param {boolean} value - true if the element is required, false otherwise,
-   undefined to unset this field
+   * undefined to unset this field
    */
   set required(value) {
     this._reactProps['aria-required'] = value;
@@ -36,7 +36,7 @@ export default class TreeData extends SelectData {
   /**
    * @access public
    * @returns {boolean} true if the element is required, false otherwise,
-   undefined if this field is unset
+   * undefined if this field is unset
    */
   get required() {
     return this._reactProps['aria-required'];

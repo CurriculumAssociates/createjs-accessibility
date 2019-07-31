@@ -5,7 +5,7 @@ export default class GroupData extends SectionData {
    * Sets the currently active descendant of a composite widget
    * @access public
    * @param {createjs.DisplayObject} displayObject - DisplayObject that is the active descendant
-    of this one.  undefined to unset the field.
+   * of this one.  undefined to unset the field.
    */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {

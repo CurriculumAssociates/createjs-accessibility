@@ -14,7 +14,7 @@ export default class ToolBarData extends GroupData {
     * Retrieves the orientation of ToolBar
     * @access public
     * @returns  {String} str "horizontal" for a horizontal ToolBar,
-      "vertical" for a vertical ToolBar
+    * "vertical" for a vertical ToolBar
     */
   get orientation() {
     return this._reactProps['aria-orientation'];

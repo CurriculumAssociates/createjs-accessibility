@@ -53,7 +53,7 @@ import ToolBarData from './RoleObjects/ToolBarData';
 /**
  * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to
  * the provided DisplayObject for annotating the DisplayObject with accessibility information.
- * @param {config}
+ * @param { Object} config - config oject for accessibility information
  * @param {createjs.DisplayObject} config.displayObject
  *  DisplayObject to add accessibility annotations to
  * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
