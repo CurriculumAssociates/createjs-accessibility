@@ -213,23 +213,6 @@ export default class AccessibilityObject {
     return this._reactProps.spellCheck;
   }
 
-  /**
-   * The contenteditable attribute specifies whether the content of an element is editable or not.
-   * @access public
-   * @param { boolean } bool true or false
-   */
-  set contenteditable(bool) {
-    this._reactProps.contentEditable = bool;
-  }
-
-  /**
-   * The contenteditable attribute specifies whether the content of an element is editable or not.
-   * @access public
-   * @returns {boolean} true or false
-   */
-  get contenteditable() {
-    return this._reactProps.contentEditable;
-  }
 
   /**
    * Sets the title for the DisplayObject
@@ -253,6 +236,7 @@ export default class AccessibilityObject {
    * The lang attribute specifies the language of the element's content.
    * @access public
    * @returns {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
    */
   get lang() {
     return this._reactProps.lang;
@@ -262,6 +246,7 @@ export default class AccessibilityObject {
    * The lang attribute specifies the language of the element's content.
    * @access public
    * @param {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
    */
   set lang(lang) {
     this._reactProps.lang = lang;

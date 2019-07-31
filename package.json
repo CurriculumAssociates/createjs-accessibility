@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "keycodes-enum": "^0.0.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   }
