@@ -11,6 +11,12 @@ export default class ButtonData extends AccessibilityObject {
   _onClick(evt) {
     const event = new createjs.Event('keyboardClick', false, evt.cancelable);
     this._displayObject.dispatchEvent(event);
+    if (event.propagationStopped) {
+      evt.stopPropagation();
+    }
+    if (event.defaultPrevented) {
+      evt.preventDefault();
+    }
   }
 
   /**
