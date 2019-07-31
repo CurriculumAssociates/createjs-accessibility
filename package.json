@@ -1,6 +1,6 @@
 {
   "name": "@curriculumassociates/createjs-accessibility",
-  "version": "1.0.0-prerelease.1",
+  "version": "1.0.0-prerelease.2",
   "description": "Module to add accessibility support to createjs",
   "main": "dist/createjs-accessibility.js",
   "scripts": {
@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "keycodes-enum": "^0.0.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   }

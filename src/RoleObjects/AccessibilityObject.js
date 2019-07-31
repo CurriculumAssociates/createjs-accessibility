@@ -178,6 +178,84 @@ export default class AccessibilityObject {
   }
 
   /**
+   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * @access public
+   * @param { boolean } bool
+   */
+  set spellcheck(bool) {
+    this._reactProps.spellCheck = bool;
+  }
+
+  /**
+   * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+   * @access public
+   * @returns {boolean} boolean: true or false
+   */
+  get spellcheck() {
+    return this._reactProps.spellCheck;
+  }
+
+
+  /**
+   * Sets the title for the DisplayObject
+   * @access public
+   * @param {String} title - string mouse hover show text of title as tooltip
+   */
+  set title(title) {
+    this._reactProps.title = title;
+  }
+
+  /**
+   * Retrieves the title for the DisplayObject
+   * @access public
+   * @returns {String} string mouse hover show text of title as tooltip
+   */
+  get title() {
+    return this._reactProps.title;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @returns {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
+   */
+  get lang() {
+    return this._reactProps.lang;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @param {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
+   */
+  set lang(lang) {
+    this._reactProps.lang = lang;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @param {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction
+   * auto: Let the browser figure out the text direction, based on the content
+   */
+  set dir(direction) {
+    this._reactProps.dir = direction;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @returns {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction, auto: Let the browser figure out the text direction, based on the content
+   */
+  get dir() {
+    return this._reactProps.dir;
+  }
+
+  /**
    * Sets whether ATs should present the region as a whole or parts
    * @access public
    * @param {boolean} enable - true if ATs should present the region as a whole, false for parts.  undefined to unset the field.
