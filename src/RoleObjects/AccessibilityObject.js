@@ -178,24 +178,6 @@ export default class AccessibilityObject {
   }
 
   /**
-   * The translate attribute specifies whether the content of an element should be translated or not.
-   * @access public
-   * @param {String} str - "yes" or "no" Specifies that the content of the element should be translated or not
-   */
-  set translate(str) {
-    this._reactProps.translate = str;
-  }
-
-  /**
-   * The translate attribute specifies whether the content of an element should be translated or not.
-   * @access public
-   * @returns {String} string containing the letter to use for the keyboard shortcut
-   */
-  get translate() {
-    return this._reactProps.translate;
-  }
-
-  /**
    * The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
    * @access public
    * @param { boolean } bool
