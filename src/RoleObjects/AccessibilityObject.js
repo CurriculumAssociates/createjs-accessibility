@@ -6,7 +6,7 @@ import { ROLES } from '../Roles.js';
  */
 export default class AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
-    _.bindAll(this, '_onKeyDown', '_onKeyUp', '_onValueChanged');
+    _.bindAll(this, '_onKeyDown', '_onKeyUp');
     this._displayObject = displayObject;
     this._children = [];
     this._role = role;
@@ -785,20 +785,6 @@ export default class AccessibilityObject {
       evt.stopPropagation();
     }
     if (event.defaultPrevented) {
-      evt.preventDefault();
-    }
-  }
-  /**
-   * Event listener for valueChanged events
-   * @access private
-   * @param {SyntheticEvent} evt - React event
-   */
-  _onValueChanged(evt) {
-    const event = new createjs.Event('valueChanged', false, evt.cancelable);
-    event.keyCode = evt.keyCode;
-    const cancelled = this._displayObject.dispatchEvent(event);
-    if (cancelled) {
-      evt.stopPropagation();
       evt.preventDefault();
     }
   }
