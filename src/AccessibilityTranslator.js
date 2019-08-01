@@ -120,6 +120,10 @@ export default class AccessibilityTranslator extends React.Component {
     }, displayObject.accessible.reactProps);
     if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO  || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
+    } else if (role === ROLES.SINGLESELECTLISTBOX) {
+      props.role = 'listbox';
+    } else if (role === ROLES.SINGLESELECTOPTION) {
+      props.role = 'option';
     }
     if (displayObject.accessible.disabledWithInference) {
       props.disabled = 'disabled';
