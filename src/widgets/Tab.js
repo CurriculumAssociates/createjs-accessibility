@@ -19,7 +19,7 @@ export default class Tab extends createjs.Container {
     this.height = height;
     this.callBack = callback;
     this.setBounds(0, 0, this.width, this.height);
-
+    _.bindAll(this, '_onFocus', '_onBlur', '_onMouseDown');
     // Assign accessibilty role
     AccessibilityModule.register({
       accessibleOptions: {
@@ -30,13 +30,25 @@ export default class Tab extends createjs.Container {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.TAB,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this._onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this._onBlur,
+        },
+        {
+          eventName: 'mousedown',
+          listener: this._onMouseDown,
+        },
+        {
+          eventName: 'keyboardClick',
+          listener: this._onMouseDown,
+        }
+      ],
     });
-
-    _.bindAll(this, '_onFocus', '_onBlur', '_onMouseDown');
-    this.addEventListener('focus', this._onFocus);
-    this.addEventListener('blur', this._onBlur);
-    this.addEventListener('mousedown', this._onMouseDown);
-    this.addEventListener('keyboardClick', this._onMouseDown);
 
     const tab = new createjs.Shape();
     tab.graphics.setStrokeStyle('black');

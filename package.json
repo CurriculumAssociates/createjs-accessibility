@@ -49,7 +49,7 @@
     "webpack-dev-server": "3.2.1"
   },
   "dependencies": {
-    "@curriculumassociates/createjs-accessibility": "^1.0.0-prerelease.2",
+    "@curriculumassociates/createjs-accessibility": "^1.0.0-prerelease.3",
     "babel-polyfill": "^6.26.0",
     "jquery": "^3.4.1",
     "keycodes-enum": "0.0.2",

@@ -30,6 +30,24 @@ export default class Slider extends createjs.Container {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.SLIDER,
+      events: [
+        {
+          eventName: 'valueChanged',
+          listener: this.moveSliderTo,
+        },
+        {
+          eventName: 'keyboardClick',
+          listener: this.moveSliderTo,
+        },
+        {
+          eventName: 'focus',
+          listener: this._onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this._onBlur,
+        }
+      ],
     });
     this._createSlider();
   }
@@ -67,10 +85,6 @@ export default class Slider extends createjs.Container {
     this.thumb.addEventListener('mousedown', this._mousedown);
     this.thumb.addEventListener('pressmove', this._mousemove);
     this.thumb.addEventListener('pressup', this._pressUp);
-    this.addEventListener('focus', this._onFocus);
-    this.addEventListener('blur', this._onBlur);
-    this.addEventListener('valueChanged', this.moveSliderTo);
-    this.addEventListener('keyboardClick', this.moveSliderTo);
   }
 
   _onFocus() {

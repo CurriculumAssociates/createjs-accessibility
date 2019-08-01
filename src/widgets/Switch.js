@@ -14,13 +14,27 @@ export default class Switch extends createjs.Container {
       accessibleOptions: { tabIndex },
       displayObject: this,
       role: AccessibilityModule.ROLES.SWITCH,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
+        {
+          eventName: 'mousedown',
+          listener: this.onChange,
+        },
+        {
+          eventName: 'keyboardClick',
+          listener: this.onChange,
+        }
+      ],
     });
 
     this._createAsset();
-    this.addEventListener('focus', this.onFocus);
-    this.addEventListener('blur', this.onBlur);
-    this.addEventListener('mousedown', this.onChange);
-    this.addEventListener('keyboardClick', this.onChange);
   }
 
   _createAsset() {

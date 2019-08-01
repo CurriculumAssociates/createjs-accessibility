@@ -13,6 +13,16 @@ export default class TreeGridRow extends createjs.Container {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.ROW,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        }
+      ],
     });
     this.setBounds(0, 0, rowWidth, rowHeight);
     this.tabIndex = tabIndex;

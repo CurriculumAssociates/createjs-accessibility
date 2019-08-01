@@ -11,6 +11,24 @@ export default class CheckBox extends createjs.Container {
       accessibleOptions: { tabIndex },
       displayObject: this,
       role: AccessibilityModule.ROLES.CHECKBOX,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
+        {
+          eventName: 'mousedown',
+          listener: this.onChange,
+        },
+        {
+          eventName: 'keyboardClick',
+          listener: this.onChange,
+        },
+      ]
     });
     this._createAsset();
   }
@@ -18,7 +36,6 @@ export default class CheckBox extends createjs.Container {
   _createAsset() {
     this._addBoxArea();
     this._addCheckMark();
-    this._addInteraction();
   }
 
   _addBoxArea() {
@@ -57,13 +74,6 @@ export default class CheckBox extends createjs.Container {
 
     checkMark.visible = false;
     this.checkMark = checkMark;
-  }
-
-  _addInteraction() {
-    this.addEventListener('mousedown', this.onChange.bind(this));
-    this.addEventListener('keyboardClick', this.onChange.bind(this));
-    this.addEventListener('focus', this.onFocus.bind(this));
-    this.addEventListener('blur', this.onBlur.bind(this));
   }
 
   onChange() {

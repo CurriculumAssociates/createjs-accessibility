@@ -29,13 +29,25 @@ export default class SpinButton extends createjs.Container {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.SPINBUTTON,
+      events: [
+        {
+          eventName: 'increment',
+          listener: this.onIncrement,
+        },
+        {
+          eventName: 'decrement',
+          listener: this.onDecrement,
+        },
+        {
+          eventName: 'change',
+          listener: this.onChange,
+        }
+      ],
     });
 
     this.setBounds(0, 0, this.width, this.height);
     this.createButtons();
-    this.addEventListener('increment', this.onIncrement.bind(this));
-    this.addEventListener('decrement', this.onDecrement.bind(this));
-    this.addEventListener('change', this.onChange.bind(this));
+
   }
 
   createButtons() {

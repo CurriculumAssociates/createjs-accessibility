@@ -12,10 +12,21 @@ export default class MultiListBox extends createjs.Container {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.MULTISELECTLISTBOX,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
+        {
+          eventName: 'valueChanged',
+          listener: this._onValueChanged,
+        }
+      ],
     });
-    this.addEventListener('valueChanged', this._onValueChanged);
-    this.addEventListener('focus', this.onFocus);
-    this.addEventListener('blur', this.onBlur);
 
     this._options = options;
 

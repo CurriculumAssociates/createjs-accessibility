@@ -17,14 +17,37 @@ export default class MultiLineTextInput extends createjs.Container {
       accessibleOptions: { tabIndex },
       displayObject: this,
       role: AccessibilityModule.ROLES.MULTILINETEXTBOX,
+      events: [
+        {
+          eventName: 'valueChanged',
+          listener: this._onValueChanged,
+        },
+        {
+          eventName: 'selectionChanged',
+          listener: this._onSelectionChanged,
+        },
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
+        {
+          eventName: 'mousedown',
+          listener: this._onMouseDown,
+        },
+        {
+          eventName: 'pressmove',
+          listener: this._onMouseMove,
+        },
+        {
+          eventName: 'pressup',
+          listener: this._onMouseUp,
+        }
+      ],
     });
-    this.addEventListener('valueChanged', this._onValueChanged);
-    this.addEventListener('selectionChanged', this._onSelectionChanged);
-    this.addEventListener('focus', this.onFocus);
-    this.addEventListener('blur', this.onBlur);
-    this.addEventListener('mousedown', this._onMouseDown);
-    this.addEventListener('pressmove', this._onMouseMove);
-    this.addEventListener('pressup', this._onMouseUp);
 
     this.setBounds(0, 0, width, height);
 

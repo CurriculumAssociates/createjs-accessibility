@@ -33,9 +33,17 @@ export default class MenuItemRadio extends MenuItem {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.MENUITEMRADIO,
+      events: [
+        {
+          eventName: 'keyboardClick',
+          listener: this.keyboardClick,
+        },
+        {
+          eventName: 'click',
+          listener: this.click,
+        }
+      ]
     });
-    this.addEventListener('keyboardClick', this.keyboardClick);
-    this.addEventListener('click', this.click);
 
     const radioBounds = this.radio.getBounds();
     this._label.x = radioBounds.x + radioBounds.width + 25;

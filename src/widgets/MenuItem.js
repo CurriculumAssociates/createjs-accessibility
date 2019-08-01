@@ -24,10 +24,17 @@ export default class MenuItem extends createjs.Container {
       accessibleOptions: { tabIndex, text: label },
       displayObject: this,
       role: AccessibilityModule.ROLES.MENUITEM,
+      events: [
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        }
+      ]
     });
-
-    this.addEventListener('focus', this.onFocus);
-    this.addEventListener('blur', this.onBlur);
   }
 
   setMenuWidth(x, width) {
