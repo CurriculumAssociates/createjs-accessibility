@@ -1,7 +1,9 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 /**
- * Class for role objects that use the ol HTML tag.  This contains only setters/getters for fields that are common to all ol tags regardless of the type attribute.
+ * Class for role objects that use the ol HTML tag.
+    This contains only setters/getters for fields that are common to all ol
+    tags regardless of the type attribute.
  */
 export default class OrderedListData extends SectionData {
   /**
@@ -16,7 +18,8 @@ export default class OrderedListData extends SectionData {
   /**
    * Retrieves whether reversed is enabled
    * @access public
-   * @returns {boolean} true if reversed is enabled, false otherwise, undefined if this field is unset
+   * @returns {boolean} true if reversed is enabled, false otherwise, undefined
+   *  if this field is unset
    */
   get reversed() {
     return this._reactProps.reversed;
@@ -34,7 +37,8 @@ export default class OrderedListData extends SectionData {
   /**
    * Retrieves the starting value of the ordered list
    * @access public
-   * @returns {number} number representing the starting position of the list, undefined if this field is unset
+   * @returns {number} number representing the starting position of the list,
+   * undefined if this field is unset
    */
   get start() {
     return this._reactProps.start;

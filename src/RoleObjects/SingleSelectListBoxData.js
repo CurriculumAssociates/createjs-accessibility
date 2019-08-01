@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -15,7 +15,8 @@ export default class SingleSelectListBoxData extends SelectData {
    */
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
-    this._reactProps.onKeyDown = this._onKeyDown; // the keydown listener is needed for this role to function per WAI-ARIA practices
+    // the keydown listener is needed for this role to function per WAI-ARIA practices
+    this._reactProps.onKeyDown = this._onKeyDown;
   }
 
   /**
@@ -66,7 +67,8 @@ export default class SingleSelectListBoxData extends SelectData {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled,
+   * false if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -76,7 +78,8 @@ export default class SingleSelectListBoxData extends SelectData {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled, false if the element is disabled.
+   * undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;
@@ -85,10 +88,12 @@ export default class SingleSelectListBoxData extends SelectData {
   /**
    * Sets which form the element belongs to
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.  null or undefined to clear it
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that represents the form.
+    null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible || displayObject.accessible.role !== ROLES.FORM)) {
+    if (displayObject && (!displayObject.accessible
+      || displayObject.accessible.role !== ROLES.FORM)) {
       throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
     }
     this._form = displayObject;
@@ -207,52 +212,50 @@ export default class SingleSelectListBoxData extends SelectData {
    * @access private
    * @param {SyntheticEvent} evt - React event
    */
-   _onKeyDown(evt) {
-     if (this.enableKeyEvents) {
-       super._onKeyDown(evt);
-     }
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+    }
 
-     if (evt.keyCode === KeyCodes.down) {
-       const index = this._getSelectionIndex() + 1;
-       if (index < this.children.length) {
-         this.selected = this.children[index];
-         this._onListBoxChanged();
-       }
-       evt.preventDefault();
-       evt.stopPropagation();
-     }
-     else if (evt.keyCode === KeyCodes.up) {
-       const index = this._getSelectionIndex() - 1;
-       if (index >= 0) {
-         this.selected = this.children[index];
-         this._onListBoxChanged();
-       }
-       evt.preventDefault();
-       evt.stopPropagation();
-     }
-     else if (evt.keyCode === KeyCodes.home) {
-       this.selected = this.children[0];
-       this._onListBoxChanged();
-       evt.preventDefault();
-       evt.stopPropagation();
-     }
-     else if (evt.keyCode === KeyCodes.end) {
-       this.selected = this.children[this.children.length - 1];
-       this._onListBoxChanged();
-       evt.preventDefault();
-       evt.stopPropagation();
-     }
-   }
+    if (evt.keyCode === KeyCodes.down) {
+      const index = this._getSelectionIndex() + 1;
+      if (index < this.children.length) {
+        this.selected = this.children[index];
+        this._onListBoxChanged();
+      }
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.up) {
+      const index = this._getSelectionIndex() - 1;
+      if (index >= 0) {
+        this.selected = this.children[index];
+        this._onListBoxChanged();
+      }
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.home) {
+      const selectedChild = this.children[0];
+      this.selected = selectedChild;
+      this._onListBoxChanged();
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.end) {
+      this.selected = this.children[this.children.length - 1];
+      this._onListBoxChanged();
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+  }
 
-   _getSelectionIndex() {
-     return _.findIndex(this.children, (child) => child === this.selected);
-   }
+  _getSelectionIndex() {
+    return _.findIndex(this.children, child => child === this.selected);
+  }
 
-   _onListBoxChanged() {
-     this.active = this.selected;
-     const event = new createjs.Event('valueChanged', false, false);
-     event.selectedValue = this.selectedValue;
-     event.selectedDisplayObject = this.selected;
-     this._displayObject.dispatchEvent(event);
-   }
+  _onListBoxChanged() {
+    this.active = this.selected;
+    const event = new createjs.Event('valueChanged', false, false);
+    event.selectedValue = this.selectedValue;
+    event.selectedDisplayObject = this.selected;
+    this._displayObject.dispatchEvent(event);
+  }
 }

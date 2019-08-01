@@ -1,4 +1,4 @@
-import SingleLineTextBoxData from './SingleLineTextBoxData.js';
+import SingleLineTextBoxData from './SingleLineTextBoxData';
 
 export default class SearchBoxData extends SingleLineTextBoxData {
   constructor(displayObject, role, domIdPrefix) {
