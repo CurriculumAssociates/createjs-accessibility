@@ -7,7 +7,7 @@ export default class Link extends createjs.Container {
       accessibleOptions: options,
       displayObject: this,
       role: AccessibilityModule.ROLES.LINK,
-    })
+    });
 
     this.accessible.download = options.download;
     this.accessible.href = options.href;

@@ -5,13 +5,14 @@ const VERT_PAD = 2;
 export default class Option extends createjs.Container {
   constructor(label, width, height, singleSelect) {
     super();
+    const { ROLES } = AccessibilityModule;
     AccessibilityModule.register({
       accessibleOptions: {
         text: label,
         value: label,
       },
       displayObject: this,
-      role: singleSelect ? AccessibilityModule.ROLES.SINGLESELECTOPTION : AccessibilityModule.ROLES.MULTISELECTOPTION,
+      role: singleSelect ? ROLES.SINGLESELECTOPTION : ROLES.MULTISELECTOPTION,
     });
 
     this.selected = false;

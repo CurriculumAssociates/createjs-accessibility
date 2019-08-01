@@ -1,8 +1,8 @@
+import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import MenuItem from './MenuItem.js';
-import Button from './Button.js';
-import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
+import MenuItem from './MenuItem';
+import Button from './Button';
 
 export default class Draggable extends createjs.Container {
   constructor(options, dropArr, tabIndex, callBack) {
@@ -141,7 +141,8 @@ export default class Draggable extends createjs.Container {
     const rect2Bounds = rect2.getBounds();
     rect2.set({ width: rect2Bounds.width, height: rect2Bounds.height });
 
-    return !(rect1.x >= rect2.x + rect2.width || rect1.x + rect1.width <= rect2.x || rect1.y >= rect2.y + rect2.height || rect1.y + rect1.height <= rect2.y);
+    return !(rect1.x >= rect2.x + rect2.width || rect1.x + rect1.width <= rect2.x
+      || rect1.y >= rect2.y + rect2.height || rect1.y + rect1.height <= rect2.y);
   }
 
   // drop current draggable into respective drop zone
@@ -181,7 +182,9 @@ export default class Draggable extends createjs.Container {
   // Hnadles visibility of menu items
   toggleMenuVisibility(boolean = true) {
     this.menuItemContainer.visible = boolean;
-    this.menuItemContainer.children.forEach(child => child.visible = boolean);
+    this.menuItemContainer.children.forEach((child) => {
+      child.visible = boolean;
+    });
 
     // To navigate between drop zone menu items
     if (boolean) {
@@ -199,7 +202,9 @@ export default class Draggable extends createjs.Container {
       if (evt.keyCode === KeyCodes.up) {
         nextIndex = (this.currentIndex - 1 < 0) ? this.currentIndex : this.currentIndex - 1;
       } else {
-        nextIndex = (this.currentIndex + 1 > this.menuItemContainer.children.length - 1) ? this.currentIndex : this.currentIndex + 1;
+        const menuItemChildLength = this.menuItemContainer.children.length;
+        nextIndex = (this.currentIndex + 1 > menuItemChildLength - 1)
+          ? this.currentIndex : this.currentIndex + 1;
       }
 
       if (nextIndex >= 0) {
@@ -212,7 +217,7 @@ export default class Draggable extends createjs.Container {
     }
   }
 
-  showHideMenu(evt) {
+  showHideMenu() {
     this.toggleMenuVisibility(!this.menuItemContainer.visible);
   }
 }

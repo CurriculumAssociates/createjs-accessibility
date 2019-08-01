@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import SearchBox from './SearchBox.js';
-import Button from './Button.js';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
+import _ from 'lodash';
+import SearchBox from './SearchBox';
+import Button from './Button';
 
 export default class Search extends createjs.Container {
   constructor(options, tabIndex) {

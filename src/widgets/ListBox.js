@@ -38,7 +38,8 @@ export default class ListBox extends createjs.Container {
     this._dropDownView.visible = !this._dropDownView.visible;
     this._collapsedView.accessible.expanded = this._dropDownView.visible;
     if (this._dropDownView.visible) {
-      // make sure the listbox is on top of its sibling DisplayObjects to try to ensure that the dropdown is completely visible
+      // make sure the listbox is on top of its sibling DisplayObjects to try
+      // to ensure that the dropdown is completely visible
       this.parent.addChild(this);
 
       // move focus from the expand button to the drop down list element
@@ -51,7 +52,8 @@ export default class ListBox extends createjs.Container {
 
   _onCollapedViewKeyDown(evt) {
     if (evt.keyCode === KeyCodes.down || evt.keyCode === KeyCodes.up) {
-      // make sure the listbox is on top of its sibling DisplayObjects to try to ensure that the dropdown is completely visible
+    // make sure the listbox is on top of its sibling DisplayObjects to try to ensure
+    // that the dropdown is completely visible
       this.parent.addChild(this);
 
       this._dropDownView.visible = true;
@@ -62,7 +64,7 @@ export default class ListBox extends createjs.Container {
   }
 
   _getAdjacentOption(next) {
-    let index = _.findIndex(this._options, (child) => child.selected);
+    let index = _.findIndex(this._options, child => child.selected);
     if (next) {
       index = Math.min(index + 1, this._options.length - 1);
     } else {
@@ -173,6 +175,7 @@ export default class ListBox extends createjs.Container {
       this._dropDownView.addChild(option);
       this._dropDownView.accessible.addChild(option);
     });
-    this._dropDownView.accessible.active = this._dropDownView.accessible.children[0];
+    const activeChild = this._dropDownView.accessible.children[0];
+    this._dropDownView.accessible.active = activeChild;
   }
 }

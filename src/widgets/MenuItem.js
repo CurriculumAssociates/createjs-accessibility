@@ -35,8 +35,7 @@ export default class MenuItem extends createjs.Container {
     this._focusIndicator.graphics
       .clear()
       .beginFill('#31c7ec')
-      .drawRect(x, bounds.y, width, bounds.height)
-    ;
+      .drawRect(x, bounds.y, width, bounds.height);
   }
 
   onFocus() {

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class ListItem extends createjs.Container {

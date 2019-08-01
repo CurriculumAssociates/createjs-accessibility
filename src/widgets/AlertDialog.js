@@ -1,5 +1,5 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import Button from './Button.js';
+import Button from './Button';
 
 export default class AlertDialog extends createjs.Container {
   constructor({ tabIndex, doneCallback, cancelCallback }) {

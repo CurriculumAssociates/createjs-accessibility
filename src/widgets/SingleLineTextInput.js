@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import TimelineMax from 'TimelineMax';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const PAD = 2;
@@ -170,7 +169,8 @@ export default class SingleLineTextInput extends createjs.Container {
       evtHandled = true;
     } else if (evt.shiftKey && (evt.keyCode === KeyCodes.right || evt.keyCode === KeyCodes.left)) {
       if (evt.keyCode === KeyCodes.right) {
-        this._selection.start = this._selection.start === -1 ? this._cursorIndex : this._selection.start;
+        this._selection.start = this._selection.start === -1
+          ? this._cursorIndex : this._selection.start;
         this._incrementCursorPos();
         this._selection.end = this._cursorIndex;
       } else {
@@ -241,7 +241,8 @@ export default class SingleLineTextInput extends createjs.Container {
   }
 
   _cursorToIndex() {
-    this._cursor.x = this._text._getMeasuredWidth(this._text.text.substring(0, this._cursorIndex)) + this._text.x;
+    this._cursor.x = this._text._getMeasuredWidth(this._text.text.substring(0,
+      this._cursorIndex)) + this._text.x;
   }
 
   _isSelectionActive() {
@@ -254,10 +255,14 @@ export default class SingleLineTextInput extends createjs.Container {
     this._updateSelection();
   }
 
+
   _updateSelection() {
     if (this._isSelectionActive()) {
-      const startX = (this._selection.start <= 0 ? 0 : this._text._getMeasuredWidth(this._text.text.substring(0, this._selection.start))) + this._text.x;
-      const width = this._text._getMeasuredWidth(this._text.text.substring(0, this._selection.end)) - startX + PAD;
+      const selectedStartText = this._text.text.substring(0, this._selection.start);
+      const startMeasureWidth = this._text._getMeasuredWidth(selectedStartText);
+      const startX = (this._selection.start <= 0 ? 0 : startMeasureWidth) + this._text.x;
+      const selectedEndText = this._text.text.substring(0, this._selection.end);
+      const width = this._text._getMeasuredWidth(selectedEndText) - startX + PAD;
       this._selectionDisplay.visible = true;
       this._selectionDisplay.graphics.clear().beginFill('#31c7ec').drawRect(startX, 1, width, this._height - 2);
     } else {

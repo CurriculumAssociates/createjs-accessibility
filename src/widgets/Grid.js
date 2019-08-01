@@ -37,7 +37,9 @@ export default class Grid extends createjs.Container {
       _.forEach(this.data[i], (data, index) => {
         let cell;
         if (data.type === 'header') {
-          cell = this._createCell({ value: data.value, index, bold: true, fontSize: 20 });
+          cell = this._createCell({
+            value: data.value, index, bold: true, fontSize: 20,
+          });
           row.addChild(cell);
           AccessibilityModule.register({
             displayObject: cell,
@@ -83,7 +85,7 @@ export default class Grid extends createjs.Container {
     });
   }
 
-  _createCell({ value, index, align = 'center', bold, fontSize }) {
+  _createCell({ value, index, align = 'center' }) {
     const cell = this._createContainer(this.cellWidths[index], this.cellHeight);
     const cellContent = value;
     cell.addChild(cellContent);
@@ -103,7 +105,8 @@ export default class Grid extends createjs.Container {
     }
     cellContent.set({
       x: left,
-      y: ((this.cellHeight - cellContentBounds.height) >= 0) ? ((this.cellHeight - cellContentBounds.height) / 2) : 0,
+      y: ((this.cellHeight - cellContentBounds.height) >= 0)
+        ? ((this.cellHeight - cellContentBounds.height) / 2) : 0,
     });
 
     cell.cellContent = cellContent;
@@ -128,7 +131,9 @@ export default class Grid extends createjs.Container {
     return container;
   }
 
-  _createText({ value, maxWidth, bold = false, fontSize = 18 }) {
+  _createText({
+    value, maxWidth, bold = false, fontSize = 18,
+  }) {
     const boldOption = bold ? 'bold' : '';
     const text = new createjs.Text().set({
       text: value,
@@ -139,11 +144,11 @@ export default class Grid extends createjs.Container {
     return text;
   }
 
-  onFocus(evt) {
+  onFocus() {
     this.focusRect.visible = true;
   }
 
-  onBlur(evt) {
+  onBlur() {
     this.focusRect.visible = false;
   }
 }

@@ -1,8 +1,10 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import Button from './Button.js';
+import Button from './Button';
 
 export default class SpinButton extends createjs.Container {
-  constructor({ options, textContainer, callback, tabIndex }) {
+  constructor({
+    options, textContainer, callback, tabIndex,
+  }) {
     super();
     const { maxValue, minValue } = options;
     this.tabIndex = tabIndex;
@@ -60,12 +62,14 @@ export default class SpinButton extends createjs.Container {
   }
 
   onIncrement() {
-    this.currentValue = ((this.currentValue + 1) > this.maxValue) ? this.maxValue : this.currentValue + 1;
+    this.currentValue = ((this.currentValue + 1) > this.maxValue)
+      ? this.maxValue : this.currentValue + 1;
     this.updateTargetValue();
   }
 
   onDecrement() {
-    this.currentValue = ((this.currentValue - 1) < this.minValue) ? this.minValue : this.currentValue - 1;
+    this.currentValue = ((this.currentValue - 1) < this.minValue)
+      ? this.minValue : this.currentValue - 1;
     this.updateTargetValue();
   }
 

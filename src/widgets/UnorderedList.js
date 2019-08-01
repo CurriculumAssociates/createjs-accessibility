@@ -14,9 +14,8 @@ export default class UnorderedList extends createjs.Container {
    * Adds a list item to the list
    * @param {!ListItem} listItem - List item to add
    * @param {Number} y - List item y
-   * @param {String} value - List item value
    */
-  addListItem(listItem, y, value) {
+  addListItem(listItem, y) {
     const bullet = new createjs.Text(String.fromCharCode(8226), '16px Arial');
     bullet.y = y;
     this.addChild(bullet);

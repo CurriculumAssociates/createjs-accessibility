@@ -2,7 +2,9 @@ import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class Table extends createjs.Container {
-  constructor({ headersData, data, showBorders = true, cellHeight = 100 }) {
+  constructor({
+    headersData, data, showBorders = true, cellHeight = 100,
+  }) {
     super();
     AccessibilityModule.register({
       displayObject: this,
@@ -49,7 +51,8 @@ export default class Table extends createjs.Container {
       _.forEach(this.data[i], (data, index) => {
         const cell = this._createCell({ value: data, index, align: 'left' });
         row.addChild(cell);
-        const ROLE = isHeader ? AccessibilityModule.ROLES.COLUMNHEADER : AccessibilityModule.ROLES.CELL;
+        const { ROLES: { COLUMNHEADER, CELL } } = AccessibilityModule;
+        const ROLE = isHeader ? COLUMNHEADER : CELL;
         AccessibilityModule.register({
           displayObject: cell,
           parent: row,
@@ -86,9 +89,13 @@ export default class Table extends createjs.Container {
     });
   }
 
-  _createCell({ value, index, align = 'center', bold, fontSize }) {
+  _createCell({
+    value, index, align = 'center', bold, fontSize,
+  }) {
     const cell = this._createContainer(this.cellWidths[index], this.cellHeight);
-    const text = this._createText({ value, maxWidth: this.cellWidths[index], bold, fontSize });
+    const text = this._createText({
+      value, maxWidth: this.cellWidths[index], bold, fontSize,
+    });
     const textBounds = text.getBounds();
     cell.addChild(text);
 
@@ -106,7 +113,8 @@ export default class Table extends createjs.Container {
     }
     text.set({
       x: left,
-      y: ((this.cellHeight - textBounds.height) >= 0) ? ((this.cellHeight - textBounds.height) / 2) : 0,
+      y: ((this.cellHeight - textBounds.height) >= 0)
+        ? ((this.cellHeight - textBounds.height) / 2) : 0,
     });
 
     cell.text = value;
@@ -123,7 +131,9 @@ export default class Table extends createjs.Container {
     return container;
   }
 
-  _createText({ value, maxWidth, bold = false, fontSize = 18 }) {
+  _createText({
+    value, maxWidth, bold = false, fontSize = 18,
+  }) {
     const boldOption = bold ? 'bold' : '';
     const text = new createjs.Text().set({
       text: value,

@@ -123,7 +123,6 @@ export default class Slider extends createjs.Container {
   _mousemove(event) {
     event.preventDefault();
     event.stopPropagation();
-    const mousePos = event.currentTarget.globalToLocal(event.stageX, event.stageY);
     const posX = _.min([
       event.stageX - this.x,
       this.width,

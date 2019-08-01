@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import TimelineMax from 'TimelineMax';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const PAD = 2;
@@ -162,11 +161,13 @@ export default class MultiLineTextInput extends createjs.Container {
       evtHandled = true;
     } else if (evt.shiftKey && (evt.keyCode === KeyCodes.right || evt.keyCode === KeyCodes.left)) {
       if (evt.keyCode === KeyCodes.right) {
-        this._selection.start = this._selection.start === -1 ? this._cursorIndex : this._selection.start;
+        this._selection.start = this._selection.start === -1
+          ? this._cursorIndex : this._selection.start;
         this._incrementCursorPos();
         this._selection.end = this._cursorIndex;
       } else {
-        this._selection.end = this._selection.end === -1 ? this._cursorIndex : this._selection.end;
+        this._selection.end = this._selection.end === -1
+          ? this._cursorIndex : this._selection.end;
         this._decrementCursorPos();
         this._selection.start = this._cursorIndex;
       }
@@ -234,7 +235,9 @@ export default class MultiLineTextInput extends createjs.Container {
       return;
     }
     const lineIndex = _.findLastIndex(lineData, line => this._cursorIndex >= line.startIndex);
-    this._cursor.x = this._text._getMeasuredWidth(this._text.text.substring(lineData[lineIndex].startIndex, this._cursorIndex)) + this._text.x;
+    this._cursor.x = this._text._getMeasuredWidth(
+      this._text.text.substring(lineData[lineIndex].startIndex, this._cursorIndex),
+    ) + this._text.x;
     this._cursor.y = lineData[lineIndex].top;
   }
 
@@ -251,19 +254,27 @@ export default class MultiLineTextInput extends createjs.Container {
   _updateSelection() {
     if (this._isSelectionActive()) {
       const lineData = this._getLineData();
-      const startLineIndex = _.findLastIndex(lineData, line => this._selection.start >= line.startIndex);
-      const endLineIndex = _.findLastIndex(lineData, line => this._selection.end >= line.startIndex);
-      const startX = this._text._getMeasuredWidth(this._text.text.substring(lineData[startLineIndex].startIndex, this._selection.start)) + this._text.x;
-      const endX = this._text._getMeasuredWidth(this._text.text.substring(lineData[endLineIndex].startIndex, this._selection.end)) + this._text.x;
+      const { start, end } = this._selection;
+      const startLineIndex = _.findLastIndex(lineData, line => start >= line.startIndex);
+      const endLineIndex = _.findLastIndex(lineData, line => end >= line.startIndex);
+      const startText = this._text.text.substring(lineData[startLineIndex].startIndex, start);
+      const startX = this._text._getMeasuredWidth(startText) + this._text.x;
+      const endText = this._text.text.substring(lineData[endLineIndex].startIndex, end);
+      const endX = this._text._getMeasuredWidth(endText) + this._text.x;
       if (startLineIndex === endLineIndex) {
         this._selectionDisplay.graphics.clear().beginFill('#31c7ec').drawRect(startX, lineData[startLineIndex].top, endX - startX, lineData[startLineIndex].bottom - lineData[startLineIndex].top);
       } else {
         this._selectionDisplay.graphics.clear().beginFill('#31c7ec');
-        this._selectionDisplay.graphics.drawRect(startX, lineData[startLineIndex].top, this._text.lineWidth - startX + this._text.x, lineData[startLineIndex].bottom - lineData[startLineIndex].top);
-        this._selectionDisplay.graphics.drawRect(this._text.x, lineData[endLineIndex].top, endX - this._text.x, lineData[endLineIndex].bottom - lineData[endLineIndex].top);
+        this._selectionDisplay.graphics.drawRect(startX, lineData[startLineIndex].top,
+          this._text.lineWidth - startX + this._text.x,
+          lineData[startLineIndex].bottom - lineData[startLineIndex].top);
+        this._selectionDisplay.graphics.drawRect(this._text.x,
+          lineData[endLineIndex].top, endX - this._text.x,
+          lineData[endLineIndex].bottom - lineData[endLineIndex].top);
         for (let i = startLineIndex + 1; i < endLineIndex; i++) {
           const height = lineData[i].bottom - lineData[i].top;
-          this._selectionDisplay.graphics.drawRect(this._text.x, lineData[i].top, this._text.lineWidth, height);
+          this._selectionDisplay.graphics.drawRect(this._text.x,
+            lineData[i].top, this._text.lineWidth, height);
         }
       }
       this._selectionDisplay.visible = true;
@@ -320,7 +331,8 @@ export default class MultiLineTextInput extends createjs.Container {
     }
     back.y = lineData[lineIndex].top;
 
-    const endIndex = lineIndex === (lineData.length - 1) ? this._text.text.length : lineData[lineIndex + 1].startIndex;
+    const endIndex = lineIndex === (lineData.length - 1)
+      ? this._text.text.length : lineData[lineIndex + 1].startIndex;
     let match = false;
     let prevWidth = PAD;
     for (let i = lineData[lineIndex].startIndex + 1; i <= endIndex && !match; i++) {

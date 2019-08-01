@@ -2,7 +2,7 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const ITEM_PADDING = 25;
 export default class Feed extends createjs.Container {
-  constructor(width, height) {
+  constructor(width) {
     super();
 
     this.articleList = [];
@@ -34,9 +34,10 @@ export default class Feed extends createjs.Container {
   }
 
   setFeedBounds() {
-    const length = this.articleList.length;
+    const { length } = this.articleList;
     const { height } = this.articleList[length - 1].getBounds();
-    const totalHeight = (this.articleList[length - 1].y + height) - this.articleList[0].y + ITEM_PADDING;
+    const totalHeight = (this.articleList[length - 1].y + height)
+      - this.articleList[0].y + ITEM_PADDING;
     this.setBounds(0, 0, this.width, totalHeight);
   }
 }

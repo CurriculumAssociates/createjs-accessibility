@@ -77,7 +77,7 @@ export default class TreeItem extends createjs.Container {
     this.label.x = 30;
     this.treeItems.push(item);
     _.forEach(this.treeItems, (treeItem, i) => {
-      const height = treeItem.getBounds().height;
+      const { height } = treeItem.getBounds();
       treeItem.x = 20;
       treeItem.y = height + (i * height);
     });
@@ -120,7 +120,7 @@ export default class TreeItem extends createjs.Container {
     evt.stopPropagation();
   }
 
-  onBlur(evt) {
+  onBlur() {
     this.focusRect.visible = false;
     this.label.color = 'black';
   }

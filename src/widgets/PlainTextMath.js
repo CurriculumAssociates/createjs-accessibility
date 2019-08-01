@@ -7,7 +7,7 @@ export default class PlainTextMath extends createjs.Container {
       displayObject: this,
       role: AccessibilityModule.ROLES.MATH,
       accessibleOptions: {
-        label:options.label
+        label: options.label,
       },
     });
     this._options = options;

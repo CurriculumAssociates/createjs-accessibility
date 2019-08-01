@@ -1,5 +1,5 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import TreeGridRow from './TreeGridRow.js';
+import TreeGridRow from './TreeGridRow';
 
 const OFFSET = 20;
 
@@ -33,7 +33,7 @@ export default class TreeGrid extends createjs.Container {
     const rowWidth = this.totalWidth;
     const rowHeight = this.cellHeight;
     const cellCount = this.colCount;
-    const data = this.data;
+    const { data } = this;
     for (let i = 0; i < data.length; i++) {
       const index = i;
       const row = new TreeGridRow(data[i], index, rowWidth, rowHeight, cellCount, this.tabIndex++);
@@ -54,7 +54,7 @@ export default class TreeGrid extends createjs.Container {
   }
 
   toggleTreeVisibility(evt) {
-    const currentTarget = evt.currentTarget;
+    const { currentTarget } = evt;
     currentTarget.opened = !currentTarget.opened;
     currentTarget.hasChildren && currentTarget.toggleArrow();
     if (currentTarget.opened) {
@@ -112,7 +112,7 @@ export default class TreeGrid extends createjs.Container {
     evt.stopPropagation();
   }
 
-  onBlur(evt) {
+  onBlur() {
     this.focusRect.visible = false;
   }
 }

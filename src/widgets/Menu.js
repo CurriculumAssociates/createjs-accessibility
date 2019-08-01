@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import TabPanel from './TabPanel';
+
 
 /**
  * See https://www.w3.org/TR/wai-aria/roles#menu
@@ -44,9 +44,7 @@ export default class Menu extends createjs.Container {
     const bounds = this._label.getBounds();
     this._focusIndicator.graphics
       .beginFill('#31c7ec')
-      .drawRect(bounds.x, 0, bounds.width, menuBarHeight)
-    ;
-
+      .drawRect(bounds.x, 0, bounds.width, menuBarHeight);
     this._itemContainer = new createjs.Container();
     this._itemContainer.y = menuBarHeight;
     this._itemContainer.visible = false;
@@ -90,8 +88,7 @@ export default class Menu extends createjs.Container {
     this._itemContainer._bg.graphics
       .clear()
       .beginFill('#aaaaaa')
-      .drawRect(bounds.x, bounds.y, bounds.width, bounds.height)
-    ;
+      .drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
     this._itemContainer.children.forEach((item) => {
       if (item.setMenuWidth) {
         item.setMenuWidth(bounds.x, bounds.width);
@@ -117,7 +114,7 @@ export default class Menu extends createjs.Container {
     this._label.accessible.expanded = false;
   }
 
-  _onClick(evt) {
+  _onClick() {
     this._itemContainer.visible = !this._itemContainer.visible;
     this.accessible.expanded = this._itemContainer.visible;
     this._label.accessible.expanded = this._itemContainer.visible;

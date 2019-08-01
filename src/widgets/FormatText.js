@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class FormatText extends createjs.Container {
@@ -22,7 +21,7 @@ export default class FormatText extends createjs.Container {
       },
     });
 
-    const label = new createjs.Text(value, `${fontType} ${fontSize} ${fontFamily}`);
+    const label = new createjs.Text(value, `${fontType} ${fontSize}px ${fontFamily}`);
     this.addChild(label);
     AccessibilityModule.register({
       displayObject: label,
@@ -33,7 +32,7 @@ export default class FormatText extends createjs.Container {
       },
     });
     label.set({ x: prefix.getBounds().width, y: prefix.getBounds().y });
-    label.fontSize = fontSize.split('px')[0];
+    label.fontSize = fontSize;
     this.label = label;
     this.formatText(role);
   }
@@ -55,6 +54,7 @@ export default class FormatText extends createjs.Container {
     };
 
     const { ROLES } = AccessibilityModule;
+    const date = new Date();
     switch (role) {
       case ROLES.FORMAT_TEXT_STRIKETHROUGH: {
         const x1 = this.label.x;
@@ -106,7 +106,6 @@ export default class FormatText extends createjs.Container {
         break;
 
       case ROLES.FORMAT_TEXT_TIME:
-        const date = new Date();
         this.label.accessible._reactProps.dateTime = date;
         break;
       default:

@@ -64,7 +64,7 @@ export default class Button extends createjs.Container {
   }
 
   get enabled() {
-    this._enabled;
+    return this._enabled;
   }
 
   _onFocus() {

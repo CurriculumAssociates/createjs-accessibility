@@ -1,7 +1,6 @@
-import createjs from 'createjs';
 import $ from 'jquery';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import AppWindow from './widgets/AppWindow.js';
+import AppWindow from './widgets/AppWindow';
 
 function init() {
   const stage = new createjs.Stage('stage');
@@ -13,17 +12,19 @@ function init() {
 
   AccessibilityModule.setupStage(stage, 'cam-test');
   const canvas = $(stage.canvas);
-  const appWindow = new AppWindow(parseInt(canvas.attr('width')), parseInt(canvas.attr('height')));
+  const appWindow = new AppWindow(parseInt(canvas.attr('width'), 10), parseInt(canvas.attr('height'), 10));
   // note: AppWindow's constructor attaches and fills in its AccessibilityObject
   stage.accessibilityTranslator.root = appWindow;
   stage.addChild(appWindow);
 
-  createjs.Ticker.on('tick', (evt) => {
+  createjs.Ticker.on('tick', () => {
     stage.update();
     stage.accessibilityTranslator.update();
   });
 
-  // todo: add window resize handler that allows for testing repositioning translated DisplayObjects so that they still have the correct position for screen magnifiers by resizing the canvas to match the window size
+  // todo: add window resize handler that allows for testing repositioning
+  // translated DisplayObjects so that they still have the correct position
+  // for screen magnifiers by resizing the canvas to match the window size
 }
 
 init();

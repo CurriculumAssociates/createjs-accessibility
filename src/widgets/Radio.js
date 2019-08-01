@@ -11,8 +11,10 @@ export default class Radio extends createjs.Container {
    * @param {boolean} checked - make the radio button as checked/uncheck
    */
 
-  constructor({ name, value, position = 1, size = 1, enabled = true, checked = false, tabIndex,
-    outerRadius = 9, innerRadius = 3, highlighterBorder = 4 } = {}) {
+  constructor({
+    name, value, position = 1, size = 1, enabled = true, checked = false, tabIndex,
+    outerRadius = 9, innerRadius = 3, highlighterBorder = 4,
+  } = {}) {
     super();
     // will be used in radio group
     this.data = { name, value };
@@ -86,7 +88,9 @@ export default class Radio extends createjs.Container {
    * @access private
    */
   _createRadioButton() {
-    const outerCircle = this._createCircle({ r: this.outerRadius + (this.border * 0.5), color: '#bdbdbd', stroke: true, border: this.border });
+    const outerCircle = this._createCircle({
+      r: this.outerRadius + (this.border * 0.5), color: '#bdbdbd', stroke: true, border: this.border,
+    });
     this.outerCircle = outerCircle;
     outerCircle.x = this.outerRadius + this.border * 0.5;
     outerCircle.y = this.outerRadius + this.border * 0.5;
@@ -143,7 +147,9 @@ export default class Radio extends createjs.Container {
    * @param {String} color color code
    * @param {Number} border border value
    */
-  _createCircle({ r, fill = false, color = '#000000', border = 1 }) {
+  _createCircle({
+    r, fill = false, color = '#000000', border = 1,
+  }) {
     const shape = new createjs.Shape();
     const g = shape.graphics;
     g.setStrokeStyle(border);

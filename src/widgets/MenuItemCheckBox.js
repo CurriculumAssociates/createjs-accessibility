@@ -1,6 +1,6 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import MenuItem from './MenuItem.js';
-import CheckBox from './CheckBox.js';
+import MenuItem from './MenuItem';
+import CheckBox from './CheckBox';
 
 /**
  * See https://www.w3.org/TR/wai-aria/#menuitemcheckbox
