@@ -61,10 +61,7 @@ import ToolBarData from './RoleObjects/ToolBarData';
  * add the DisplayObject
  * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM
  * id in the translated display object.  Defaults to 'acc_'
- * @param {Function} [config.onFocus] - Optional callback when the DisplayObject is
- * brought into focus
- * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard is clicked
- * while the DisplayObject is in focus
+ * @param {Object} [config.events] - event object with field eventName and listener to bind event while registering displayObject
  * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current
  * DisplayObject to as a child. Note the order of registration is important, the parent
  * object will need to be registered with the module before the child.
@@ -75,8 +72,7 @@ function createAccessibilityObjectForRole(config) {
     containerIndex,
     displayObject,
     domIdPrefix = 'acc_',
-    onFocus,
-    onKeyboardClick,
+    events,
     parent,
     role,
   } = config;
@@ -349,12 +345,11 @@ function createAccessibilityObjectForRole(config) {
 
   displayObject.accessible = accessibilityObject;
 
-  if (onFocus) {
-    displayObject.on('focus', onFocus);
-  }
-
-  if (onKeyboardClick) {
-    displayObject.on('keyboardClick', onKeyboardClick);
+  if (events) {
+    _.forEach(events, (event) => {
+      const { eventName, listener } = event;
+      displayObject.on(eventName, listener);
+    });
   }
 
   if (accessibleOptions) {
