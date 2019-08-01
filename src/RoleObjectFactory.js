@@ -179,12 +179,12 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new GroupData(displayObject, role, domIdPrefix);
       break;
 
-    case ROLES.HEADING1:
-    case ROLES.HEADING2:
-    case ROLES.HEADING3:
-    case ROLES.HEADING4:
-    case ROLES.HEADING5:
-    case ROLES.HEADING6:
+    case ROLES.HEADING1: // eslint-disable-line no-duplicate-case
+    case ROLES.HEADING2: // eslint-disable-line no-duplicate-case
+    case ROLES.HEADING3: // eslint-disable-line no-duplicate-case
+    case ROLES.HEADING4: // eslint-disable-line no-duplicate-case
+    case ROLES.HEADING5: // eslint-disable-line no-duplicate-case
+    case ROLES.HEADING6: // eslint-disable-line no-duplicate-case
       accessibilityObject = new HeadingData(displayObject, role, domIdPrefix);
       break;
 

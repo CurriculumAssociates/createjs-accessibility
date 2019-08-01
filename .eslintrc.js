@@ -44,7 +44,7 @@ module.exports = {
     'no-eval': 'warn',
     'no-lone-blocks': 'off',
     'no-return-assign': 'warn',
-    'no-duplicate-case': 'off',
+    'no-duplicate-case': 'error',
     'class-methods-use-this': 'off',
     'import/prefer-default-export': 'off',
     'prefer-rest-params': 'warn',
