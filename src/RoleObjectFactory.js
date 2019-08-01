@@ -56,10 +56,7 @@ import ToolBarData from './RoleObjects/ToolBarData.js';
  * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
  * @param {number} [config.containerIndex] - An optional value for the layer index to add the DisplayObject
  * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM id in the translated display object.  Defaults to 'acc_'
- * @param {Function} [config.onFocus] - Optional callback when the DisplayObject is brought into focus
- * @param {Function} [config.onBlur] - Optional callback when the DisplayObject is gets blur
- * @param {Function} [config.onValueChanged] -  Optional callback when the value changed for the DisplayObject
- * @param {Function} [config.onKeyboardClick] - Optional callback when the keyboard is clicked while the DisplayObject is in focus
+ * @param {Object} [config.events] - event object with field eventName and listener to bind event while registering displayObject
  * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current DisplayObject to as a child. Note the order of registration is important, the parent object will need to be registered with the module before the child.
  */
 function createAccessibilityObjectForRole(config) {
@@ -68,10 +65,7 @@ function createAccessibilityObjectForRole(config) {
     containerIndex,
     displayObject,
     domIdPrefix = 'acc_',
-    onFocus,
-    onBlur,
-    onValueChanged,
-    onKeyboardClick,
+    events,
     parent,
     role,
   } = config;
@@ -344,22 +338,11 @@ function createAccessibilityObjectForRole(config) {
 
   displayObject.accessible = accessibilityObject;
 
-  if (onFocus) {
-    displayObject.on('focus', onFocus);
-  }
-
-  if (onBlur) {
-    console.log(onBlur);
-    displayObject.on('blur', onBlur);
-  }
-
-  if (onValueChanged) {
-    displayObject.on('valueChanged', onValueChanged);
-  }
-
-
-  if (onKeyboardClick) {
-    displayObject.on('keyboardClick', onKeyboardClick);
+  if (events) {
+    _.forEach(events, (event) => {
+      const { eventName, listener } = event;
+      displayObject.on(eventName, listener);
+    });
   }
 
   if (accessibleOptions) {
