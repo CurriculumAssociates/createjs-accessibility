@@ -46,7 +46,7 @@ export default class Slider extends createjs.Container {
         {
           eventName: 'blur',
           listener: this._onBlur,
-        }
+        },
       ],
     });
     this._createSlider();

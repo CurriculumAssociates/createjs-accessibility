@@ -32,8 +32,8 @@ export default class MenuItem extends createjs.Container {
         {
           eventName: 'blur',
           listener: this.onBlur,
-        }
-      ]
+        },
+      ],
     });
   }
 

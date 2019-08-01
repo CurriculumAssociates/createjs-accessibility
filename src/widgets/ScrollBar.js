@@ -34,7 +34,7 @@ export default class ScrollBar extends createjs.Container {
         {
           eventName: 'scroll',
           listener: this.onScroll,
-        }
+        },
       ],
     });
 

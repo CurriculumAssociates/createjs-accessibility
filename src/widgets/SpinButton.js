@@ -41,13 +41,12 @@ export default class SpinButton extends createjs.Container {
         {
           eventName: 'change',
           listener: this.onChange,
-        }
+        },
       ],
     });
 
     this.setBounds(0, 0, this.width, this.height);
     this.createButtons();
-
   }
 
   createButtons() {

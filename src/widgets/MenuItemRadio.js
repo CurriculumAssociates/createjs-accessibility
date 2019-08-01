@@ -41,8 +41,8 @@ export default class MenuItemRadio extends MenuItem {
         {
           eventName: 'click',
           listener: this.click,
-        }
-      ]
+        },
+      ],
     });
 
     const radioBounds = this.radio.getBounds();

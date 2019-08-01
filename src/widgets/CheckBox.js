@@ -28,7 +28,7 @@ export default class CheckBox extends createjs.Container {
           eventName: 'keyboardClick',
           listener: this.onChange,
         },
-      ]
+      ],
     });
     this._createAsset();
   }

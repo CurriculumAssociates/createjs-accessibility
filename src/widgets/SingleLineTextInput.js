@@ -46,7 +46,7 @@ export default class SingleLineTextInput extends createjs.Container {
         {
           eventName: 'pressup',
           listener: this._onMouseUp,
-        }
+        },
       ],
     });
 

@@ -38,7 +38,7 @@ export default class Button extends createjs.Container {
           eventName: 'keyboardClick',
           listener: this._onMouseDown,
         },
-      ]
+      ],
     });
 
     this._options = options;

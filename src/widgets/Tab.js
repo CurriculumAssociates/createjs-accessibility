@@ -46,7 +46,7 @@ export default class Tab extends createjs.Container {
         {
           eventName: 'keyboardClick',
           listener: this._onMouseDown,
-        }
+        },
       ],
     });
 

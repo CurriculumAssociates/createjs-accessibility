@@ -21,7 +21,7 @@ export default class TreeGridRow extends createjs.Container {
         {
           eventName: 'blur',
           listener: this.onBlur,
-        }
+        },
       ],
     });
     this.setBounds(0, 0, rowWidth, rowHeight);

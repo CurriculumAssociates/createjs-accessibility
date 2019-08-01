@@ -22,7 +22,7 @@ export default class ProgressBar extends createjs.Container {
         {
           eventName: 'blur',
           listener: this.onBlur,
-        }
+        },
       ],
     });
     this.valueMax = valueMax;

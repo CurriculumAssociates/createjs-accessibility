@@ -24,7 +24,7 @@ export default class MultiListBox extends createjs.Container {
         {
           eventName: 'valueChanged',
           listener: this._onValueChanged,
-        }
+        },
       ],
     });
 
