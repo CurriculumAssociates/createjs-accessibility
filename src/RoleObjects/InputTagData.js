@@ -1,7 +1,9 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 /**
- * Base class for role objects that use the input HTML tag.  This contains only setters/getters for fields that are common to all input tags regardless of the type attribute.
+ * Base class for role objects that use the input HTML tag.
+ * This contains only setters/getters for fields that are common to all input
+ * tags regardless of the type attribute.
  */
 export default class InputTagData extends AccessibilityObject {
   /**
@@ -25,7 +27,8 @@ export default class InputTagData extends AccessibilityObject {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled, false if
+   * the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
@@ -35,7 +38,8 @@ export default class InputTagData extends AccessibilityObject {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled, false if the element is disabled.
+   * undefined if the field is unset.
    */
   get enabled() {
     return super.enabled;

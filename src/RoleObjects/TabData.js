@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class TabData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -78,6 +78,7 @@ export default class TabData extends AccessibilityObject {
   /**
    * Keydown listener for when the radio button is pressed
    * @access private
+   * @param {SyntheticEvent} e - React event
    */
   _onTabKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {

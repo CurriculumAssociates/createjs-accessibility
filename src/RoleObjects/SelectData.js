@@ -1,4 +1,4 @@
-import GroupData from './GroupData.js';
+import GroupData from './GroupData';
 
 export default class SelectData extends GroupData {
   /**

@@ -1,11 +1,18 @@
-import  _ from 'lodash';
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ROLES, getTagNameForDisplayObject } from './Roles.js';
-import AccessibilityObject from './RoleObjects/AccessibilityObject.js';
+import { ROLES, getTagNameForDisplayObject } from './Roles';
 
 /**
- * Update process for translating accessibility information for a stage to a DOM approach that is available to assistive technologies.  Applications should create an instance of this for each stage and provide instances with different parent nodes.  Since the drawing order may not always be convient for accessibility, this manages a separate tree of DisplayObjects.  After the instance is created, the setter for 'root' should be used to specify which DisplayObject will serve as the root of the accessibility tree and other DisplayObjects can be added to that to be included in the accessibility output.  This also helps minimize the processing done by this class along with reduce its output to the DOM.
+ * Update process for translating accessibility information for a stage to a DOM approach
+ * that is available to assistive technologies.  Applications should create an instance
+ * of this for each stage and provide instances with different parent nodes.  Since the
+ * drawing order may not always be convient for accessibility, this manages a separate
+ * tree of DisplayObjects.  After the instance is created, the setter for 'root' should
+ * be used to specify which DisplayObject will serve as the root of the accessibility tree
+ * and other DisplayObjects can be added to that to be included in the accessibility output.
+ * This also helps minimize the processing done by this class along with reduce
+ * its output to the DOM.
  */
 export default class AccessibilityTranslator extends React.Component {
   /**
@@ -25,16 +32,11 @@ export default class AccessibilityTranslator extends React.Component {
     _.bindAll(this, 'update');
   }
 
-  /**
-   * Starts the update of the accessibility DOM.  This should be called each time the accessibility information for all DisplayObjects has been completed (e.g. just after drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
-   */
-  update() {
-    this.forceUpdate();
-  }
 
   /**
    * Sets the DisplayObject to use as the root of the accessibility tree.
-   * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root of the accessibility tree
+   * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root of
+    the accessibility tree
    */
   set root(displayObject) {
     if (!displayObject.accessible) {
@@ -51,19 +53,28 @@ export default class AccessibilityTranslator extends React.Component {
     return this._root;
   }
 
+  /**
+   * Starts the update of the accessibility DOM.  This should be called each time
+   * the accessibility information for all DisplayObjects has been completed(e.g. just after
+   * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
+   */
+  update() {
+    this.forceUpdate();
+  }
+
   _processDisplayObject(displayObject, parentBoundsInGlobalSpace) {
     if (!displayObject.accessible) {
       return;
     }
-
-    const role = displayObject.accessible.role;
+    const { accessible } = displayObject;
+    const { role } = accessible;
     const tagName = getTagNameForDisplayObject(displayObject);
-    const children = displayObject.accessible.children || [];
+    const children = accessible.children || [];
 
-    let text = displayObject.accessible.text;
-    let label;
-    if (role === ROLES.MENUBAR || role === ROLES.MENU || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO) &&  children.length > 0)) {
-      label = text;
+    let { text } = accessible;
+    if (role === ROLES.MENUBAR || role === ROLES.MENU
+      || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX
+      || role === ROLES.MENUITEMRADIO) && children.length > 0)) {
       text = null;
     }
 
@@ -80,9 +91,12 @@ export default class AccessibilityTranslator extends React.Component {
     try {
       const bounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
-      const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width, bounds.y + bounds.height);
-      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x) * (1 / displayObject.stage.scaleX);
-      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width,
+        bounds.y + bounds.height);
+      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x)
+        * (1 / displayObject.stage.scaleX);
+      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y)
+        * (1 / displayObject.stage.scaleY);
       posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
       posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
       if (posParentSpace.width < 0) {
@@ -118,7 +132,12 @@ export default class AccessibilityTranslator extends React.Component {
         padding: 0,
       },
     }, displayObject.accessible.reactProps);
-    if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO  || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM || role === ROLES.DEFINITION || role === ROLES.TERM) {
+    if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR
+      || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO
+      || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH
+      || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL
+      || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM
+      || role === ROLES.DEFINITION || role === ROLES.TERM) {
       props.role = role;
     } else if (role === ROLES.SINGLESELECTLISTBOX) {
       props.role = 'listbox';

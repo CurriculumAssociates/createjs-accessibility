@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class MenuBarData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -11,14 +11,16 @@ export default class MenuBarData extends SelectData {
   }
 
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
+      ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
     }
     super.addChild(displayObject);
   }
 
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
+      ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
     }
     super.addChildAt(displayObject, index);
