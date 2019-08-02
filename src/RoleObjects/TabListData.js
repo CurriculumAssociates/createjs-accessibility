@@ -1,5 +1,6 @@
-import CompositeData from './CompositeData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import CompositeData from './CompositeData';
 
 export default class TabListData extends CompositeData {
   constructor(displayObject, role, domIdPrefix) {
@@ -28,7 +29,8 @@ export default class TabListData extends CompositeData {
 
   /**
    * @access public
-   * @param {boolean} val - true if more than one tab in the tablist may be selected at a time. false if only one tab can be selected.
+   * @param {boolean} val - true if more than one tab in the tablist may be selected at a time.
+   * false if only one tab can be selected.
    */
   set multiselectable(val) {
     this._reactProps['aria-multiselectable'] = val;
@@ -36,7 +38,8 @@ export default class TabListData extends CompositeData {
 
   /**
    * @access public
-   * @param {boolean} val - true if more than one tab in the tablist may be selected at a time. false if only one tab can be selected.
+   * @param {boolean} val - true if more than one tab in the tablist may be selected at a time.
+   * false if only one tab can be selected.
    */
   get multiselectable() {
     return this._reactProps['aria-multiselectable'];
@@ -54,7 +57,8 @@ export default class TabListData extends CompositeData {
   /**
     * Retrieves the orientation of tablist
     * @access public
-    * @returns  {String} str "horizontal" for a horizontal tablist, "vertical" for a vertical tablist
+    * @returns  {String} str "horizontal" for a horizontal tablist,
+    "vertical" for a vertical tablist
     */
   get orientation() {
     return this._reactProps['aria-orientation'];
@@ -63,6 +67,7 @@ export default class TabListData extends CompositeData {
   /**
    * Keydown listener for when the tablist is pressed
    * @access private
+   * @param {SyntheticEvent} e - React event
    */
   _onTabListKeyDown(e) {
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {

@@ -1,11 +1,11 @@
-import AccessibilityObject from './AccessibilityObject.js';
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 export default class GroupData extends SectionData {
   /**
    * Sets the currently active descendant of a composite widget
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that is the active descendant of this one.  undefined to unset the field.
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that is the active descendant
+   * of this one.  undefined to unset the field.
    */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {

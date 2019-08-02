@@ -1,4 +1,4 @@
-import CellData from './CellData.js';
+import CellData from './CellData';
 
 export default class GridCellData extends CellData {
   /**

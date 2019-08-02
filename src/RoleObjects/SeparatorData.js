@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class SeparatorData extends AccessibilityObject {
   set orientation(value) {
@@ -6,7 +6,7 @@ export default class SeparatorData extends AccessibilityObject {
   }
 
   get orientation() {
-    this._reactProps['aria-orientation'];
+    return this._reactProps['aria-orientation'];
   }
 
   set valueMax(value) {
@@ -14,7 +14,7 @@ export default class SeparatorData extends AccessibilityObject {
   }
 
   get valueMax() {
-    this._reactProps['aria-valuemax'];
+    return this._reactProps['aria-valuemax'];
   }
 
   set valueMin(value) {
@@ -22,7 +22,7 @@ export default class SeparatorData extends AccessibilityObject {
   }
 
   get valueMin() {
-    this._reactProps['aria-valuemin'];
+    return this._reactProps['aria-valuemin'];
   }
 
   set valueNow(value) {
@@ -30,7 +30,7 @@ export default class SeparatorData extends AccessibilityObject {
   }
 
   get valueNow() {
-    this._reactProps['aria-valuenow'];
+    return this._reactProps['aria-valuenow'];
   }
 
   set valueText(value) {
@@ -38,6 +38,6 @@ export default class SeparatorData extends AccessibilityObject {
   }
 
   get valueText() {
-    this._reactProps['aria-valuetext'];
+    return this._reactProps['aria-valuetext'];
   }
 }

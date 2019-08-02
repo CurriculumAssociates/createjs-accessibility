@@ -1,4 +1,4 @@
-import SectionData from './SectionData.js';
+import SectionData from './SectionData';
 
 export default class CellData extends SectionData {
   constructor(displayObject, role, domIdPrefix) {
@@ -7,8 +7,10 @@ export default class CellData extends SectionData {
     this.colspan = 1;
     this.rowspan = 1;
   }
+
   /**
-   * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Sets an element's column index or position with respect to the total number
+   * of columns within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -17,7 +19,8 @@ export default class CellData extends SectionData {
   }
 
   /**
-   * Gives an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * Gives an element's column index or position with respect to the total
+   * number of columns within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -27,7 +30,8 @@ export default class CellData extends SectionData {
 
   /**
    * Sets the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
-   * This value must be at least 1 (default) and low enough to avoid overlap with other cells in the same row
+   * This value must be at least 1 (default) and low enough to avoid overlap with other
+   * cells in the same row
    * @access public
    * @param {Number} val - number
    */
@@ -45,7 +49,8 @@ export default class CellData extends SectionData {
   }
 
   /**
-   * Sets an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Sets an element's row index or position with respect to the total
+   * number of rows within a table, grid, or treegrid.
    * @access public
    * @param {Number} val - Positive number
    */
@@ -54,7 +59,8 @@ export default class CellData extends SectionData {
   }
 
   /**
-   * Gives an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * Gives an element's row index or position with respect to the total
+   * number of rows within a table, grid, or treegrid.
    * @access public
    * @returns {Number} - Positive number
    */
@@ -64,8 +70,10 @@ export default class CellData extends SectionData {
 
   /**
    * Sets the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
-   * This value must be at least 1 (default) and low enough to avoid overlap with next cell in the same column.
-   * Setting the value to 0 indicates that the cell or gridcell is to span all the remaining rows in the row group.
+   * This value must be at least 1 (default) and low enough to avoid overlap
+   * with next cell in the same column.
+   * Setting the value to 0 indicates that the cell or gridcell is to span all
+   * the remaining rows in the row group.
    * @access public
    * @param {Number} val - Positive number
    */

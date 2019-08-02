@@ -1,4 +1,4 @@
-import AccessibilityObject from './AccessibilityObject.js';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class DialogData extends AccessibilityObject {
   /**

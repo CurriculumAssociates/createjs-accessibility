@@ -1,7 +1,6 @@
-import TableData from './TableData.js';
-import { ROLES } from '../Roles.js';
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
+import TableData from './TableData';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
@@ -31,7 +30,8 @@ export default class GridData extends TableData {
   /**
    *  user may select more then one item from the current grid
    * @access public
-   * @param {boolean} val - aria-multiselectable is set to true, multiple items in the grid can be selected. The default value is false
+   * @param {boolean} val - aria-multiselectable is set to true, multiple items
+   * in the grid can be selected. The default value is false
    */
   set multiselectable(val) {
     this._reactProps['aria-multiselectable'] = val;
@@ -40,7 +40,8 @@ export default class GridData extends TableData {
   /**
    * The user may select more then one item from the current grid
    * @access public
-   * @param {boolean} val - aria-multiselectable is set to true, multiple items in the grid can be selected. The default value is false
+   * @param {boolean} val - aria-multiselectable is set to true, multiple items
+   * in the grid can be selected. The default value is false
    */
   get multiselectable() {
     return this._reactProps['aria-multiselectable'];
@@ -65,8 +66,11 @@ export default class GridData extends TableData {
   }
 
   onKeyDown(event) {
-    if ([KeyCodes.up, KeyCodes.down, KeyCodes.right, KeyCodes.left, KeyCodes.home, KeyCodes.end].indexOf(event.keyCode) !== -1) {
-      const target = event.target;
+    const {
+      up, down, right, left, home, end,
+    } = KeyCodes;
+    if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
+      const { target } = event;
       const rowArr = this._children[0].accessible._children;
       let rowIndex = this.getRowIndex(target);
       let colIndex = this.getColIndex(target);

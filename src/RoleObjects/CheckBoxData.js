@@ -1,8 +1,11 @@
-import InputTagData from './InputTagData.js';
 import KeyCodes from 'keycodes-enum';
+import _ from 'lodash';
+import InputTagData from './InputTagData';
 
 /**
- * Base class for role objects that use the img HTML tag.  This contains only setters/getters for fields that are common to all img tags regardless of the type attribute.
+ * Base class for role objects that use the img HTML tag.
+ * This contains only setters/getters for fields that are common to all img tags
+ * regardless of the type attribute.
  */
 export default class CheckBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
@@ -38,7 +41,7 @@ export default class CheckBoxData extends InputTagData {
     }
   }
 
-  onClick(evt) {
+  onClick() {
     this._displayObject.dispatchEvent('keyboardClick');
   }
 }

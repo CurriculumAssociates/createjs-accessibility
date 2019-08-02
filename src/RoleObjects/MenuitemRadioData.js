@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import MenuItemData from './MenuItemData.js';
+import MenuItemData from './MenuItemData';
 
 export default class MenuItemRadioData extends MenuItemData {
   constructor(displayObject, role, domIdPrefix) {
@@ -10,7 +9,8 @@ export default class MenuItemRadioData extends MenuItemData {
   /**
    * Sets whether the element is checked
    * @access public
-   * @param {boolean} check - true if the element is checked, false if the element is unchecked, mixed if the element mixture of checked and unchecked values.
+   * @param {boolean} check - true if the element is checked, false
+   * if the element is unchecked, mixed if the element mixture of checked and unchecked values.
    */
   set checked(check) {
     this._reactProps['aria-checked'] = check;
@@ -19,7 +19,8 @@ export default class MenuItemRadioData extends MenuItemData {
   /**
    * Retrieves whether the element is checked
    * @access public
-   * @returns {boolean}  - true if the element is checked, false if the element is unchecked, mixed if the element mixture of checked and unchecked values.
+   * @returns {boolean}  - true if the element is checked, false
+   * if the element is unchecked, mixed if the element mixture of checked and unchecked values.
    */
   get checked() {
     return this._reactProps['aria-checked'];

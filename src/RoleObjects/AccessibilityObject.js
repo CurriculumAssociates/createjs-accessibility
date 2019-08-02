@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { ROLES } from '../Roles.js';
 
 /**
  * Container for the accessibility information for a DisplayObject.
@@ -13,7 +12,9 @@ export default class AccessibilityObject {
     this._domId = domIdPrefix + displayObject.id;
     this._areKeyEventsEnabled = false;
     /**
-     * Fields with relatively fixed values that should go into the React props for the element translation of this object.  This is done as an object for easy merging with the rest of the props
+     * Fields with relatively fixed values that should go into the React props for the
+     * element translation of this object.  This is done as an object for easy merging
+     * with the rest of the props
      * @access private
      */
     this._reactProps = {
@@ -44,13 +45,16 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Adds the specified DisplayObject as a child of the DisplayObject associated with this AccessibilityObject in the accessibility tree.  The specified DisplayObject must have accessibility information already present.  Different subclasses may limit the valid roles for the specified DisplayObject.
+   * Adds the specified DisplayObject as a child of the DisplayObject associated with this
+   * AccessibilityObject in the accessibility tree.  The specified DisplayObject must have
+   * accessibility information already present.  Different subclasses may limit the valid roles
+   * for the specified DisplayObject.
    * todo: list role restrictions
    * @access public
-   * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to add as a child in the accessibility tree
+   * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to
+   * add as a child in the accessibility tree
    */
   addChild(displayObject) {
-
     if (!displayObject.accessible) {
       throw new Error('DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree');
     }
@@ -63,10 +67,16 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Adds the specified DisplayObject as a child of the DisplayObject associated with this AccessibilityObject in the accessibility tree at the specified index.  The specified DisplayObject must have accessibility information already present.  Different subclasses may limit the valid roles for the specified DisplayObject (see addChild's function comment for list of role restrictions).
+   * Adds the specified DisplayObject as a child of the DisplayObject associated with this
+   * AccessibilityObject in the accessibility tree at the specified index.  The specified
+   * DisplayObject must have accessibility information already present.  Different subclasses
+   * may limit the valid roles for the specified DisplayObject (see addChild's function comment
+   * for list of role restrictions).
    * @access public
-   * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to add as a child in the accessibility tree
-   * @param {Number} index - 0 based index that the DisplayObject should have in the array of children once added
+   * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to add
+   * as a child in the accessibility tree
+   * @param {Number} index - 0 based index that the DisplayObject should have in the array of
+   * children once added
    */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible) {
@@ -102,7 +112,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Removes the child at the specified index of this AccessibilityObject from the accessibility tree.
+   * Removes the child at the specified index of this AccessibilityObject
+   * from the accessibility tree.
    * @access public
    * @param {Number} index - index of the child to remove
    */
@@ -134,9 +145,11 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Sets whether keydown/keyup events should be sent to the DisplayObject.  The constructor default is that these events are not sent.
+   * Sets whether keydown/keyup events should be sent to the DisplayObject.
+   * The constructor default is that these events are not sent.
    * @access public
-   * @param {boolean} enable - true if the keydown/keyup events should be sent to the DisplayObject.  false otherwise.
+   * @param {boolean} enable - true if the keydown/keyup events should be sent to the DisplayObject.
+   * false otherwise.
    */
   set enableKeyEvents(enable) {
     if (this._areKeyEventsEnabled && !enable) {
@@ -151,9 +164,11 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves whether keydown/keyup events are currently configured to be sent to the DisplayObject.
+   * Retrieves whether keydown/keyup events are currently configured to be
+   * sent to the DisplayObject.
    * @access public
-   * @returns {boolean} true if the keydown/keyup events should be sent to the DisplayObject.  false otherwise.
+   * @returns {boolean} true if the keydown/keyup events should be sent to the DisplayObject.
+   * false otherwise.
    */
   get enableKeyEvents() {
     return this._areKeyEventsEnabled;
@@ -165,7 +180,7 @@ export default class AccessibilityObject {
    * @param {String} keycode - string containing the letter to use for the keyboard shortcut
    */
   set accessKey(keycode) {
-   this._reactProps.accessKey = keycode;
+    this._reactProps.accessKey = keycode;
   }
 
   /**
@@ -178,9 +193,91 @@ export default class AccessibilityObject {
   }
 
   /**
+   * The spellcheck attribute specifies whether the element is to have its spelling
+   * and grammar checked or not.
+   * @access public
+   * @param { boolean } bool
+   */
+  set spellcheck(bool) {
+    this._reactProps.spellCheck = bool;
+  }
+
+  /**
+   * The spellcheck attribute specifies whether the element is to have its spelling and
+   * grammar checked or not.
+   * @access public
+   * @returns {boolean} boolean: true or false
+   */
+  get spellcheck() {
+    return this._reactProps.spellCheck;
+  }
+
+
+  /**
+   * Sets the title for the DisplayObject
+   * @access public
+   * @param {String} title - string mouse hover show text of title as tooltip
+   */
+  set title(title) {
+    this._reactProps.title = title;
+  }
+
+  /**
+   * Retrieves the title for the DisplayObject
+   * @access public
+   * @returns {String} string mouse hover show text of title as tooltip
+   */
+  get title() {
+    return this._reactProps.title;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @returns {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
+   */
+  get lang() {
+    return this._reactProps.lang;
+  }
+
+  /**
+   * The lang attribute specifies the language of the element's content.
+   * @access public
+   * @param {String} lang: eg. "en" for English, "es" for Spanish, "fr" for French, and so on.
+   * https://www.w3schools.com/tags/ref_language_codes.asp has the full list of valid values.
+   */
+  set lang(lang) {
+    this._reactProps.lang = lang;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @param {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction
+   * auto: Let the browser figure out the text direction, based on the content
+   */
+  set dir(direction) {
+    this._reactProps.dir = direction;
+  }
+
+  /**
+   * The dir attribute specifies the text direction of the element's content.
+   * @access public
+   * @returns {String} direction
+   * ltr: Left-to-right text direction, rtl: Right-to-left text direction, auto: Let the browser
+   * figure out the text direction, based on the content
+   */
+  get dir() {
+    return this._reactProps.dir;
+  }
+
+  /**
    * Sets whether ATs should present the region as a whole or parts
    * @access public
-   * @param {boolean} enable - true if ATs should present the region as a whole, false for parts.  undefined to unset the field.
+   * @param {boolean} enable - true if ATs should present the region as a whole,
+   * false for parts.  undefined to unset the field.
    */
   set atomic(enable) {
     this._reactProps['aria-atomic'] = enable;
@@ -189,7 +286,8 @@ export default class AccessibilityObject {
   /**
    * Retrieves whether ATs should present the region as a whole or parts
    * @access public
-   * @returns {boolean} true if ATs should present the region as a whole, false for parts, undefined if the field is unset.
+   * @returns {boolean} true if ATs should present the region as a whole, false
+   * for parts, undefined if the field is unset.
    */
   get atomic() {
     return this._reactProps['aria-atomic'];
@@ -198,16 +296,19 @@ export default class AccessibilityObject {
   /**
    * Sets whether the element or its children in the accessibility tree are currently being updated
    * @access public
-   * @param {boolean} updating - true if updating is in progress, false if there are no more expected updates, undefined to unset the field.
+   * @param {boolean} updating - true if updating is in progress, false if there
+   * are no more expected updates, undefined to unset the field.
    */
   set busy(updating) {
     this._reactProps['aria-busy'] = updating;
   }
 
   /**
-   * Retrieves whether the element or its children in the accessibility tree are currently being updated
+   * Retrieves whether the element or its children in the accessibility tree are
+   * currently being updated
    * @access public
-   * @returns {boolean} true if updating is in progress, false if there are no more expected updates, undefined if the field is unset.
+   * @returns {boolean} true if updating is in progress, false if there are no more
+   * expected updates, undefined if the field is unset.
    */
   get busy() {
     return this._reactProps['aria-busy'];
@@ -225,7 +326,8 @@ export default class AccessibilityObject {
   /**
    * Sets which DisplayObject's contents or presence is controlled by this one.
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject controlled by this one.  undefined to unset the field.
+   * @param {createjs.DisplayObject} displayObject - DisplayObject controlled by this one.
+   * undefined to unset the field.
    */
   set controls(displayObject) {
     if (displayObject && !displayObject.accessible) {
@@ -256,7 +358,8 @@ export default class AccessibilityObject {
   /**
    * Sets which DisplayObject's accessibility information describes this one.
    * @access public
-   * @param {createjs.DisplayObject} displayObject - describing DisplayObject.  undefined to unset the field.
+   * @param {createjs.DisplayObject} displayObject - describing DisplayObject.
+   * undefined to unset the field.
    */
   set describedBy(displayObject) {
     if (displayObject && !displayObject.accessible) {
@@ -276,7 +379,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the DOM id of the translated DisplayObject that has accessibility information describing this one.
+   * Retrieves the DOM id of the translated DisplayObject that has accessibility information
+   * describing this one.
    * @access public
    * @returns {String} id of the translated describing DisplayObject
    */
@@ -285,7 +389,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the value of the id attribute used in the DOM for the DisplayObject's accessibility information
+   * Retrieves the value of the id attribute used in the DOM for the DisplayObject's accessibility
+   * information
    * @access public
    * @returns {String} id of the DOM element
    */
@@ -314,7 +419,8 @@ export default class AccessibilityObject {
   /**
    * Sets whether the element is enabled
    * @access public
-   * @param {boolean} enable - true if the element should be enabled, false if the element should be disabled.  undefined to unset the field.
+   * @param {boolean} enable - true if the element should be enabled, false
+   * if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
     this._reactProps['aria-disabled'] = enable === undefined ? undefined : !enable;
@@ -323,14 +429,16 @@ export default class AccessibilityObject {
   /**
    * Retrieves whether the element is enabled
    * @access public
-   * @returns {boolean} true if the element is enabled, false if the element is disabled.  undefined if the field is unset.
+   * @returns {boolean} true if the element is enabled, false if the element
+   * is disabled.  undefined if the field is unset.
    */
   get enabled() {
     return this._reactProps['aria-disabled'] === undefined ? undefined : !this._reactProps['aria-disabled'];
   }
 
   /**
-   * Retrieves whether the DisplayObject is disabled for interaction, taking into account the automatic field determination done when translating to the DOM.
+   * Retrieves whether the DisplayObject is disabled for interaction,
+   * taking into account the automatic field determination done when translating to the DOM.
    * @access public
    * @returns {boolean} true if disabled, false otherwise
    */
@@ -346,7 +454,8 @@ export default class AccessibilityObject {
   /**
    * Sets which DisplayObject is next in an alternative reading order
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject to flow to.  undefined to unset the field.
+   * @param {createjs.DisplayObject} displayObject - DisplayObject to flow to.
+   * undefined to unset the field.
    */
   set flowTo(displayObject) {
     if (displayObject && !displayObject.accessible) {
@@ -366,7 +475,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the DOM id of the translated DisplayObject that is next in an alternative reading order
+   * Retrieves the DOM id of the translated DisplayObject that is next in an
+   * alternative reading order
    * @access public
    * @returns {String} id to flow to
    */
@@ -377,7 +487,8 @@ export default class AccessibilityObject {
   /**
    * Sets whether the DisplayObject is picked up for a drag and drop interaction
    * @access public
-   * @param {boolean} dragging - true if being dragged, false for not being dragged but supports it, undefined for not being dragged and doesn't support it
+   * @param {boolean} dragging - true if being dragged, false for not being dragged but
+   * supports it, undefined for not being dragged and doesn't support it
    */
   set grabbed(dragging) {
     this._reactProps['aria-grabbed'] = dragging;
@@ -386,7 +497,8 @@ export default class AccessibilityObject {
   /**
    * Retrieves whether the DisplayObject is picked up for a drag and drop interaction
    * @access public
-   * @returns {boolean} true if being dragged, false for not being dragged but supports it, undefined for not being dragged and doesn't support it
+   * @returns {boolean} true if being dragged, false for not being dragged but supports it,
+   * undefined for not being dragged and doesn't support it
    */
   get grabbed() {
     return this._reactProps['aria-grabbed'];
@@ -412,9 +524,13 @@ export default class AccessibilityObject {
 
   /**
    * Sets whether the DisplayObject is perceivable to any type of user.
-   * Note: if this field is unset (undefined) and the DisplayObject's .visible field a falsey value, then the translated DOM entry will have 'aria-hidden' set to true.  If you want to prevent this automatic field determination, then this field should be set to true or false.
+   * Note: if this field is unset (undefined) and the DisplayObject's .visible
+   * field a falsey value, then the translated DOM entry will have 'aria-hidden'
+   * set to true.  If you want to prevent this automatic field determination,
+   * then this field should be set to true or false.
    * @access public
-   * @param {boolean} hide - true if not perceivable, false for perceivable.  undefined to unset the field.
+   * @param {boolean} hide - true if not perceivable, false for perceivable.
+   * undefined to unset the field.
    */
   set hidden(hide) {
     this._reactProps['aria-hidden'] = hide;
@@ -423,14 +539,16 @@ export default class AccessibilityObject {
   /**
    * Retrieves whether the DisplayObject is perceivable to any type of user.
    * @access public
-   * @returns {boolean} true if not perceivable, false for perceivable.  undefined if this field is unset.
+   * @returns {boolean} true if not perceivable, false for perceivable.
+   * undefined if this field is unset.
    */
   get hidden() {
     return this._reactProps['aria-hidden'];
   }
 
   /**
-   * Retrieves whether the DisplayObject is perceivable to any type of user, taking into account the automatic field determination done when translating to the DOM.
+   * Retrieves whether the DisplayObject is perceivable to any type of user,
+   * taking into account the automatic field determination done when translating to the DOM.
    * @access public
    * @returns {boolean} true if not perceivable, false for perceivable
    */
@@ -477,7 +595,8 @@ export default class AccessibilityObject {
   /**
    * Sets which other DisplayObject labels the DisplayObject
    * @access public
-   * @param {createjs.DisplayObject} displayObject - DisplayObject that labels this one.  undefined if the field is to be cleared
+   * @param {createjs.DisplayObject} displayObject - DisplayObject that labels this one.
+   * undefined if the field is to be cleared
    */
   set labelledBy(displayObject) {
     if (displayObject && !displayObject.accessible) {
@@ -493,7 +612,8 @@ export default class AccessibilityObject {
   /**
    * Retrieves the DisplayObject that is used for labelling this one
    * @access public
-   * @returns {createjs.DisplayObject} DisplayObject that is used for a label.  undefined if this field is unset.
+   * @returns {createjs.DisplayObject} DisplayObject that is used for a label.
+   * undefined if this field is unset.
    */
   get labelledBy() {
     return this._labelledBy;
@@ -509,7 +629,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Sets the priority level of the user being informed of updates to the translated DOM element or its children
+   * Sets the priority level of the user being informed of updates to the translated
+   * DOM element or its children
    * @access public
    * @param {String} level - See https://www.w3.org/TR/wai-aria/states_and_properties#aria-live for values and their meaning.  undefined if the field is to be cleared
    */
@@ -518,7 +639,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the priority level of the user being informed of updates to the translated DOM element or its children
+   * Retrieves the priority level of the user being informed of updates to the translated
+   * DOM element or its children
    * @access public
    * @returns {String} priority level.  undefined if this field is unset.
    */
@@ -527,9 +649,12 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Sets which DisplayObjects that are not children in the accessibility tree but have a child relationship with this one
+   * Sets which DisplayObjects that are not children in the accessibility tree but have
+   *  a child relationship with this one
    * @access public
-   * @param {Array<createjs.DisplayObject>} displayObjects - array of DisplayObjects that should have a child relationship without being children in the accessibility tree.  undefined if the field is to be cleared
+   * @param {Array<createjs.DisplayObject>} displayObjects - array of DisplayObjects that
+   * should have a child relationship without being children in the accessibility tree.
+   * undefined if the field is to be cleared
    */
   set owns(displayObjects) {
     if (displayObjects) {
@@ -550,16 +675,20 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves which DisplayObjects that are not children in the accessibility tree but have a child relationship with this one
+   * Retrieves which DisplayObjects that are not children in the accessibility tree but
+   * have a child relationship with this one
    * @access public
-   * @returns {Array<createjs.DisplayObject>} array of DisplayObjects that should have a child relationship without being children in the accessibility tree.  undefined if this field is unset.
+   * @returns {Array<createjs.DisplayObject>} array of DisplayObjects that should have
+   * a child relationship without being children in the accessibility tree.
+   * undefined if this field is unset.
    */
   get owns() {
     return this._owns;
   }
 
   /**
-   * Retrieves a space separated list of the DOM ids of the translated DisplayObjects that are not children in the accessibility tree that have a child relationship with this one
+   * Retrieves a space separated list of the DOM ids of the translated DisplayObjects
+   * that are not children in the accessibility tree that have a child relationship with this one
    * @access public
    * @returns {String} space separate list of DOM ids.  undefined if this field is unset.
    */
@@ -568,7 +697,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the AccessibilityObject that is this one's parent in an accessibility tree.  null if this is currently not in an accessibility tree.
+   * Retrieves the AccessibilityObject that is this one's parent in an accessibility tree.
+   * null if this is currently not in an accessibility tree.
    * @access public
    * @return {AccessibilityObject} Parent AccessibilityObject in an accessibility tree
    */
@@ -617,7 +747,7 @@ export default class AccessibilityObject {
    * @param {Number} index - number to use as the tab index
    */
   set tabIndex(index) {
-   this._reactProps.tabIndex = index;
+    this._reactProps.tabIndex = index;
   }
 
   /**
@@ -631,9 +761,13 @@ export default class AccessibilityObject {
 
   /**
    * Sets whether the DisplayObject should be displayed in the DOM translation.
-   * Note: if this field is unset (undefined) and the DisplayObject's .visible field a falsey value, then the translated DOM entry will have 'display' set to 'none'.  If you want to prevent this automatic field determination, then this field should be set to true or false.
+   * Note: if this field is unset (undefined) and the DisplayObject's .visible field
+   * a falsey value, then the translated DOM entry will have 'display' set to 'none'.
+   * If you want to prevent this automatic field determination, then this field should
+   * be set to true or false.
    * @access public
-   * @param {boolean} vis - true if DOM translation should be displayed, false for hidden.  undefined to unset the field.
+   * @param {boolean} vis - true if DOM translation should be displayed, false for hidden.
+   * undefined to unset the field.
    */
   set visible(vis) {
     this._visible = vis;
@@ -649,7 +783,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves whether the DisplayObject is displayed in the DOM translation, taking into account the automatic field determination done when translating to the DOM.
+   * Retrieves whether the DisplayObject is displayed in the DOM translation, taking into
+   * account the automatic field determination done when translating to the DOM.
    * @access public
    * @returns {boolean} true if not visible, false if hidden
    */
@@ -658,7 +793,8 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Makes the DOM entry visible immediately.  This does not affect the value used during the next render of the accessibility tree.
+   * Makes the DOM entry visible immediately.  This does not affect the value used
+   * during the next render of the accessibility tree.
    * @access package
    */
   _forceShow() {
@@ -672,9 +808,7 @@ export default class AccessibilityObject {
    * @returns {Number} index into this.children.  -1 if no match is found
    */
   _domIdToChildIndex(id) {
-    return _.findIndex(this._children, (displayObject) => {
-      return id === displayObject.accessible._domId;
-    });
+    return _.findIndex(this._children, displayObject => id === displayObject.accessible._domId);
   }
 
   /**

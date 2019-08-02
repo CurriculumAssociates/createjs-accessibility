@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import AccessibilityObject from './AccessibilityObject.js';
+import { ROLES } from '../Roles';
+import AccessibilityObject from './AccessibilityObject';
 
 export default class MenuItemData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -14,7 +14,8 @@ export default class MenuItemData extends AccessibilityObject {
   }
 
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
+      ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO} `);
     }
 
@@ -24,7 +25,8 @@ export default class MenuItemData extends AccessibilityObject {
   }
 
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
+    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
+      ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
     }
 
@@ -36,6 +38,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Informs a menu label of which DisplayObject is the submenu
    * @access package
+   * @param {Object} displayObject - accessibility DisplayObject
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
@@ -43,9 +46,11 @@ export default class MenuItemData extends AccessibilityObject {
   }
 
   /**
-   * Sets whether the menu item is expanded or collapsed.  If the menu item is not expandable, then this should be set to undefined.
+   * Sets whether the menu item is expanded or collapsed.
+   * If the menu item is not expandable, then this should be set to undefined.
    * @access public
-   * @param {boolean} val - true if the menu is expanded, false if it is collapsed, undefined if the item is not expandable
+   * @param {boolean} val - true if the menu is expanded,
+   * false if it is collapsed, undefined if the item is not expandable
    */
   set expanded(val) {
     this._reactProps['aria-expanded'] = val;
@@ -54,7 +59,8 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Retrieves whether the menu item is expanded, collapsed, or not expandable.
    * @access public
-   * @returns {boolean} - true if the item is expanded, false if the item is collapsed, undefined if it is not expandable
+   * @returns {boolean} - true if the item is expanded,
+   * false if the item is collapsed, undefined if it is not expandable
    */
   get expanded() {
     return this._reactProps['aria-expanded'];
@@ -63,7 +69,8 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Sets the position in the current set of items
    * @access public
-   * @param {Number} num - One based index for the position in the current set of items.  Or undefined to clear the field
+   * @param {Number} num - One based index for the position in the current set of items.
+   * Or undefined to clear the field
    */
   set positionInSet(num) {
     this._reactProps['aria-posinset'] = num;
@@ -99,10 +106,13 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for when the item manages opening a menu
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   _subMenuOpenerKeyDown(evt) {
-    const toggleMenu = evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space || (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
-    const focusToFirstItem = evt.keyCode === KeyCodes.down || (!this._subMenu.visible && (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space));
+    const toggleMenu = evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space
+      || (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
+    const focusToFirstItem = evt.keyCode === KeyCodes.down || (!this._subMenu.visible
+        && (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space));
     if (toggleMenu) {
       const event = new createjs.Event(this._subMenu.visible ? 'closeMenu' : 'openMenu', false, evt.cancelable);
       const skipPreventDefault = this._displayObject.dispatchEvent(event);
@@ -121,6 +131,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for an entry in a popup menu
    * @access private
+   * @param {SyntheticEvent} evt - React event
    */
   _menuItemKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {
@@ -134,7 +145,8 @@ export default class MenuItemData extends AccessibilityObject {
   }
 
   /**
-   * Helper function for addChild and addChildAt that handles common menu item specific settings when adding a DisplayObject
+   * Helper function for addChild and addChildAt that handles common menu item
+   * specific settings when adding a DisplayObject
    * @access private
    * @param {createjs.DisplayObject} displayObject - DisplayObject being added
    */
