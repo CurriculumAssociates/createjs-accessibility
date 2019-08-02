@@ -20,60 +20,61 @@ export default class SpinButtonData extends RangeData {
   }
 
   /**
-  * Set value
-  * @access public
-  * @param {Number} val - current value
-  */
+   * Set value
+   * @access public
+   * @param {Number} val - current value
+   */
   set value(val) {
     this._reactProps.value = val;
   }
 
   /**
-  * get value
-  * @access public
-  * @returns {Number}  current value
-  */
+   * get value
+   * @access public
+   * @returns {Number}  current value
+   */
   get value() {
     return this._reactProps.value;
   }
 
   /**
-  * Set min value
-  * @access public
-  * @param {Number} val - min value
-  */
+   * Set min value
+   * @access public
+   * @param {Number} val - min value
+   */
   set min(val) {
     this._reactProps.min = val;
   }
 
   /**
-  * get min value
-  * @access public
-  * @returns {Number}  min value
-  */
+   * get min value
+   * @access public
+   * @returns {Number}  min value
+   */
   get min() {
     return this._reactProps.min;
   }
 
   /**
-  * Set max value
-  * @access public
-  * @param {Number} val - max value
-  */
+   * Set max value
+   * @access public
+   * @param {Number} val - max value
+   */
   set max(val) {
     this._reactProps.max = val;
   }
 
   /**
-  * get max value
-  * @access public
-  * @returns {Number} - max value
-  */
+   * get max value
+   * @access public
+   * @returns {Number} - max value
+   */
   get max() {
     return this._reactProps.max;
   }
 
   /**
+   * Sets whether the element is editable or not
    * @access public
    * @param {boolean} value - true if the element should be read only, false for read and editable
    */
@@ -82,6 +83,7 @@ export default class SpinButtonData extends RangeData {
   }
 
   /**
+   * Retrieves whether the element is editable or not
    * @access public
    * @returns {boolean} true if the element should be read only, false for read and editable
    */
@@ -90,6 +92,7 @@ export default class SpinButtonData extends RangeData {
   }
 
   /**
+   * Sets whether user input is required or not
    * @access public
    * @param {boolean} value - true if the element is required, false otherwise
    */
@@ -98,6 +101,7 @@ export default class SpinButtonData extends RangeData {
   }
 
   /**
+   * Retrieves whether user input is required or not
    * @access public
    * @returns {boolean} true if the element is required, false otherwise
    */

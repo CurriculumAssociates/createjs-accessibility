@@ -38,7 +38,7 @@ export default class GridData extends TableData {
   }
 
   /**
-   *  user may select more then one item from the current grid
+   * The user may select more then one item from the current grid
    * @access public
    * @param {boolean} val - aria-multiselectable is set to true, multiple items in the grid can be selected. The default value is false
    */
@@ -47,6 +47,7 @@ export default class GridData extends TableData {
   }
 
   /**
+   * Sets whether the grid is editable or not
    * @access public
    * @param {boolean} value - true if the element should be read only, false for read and editable
    */
@@ -55,6 +56,7 @@ export default class GridData extends TableData {
   }
 
   /**
+   * Retrieves whether the grid is editable or not
    * @access public
    * @returns {boolean} true if the element should be read only, false for read and editable
    */

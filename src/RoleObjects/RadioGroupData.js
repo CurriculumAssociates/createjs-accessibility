@@ -2,6 +2,7 @@ import SelectData from './SelectData.js';
 
 export default class RadioGroupData extends SelectData {
   /**
+   * Sets whether the element is editable or not
    * @access public
    * @param {boolean} value - true if the element should be read only, false for read and editable
    */
@@ -10,6 +11,7 @@ export default class RadioGroupData extends SelectData {
   }
 
   /**
+   * Retrieves whether the element is editable or not
    * @access public
    * @returns {boolean} true if the element should be read only, false for read and editable
    */
@@ -18,6 +20,7 @@ export default class RadioGroupData extends SelectData {
   }
 
   /**
+   * Sets whether user input is required or not
    * @access public
    * @param {boolean} value - true if the element is required, false otherwise
    */
@@ -26,6 +29,7 @@ export default class RadioGroupData extends SelectData {
   }
 
   /**
+   * Retrieves whether user input is required or not
    * @access public
    * @returns {boolean} true if the element is required, false otherwise
    */
