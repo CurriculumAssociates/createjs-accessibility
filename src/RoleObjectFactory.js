@@ -62,7 +62,8 @@ import ToolBarData from './RoleObjects/ToolBarData';
  * add the DisplayObject
  * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM
  * id in the translated display object.  Defaults to 'acc_'
- * @param {Object} [config.events] - event object with field eventName and listener to bind event while registering displayObject
+ * @param {Object} [config.events] - event object with field eventName and listener to bind event
+ * while registering displayObject
  * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current
  * DisplayObject to as a child. Note the order of registration is important, the parent
  * object will need to be registered with the module before the child.

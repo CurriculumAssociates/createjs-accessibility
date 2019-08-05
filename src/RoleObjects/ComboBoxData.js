@@ -1,7 +1,5 @@
-import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
-import { ROLES } from '../Roles.js';
-import SelectData from './SelectData.js';
+import { ROLES } from '../Roles';
+import SelectData from './SelectData';
 
 export default class ComboBoxData extends SelectData {
   /**
@@ -59,7 +57,8 @@ export default class ComboBoxData extends SelectData {
   /**
    * Sets whether the combobox is expanded or not
    * @access public
-   * @param {boolean} val - true if combobox expanded, false if combobox not expanded, undefined if the field is unset
+   * @param {boolean} val - true if combobox expanded, false if combobox not expanded, undefined if
+   * the field is unset
    */
   set expanded(val) {
     this._reactProps['aria-expanded'] = val;
@@ -68,7 +67,8 @@ export default class ComboBoxData extends SelectData {
   /**
    * Retrieves whether combobox expanded
    * @access public
-   * @returns {boolean} true if combobox expanded, false if combobox not expanded, undefined if the field is unset
+   * @returns {boolean} true if combobox expanded, false if combobox not expanded, undefined if the
+   * field is unset
    */
   get expanded() {
     return this._reactProps['aria-expanded'];
