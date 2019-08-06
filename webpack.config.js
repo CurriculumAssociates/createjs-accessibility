@@ -17,16 +17,9 @@ const config = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           { loader: 'babel-loader' },
-          {
-            loader: 'eslint-loader',
-            options: {
-              // Allow hot reloading even with linting errors:
-              // https://github.com/webpack-contrib/eslint-loader#emitwarning-default-false
-              emitWarning: true,
-            },
-          },
         ],
       },
       {
