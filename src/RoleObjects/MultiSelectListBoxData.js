@@ -199,11 +199,6 @@ export default class MultiSelectListBoxData extends SelectData {
    * @param {SyntheticEvent} evt - React event
    */
   _onListBoxChanged(evt) {
-    // todo: imporove list box support for different browsers.
-    // In IE10 after it gets focus using the arrow keys changes the value,
-    // so that works fine currently.  In Chrome, the first up/down arrow key
-    // will open the drop down then subsequent ones will alter the selection,
-    // but the onChange event doesn't happen until the list box is closed. etc.
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValues = _.filter(evt.target.options,
       option => option.selected).map(option => option.value);
