@@ -362,11 +362,11 @@ function createAccessibilityObjectForRole(config) {
       parent.accessible.addChild(displayObject);
     }
   } else {
-    parent = displayObject.accessible.parent
+    parent = displayObject.accessible.parent;
   }
 
-  if(!containerIndex) {
-    containerIndex = displayObject.accessible.containerIndex
+  if (!containerIndex) {
+    containerIndex = displayObject.accessible.containerIndex;
   }
 }
 
