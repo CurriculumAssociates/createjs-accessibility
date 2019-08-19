@@ -49,7 +49,6 @@ export default class AccessibilityObject {
    * AccessibilityObject in the accessibility tree.  The specified DisplayObject must have
    * accessibility information already present.  Different subclasses may limit the valid roles
    * for the specified DisplayObject.
-   * todo: list role restrictions
    * @access public
    * @param {createjs.DisplayObject} displayObject - accessibility annotated DisplayObject to
    * add as a child in the accessibility tree

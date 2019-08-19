@@ -74,6 +74,7 @@ module.exports = {
     }],
     'space-in-parens': 'warn',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'prefer-destructuring': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],
