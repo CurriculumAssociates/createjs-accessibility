@@ -7,9 +7,6 @@ function init() {
   createjs.Touch.enable(stage, true, false);
   createjs.Ticker.framerate = 24;
 
-  // todo: delete
-  window.stage = stage;
-
   AccessibilityModule.setupStage(stage, 'cam-test');
   const canvas = $(stage.canvas);
   const appWindow = new AppWindow(parseInt(canvas.attr('width'), 10), parseInt(canvas.attr('height'), 10));
@@ -21,10 +18,6 @@ function init() {
     stage.update();
     stage.accessibilityTranslator.update();
   });
-
-  // todo: add window resize handler that allows for testing repositioning
-  // translated DisplayObjects so that they still have the correct position
-  // for screen magnifiers by resizing the canvas to match the window size
 }
 
 init();

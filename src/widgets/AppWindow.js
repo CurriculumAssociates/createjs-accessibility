@@ -182,16 +182,6 @@ export default class AppWindow extends createjs.Container {
 
     this._showDefaultScreen();
     this.createGrid();
-
-    // todo: delete
-    window.testApp = this;
-  }
-
-  resize(width, height) {
-    this._menuBar.resize(width, MENU_HEIGHT);
-    this._contentArea.setBounds(0, this._headerArea.getBounds().height
-      + MENU_HEIGHT, width, height - MENU_HEIGHT);
-    // todo
   }
 
   _createMenu(width) {
@@ -210,7 +200,7 @@ export default class AppWindow extends createjs.Container {
     this.nav.addChild(this._menuBar);
     this.nav.accessible.addChild(this._menuBar);
 
-    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, this._nextTab++, 't');
+    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, this._nextTab++, 'T');
     this._menuBar.addMenu(testCasesMenu);
     const testCasesGroup = {
       group1: {
@@ -265,7 +255,7 @@ export default class AppWindow extends createjs.Container {
     });
 
 
-    const testCasesMenuItemRadio = new Menu('Contrast Radio', MENU_HEIGHT, this._nextTab++, 't');
+    const testCasesMenuItemRadio = new Menu('Contrast Radio', MENU_HEIGHT, this._nextTab++, 'c');
     this._menuBar.addMenu(testCasesMenuItemRadio);
     const testCasesMenuRadio = [
       { name: ' Black-Yellow', bgColor: '#000000', textColor: '#ffff00' },
@@ -283,14 +273,6 @@ export default class AppWindow extends createjs.Container {
       menuItemRadioArray.push(item);
     });
     this.menuItemRadioArray = menuItemRadioArray;
-
-
-    // todo: add a menu for testing checkbox and radio menu items, as well as
-    // popup menus inside another menu
-    // todo: test case for draw order different than accessibility order,
-    // also include scaling as part of this test for screen magnifiers
-    // todo: for caption test case, play audio and/or video and have the
-    // captions display in sync with the audio
 
     const help = new Menu('Help', MENU_HEIGHT, this._nextTab++, 'h');
     const about = new MenuItem('About', this._nextTab++);
@@ -772,27 +754,25 @@ export default class AppWindow extends createjs.Container {
     alert.addChild(alertLabel);
     alert.visible = false;
 
+    label = new createjs.Text('', '14px Arial');
+
+
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+
+    form.addChild(label);
+    form.accessible.addChild(label);
     // Implementing BUTTON
     const submitCallBack = () => {
-      // todo: this code results in a new createjs.Text for each click of
-      // the submit button.  This code needs to be fixed to either cleanup
-      // the previous createjs.Text instance or use the same instance for
-      // all clicks where the displayed string gets updated.
-      label = new createjs.Text(`NAME: ${nameField._text.text}, Comments: ${commentArea._text.text}, MEMBERSHIP: ${membershipList._selectedDisplay.text}, mailingList: ${mailingList.accessible.selectedValue}`, '14px Arial');
+      label.text = `NAME: ${nameField._text.text}, Comments: ${commentArea._text.text}, MEMBERSHIP: ${membershipList._selectedDisplay.text}, mailingList: ${mailingList.accessible.selectedValue}`;
       label.x = 10;
       label.y = 350;
-
-      AccessibilityModule.register({
-        displayObject: label,
-        parent: form,
-        role: AccessibilityModule.ROLES.NONE,
-        accessibleOptions: {
-          text: label.text,
-        },
-      });
-
-      form.addChild(label);
-      form.accessible.addChild(label);
 
       // Show alert
       alert.visible = true;

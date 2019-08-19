@@ -39,12 +39,32 @@ export default class Menu extends createjs.Container {
       role: AccessibilityModule.ROLES.MENUITEM,
     });
     this.addChild(this._label);
-    // todo: underline the first letter that corrsponds to the accessKey
+    const charArr = label.split('');
+    const font = '16px Arial';
+    const index = _.indexOf(charArr, accessKey);
+    const accessKeyText = new createjs.Text(`${accessKey}`, font);
+    const accesKeyTextWidth = accessKeyText.getBounds().width;
+    let totalWidth = 0;
+    for (let i = 0; i < index; i++) {
+      const text = new createjs.Text(`${charArr[i]}`, font);
+      totalWidth += text.getBounds().width;
+    }
 
-    const bounds = this._label.getBounds();
+    const underlineStartX = this._label.x + totalWidth;
+    const {
+      x, y, width, height,
+    } = this._label.getBounds();
+    const underLine = new createjs.Shape();
+    underLine.graphics.setStrokeStyle(3);
+    underLine.graphics.beginStroke('#FF4500');
+    underLine.graphics.moveTo(underlineStartX, height + 2);
+    underLine.graphics.lineTo(underlineStartX + accesKeyTextWidth, height + 2);
+    underLine.graphics.endStroke();
+    this.addChild(underLine);
+
     this._focusIndicator.graphics
       .beginFill('#31c7ec')
-      .drawRect(bounds.x, 0, bounds.width, menuBarHeight);
+      .drawRect(x, 0, width, menuBarHeight);
     this._itemContainer = new createjs.Container();
     this._itemContainer.y = menuBarHeight;
     this._itemContainer.visible = false;
@@ -60,7 +80,7 @@ export default class Menu extends createjs.Container {
     this._itemContainer.addChild(this._itemContainer._bg);
 
     this._label.hitArea = new createjs.Shape();
-    this._label.hitArea.graphics.beginFill('#ff0000').drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    this._label.hitArea.graphics.beginFill('#ff0000').drawRect(x, y, width, height);
     this._label.addEventListener('click', this._onClick);
     this._label.addEventListener('openMenu', this.openMenu);
     this._label.addEventListener('closeMenu', this.closeMenu);
