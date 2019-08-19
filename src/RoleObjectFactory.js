@@ -86,6 +86,10 @@ function createAccessibilityObjectForRole(config) {
     throw new Error('The parent object must be registered with the module.');
   }
 
+  if (displayObject.accessible) {
+    parent = displayObject.accessible.parent;
+  }
+
   let accessibilityObject;
   switch (role) {
     // roles resulting in AccessibilityObject in alphabetical order by enum entry
@@ -360,13 +364,8 @@ function createAccessibilityObjectForRole(config) {
       parent.accessible.addChildAt(displayObject, containerIndex);
     } else {
       parent.accessible.addChild(displayObject);
+      containerIndex = _.findIndex(parent.children, child => child === displayObject);
     }
-  } else {
-    parent = displayObject.accessible.parent;
-  }
-
-  if (!containerIndex) {
-    containerIndex = displayObject.accessible.containerIndex;
   }
 }
 
