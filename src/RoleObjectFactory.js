@@ -71,13 +71,13 @@ import ToolBarData from './RoleObjects/ToolBarData';
 function createAccessibilityObjectForRole(config) {
   const {
     accessibleOptions,
-    containerIndex,
     displayObject,
     domIdPrefix = 'acc_',
     events,
-    parent,
     role,
   } = config;
+
+  let { containerIndex, parent } = config;
 
   if (!displayObject) {
     throw new Error('No DisplayObject specified.');
@@ -88,7 +88,11 @@ function createAccessibilityObjectForRole(config) {
   }
 
   if (displayObject.accessible) {
-    // todo: allow changing the role of a DisplayObject
+    parent = displayObject.accessible.parent;
+    if (parent) {
+      containerIndex = _.findIndex(parent.children, child => child === displayObject);
+      parent.removedChildAt(containerIndex);
+    }
   }
 
   let accessibilityObject;
