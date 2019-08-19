@@ -88,6 +88,10 @@ function createAccessibilityObjectForRole(config) {
 
   if (displayObject.accessible) {
     parent = displayObject.accessible.parent;
+    if (parent) {
+      containerIndex = _.findIndex(parent.children, child => child === displayObject);
+      parent.removedChildAt(containerIndex);
+    }
   }
 
   let accessibilityObject;
@@ -364,7 +368,6 @@ function createAccessibilityObjectForRole(config) {
       parent.accessible.addChildAt(displayObject, containerIndex);
     } else {
       parent.accessible.addChild(displayObject);
-      containerIndex = _.findIndex(parent.children, child => child === displayObject);
     }
   }
 }
