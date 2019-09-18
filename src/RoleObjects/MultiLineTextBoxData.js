@@ -224,7 +224,10 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    * @param {String} str - string value for the text input field
    */
   set value(str) {
-    this._reactProps.value = str;
+    const elementId = this._reactProps.id;
+    const element = document.getElementById(elementId);
+    element.value = str;
+    // this._reactProps.value = str;
   }
 
   /**
