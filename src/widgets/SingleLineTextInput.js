@@ -1,6 +1,4 @@
-import $ from 'jquery';
 import _ from 'lodash';
-import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 const PAD = 2;
@@ -12,7 +10,7 @@ const MODES = {
 export default class SingleLineTextInput extends createjs.Container {
   constructor(width, height, tabIndex, placeholderText = '') {
     super();
-    _.bindAll(this, 'onFocus', 'onBlur', '_onCanvasKeyDown', '_onValueChanged', '_onSelectionChanged', '_onMouseDown', '_onMouseMove', '_onMouseUp');
+    _.bindAll(this, 'onFocus', 'onBlur', '_onValueChanged', '_onSelectionChanged', '_onMouseDown', '_onMouseMove', '_onMouseUp');
 
     AccessibilityModule.register({
       accessibleOptions: { tabIndex },
@@ -85,8 +83,7 @@ export default class SingleLineTextInput extends createjs.Container {
     this.accessible.placeholder = placeholderText;
 
     this.addEventListener('click', this.onFocus);
-    // todo: handle mouse based blur causing event
-
+    this.addEventListener('blur', this.onBlur);
     this._mode = MODES.INSERT;
   }
 
@@ -137,11 +134,7 @@ export default class SingleLineTextInput extends createjs.Container {
     }
 
     if (evt.type === 'click') {
-      // prep for keyboard input
-      const canvas = $(this.stage.canvas);
-      canvas.focus();
-      canvas.on('keydown', this._onCanvasKeyDown);
-
+      this.accessible.requestFocus();
       // determine cursor x coordinate based on click position vs letters
       const tmp = this._mouseXToLetterIndexAndPos(evt.stageX);
       this._cursorIndex = tmp.index;
@@ -155,7 +148,6 @@ export default class SingleLineTextInput extends createjs.Container {
       this._cursorTimeline.kill();
       this._cursorTimeline = undefined;
     }
-    $(this.stage.canvas).off('keydown', this._onCanvasKeyDown);
   }
 
   _incrementCursorPos() {
@@ -166,100 +158,6 @@ export default class SingleLineTextInput extends createjs.Container {
   _decrementCursorPos() {
     this._cursorIndex = Math.max(this._cursorIndex - 1, 0);
     this._cursorToIndex();
-  }
-
-  _onCanvasKeyDown(evt) {
-    let evtHandled = false;
-    if ((evt.key >= 'a' && evt.key <= 'z') || (evt.key >= '0' && evt.key <= '9')) {
-      const char = evt.shiftKey ? evt.key.toUpperCase() : evt.key;
-      if (this._isSelectionActive()) {
-        this._updateDisplayString([this._text.text.slice(0, this._selection.start), char, this._text.text.slice(this._selection.end)].join(''));
-        this._cursorIndex = this._selection.start + 1;
-        this._clearSelection();
-      } else {
-        if (this._mode === MODES.INSERT) {
-          this._updateDisplayString([this._text.text.slice(0, this._cursorIndex), char, this._text.text.slice(this._cursorIndex)].join(''));
-        } else {
-          this._updateDisplayString([this._text.text.slice(0, this._cursorIndex), char, this._text.text.slice(this._cursorIndex + 1)].join(''));
-        }
-        ++this._cursorIndex;
-      }
-      this._cursorToIndex();
-      evtHandled = true;
-    } else if (evt.keyCode === KeyCodes.insert) {
-      this._mode = this._mode === MODES.INSERT ? MODES.OVERWRITE : MODES.INSERT;
-      evtHandled = true;
-    } else if (evt.shiftKey && (evt.keyCode === KeyCodes.right || evt.keyCode === KeyCodes.left)) {
-      if (evt.keyCode === KeyCodes.right) {
-        this._selection.start = this._selection.start === -1
-          ? this._cursorIndex : this._selection.start;
-        this._incrementCursorPos();
-        this._selection.end = this._cursorIndex;
-      } else {
-        this._selection.end = this._selection.end === -1 ? this._cursorIndex : this._selection.end;
-        this._decrementCursorPos();
-        this._selection.start = this._cursorIndex;
-      }
-      this._updateSelection();
-    } else if (evt.keyCode === KeyCodes.right || evt.keyCode === KeyCodes.left) {
-      this._clearSelection();
-      if (evt.keyCode === KeyCodes.right) {
-        this._incrementCursorPos();
-      } else {
-        this._decrementCursorPos();
-      }
-      evtHandled = true;
-    } else if (evt.keyCode === KeyCodes.home) {
-      if (evt.shiftKey) {
-        this._selection.start = 0;
-        this._selection.end = this._cursorIndex;
-        this._updateSelection();
-      } else {
-        this._clearSelection();
-      }
-      this._cursorIndex = 0;
-      this._cursorToIndex();
-      evtHandled = true;
-    } else if (evt.keyCode === KeyCodes.end) {
-      if (evt.shiftKey) {
-        this._selection.start = this._cursorIndex;
-        this._selection.end = this._text.text.length;
-        this._updateSelection();
-      } else {
-        this._clearSelection();
-      }
-      this._cursorIndex = this._text.text.length;
-      this._cursorToIndex();
-      evtHandled = true;
-    } else if (evt.keyCode === KeyCodes.delete) {
-      if (this._isSelectionActive()) {
-        this._updateDisplayString([this._text.text.slice(0, this._selection.start), this._text.text.slice(this._selection.end)].join(''));
-        this._cursorIndex = this._selection.start;
-        this._clearSelection();
-        this._cursorToIndex();
-      } else if (this._cursorIndex < this._text.text.length) {
-        this._updateDisplayString([this._text.text.slice(0, this._cursorIndex), this._text.text.slice(this._cursorIndex + 1)].join(''));
-        this._cursorToIndex();
-      }
-      evtHandled = true;
-    } else if (evt.keyCode === KeyCodes.backspace) {
-      if (this._isSelectionActive()) {
-        this._updateDisplayString([this._text.text.slice(0, this._selection.start), this._text.text.slice(this._selection.end)].join(''));
-        this._cursorIndex = this._selection.start;
-        this._clearSelection();
-        this._cursorToIndex();
-      } else if (this._cursorIndex > 0) {
-        this._updateDisplayString([this._text.text.slice(0, this._cursorIndex - 1), this._text.text.slice(this._cursorIndex)].join(''));
-        --this._cursorIndex;
-        this._cursorToIndex();
-      }
-      evtHandled = true;
-    }
-
-    if (evtHandled) {
-      evt.stopPropagation();
-      evt.preventDefault();
-    }
   }
 
   _cursorToIndex() {
