@@ -6,7 +6,6 @@ export default class SingleLineTextBoxData extends InputTagData {
     super(displayObject, role, domIdPrefix);
     _.bindAll(this, '_onChange', '_onSelect');
     this._reactProps.type = 'text';
-    this._reactProps.value = '';
     this._reactProps.onChange = this._onChange;
     this._reactProps.onSelect = this._onSelect;
   }
@@ -183,7 +182,9 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @param {String} str - string value for the text input field
    */
   set value(str) {
-    this._reactProps.value = str;
+    const elementId = this._reactProps.id;
+    const element = document.getElementById(elementId);
+    element.value = str;
   }
 
   /**
@@ -201,10 +202,8 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @param {SyntheticEvent} evt - React event
    */
   _onChange(evt) {
-    this._reactProps.value = evt.target.value;
-
     const event = new createjs.Event('valueChanged', false, false);
-    event.newValue = this._reactProps.value;
+    event.newValue = evt.target.value;
     this._displayObject.dispatchEvent(event);
   }
 
