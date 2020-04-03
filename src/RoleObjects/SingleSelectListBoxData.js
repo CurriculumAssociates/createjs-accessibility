@@ -6,8 +6,9 @@ import SelectData from './SelectData';
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onKeyDown');
+    _.bindAll(this, ['_onKeyDown', '_onFocus']);
     this._reactProps.onKeyDown = this._onKeyDown;
+    this._reactProps.onFocus = this._onFocus;
   }
 
   /**
@@ -244,6 +245,20 @@ export default class SingleSelectListBoxData extends SelectData {
       this._onListBoxChanged();
       evt.preventDefault();
       evt.stopPropagation();
+    } else if (evt.keyCode === KeyCodes.space || evt.keyCode === KeyCodes.enter) {
+      this._onListBoxSubmit();
+    }
+  }
+
+  /**
+   * React event handler for keyboard focus begin
+   * @access private
+   * @param {SyntheticEvent} evt - React event
+   */
+  _onFocus(evt) {
+    console.log("#### FOCUS ON SINGLE SELECT", this._selected);
+    if(this._selected === undefined) {
+      this._selected = this.children[0];
     }
   }
 
@@ -256,6 +271,17 @@ export default class SingleSelectListBoxData extends SelectData {
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValue = this.selectedValue;
     event.selectedDisplayObject = this.selected;
+    _.each(this.children, listItem => {
+      listItem.accessible.reactProps['data-selected'] = listItem === event.selectedDisplayObject ? true : false;
+    })
+    this._displayObject.dispatchEvent(event);
+  }
+
+  _onListBoxSubmit() {
+    console.log("#### LIST BOX SUBMIT");
+    const event = new createjs.Event('keyboardClick', false, false);
     this._displayObject.dispatchEvent(event);
   }
 }
+
+
