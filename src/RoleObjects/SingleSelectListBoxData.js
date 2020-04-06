@@ -45,6 +45,9 @@ export default class SingleSelectListBoxData extends SelectData {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
     }
     super.addChildAt(displayObject, index);
+    if(index === 0) {
+      this._selected = displayObject;
+    }
   }
 
   /**
@@ -256,7 +259,6 @@ export default class SingleSelectListBoxData extends SelectData {
    * @param {SyntheticEvent} evt - React event
    */
   _onFocus(evt) {
-    console.log("#### FOCUS ON SINGLE SELECT", this._selected);
     if(this._selected === undefined) {
       this._selected = this.children[0];
     }
@@ -278,10 +280,7 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   _onListBoxSubmit() {
-    console.log("#### LIST BOX SUBMIT");
     const event = new createjs.Event('keyboardClick', false, false);
-    this._displayObject.dispatchEvent(event);
+    this.selected.dispatchEvent(event);
   }
 }
-
-
