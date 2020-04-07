@@ -28,6 +28,7 @@ const config = {
 if (process.env.NODE_ENV !== 'production') {
   config.watch = true;
   config.watchOptions = {
+    ignored: /node_modules/,
   };
 }
 

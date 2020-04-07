@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CurriculumAssociates/createjs-accessibility.git"
+    "url": "https://github.cainc.com/ngarza/createjs-accessibility-sr-poc.git"
   },
   "keywords": [
     "createjs",
@@ -51,7 +51,7 @@
     "eslint-plugin-react": "^7.14.3",
     "file-loader": "1.1.11",
     "url-loader": "1.0.1",
-    "webpack": "^4.42.1",
+    "webpack": "^4.7.1",
     "webpack-cli": "3.2.3",
     "webpack-node-externals": "1.7.2"
   },
