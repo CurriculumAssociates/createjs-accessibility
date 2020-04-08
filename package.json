@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adagar/createjs-accessibility.git"
+    "url": "git+https://github.com/adagar/createjs-accessibility.git"
   },
   "keywords": [
     "createjs",
@@ -28,10 +28,7 @@
     "wcag",
     "aria"
   ],
-  "author": {
-    "name": "Curriculum Associates",
-    "email": "opensource@cainc.com"
-  },
+  "author": "Curriculum Associates <opensource@cainc.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "6.24.0",
@@ -61,5 +58,9 @@
     "prop-types": "^15.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/adagar/createjs-accessibility/issues"
+  },
+  "homepage": "https://github.com/adagar/createjs-accessibility#readme"
 }
