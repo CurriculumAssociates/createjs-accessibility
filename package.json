@@ -28,7 +28,10 @@
     "wcag",
     "aria"
   ],
-  "author": "Curriculum Associates <opensource@cainc.com>",
+  "author": {
+    "name": "Curriculum Associates",
+    "email": "opensource@cainc.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "babel-core": "6.24.0",
@@ -48,7 +51,7 @@
     "eslint-plugin-react": "^7.14.3",
     "file-loader": "1.1.11",
     "url-loader": "1.0.1",
-    "webpack": "^4.7.1",
+    "webpack": "4.7.0",
     "webpack-cli": "3.2.3",
     "webpack-node-externals": "1.7.2"
   },
@@ -58,9 +61,5 @@
     "prop-types": "^15.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
-  },
-  "bugs": {
-    "url": "https://github.com/adagar/createjs-accessibility/issues"
-  },
-  "homepage": "https://github.com/adagar/createjs-accessibility#readme"
+  }
 }
