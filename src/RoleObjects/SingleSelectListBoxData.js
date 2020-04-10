@@ -6,9 +6,16 @@ import SelectData from './SelectData';
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, ['_onKeyDown', '_onFocus']);
+    // _.bindAll(this, ['_onKeyDown', '_onFocus']);
+    _.bindAll(this, ['_onKeyDown']);
     this._reactProps.onKeyDown = this._onKeyDown;
-    this._reactProps.onFocus = this._onFocus;
+    const querySelect = `#${this.domId}`;
+
+    // console.log('#### CONSTRUCTOR', domIdPrefix, this.domId, querySelect);
+    // document.querySelector(querySelect).setAttribute('aria-multiselectable', false);
+    // this._reactProps.onFocus = this._onFocus;
+    // displayObject.setAttribute('aria-multiselectable', false);
+    console.log('#### DISPLAY OBJECT:', querySelect, document.querySelector(querySelect));
   }
 
   /**
@@ -45,7 +52,7 @@ export default class SingleSelectListBoxData extends SelectData {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
     }
     super.addChildAt(displayObject, index);
-    if(index === 0) {
+    if (index === 0) {
       this._selected = displayObject;
     }
   }
@@ -253,16 +260,16 @@ export default class SingleSelectListBoxData extends SelectData {
     }
   }
 
-  /**
-   * React event handler for keyboard focus begin
-   * @access private
-   * @param {SyntheticEvent} evt - React event
-   */
-  _onFocus(evt) {
-    if(this._selected === undefined) {
-      this._selected = this.children[0];
-    }
-  }
+  // /**
+  //  * React event handler for keyboard focus begin
+  //  * @access private
+  //  * @param {SyntheticEvent} evt - React event
+  //  */
+  // _onFocus(evt) {
+  //   if(this._selected === undefined) {
+  //     this._selected = this.children[0];
+  //   }
+  // }
 
   _getSelectionIndex() {
     return _.findIndex(this.children, child => child === this.selected);
@@ -273,9 +280,18 @@ export default class SingleSelectListBoxData extends SelectData {
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValue = this.selectedValue;
     event.selectedDisplayObject = this.selected;
-    _.each(this.children, listItem => {
-      listItem.accessible.reactProps['data-selected'] = listItem === event.selectedDisplayObject ? true : false;
-    })
+    _.each(this.children, (listItem) => {
+      listItem.accessible.reactProps['aria-selected'] = listItem === event.selectedDisplayObject;
+      if (listItem === event.selectedDisplayObject) {
+        // listItem.accessible.setAttribute('selected', '');
+        // listItem.accessible.reactProps['selected'];
+        // listItem.accessible
+        // document.querySelector(`#${listItem.accessible.domId}`).setAttribute('selected', '');
+      } else {
+        // listItem.accessible.removeAttribute('selected');
+        // document.querySelector(`#${listItem.accessible.domId}`).removeAttribute('selected');
+      }
+    });
     this._displayObject.dispatchEvent(event);
   }
 
