@@ -6,14 +6,14 @@ import SelectData from './SelectData';
 export default class SingleSelectListBoxData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    // _.bindAll(this, ['_onKeyDown', '_onFocus']);
-    _.bindAll(this, ['_onKeyDown']);
+    _.bindAll(this, ['_onKeyDown', '_onFocus']);
+    // _.bindAll(this, ['_onKeyDown']);
     this._reactProps.onKeyDown = this._onKeyDown;
     const querySelect = `#${this.domId}`;
 
     // console.log('#### CONSTRUCTOR', domIdPrefix, this.domId, querySelect);
     // document.querySelector(querySelect).setAttribute('aria-multiselectable', false);
-    // this._reactProps.onFocus = this._onFocus;
+    this._reactProps.onFocus = this._onFocus;
     // displayObject.setAttribute('aria-multiselectable', false);
     console.log('#### DISPLAY OBJECT:', querySelect, document.querySelector(querySelect));
   }
@@ -260,22 +260,24 @@ export default class SingleSelectListBoxData extends SelectData {
     }
   }
 
-  // /**
-  //  * React event handler for keyboard focus begin
-  //  * @access private
-  //  * @param {SyntheticEvent} evt - React event
-  //  */
-  // _onFocus(evt) {
-  //   if(this._selected === undefined) {
-  //     this._selected = this.children[0];
-  //   }
-  // }
+  /**
+   * React event handler for keyboard focus begin
+   * @access private
+   * @param {SyntheticEvent} evt - React event
+   */
+  _onFocus(evt) {
+    if (this.selected === undefined) {
+      this.selected = this.children[0];
+      this._onListBoxChanged();
+    }
+  }
 
   _getSelectionIndex() {
     return _.findIndex(this.children, child => child === this.selected);
   }
 
   _onListBoxChanged() {
+    console.log('#### ON LIST BOX CHANGED');
     this.active = this.selected;
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValue = this.selectedValue;
@@ -283,12 +285,12 @@ export default class SingleSelectListBoxData extends SelectData {
     _.each(this.children, (listItem) => {
       listItem.accessible.reactProps['aria-selected'] = listItem === event.selectedDisplayObject;
       if (listItem === event.selectedDisplayObject) {
-        // listItem.accessible.setAttribute('selected', '');
+        // listItem.accessible.setAttribute('checked', '');
         // listItem.accessible.reactProps['selected'];
         // listItem.accessible
         // document.querySelector(`#${listItem.accessible.domId}`).setAttribute('selected', '');
       } else {
-        // listItem.accessible.removeAttribute('selected');
+        // listItem.accessible.removeAttribute('checked');
         // document.querySelector(`#${listItem.accessible.domId}`).removeAttribute('selected');
       }
     });
