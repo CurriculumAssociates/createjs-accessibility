@@ -277,27 +277,20 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   _onListBoxChanged() {
-    console.log('#### ON LIST BOX CHANGED');
     this.active = this.selected;
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValue = this.selectedValue;
     event.selectedDisplayObject = this.selected;
     _.each(this.children, (listItem) => {
-      listItem.accessible.reactProps['aria-selected'] = listItem === event.selectedDisplayObject;
-      if (listItem === event.selectedDisplayObject) {
-        // listItem.accessible.setAttribute('checked', '');
-        // listItem.accessible.reactProps['selected'];
-        // listItem.accessible
-        // document.querySelector(`#${listItem.accessible.domId}`).setAttribute('selected', '');
-      } else {
-        // listItem.accessible.removeAttribute('checked');
-        // document.querySelector(`#${listItem.accessible.domId}`).removeAttribute('selected');
-      }
+      listItem.accessible.reactProps['data-focused'] = listItem === event.selectedDisplayObject;
     });
     this._displayObject.dispatchEvent(event);
   }
 
   _onListBoxSubmit() {
+    _.each(this.children, (listItem) => {
+      listItem.accessible.reactProps['aria-selected'] = listItem === this.selected;
+    });
     const event = new createjs.Event('keyboardClick', false, false);
     this.selected.dispatchEvent(event);
   }
