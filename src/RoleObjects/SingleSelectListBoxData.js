@@ -288,9 +288,6 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   _onListBoxSubmit() {
-    _.each(this.children, (listItem) => {
-      listItem.accessible.reactProps['aria-selected'] = listItem === this.selected;
-    });
     const event = new createjs.Event('keyboardClick', false, false);
     this.selected.dispatchEvent(event);
   }
