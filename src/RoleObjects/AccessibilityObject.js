@@ -124,6 +124,15 @@ export default class AccessibilityObject {
   }
 
   /**
+   * Get the specified child index of this AccessibilityObject from the accessibility tree.
+   * @access public
+   * @param {createjs.DisplayObject} displayObject - child DisplayObject to get index
+   */
+  getChildIndex(displayObject) {
+    return _.findIndex(this._children, test => test === displayObject);
+  }
+
+  /**
    * Requests that focus be sent to the DOM entry for associated DisplayObject
    * @access public
    */
