@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { ROLES } from './Roles';
-import CompositeData from './RoleObjects/CompositeData';
 
 // role objects in alphabetical order by class name
 import AccessibilityObject from './RoleObjects/AccessibilityObject';
@@ -8,6 +7,8 @@ import ArticleData from './RoleObjects/ArticleData';
 import ButtonData from './RoleObjects/ButtonData';
 import CellData from './RoleObjects/CellData';
 import CheckBoxData from './RoleObjects/CheckBoxData';
+import ComboBoxData from './RoleObjects/ComboBoxData';
+import CompositeData from './RoleObjects/CompositeData';
 import DialogData from './RoleObjects/DialogData';
 import DocumentData from './RoleObjects/DocumentData';
 import FormData from './RoleObjects/FormData';
@@ -135,10 +136,6 @@ function createAccessibilityObjectForRole(config) {
 
       // rest of the roles in alphabetical order by its class entry
 
-    case ROLES.APPLICATION:
-      accessibilityObject = new CompositeData(displayObject, role, domIdPrefix);
-      break;
-
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);
       break;
@@ -153,6 +150,14 @@ function createAccessibilityObjectForRole(config) {
 
     case ROLES.CHECKBOX:
       accessibilityObject = new CheckBoxData(displayObject, role, domIdPrefix);
+      break;
+
+    case ROLES.COMBOBOX:
+      accessibilityObject = new ComboBoxData(displayObject, role, domIdPrefix);
+      break;
+
+    case ROLES.APPLICATION:
+      accessibilityObject = new CompositeData(displayObject, role, domIdPrefix);
       break;
 
     case ROLES.DIALOG:

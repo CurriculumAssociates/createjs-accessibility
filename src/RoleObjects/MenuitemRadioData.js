@@ -27,6 +27,7 @@ export default class MenuItemRadioData extends MenuItemData {
   }
 
   /**
+   * Sets whether the element is editable or not
    * @access public
    * @param {boolean} value - true if the element should be read only, false for read and editable
    */
@@ -35,6 +36,7 @@ export default class MenuItemRadioData extends MenuItemData {
   }
 
   /**
+   * Retrieves whether the element is editable or not
    * @access public
    * @returns {boolean} true if the element should be read only, false for read and editable
    */

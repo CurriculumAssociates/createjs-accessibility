@@ -1,6 +1,6 @@
 {
   "name": "@curriculumassociates/createjs-accessibility",
-  "version": "1.0.0-prerelease.5",
+  "version": "1.0.0-prerelease.6",
   "description": "Module to add accessibility support to createjs",
   "main": "dist/createjs-accessibility.js",
   "scripts": {
