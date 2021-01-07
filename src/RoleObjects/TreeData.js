@@ -25,6 +25,7 @@ export default class TreeData extends SelectData {
   }
 
   /**
+   * Sets whether user input is required or not
    * @access public
    * @param {boolean} value - true if the element is required, false otherwise,
    * undefined to unset this field
@@ -34,6 +35,7 @@ export default class TreeData extends SelectData {
   }
 
   /**
+   * Retrieves whether user input is required or not
    * @access public
    * @returns {boolean} true if the element is required, false otherwise,
    * undefined if this field is unset
