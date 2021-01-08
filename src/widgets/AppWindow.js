@@ -2,6 +2,7 @@ import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import Article from './Article';
 import Button from './Button';
+import ComboBox from './ComboBox';
 import Img from './Img';
 import ListBox from './ListBox';
 import Link from './Link';
@@ -50,7 +51,7 @@ import formulaImg1 from './media/formula1.png';
 import formulaImg2 from './media/formula2.png';
 
 const MENU_HEIGHT = 20;
-const OPTION_WIDTH = 100;
+const OPTION_WIDTH = 115;
 const OPTION_HEIGHT = 18;
 const HEADER_HEIGHT = 34;
 const FOOTER_HEIGHT = 30;
@@ -725,6 +726,27 @@ export default class AppWindow extends createjs.Container {
     form.addChild(mailingListToolTip);
     form.accessible.addChild(mailingListToolTip);
 
+    // combobox example
+    label = new createjs.Text('Primary interest', '14px Arial');
+    label.x = 10;
+    label.y = 352;
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+    form.addChild(label);
+    optionLabels = ['Graphics', 'Game Engines', 'AI', 'Pathfinding', 'Game Design'];
+    options = _.map(optionLabels, optionLabel => new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, true)); // eslint-disable-line max-len
+    const combobox = new ComboBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    combobox.x = 160;
+    combobox.y = 350;
+    form.addChild(combobox);
+    form.accessible.addChild(combobox);
+
     // Alert when form gets submitted
     const alert = new createjs.Container();
     AccessibilityModule.register({
@@ -755,8 +777,6 @@ export default class AppWindow extends createjs.Container {
     alert.visible = false;
 
     label = new createjs.Text('', '14px Arial');
-
-
     AccessibilityModule.register({
       displayObject: label,
       parent: form,
@@ -765,14 +785,14 @@ export default class AppWindow extends createjs.Container {
         text: label.text,
       },
     });
-
     form.addChild(label);
     form.accessible.addChild(label);
+
     // Implementing BUTTON
     const submitCallBack = () => {
-      label.text = `NAME: ${nameField._text.text}, Comments: ${commentArea._text.text}, MEMBERSHIP: ${membershipList._selectedDisplay.text}, mailingList: ${mailingList.accessible.selectedValue}`;
+      label.text = `NAME: ${nameField._text.text}, Comments: ${commentArea._text.text}, MEMBERSHIP: ${membershipList._selectedDisplay.text}, mailingList: ${mailingList.accessible.selectedValue}, primary interest: ${combobox.text}`;
       label.x = 10;
-      label.y = 350;
+      label.y = 390;
 
       // Show alert
       alert.visible = true;
@@ -784,7 +804,7 @@ export default class AppWindow extends createjs.Container {
 
 
     const resetAll = () => {
-      form.removeChild(label);
+      label.text = '';
       form.accessible.removeChild(label);
       nameField._updateDisplayString('');
       nameField.onBlur();
@@ -794,6 +814,7 @@ export default class AppWindow extends createjs.Container {
       mailingList.onBlur();
       mailingList._unhighlightAll();
       mailingList.accessible.selected = [];
+      combobox.text = '';
     };
 
     const alertDialog = new AlertDialog({

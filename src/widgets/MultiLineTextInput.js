@@ -78,6 +78,10 @@ export default class MultiLineTextInput extends createjs.Container {
     this._mode = MODES.INSERT;
   }
 
+  get text() {
+    return this._text.text;
+  }
+
   /**
    * Internal function for updating the string displayed in the text input
    * @access private
