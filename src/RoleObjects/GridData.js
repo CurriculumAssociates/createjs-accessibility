@@ -73,17 +73,26 @@ export default class GridData extends TableData {
     if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
       const targetData = this._interactiveElemToGridData(event.target);
       if (targetData) {
-        // todo: handle moving between sections
         // todo: handle expandable rows without relying on the non-standard expandedArrow and collapsedArrow fields on the DisplayObject instance
 
-        const rowArr = this.children[targetData.sectionIndex].accessible.children;
+        let rowArr = this.children[targetData.sectionIndex].accessible.children;
 
         switch (event.keyCode) {
           case KeyCodes.up:
             targetData.rowIndex--;
+            if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
+              targetData.sectionIndex--;
+              targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1;
+              rowArr = this.children[targetData.sectionIndex].accessible.children;
+            }
             break;
           case KeyCodes.down:
             targetData.rowIndex++;
+            if (targetData.rowIndex >= rowArr.length && targetData.sectionIndex < (this.children.length - 1)) {
+              targetData.sectionIndex++;
+              targetData.rowIndex = 0;
+              rowArr = this.children[targetData.sectionIndex].accessible.children;
+            }
             break;
           case KeyCodes.left:
             targetData.colIndex--;
