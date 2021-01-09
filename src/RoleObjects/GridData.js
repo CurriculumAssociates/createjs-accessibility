@@ -8,6 +8,7 @@ export default class GridData extends TableData {
     _.bindAll(this, 'onKeyDown');
     this._reactProps.onKeyDown = this.onKeyDown;
   }
+
   /**
    *  hierarchical level of the grid within other structures
    * @access public
@@ -70,59 +71,85 @@ export default class GridData extends TableData {
       up, down, right, left, home, end,
     } = KeyCodes;
     if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
-      const { target } = event;
-      const rowArr = this._children[0].accessible._children;
-      let rowIndex = this.getRowIndex(target);
-      let colIndex = this.getColIndex(target);
-      const currentRowData = rowArr[rowIndex];
-      const isExpandable = currentRowData.expandedArrow && currentRowData.expandedArrow.visible;
-      const isCollapsable = currentRowData.collapsedArrow && currentRowData.collapsedArrow.visible;
-      const rowClick = (e) => {
-        const evt = new createjs.Event('keyboardClick', false, e.cancelable);
-        const skipPreventDefault = currentRowData.dispatchEvent(evt);
-        if (!skipPreventDefault) {
-          e.preventDefault();
-        }
-        e.stopPropagation();
-      };
-      switch (event.keyCode) {
-        case KeyCodes.up:
-          rowIndex--;
-          break;
-        case KeyCodes.down:
-          rowIndex++;
-          break;
-        case KeyCodes.left:
-          isExpandable ? rowClick(event) : colIndex--;
-          break;
-        case KeyCodes.right:
-          isCollapsable ? rowClick(event) : colIndex++;
-          break;
-        case KeyCodes.home:
-          colIndex = 0;
-          break;
-        case KeyCodes.end:
-          colIndex = currentRowData.cellCount - 1;
-          break;
-        default:
-          break;
-      }
+      const targetData = this._interactiveElemToGridData(event.target);
+      if (targetData) {
+        // todo: handle moving between sections
+        // todo: handle expandable rows without relying on the non-standard expandedArrow and collapsedArrow fields on the DisplayObject instance
 
-      const getTarget = () => {
-        if (rowArr[rowIndex]) {
-          const colArr = rowArr[rowIndex].accessible._children;
-          if (colArr[colIndex]) {
-            return colArr[colIndex];
-          }
-          return null;
+        const rowArr = this.children[targetData.sectionIndex].accessible.children;
+
+        switch (event.keyCode) {
+          case KeyCodes.up:
+            targetData.rowIndex--;
+            break;
+          case KeyCodes.down:
+            targetData.rowIndex++;
+            break;
+          case KeyCodes.left:
+            targetData.colIndex--;
+            break;
+          case KeyCodes.right:
+            targetData.colIndex++;
+            break;
+          case KeyCodes.home:
+            targetData.colIndex = 0;
+            break;
+          case KeyCodes.end:
+            targetData.colIndex = rowArr[targetData.rowIndex].accessible.children.length - 1;
+            break;
+          default:
+            break;
         }
-        return null;
-      };
-      const nextTarget = getTarget();
-      if (nextTarget) {
-        nextTarget.accessible.requestFocus();
+
+        let nextTarget = null;
+        if (rowArr[targetData.rowIndex]) {
+          const colArr = rowArr[targetData.rowIndex].accessible.children;
+          if (colArr[targetData.colIndex] && colArr[targetData.colIndex].accessible.children.length > 0) {
+            nextTarget = colArr[targetData.colIndex].accessible.children[0];
+          }
+        }
+        if (nextTarget) {
+          nextTarget.accessible.tabIndex = targetData.displayObject.accessible.tabIndex;
+          targetData.displayObject.accessible.tabIndex = -1;
+          nextTarget.accessible.requestFocus();
+          event.preventDefault();
+          event.stopPropagation();
+        }
       }
     }
+  }
+
+  _interactiveElemToGridData(elem) {
+    let matchingData = null;
+
+    const id = elem.getAttribute('id');
+    _.forEach(this.children, (tableSectionDisplayObject, sectionIndex) => {
+      _.forEach(tableSectionDisplayObject.accessible.children, (rowDisplayObject, rowIndex) => {
+        _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
+          _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => {
+            if (cellChildDisplayObject.accessible.domId === id) {
+              matchingData = {
+                displayObject: cellChildDisplayObject,
+                sectionIndex,
+                rowIndex,
+                colIndex,
+                cellChildIndex,
+              };
+            }
+
+            return !matchingData;
+          });
+
+          return !matchingData;
+        });
+
+        return !matchingData;
+      });
+
+      return !matchingData;
+    });
+
+    return matchingData;
   }
 
   getRowIndex(target) {
