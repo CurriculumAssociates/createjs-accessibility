@@ -90,74 +90,166 @@ export default class GridData extends TableData {
       super._onKeyDown(event);
     }
 
-    const {
-      up, down, right, left, home, end,
-    } = KeyCodes;
-    if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
+    const keyToUpdateMap = {
+      [KeyCodes.up]: '_updateTargetDataUp',
+      [KeyCodes.down]: '_updateTargetDataDown',
+      [KeyCodes.left]: '_updateTargetDataLeft',
+      [KeyCodes.right]: '_updateTargetDataRight',
+      [KeyCodes.home]: '_updateTargetDataHome',
+      [KeyCodes.end]: '_updateTargetDataEnd',
+    };
+
+    const updateFuncName = keyToUpdateMap[event.keyCode];
+    if (updateFuncName) {
       const targetData = this._focusableElemToTargetData(event.target);
-      if (targetData) {
-        // eslint-disable-next-line max-len
-        // todo: handle expandable rows without relying on the non-standard expandedArrow and collapsedArrow fields on the DisplayObject instance
+      const attemptFocusUpdate = this[updateFuncName](targetData);
 
-        let rowArr = this.children[targetData.sectionIndex].accessible.children;
-
-        switch (event.keyCode) {
-          case KeyCodes.up:
-            targetData.rowIndex--;
-            if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
-              targetData.sectionIndex--;
-              targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
-              rowArr = this.children[targetData.sectionIndex].accessible.children;
-            }
-            break;
-          case KeyCodes.down:
-            targetData.rowIndex++;
-            if (targetData.rowIndex >= rowArr.length && targetData.sectionIndex < (this.children.length - 1)) { // eslint-disable-line max-len
-              targetData.sectionIndex++;
-              targetData.rowIndex = 0;
-              rowArr = this.children[targetData.sectionIndex].accessible.children;
-            }
-            break;
-          case KeyCodes.left:
-            if (targetData.displayObject.accessible.role === ROLES.ROW) {
-              const rowData = targetData.displayObject.accessible;
-              if (!rowData.expanded) {
-                // non-exandable rows move focus to the previous level's row, if there is one
-                // collapsed exandable rows do the same
-              } else {
-                // expanded exandable rows collapse
-                const collapseEvent = new createjs.Event('collapseRow', false, false);
-                collapseEvent.rowDisplayObject = targetData.displayObject;
-                this._displayObject.dispatchEvent(event);
-                return;
-              }
-            } else {
-              targetData.colIndex--;
-
-              // if on the first cell of the row and the row can receive focus,
-              // then focus moves to the row
-              if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) { // eslint-disable-line max-len
-                // todo
-              }
-            }
-            break;
-          case KeyCodes.right:
-            targetData.colIndex++;
-            break;
-          case KeyCodes.home:
-            targetData.colIndex = 0;
-            break;
-          case KeyCodes.end:
-            targetData.colIndex = rowArr[targetData.rowIndex].accessible.children.length - 1;
-            break;
-          default:
-            break;
-        }
-
+      if (attemptFocusUpdate) {
         const nextTarget = this._findNextTarget(targetData);
         this._focusToNextTarget(nextTarget, targetData.displayObject, event);
       }
     }
+  }
+
+  /**
+   * Handles updating the target data when the up arrow key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataUp(targetData) {
+    targetData.rowIndex--;
+    if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
+      // handles rolling into the prior table section
+      targetData.sectionIndex--;
+      targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
+    }
+
+    return true;
+  }
+
+  /**
+   *Handles updating the target data when the down arrow key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataDown(targetData) {
+    const rows = this.children[targetData.sectionIndex].accessible.children;
+    targetData.rowIndex++;
+    if (targetData.rowIndex >= rows.length
+      && targetData.sectionIndex < (this.children.length - 1)) {
+      // handles rolling over into the next table section
+      targetData.sectionIndex++;
+      targetData.rowIndex = 0;
+    }
+
+    return true;
+  }
+
+  /**
+   * Handles updating the target data when the left arrow key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataLeft(targetData) {
+    if (targetData.displayObject.accessible.role === ROLES.ROW) {
+      const rowData = targetData.displayObject.accessible;
+      if (!rowData.expanded) {
+        // non-exandable rows move focus to the previous level's row, if there is one
+        // collapsed exandable rows do the same
+      } else {
+        // expanded exandable rows collapse
+        const collapseEvent = new createjs.Event('collapseRow', false, false);
+        collapseEvent.rowDisplayObject = targetData.displayObject;
+        this._displayObject.dispatchEvent(collapseEvent);
+        return false;
+      }
+    } else {
+      targetData.colIndex--;
+
+      // if on the first cell of the row and the row can receive focus,
+      // then focus moves to the row
+      if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) { // eslint-disable-line max-len
+        // todo
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Handles updating the target data when the right arrow key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataRight(targetData) {
+    targetData.colIndex++;
+
+    return true;
+  }
+
+  /**
+   * Handles updating the target data when the home key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataHome(targetData) {
+    targetData.colIndex = 0;
+
+    return true;
+  }
+
+  /**
+   * Handles updating the target data when the end key is pressed
+   * @access protected
+   *
+   * @param {!TargetData} targetData - target data to update/mutate for which
+   * DisplayObject has focus vs which should get focus as a result of the
+   * keystroke
+   * @returns {boolean} true if focus should potentially be moved,
+   * false if potentially moving focus should be skipped (e.g. the treegrid
+   * emitting an event to handle expanding/collapsing a row instead of moving
+   * focus)
+   */
+  _updateTargetDataEnd(targetData) {
+    const rows = this.children[targetData.sectionIndex].accessible.children;
+    targetData.colIndex = rows[targetData.rowIndex].accessible.children.length - 1;
+
+    return true;
   }
 
   /**
@@ -173,9 +265,9 @@ export default class GridData extends TableData {
   _findNextTarget(targetData) {
     let nextTarget = null;
 
-    const rowArr = this.children[targetData.sectionIndex].accessible.children;
-    if (rowArr[targetData.rowIndex]) {
-      const colArr = rowArr[targetData.rowIndex].accessible.children;
+    const rows = this.children[targetData.sectionIndex].accessible.children;
+    if (rows[targetData.rowIndex]) {
+      const colArr = rows[targetData.rowIndex].accessible.children;
       const cellDisplayObject = colArr[targetData.colIndex];
       if (cellDisplayObject) {
         if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
