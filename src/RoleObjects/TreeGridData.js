@@ -44,9 +44,15 @@ export default class TreeGridData extends GridData {
     return this._reactProps['aria-required'];
   }
 
+  /**
+   * @inheritdoc
+   */
   _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
     let matchingData = null;
 
+    // Since treegrid rows can be expandable, they can receive focus and therefore
+    // need to be checked if they are what currently has focus instead of just
+    // going through the cells.
     if (rowDisplayObject.accessible.domId === id) {
       matchingData = {
         displayObject: rowDisplayObject,
