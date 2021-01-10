@@ -83,7 +83,7 @@ export default class GridData extends TableData {
 
   _onKeyDown(event) {
     if (this.enableKeyEvents) {
-      super._onKeyDown(evt);
+      super._onKeyDown(event);
     }
 
     const {
@@ -101,13 +101,13 @@ export default class GridData extends TableData {
             targetData.rowIndex--;
             if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
               targetData.sectionIndex--;
-              targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1;
+              targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
               rowArr = this.children[targetData.sectionIndex].accessible.children;
             }
             break;
           case KeyCodes.down:
             targetData.rowIndex++;
-            if (targetData.rowIndex >= rowArr.length && targetData.sectionIndex < (this.children.length - 1)) {
+            if (targetData.rowIndex >= rowArr.length && targetData.sectionIndex < (this.children.length - 1)) { // eslint-disable-line max-len
               targetData.sectionIndex++;
               targetData.rowIndex = 0;
               rowArr = this.children[targetData.sectionIndex].accessible.children;
@@ -168,7 +168,7 @@ export default class GridData extends TableData {
               cellChildIndex: -1,
             };
           } else {
-            _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => {
+            _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => { // eslint-disable-line max-len
               if (cellChildDisplayObject.accessible.domId === id) {
                 matchingData = {
                   displayObject: cellChildDisplayObject,

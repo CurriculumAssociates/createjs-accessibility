@@ -1,10 +1,6 @@
 import SectionData from './SectionData';
 
 export default class CellData extends SectionData {
-  constructor(displayObject, role, domIdPrefix) {
-    super(displayObject, role, domIdPrefix);
-  }
-
   /**
    * Sets an element's column index or position with respect to the total number
    * of columns within a table, grid, or treegrid.
@@ -31,7 +27,7 @@ export default class CellData extends SectionData {
    * @param {Number} val - number of columns spanned by this cell.  undefined to unset the field
    */
   set colspan(val) {
-    this._reactProps['colspan'] = val;
+    this._reactProps.colspan = val;
   }
 
   /**
@@ -40,7 +36,7 @@ export default class CellData extends SectionData {
    * @returns {Number} - number of columns spanned by the cell.  undefined if the field is unset
    */
   get colspan() {
-    return this._reactProps['colspan'];
+    return this._reactProps.colspan;
   }
 
   /**
@@ -69,7 +65,7 @@ export default class CellData extends SectionData {
    * @param {Number} val - number of rows spanned by this cell.  undefined to unset the field
    */
   set rowspan(val) {
-    this._reactProps['rowspan'] = val;
+    this._reactProps.rowspan = val;
   }
 
   /**
@@ -78,6 +74,6 @@ export default class CellData extends SectionData {
    * @returns {Number} - number of rows spanned by the cell.  undefined if the field is unset
    */
   get rowspan() {
-    return this._reactProps['rowspan'];
+    return this._reactProps.rowspan;
   }
 }
