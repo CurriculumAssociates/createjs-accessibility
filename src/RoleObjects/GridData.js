@@ -1,6 +1,7 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import TableData from './TableData';
+import { ROLES} from '../Roles';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
@@ -114,7 +115,25 @@ export default class GridData extends TableData {
             }
             break;
           case KeyCodes.left:
-            targetData.colIndex--;
+            if (targetData.displayObject.accessible.role === ROLES.ROW) {
+              const rowData = targetData.displayObject.accessible;
+              if (!rowData.expanded) {
+                // non-exandable rows move focus to the previous level's row, if there is one
+                // collapsed exandable rows do the same
+              } else {
+                // expanded exandable rows collapse
+                const collapseEvent = new createjs.Event('collapseRow', false, false);
+                return;
+              }
+            } else {
+              targetData.colIndex--;
+
+              // if on the first cell of the row and the row can receive focus,
+              // then focus moves to the row
+              if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) {
+                // todo
+              }
+            }
             break;
           case KeyCodes.right:
             targetData.colIndex++;
@@ -129,26 +148,38 @@ export default class GridData extends TableData {
             break;
         }
 
-        let nextTarget = null;
-        if (rowArr[targetData.rowIndex]) {
-          const colArr = rowArr[targetData.rowIndex].accessible.children;
-          const cellDisplayObject = colArr[targetData.colIndex];
-          if (cellDisplayObject) {
-            if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
-              nextTarget = cellDisplayObject;
-            } else if (cellDisplayObject.accessible.children.length > 0) {
-              nextTarget = cellDisplayObject.accessible.children[0];
-            }
-          }
-        }
-        if (nextTarget) {
-          nextTarget.accessible.tabIndex = targetData.displayObject.accessible.tabIndex;
-          targetData.displayObject.accessible.tabIndex = -1;
-          nextTarget.accessible.requestFocus();
-          event.preventDefault();
-          event.stopPropagation();
+        const nextTarget = this._findNextTarget(targetData);
+        this._focusToNextTarget(nextTarget, targetData.displayObject, event);
+      }
+    }
+  }
+
+  _findNextTarget(targetData) {
+    let nextTarget = null;
+
+    const rowArr = this.children[targetData.sectionIndex].accessible.children;
+    if (rowArr[targetData.rowIndex]) {
+      const colArr = rowArr[targetData.rowIndex].accessible.children;
+      const cellDisplayObject = colArr[targetData.colIndex];
+      if (cellDisplayObject) {
+        if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
+          nextTarget = cellDisplayObject;
+        } else if (cellDisplayObject.accessible.children.length > 0) {
+          nextTarget = cellDisplayObject.accessible.children[0];
         }
       }
+    }
+
+    return nextTarget;
+  }
+
+  _focusToNextTarget(nextTarget, prevTarget, evt) {
+    if (nextTarget) {
+      nextTarget.accessible.tabIndex = prevTarget.accessible.tabIndex;
+      prevTarget.accessible.tabIndex = -1;
+      nextTarget.accessible.requestFocus();
+      event.preventDefault();
+      event.stopPropagation();
     }
   }
 
@@ -157,40 +188,60 @@ export default class GridData extends TableData {
 
     const id = elem.getAttribute('id');
     _.forEach(this.children, (tableSectionDisplayObject, sectionIndex) => {
-      _.forEach(tableSectionDisplayObject.accessible.children, (rowDisplayObject, rowIndex) => {
-        _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
-          if (cellDisplayObject.accessible.domId === id) {
-            matchingData = {
-              displayObject: cellDisplayObject,
-              sectionIndex,
-              rowIndex,
-              colIndex,
-              cellChildIndex: -1,
-            };
-          } else {
-            _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => { // eslint-disable-line max-len
-              if (cellChildDisplayObject.accessible.domId === id) {
-                matchingData = {
-                  displayObject: cellChildDisplayObject,
-                  sectionIndex,
-                  rowIndex,
-                  colIndex,
-                  cellChildIndex,
-                };
-              }
+      matchingData = this._searchSection(id, tableSectionDisplayObject, sectionIndex);
+      return !matchingData;
+    });
 
-              return !matchingData;
-            });
-          }
+    return matchingData;
+  }
 
-          return !matchingData;
-        });
+  _searchSection(id, tableSectionDisplayObject, sectionIndex) {
+    let matchingData = null;
+
+    _.forEach(tableSectionDisplayObject.accessible.children, (rowDisplayObject, rowIndex) => {
+      matchingData = this._searchRow(id, rowDisplayObject, sectionIndex, rowIndex);
+      return !matchingData;
+    });
+
+    return matchingData;
+  }
+
+  _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
+    let matchingData = null;
+
+    _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
+      matchingData = this._searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex);
+      return !matchingData;
+    });
+
+    return matchingData;
+  }
+
+  _searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex) {
+    let matchingData = null;
+    if (cellDisplayObject.accessible.domId === id) {
+      matchingData = {
+        displayObject: cellDisplayObject,
+        sectionIndex,
+        rowIndex,
+        colIndex,
+        cellChildIndex: -1,
+      };
+    } else {
+      _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => { // eslint-disable-line max-len
+        if (cellChildDisplayObject.accessible.domId === id) {
+          matchingData = {
+            displayObject: cellChildDisplayObject,
+            sectionIndex,
+            rowIndex,
+            colIndex,
+            cellChildIndex,
+          };
+        }
 
         return !matchingData;
       });
-
-      return !matchingData;
-    });
+    }
 
     return matchingData;
   }

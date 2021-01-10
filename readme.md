@@ -102,7 +102,6 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | | keyup | `keyCode`: code for which key was released | A key was released on the keyboard |
 | button | keyboardClick | | clicking event from keyboard interaction |
 | checkbox | keyboardClick | | clicking event from keyboard interaction |
-| grid | keyboardClick | | clicking event from keyboard interaction |
 | menu item | closeMenu | | the menu should close |
 | menu item | openMenu | | the menu should open |
 | menu item | keyboardClick | | the menu item was clicked |
@@ -121,6 +120,7 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | | change | `value`: number representing the new value | the value of the spin button has changed |
 | tab | click | | clicking event from keyboard interaction |
 | tab list | click | | clicking event from keyboard interaction |
+| tree grid | collapseRow | `rowDisplayObject`: DisplayObject for the row to collapse | The specified expandable row of the grid should be collapsed |
 | tree item | click | | clicking event from keyboard interaction |
 
 ### Test app and reference implementation

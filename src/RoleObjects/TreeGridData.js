@@ -42,4 +42,25 @@ export default class TreeGridData extends GridData {
   get required() {
     return this._reactProps['aria-required'];
   }
+
+  _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
+    let matchingData = null;
+
+    if (rowDisplayObject.accessible.domId === id) {
+      matchingData = {
+        displayObject: rowDisplayObject,
+        sectionIndex,
+        rowIndex,
+        colIndex: -1,
+        cellChildIndex: -1,
+      };
+    } else {
+      _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
+        matchingData = this._searchCell(elem, cellDisplayObject, sectionIndex, rowIndex, colIndex);
+        return !matchingData;
+      });
+    }
+
+    return matchingData;
+  }
 }

@@ -2,7 +2,7 @@
   "name": "@curriculumassociates/createjs-accessibility",
   "version": "1.0.0-prerelease.6",
   "description": "Module to add accessibility support to createjs",
-  "main": "dist/createjs-accessibility.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint --color src",
