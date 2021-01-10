@@ -90,7 +90,7 @@ export default class GridData extends TableData {
       up, down, right, left, home, end,
     } = KeyCodes;
     if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
-      const targetData = this._interactiveElemToGridData(event.target);
+      const targetData = this._focusableElemToGridData(event.target);
       if (targetData) {
         // todo: handle expandable rows without relying on the non-standard expandedArrow and collapsedArrow fields on the DisplayObject instance
 
@@ -132,8 +132,13 @@ export default class GridData extends TableData {
         let nextTarget = null;
         if (rowArr[targetData.rowIndex]) {
           const colArr = rowArr[targetData.rowIndex].accessible.children;
-          if (colArr[targetData.colIndex] && colArr[targetData.colIndex].accessible.children.length > 0) {
-            nextTarget = colArr[targetData.colIndex].accessible.children[0];
+          const cellDisplayObject = colArr[targetData.colIndex];
+          if (cellDisplayObject) {
+            if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
+              nextTarget = cellDisplayObject;
+            } else if (cellDisplayObject.accessible.children.length > 0) {
+              nextTarget = cellDisplayObject.accessible.children[0];
+            }
           }
         }
         if (nextTarget) {
@@ -147,26 +152,36 @@ export default class GridData extends TableData {
     }
   }
 
-  _interactiveElemToGridData(elem) {
+  _focusableElemToGridData(elem) {
     let matchingData = null;
 
     const id = elem.getAttribute('id');
     _.forEach(this.children, (tableSectionDisplayObject, sectionIndex) => {
       _.forEach(tableSectionDisplayObject.accessible.children, (rowDisplayObject, rowIndex) => {
         _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
-          _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => {
-            if (cellChildDisplayObject.accessible.domId === id) {
-              matchingData = {
-                displayObject: cellChildDisplayObject,
-                sectionIndex,
-                rowIndex,
-                colIndex,
-                cellChildIndex,
-              };
-            }
+          if (cellDisplayObject.accessible.domId === id) {
+            matchingData = {
+              displayObject: cellDisplayObject,
+              sectionIndex,
+              rowIndex,
+              colIndex,
+              cellChildIndex: -1,
+            };
+          } else {
+            _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => {
+              if (cellChildDisplayObject.accessible.domId === id) {
+                matchingData = {
+                  displayObject: cellChildDisplayObject,
+                  sectionIndex,
+                  rowIndex,
+                  colIndex,
+                  cellChildIndex,
+                };
+              }
 
-            return !matchingData;
-          });
+              return !matchingData;
+            });
+          }
 
           return !matchingData;
         });
