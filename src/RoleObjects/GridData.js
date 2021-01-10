@@ -1,7 +1,7 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import TableData from './TableData';
-import { ROLES} from '../Roles';
+import { ROLES } from '../Roles';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
@@ -82,6 +82,9 @@ export default class GridData extends TableData {
     return this._reactProps['aria-readonly'];
   }
 
+  /**
+   * @inheritdoc
+   */
   _onKeyDown(event) {
     if (this.enableKeyEvents) {
       super._onKeyDown(event);
@@ -91,8 +94,9 @@ export default class GridData extends TableData {
       up, down, right, left, home, end,
     } = KeyCodes;
     if ([up, down, right, left, home, end].indexOf(event.keyCode) !== -1) {
-      const targetData = this._focusableElemToGridData(event.target);
+      const targetData = this._focusableElemToTargetData(event.target);
       if (targetData) {
+        // eslint-disable-next-line max-len
         // todo: handle expandable rows without relying on the non-standard expandedArrow and collapsedArrow fields on the DisplayObject instance
 
         let rowArr = this.children[targetData.sectionIndex].accessible.children;
@@ -123,6 +127,8 @@ export default class GridData extends TableData {
               } else {
                 // expanded exandable rows collapse
                 const collapseEvent = new createjs.Event('collapseRow', false, false);
+                collapseEvent.rowDisplayObject = targetData.displayObject;
+                this._displayObject.dispatchEvent(event);
                 return;
               }
             } else {
@@ -130,7 +136,7 @@ export default class GridData extends TableData {
 
               // if on the first cell of the row and the row can receive focus,
               // then focus moves to the row
-              if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) {
+              if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) { // eslint-disable-line max-len
                 // todo
               }
             }
@@ -154,6 +160,16 @@ export default class GridData extends TableData {
     }
   }
 
+  /**
+   * For targetData that has been updated based on which keycode was pressed,
+   * this finds the DisplayObject that should get focus next.
+   * @access protected
+   *
+   * @param {!TargetData} targetData - the updated target data based on what
+   * currently has focus and which key was pressed
+   * @returns {?createjs.DisplayObject} the DisplayObject that should receive
+   * focus.  null if there is no DisplayObject that focus should move to.
+   */
   _findNextTarget(targetData) {
     let nextTarget = null;
 
@@ -173,17 +189,38 @@ export default class GridData extends TableData {
     return nextTarget;
   }
 
+  /**
+   * Sends focus to the specified target, along with updating the tabIndex of the
+   * target and the DisplayObject that currently has focus in order to maintain
+   * proper tab order according to WAI-ARIA practices.
+   * @access private
+   *
+   * @param {?createjs.DisplayObject} nextTarget - DisplayObject to send focus to.
+   * null if focus should not be moved.
+   * @param {!createjs.DisplayObject} prevTarget - the DisplayObject that currently
+   * has focus
+   * @param {!SyntheticEvent} evt - React event
+   */
   _focusToNextTarget(nextTarget, prevTarget, evt) {
     if (nextTarget) {
       nextTarget.accessible.tabIndex = prevTarget.accessible.tabIndex;
       prevTarget.accessible.tabIndex = -1;
       nextTarget.accessible.requestFocus();
-      event.preventDefault();
-      event.stopPropagation();
+      evt.preventDefault();
+      evt.stopPropagation();
     }
   }
 
-  _focusableElemToGridData(elem) {
+  /**
+   * Converts the element that currently has focus to TargetData describing is
+   * position within the grid.
+   * @access protected
+   *
+   * @param {!DOMElement} elem - element that currently has focus
+   * @returns {?TargetData} target data for the DisplayObject that currently has
+   * focus. null if there is no match.
+   */
+  _focusableElemToTargetData(elem) {
     let matchingData = null;
 
     const id = elem.getAttribute('id');
@@ -195,6 +232,18 @@ export default class GridData extends TableData {
     return matchingData;
   }
 
+  /**
+   * Searches a table section for the DisplayObject whose AccessibilityObject domId
+   * matches the specified id.
+   * @access protected
+   *
+   * @param {!string} id - id to search for
+   * @param {createjs.DisplayObject} tableSectionDisplayObject - DisplayObject
+   * for the table section to search
+   * @param {Number} sectionIndex - index of which table section to search
+   * @returns {?TargetData} target data for the DisplayObject that currently has
+   * focus. null if there is no match.
+   */
   _searchSection(id, tableSectionDisplayObject, sectionIndex) {
     let matchingData = null;
 
@@ -206,6 +255,19 @@ export default class GridData extends TableData {
     return matchingData;
   }
 
+  /**
+   * Searches a row for the DisplayObject whose AccessibilityObject domId
+   * matches the specified id.
+   * @access protected
+   *
+   * @param {!string} id - id to search for
+   * @param {createjs.DisplayObject} rowDisplayObject - DisplayObject
+   * for the row to search
+   * @param {Number} sectionIndex - index of which table section is being searched
+   * @param {Number} rowIndex - index of which row to search
+   * @returns {?TargetData} target data for the DisplayObject that currently has
+   * focus. null if there is no match.
+   */
   _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
     let matchingData = null;
 
@@ -217,6 +279,20 @@ export default class GridData extends TableData {
     return matchingData;
   }
 
+  /**
+   * Searches a cell for the DisplayObject whose AccessibilityObject domId
+   * matches the specified id.
+   * @access protected
+   *
+   * @param {!string} id - id to search for
+   * @param {createjs.DisplayObject} cellDisplayObject - DisplayObject
+   * for the cell to search
+   * @param {Number} sectionIndex - index of which table section is being searched
+   * @param {Number} rowIndex - index of which row being search
+   * @param {Number} colIndex - index of which column to search
+   * @returns {?TargetData} target data for the DisplayObject that currently has
+   * focus. null if there is no match.
+   */
   _searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex) {
     let matchingData = null;
     if (cellDisplayObject.accessible.domId === id) {
@@ -246,3 +322,23 @@ export default class GridData extends TableData {
     return matchingData;
   }
 }
+
+/**
+ * @typedef {Object} TargetData
+ * @property {createjs.DisplayObject} displayObject - DisplayObject that currently
+ * has focus
+ * @property {Number} sectionIndex - index into the GridData's children array for
+ * which section of the table contains the DisplayObject that currently or should
+ * receive focus
+ * @property {Number} rowIndex - index into the table section's AccessibilityObject
+ * children array for which row contains the DisplayObject that currently or should
+ * receive focus
+ * @property {Number} colIndex - index into the row's AccessibilityObject children
+ * array for which table cell either has or contains the DIsplayObject that
+ * currently or should receive focus.  -1 if the row itself has or should receive
+ * focus (this value is only applicable to treegrid role).
+ * @property {Number} cellChildIndex - index into the cell's AccessibilityObject
+ * children array for which has focus.  -1 if the cell itself has focus, which
+ * should only occur in the case of the cell having a tabIndex set and therefore
+ * this child elements should not be focusable.
+ */

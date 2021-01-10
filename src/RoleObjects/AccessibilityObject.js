@@ -812,7 +812,7 @@ export default class AccessibilityObject {
 
   /**
    * Event listener for keydown events
-   * @access private
+   * @access protected
    * @param {SyntheticEvent} evt - React event
    */
   _onKeyDown(evt) {
@@ -829,7 +829,7 @@ export default class AccessibilityObject {
 
   /**
    * Event listener for keyup events
-   * @access private
+   * @access protected
    * @param {SyntheticEvent} evt - React event
    */
   _onKeyUp(evt) {

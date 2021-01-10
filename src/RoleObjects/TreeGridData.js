@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import GridData from './GridData';
 
 export default class TreeGridData extends GridData {
@@ -56,7 +57,7 @@ export default class TreeGridData extends GridData {
       };
     } else {
       _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
-        matchingData = this._searchCell(elem, cellDisplayObject, sectionIndex, rowIndex, colIndex);
+        matchingData = this._searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex);
         return !matchingData;
       });
     }
