@@ -26,17 +26,16 @@ export default class GridData extends TableData {
   }
 
   /**
-   *  hierarchical level of the grid within other structures
+   * hierarchical level of the grid within other structures
    * @access public
    * @param {Number} val - aria-level is an integer greater than or equal to 1
    */
-
   set level(val) {
     this._reactProps['aria-level'] = val;
   }
 
   /**
-   *  hierarchical level of the grid within other structures
+   * hierarchical level of the grid within other structures
    * @access public
    * @param {Number} val - aria-level is an integer greater than or equal to 1
    */
@@ -45,7 +44,7 @@ export default class GridData extends TableData {
   }
 
   /**
-   *  user may select more then one item from the current grid
+   * user may select more then one item from the current grid
    * @access public
    * @param {boolean} val - aria-multiselectable is set to true, multiple items
    * in the grid can be selected. The default value is false
@@ -179,13 +178,5 @@ export default class GridData extends TableData {
     });
 
     return matchingData;
-  }
-
-  getRowIndex(target) {
-    return Number(target.getAttribute('aria-rowindex'));
-  }
-
-  getColIndex(target) {
-    return Number(target.getAttribute('aria-colindex'));
   }
 }
