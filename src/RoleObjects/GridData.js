@@ -172,27 +172,7 @@ export default class GridData extends TableData {
    * focus)
    */
   _updateTargetDataLeft(targetData) {
-    if (targetData.displayObject.accessible.role === ROLES.ROW) {
-      const rowData = targetData.displayObject.accessible;
-      if (!rowData.expanded) {
-        // non-exandable rows move focus to the previous level's row, if there is one
-        // collapsed exandable rows do the same
-      } else {
-        // expanded exandable rows collapse
-        const collapseEvent = new createjs.Event('collapseRow', false, false);
-        collapseEvent.rowDisplayObject = targetData.displayObject;
-        this._displayObject.dispatchEvent(collapseEvent);
-        return false;
-      }
-    } else {
-      targetData.colIndex--;
-
-      // if on the first cell of the row and the row can receive focus,
-      // then focus moves to the row
-      if (targetData.colIndex < 0 && !_.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) { // eslint-disable-line max-len
-        // todo
-      }
-    }
+    targetData.colIndex--;
 
     return true;
   }
@@ -267,8 +247,8 @@ export default class GridData extends TableData {
 
     const rows = this.children[targetData.sectionIndex].accessible.children;
     if (rows[targetData.rowIndex]) {
-      const colArr = rows[targetData.rowIndex].accessible.children;
-      const cellDisplayObject = colArr[targetData.colIndex];
+      const cells = rows[targetData.rowIndex].accessible.children;
+      const cellDisplayObject = cells[targetData.colIndex];
       if (cellDisplayObject) {
         if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
           nextTarget = cellDisplayObject;
