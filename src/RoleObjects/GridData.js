@@ -5,8 +5,24 @@ import TableData from './TableData';
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, 'onKeyDown');
-    this._reactProps.onKeyDown = this.onKeyDown;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    // the keydown listener is needed for this role to function per WAI-ARIA practices
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -66,7 +82,11 @@ export default class GridData extends TableData {
     return this._reactProps['aria-readonly'];
   }
 
-  onKeyDown(event) {
+  _onKeyDown(event) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+    }
+
     const {
       up, down, right, left, home, end,
     } = KeyCodes;
