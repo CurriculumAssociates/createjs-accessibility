@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { ROLES } from '../Roles';
 import GridData from './GridData';
 
 export default class TreeGridData extends GridData {

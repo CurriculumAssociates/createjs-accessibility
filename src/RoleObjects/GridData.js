@@ -1,7 +1,6 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import TableData from './TableData';
-import { ROLES } from '../Roles';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
