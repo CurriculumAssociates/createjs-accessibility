@@ -388,6 +388,16 @@ export default class AccessibilityObject {
   }
 
   /**
+   * Retrieves the DisplayObject that this AccessibilityObject instance provides
+   * accessibility annotation for.
+   * @access public
+   * @returns {createjs.DisplayObject} DisplayObject that this AccessibilityObject annotates
+   */
+  get displayObject() {
+    return this._displayObject;
+  }
+
+  /**
    * Retrieves the value of the id attribute used in the DOM for the DisplayObject's accessibility
    * information
    * @access public

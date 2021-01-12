@@ -109,7 +109,6 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | | selectionChanged | `selectionStart`: index into the value where the section starts<br>`selectionEnd` index into the value where the section ends<br>`selectionDirection`: "forward" for the selection increasing towards the end of the string, "backward" for the section increasing towards the beginning of the string | there has been a change in which part of the text is selected |
 | multi-select listbox | valueChanged | `selectedValues`: array where each entry is the value of selected options in the listbox<br>`selectedDisplayObjects`: array containing the DisplayObjects that are selected in the listbox | which items are selected in the listbox have changed |
 | radio | keyboardClick | | clicking event from keyboard interaction |
-| row | keyboardClick | | clicking event from keyboard interaction |
 | scrollbar | scroll | For horizontal scrollbars, `scrollLeft`: value in pixels, for how far the content is scrolled horizontally.<br>Otherwise, `scrollTop`: value, in pixels, for how far the content is scrolled vertically | scrolling the scrollbar |
 | single line textbox | valueChanged | `value`: the new string in the textbox | the string in the textbox has changed |
 | | selectionChanged | `selectionStart`: index into the value where the section starts<br>`selectionEnd` index into the value where the section ends<br>`selectionDirection`: "forward" for the selection increasing towards the end of the string, "backward" for the section increasing towards the beginning of the string | there has been a change in which part of the text is selected |
@@ -121,6 +120,7 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | tab | click | | clicking event from keyboard interaction |
 | tab list | click | | clicking event from keyboard interaction |
 | tree grid | collapseRow | `rowDisplayObject`: DisplayObject for the row to collapse | The specified expandable row of the grid should be collapsed |
+| tree grid | expandRow | `rowDisplayObject`: DisplayObject for the row to collapse | The specified expandable row of the grid should be collapsed |
 | tree item | click | | clicking event from keyboard interaction |
 
 ### Test app and reference implementation
