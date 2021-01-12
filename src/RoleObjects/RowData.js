@@ -1,5 +1,3 @@
-import KeyCodes from 'keycodes-enum';
-import _ from 'lodash';
 import GroupData from './GroupData';
 
 export default class RowData extends GroupData {
