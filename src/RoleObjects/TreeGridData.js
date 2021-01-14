@@ -149,6 +149,74 @@ export default class TreeGridData extends GridData {
   /**
    * @inheritdoc
    */
+  _updateTargetDataUp(targetData) {
+    let allowFocusUpdate = true;
+
+    if (targetData.displayObject.accessible.role === ROLES.ROW) {
+      let gotoRowIndex = _.findLastIndex(
+        this.children[targetData.sectionIndex].accessible.children,
+        testRow => !_.isUndefined(testRow.accessible.tabIndex)
+          && testRow.accessible.visibleWithInference,
+        targetData.rowIndex - 1
+      );
+      for (let sectionIndex = targetData.sectionIndex - 1;
+        sectionIndex >= 0 && gotoRowIndex === -1;
+        sectionIndex--) {
+        gotoRowIndex = _.findLastIndex(
+          this.children[sectionIndex].accessible.children,
+          testRow => !_.isUndefined(testRow.accessible.tabIndex)
+             && testRow.accessible.visibleWithInference
+        );
+      }
+      if (gotoRowIndex === -1) {
+        allowFocusUpdate = false;
+      } else {
+        targetData.rowIndex = gotoRowIndex;
+      }
+    } else {
+      allowFocusUpdate = super._updateTargetDataUp(targetData);
+    }
+
+    return allowFocusUpdate;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  _updateTargetDataDown(targetData) {
+    let allowFocusUpdate = true;
+
+    if (targetData.displayObject.accessible.role === ROLES.ROW) {
+      let gotoRowIndex = _.findIndex(
+        this.children[targetData.sectionIndex].accessible.children,
+        testRow => !_.isUndefined(testRow.accessible.tabIndex)
+          && testRow.accessible.visibleWithInference,
+        targetData.rowIndex + 1
+      );
+      for (let sectionIndex = targetData.sectionIndex + 1;
+        sectionIndex < this.children.length && gotoRowIndex === -1;
+        sectionIndex++) {
+        gotoRowIndex = _.findIndex(
+          this.children[sectionIndex].accessible.children,
+          testRow => !_.isUndefined(testRow.accessible.tabIndex)
+            && testRow.accessible.visibleWithInference
+        );
+      }
+      if (gotoRowIndex === -1) {
+        allowFocusUpdate = false;
+      } else {
+        targetData.rowIndex = gotoRowIndex;
+      }
+    } else {
+      allowFocusUpdate = super._updateTargetDataDown(targetData);
+    }
+
+    return allowFocusUpdate;
+  }
+
+  /**
+   * @inheritdoc
+   */
   _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
     let matchingData = null;
 
