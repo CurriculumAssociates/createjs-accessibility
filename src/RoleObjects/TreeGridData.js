@@ -159,7 +159,8 @@ export default class TreeGridData extends GridData {
           && testRow.accessible.visibleWithInference,
         targetData.rowIndex - 1
       );
-      for (let sectionIndex = targetData.sectionIndex - 1;
+      let sectionIndex;
+      for (sectionIndex = targetData.sectionIndex - 1;
         sectionIndex >= 0 && gotoRowIndex === -1;
         sectionIndex--) {
         gotoRowIndex = _.findLastIndex(
@@ -171,9 +172,14 @@ export default class TreeGridData extends GridData {
       if (gotoRowIndex === -1) {
         allowFocusUpdate = false;
       } else {
+        targetData.currFocusRowIndex = targetData.rowIndex;
+        targetData.currFocusSectionIndex = targetData.sectionIndex;
         targetData.rowIndex = gotoRowIndex;
+        targetData.sectionIndex = sectionIndex;
       }
     } else {
+      targetData.currFocusRowIndex = targetData.rowIndex;
+      targetData.currFocusSectionIndex = targetData.sectionIndex;
       allowFocusUpdate = super._updateTargetDataUp(targetData);
     }
 
@@ -193,7 +199,8 @@ export default class TreeGridData extends GridData {
           && testRow.accessible.visibleWithInference,
         targetData.rowIndex + 1
       );
-      for (let sectionIndex = targetData.sectionIndex + 1;
+      let sectionIndex;
+      for (sectionIndex = targetData.sectionIndex + 1;
         sectionIndex < this.children.length && gotoRowIndex === -1;
         sectionIndex++) {
         gotoRowIndex = _.findIndex(
@@ -205,9 +212,14 @@ export default class TreeGridData extends GridData {
       if (gotoRowIndex === -1) {
         allowFocusUpdate = false;
       } else {
+        targetData.currFocusRowIndex = targetData.rowIndex;
+        targetData.currFocusSectionIndex = targetData.sectionIndex;
         targetData.rowIndex = gotoRowIndex;
+        targetData.sectionIndex = sectionIndex;
       }
     } else {
+      targetData.currFocusRowIndex = targetData.rowIndex;
+      targetData.currFocusSectionIndex = targetData.sectionIndex;
       allowFocusUpdate = super._updateTargetDataDown(targetData);
     }
 
@@ -256,5 +268,42 @@ export default class TreeGridData extends GridData {
     }
 
     return nextTarget;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  _focusToNextTarget(nextTarget, targetData, evt) {
+    if (nextTarget) {
+      if (!_.isUndefined(targetData.currFocusRowIndex)) {
+        // The row containing the focused element (including the row itself) should
+        // be in the tab order.  Other rows, if they can receive focus should get a
+        // tabIndex of -1 (and due to the way focus works, only the row losing it
+        // needs to be udpated).
+        if (targetData.currFocusRowIndex !== targetData.rowIndex
+          || targetData.currFocusSectionIndex !== targetData.sectionIndex) {
+          const currSection = this.children[targetData.currFocusSectionIndex];
+          const nextSection = this.children[targetData.sectionIndex];
+          const currRow = currSection.accessible.children[targetData.currFocusRowIndex];
+          const nextRow = nextSection.accessible.children[targetData.rowIndex];
+          nextRow.accessible.tabIndex = currRow.accessible.tabIndex;
+          currRow.accessible.tabIndex = -1;
+        }
+      }
+
+      // When putting focus on a cell (as in the case of it not having interactable
+      // contents), need to set the tabIndex so that the cell can receive focus.
+      if (nextTarget.accessible.role === ROLES.GRIDCELL) {
+        nextTarget.accessible.tabIndex = 0;
+      }
+      // If a cell is losing focus, it loses its tabIndex setting
+      if (targetData.displayObject.accessible.role === ROLES.GRIDCELL) {
+        targetData.displayObject.accessible.tabIndex = undefined;
+      }
+
+      nextTarget.accessible.requestFocus();
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
   }
 }

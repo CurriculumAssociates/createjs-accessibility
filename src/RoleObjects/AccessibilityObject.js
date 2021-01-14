@@ -138,6 +138,10 @@ export default class AccessibilityObject {
       if (this.enabled && elem.getAttribute('disabled') !== null) {
         elem.removeAttribute('disabled');
       }
+      // handle elements that won't get tabindex updated until the next render pass
+      if (!_.isUndefined(this.tabIndex) && elem.getAttribute('tabindex') === null) {
+        elem.setAttribute('tabindex', this.tabIndex);
+      }
 
       elem.focus();
     }

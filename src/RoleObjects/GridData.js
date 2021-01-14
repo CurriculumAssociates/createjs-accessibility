@@ -1,6 +1,7 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import TableData from './TableData';
+import { ROLES } from '../Roles';
 
 export default class GridData extends TableData {
   constructor(displayObject, role, domIdPrefix) {
@@ -105,7 +106,7 @@ export default class GridData extends TableData {
 
       if (attemptFocusUpdate) {
         const nextTarget = this._findNextTarget(targetData);
-        this._focusToNextTarget(nextTarget, targetData.displayObject, event);
+        this._focusToNextTarget(nextTarget, targetData, event);
       }
     }
   }
@@ -249,10 +250,10 @@ export default class GridData extends TableData {
       const cells = rows[targetData.rowIndex].accessible.children;
       const cellDisplayObject = cells[targetData.colIndex];
       if (cellDisplayObject) {
-        if (!_.isUndefined(cellDisplayObject.accessible.tabIndex)) {
-          nextTarget = cellDisplayObject;
-        } else if (cellDisplayObject.accessible.children.length > 0) {
+        if (cellDisplayObject.accessible.children.length > 0) {
           nextTarget = cellDisplayObject.accessible.children[0];
+        } else if (cellDisplayObject.accessible.role === ROLES.GRIDCELL) {
+          nextTarget = cellDisplayObject;
         }
       }
     }
@@ -268,12 +269,13 @@ export default class GridData extends TableData {
    *
    * @param {?createjs.DisplayObject} nextTarget - DisplayObject to send focus to.
    * null if focus should not be moved.
-   * @param {!createjs.DisplayObject} prevTarget - the DisplayObject that currently
-   * has focus
+   * @param {!TargetData} targetData - target data convering the DisplayObject
+   * that previously had focused and where focus should move to within the grid
    * @param {!SyntheticEvent} evt - React event
    */
-  _focusToNextTarget(nextTarget, prevTarget, evt) {
+  _focusToNextTarget(nextTarget, targetData, evt) {
     if (nextTarget) {
+      const prevTarget = targetData.displayObject;
       nextTarget.accessible.tabIndex = prevTarget.accessible.tabIndex;
       prevTarget.accessible.tabIndex = -1;
       nextTarget.accessible.requestFocus();
@@ -412,4 +414,10 @@ export default class GridData extends TableData {
  * children array for which has focus.  -1 if the cell itself has focus, which
  * should only occur in the case of the cell having a tabIndex set and therefore
  * this child elements should not be focusable.
+ * @property {?Number} currFocusRowIndex - For TreeGridData if rowIndex might
+ * have been changed, the index of the row that contains or is the item that
+ * currently has  focus.  Otherwise, undefined.
+ * @property {?Number} currFocusSectionIndex - For TreeGridData if rowIndex might
+ * have been changed, the index of the section that contains or is the item that
+ * currently has focus.  Otherwise, undefined.
  */
