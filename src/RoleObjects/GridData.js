@@ -138,7 +138,7 @@ export default class GridData extends TableData {
   }
 
   /**
-   *Handles updating the target data when the down arrow key is pressed
+   * Handles updating the target data when the down arrow key is pressed
    * @access protected
    *
    * @param {!TargetData} targetData - target data to update/mutate for which
