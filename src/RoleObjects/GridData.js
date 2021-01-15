@@ -85,9 +85,12 @@ export default class GridData extends TableData {
   /**
    * @inheritdoc
    */
-  _onKeyDown(event) {
+  _onKeyDown(evt) {
     if (this.enableKeyEvents) {
-      super._onKeyDown(event);
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
     }
 
     const keyToUpdateMap = {
@@ -99,14 +102,14 @@ export default class GridData extends TableData {
       [KeyCodes.end]: '_updateTargetDataEnd',
     };
 
-    const updateFuncName = keyToUpdateMap[event.keyCode];
+    const updateFuncName = keyToUpdateMap[evt.keyCode];
     if (updateFuncName) {
-      const targetData = this._focusableElemToTargetData(event.target);
+      const targetData = this._focusableElemToTargetData(evt.target);
       const attemptFocusUpdate = this[updateFuncName](targetData);
 
       if (attemptFocusUpdate) {
         const nextTarget = this._findNextTarget(targetData);
-        this._focusToNextTarget(nextTarget, targetData, event);
+        this._focusToNextTarget(nextTarget, targetData, evt);
       }
     }
   }
