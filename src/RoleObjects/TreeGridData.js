@@ -153,21 +153,23 @@ export default class TreeGridData extends GridData {
     let allowFocusUpdate = true;
 
     if (targetData.displayObject.accessible.role === ROLES.ROW) {
+      let sectionIndex = targetData.sectionIndex;
       let gotoRowIndex = _.findLastIndex(
-        this.children[targetData.sectionIndex].accessible.children,
+        this.children[sectionIndex].accessible.children,
         testRow => !_.isUndefined(testRow.accessible.tabIndex)
           && testRow.accessible.visibleWithInference,
         targetData.rowIndex - 1
       );
-      let sectionIndex;
-      for (sectionIndex = targetData.sectionIndex - 1;
-        sectionIndex >= 0 && gotoRowIndex === -1;
-        sectionIndex--) {
-        gotoRowIndex = _.findLastIndex(
-          this.children[sectionIndex].accessible.children,
-          testRow => !_.isUndefined(testRow.accessible.tabIndex)
-             && testRow.accessible.visibleWithInference
-        );
+      if (gotoRowIndex === -1) {
+        for (sectionIndex = targetData.sectionIndex - 1;
+          sectionIndex >= 0 && gotoRowIndex === -1;
+          sectionIndex--) {
+          gotoRowIndex = _.findLastIndex(
+            this.children[sectionIndex].accessible.children,
+            testRow => !_.isUndefined(testRow.accessible.tabIndex)
+               && testRow.accessible.visibleWithInference
+          );
+        }
       }
       if (gotoRowIndex === -1) {
         allowFocusUpdate = false;
@@ -193,21 +195,23 @@ export default class TreeGridData extends GridData {
     let allowFocusUpdate = true;
 
     if (targetData.displayObject.accessible.role === ROLES.ROW) {
+      let sectionIndex = targetData.sectionIndex;
       let gotoRowIndex = _.findIndex(
-        this.children[targetData.sectionIndex].accessible.children,
+        this.children[sectionIndex].accessible.children,
         testRow => !_.isUndefined(testRow.accessible.tabIndex)
           && testRow.accessible.visibleWithInference,
         targetData.rowIndex + 1
       );
-      let sectionIndex;
-      for (sectionIndex = targetData.sectionIndex + 1;
-        sectionIndex < this.children.length && gotoRowIndex === -1;
-        sectionIndex++) {
-        gotoRowIndex = _.findIndex(
-          this.children[sectionIndex].accessible.children,
-          testRow => !_.isUndefined(testRow.accessible.tabIndex)
-            && testRow.accessible.visibleWithInference
-        );
+      if (gotoRowIndex === -1) {
+        for (sectionIndex = targetData.sectionIndex + 1;
+          sectionIndex < this.children.length && gotoRowIndex === -1;
+          sectionIndex++) {
+          gotoRowIndex = _.findIndex(
+            this.children[sectionIndex].accessible.children,
+            testRow => !_.isUndefined(testRow.accessible.tabIndex)
+              && testRow.accessible.visibleWithInference
+          );
+        }
       }
       if (gotoRowIndex === -1) {
         allowFocusUpdate = false;
