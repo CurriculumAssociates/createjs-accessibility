@@ -253,6 +253,9 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new SearchBoxData(displayObject, role, domIdPrefix);
       break;
 
+    // note: heading roles are here since aria-level is not needed due to using
+    // semantic markup.  Otherwise these would require their own subclass to provide
+    // getters/setters for that field.
     case ROLES.ALERT:
     case ROLES.ALERTDIALOG:
     case ROLES.BANNER:
@@ -262,9 +265,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.DIRECTORY:
     case ROLES.FEED:
     case ROLES.FIGURE:
-    // note: heading roles are here since aria-level is not needed due to using
-    // semantic markup.  Otherwise these would require their own subclass to provide
-    // getters/setters for that field.
     case ROLES.HEADING1:
     case ROLES.HEADING2:
     case ROLES.HEADING3:
