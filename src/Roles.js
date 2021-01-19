@@ -74,7 +74,6 @@ const ROLES = {
   PARAGRAPH: 'paragraph',
   REGION: 'region',
   ROW: 'row',
-  ROWGROUP: 'rowgroup',
   ROWHEADER: 'rowheader',
   SEPARATOR: 'separator',
   TABLE: 'table',
