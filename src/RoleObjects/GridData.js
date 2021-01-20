@@ -1,5 +1,3 @@
-import TableData from './TableData.js';
-import { ROLES } from '../Roles.js';
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import TableData from './TableData';
