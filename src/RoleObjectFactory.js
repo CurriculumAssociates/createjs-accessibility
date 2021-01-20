@@ -46,6 +46,7 @@ import TableHeaderData from './RoleObjects/TableHeaderData.js';
 import TabListData from './RoleObjects/TabListData.js';
 import TimerData from './RoleObjects/TimerData.js';
 import TreeData from './RoleObjects/TreeData.js';
+import TreeGridData from './RoleObjects/TreeGridData';
 import TreeItemData from './RoleObjects/TreeItemData.js';
 import ToolBarData from './RoleObjects/ToolBarData.js';
 
@@ -158,7 +159,6 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.GRID:
-    case ROLES.TREEGRID:
       accessibilityObject = new GridData(displayObject, role, domIdPrefix);
       break;
 
@@ -323,6 +323,10 @@ function createAccessibilityObjectForRole(config) {
 
     case ROLES.TREE:
       accessibilityObject = new TreeData(displayObject, role, domIdPrefix);
+      break;
+
+    case ROLES.TREEGRID:
+      accessibilityObject = new TreeGridData(displayObject, role, domIdPrefix);
       break;
 
     case ROLES.TREEITEM:

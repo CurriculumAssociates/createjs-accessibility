@@ -1,12 +1,6 @@
-import GroupData from './GroupData.js';
-import KeyCodes from 'keycodes-enum';
+import GroupData from './GroupData';
 
 export default class RowData extends GroupData {
-  constructor(displayObject, role, domIdPrefix) {
-    super(displayObject, role, domIdPrefix);
-    _.bindAll(this, 'onKeyDown');
-    this._reactProps.onKeyDown = this.onKeyDown;
-  }
   /**
    * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
    * @access public
@@ -58,19 +52,5 @@ export default class RowData extends GroupData {
    */
   get level() {
     return this._reactProps['aria-level'];
-  }
-  /**
-   * Keydown listener for an row item
-   * @access private
-   */
-  onKeyDown(evt) {
-    if (evt.keyCode === KeyCodes.enter) {
-      const event = new createjs.Event('keyboardClick', false, evt.cancelable);
-      const skipPreventDefault = this._displayObject.dispatchEvent(event);
-      if (!skipPreventDefault) {
-        evt.preventDefault();
-      }
-      evt.stopPropagation();
-    }
   }
 }

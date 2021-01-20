@@ -128,6 +128,10 @@ export default class AccessibilityObject {
       if (this.enabled && elem.getAttribute('disabled') !== null) {
         elem.removeAttribute('disabled');
       }
+      // handle elements that won't get tabindex updated until the next render pass
+      if (!_.isUndefined(this.tabIndex) && elem.getAttribute('tabindex') === null) {
+        elem.setAttribute('tabindex', this.tabIndex);
+      }
 
       elem.focus();
     }
@@ -282,6 +286,16 @@ export default class AccessibilityObject {
    */
   get describedById() {
     return this._reactProps['aria-describedby'];
+  }
+
+  /**
+   * Retrieves the DisplayObject that this AccessibilityObject instance provides
+   * accessibility annotation for.
+   * @access public
+   * @returns {createjs.DisplayObject} DisplayObject that this AccessibilityObject annotates
+   */
+  get displayObject() {
+    return this._displayObject;
   }
 
   /**
@@ -679,7 +693,7 @@ export default class AccessibilityObject {
 
   /**
    * Event listener for keydown events
-   * @access private
+   * @access protected
    * @param {SyntheticEvent} evt - React event
    */
   _onKeyDown(evt) {
@@ -696,7 +710,7 @@ export default class AccessibilityObject {
 
   /**
    * Event listener for keyup events
-   * @access private
+   * @access protected
    * @param {SyntheticEvent} evt - React event
    */
   _onKeyUp(evt) {

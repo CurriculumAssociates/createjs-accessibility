@@ -1,16 +1,10 @@
 import SectionData from './SectionData.js';
 
 export default class CellData extends SectionData {
-  constructor(displayObject, role, domIdPrefix) {
-    super(displayObject, role, domIdPrefix);
-    // Setting Default value for colspan and rowspan to 1
-    this.colspan = 1;
-    this.rowspan = 1;
-  }
   /**
    * Sets an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
    * @access public
-   * @param {Number} val - Positive number
+   * @param {Number} val - positive number for column index.  undefined to unset the field.
    */
   set colindex(val) {
     this._reactProps['aria-colindex'] = val;
@@ -19,7 +13,7 @@ export default class CellData extends SectionData {
   /**
    * Gives an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
    * @access public
-   * @returns {Number} - Positive number
+   * @returns {Number} - column index.  undefined if the field is unset
    */
   get colindex() {
     return this._reactProps['aria-colindex'];
@@ -27,21 +21,20 @@ export default class CellData extends SectionData {
 
   /**
    * Sets the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
-   * This value must be at least 1 (default) and low enough to avoid overlap with other cells in the same row
    * @access public
-   * @param {Number} val - number
+   * @param {Number} val - number of columns spanned by this cell.  undefined to unset the field
    */
   set colspan(val) {
-    this._reactProps['aria-colspan'] = val;
+    this._reactProps.colspan = val;
   }
 
   /**
    * Gives the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
    * @access public
-   * @returns {Number} - Positive number
+   * @returns {Number} - number of columns spanned by the cell.  undefined if the field is unset
    */
   get colspan() {
-    return this._reactProps['aria-colspan'];
+    return this._reactProps.colspan;
   }
 
   /**
@@ -64,21 +57,19 @@ export default class CellData extends SectionData {
 
   /**
    * Sets the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
-   * This value must be at least 1 (default) and low enough to avoid overlap with next cell in the same column.
-   * Setting the value to 0 indicates that the cell or gridcell is to span all the remaining rows in the row group.
    * @access public
-   * @param {Number} val - Positive number
+   * @param {Number} val - number of rows spanned by this cell.  undefined to unset the field
    */
   set rowspan(val) {
-    this._reactProps['aria-rowspan'] = val;
+    this._reactProps.rowspan = val;
   }
 
   /**
    * Gives the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
    * @access public
-   * @returns {Number} - Positive number
+   * @returns {Number} - number of rows spanned by the cell.  undefined if the field is unset
    */
   get rowspan() {
-    return this._reactProps['aria-rowspan'];
+    return this._reactProps.rowspan;
   }
 }
