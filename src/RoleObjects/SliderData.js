@@ -9,18 +9,10 @@ export default class SliderData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
 
-    _.bindAll(this, 'onChange');
-    this._reactProps.onChange = this.onChange;
+    _.bindAll(this, '_onChange');
+    this._reactProps.onChange = this._onChange;
     this._reactProps.type = 'range';
   }
-
-  onChange(evt) {
-    this._reactProps.value = evt.target.value;
-    const event = new createjs.Event('valueChanged', false, false);
-    event.newValue = this._reactProps.value;
-    this._displayObject.dispatchEvent(event);
-  }
-
 
   /**
   * Sets the step of the slider
@@ -111,5 +103,12 @@ export default class SliderData extends InputTagData {
   */
   get max() {
     return this._reactProps.max;
+  }
+
+  _onChange(evt) {
+    this._reactProps.value = evt.target.value;
+    const event = new createjs.Event('valueChanged', false, false);
+    event.newValue = this._reactProps.value;
+    this._displayObject.dispatchEvent(event);
   }
 }
