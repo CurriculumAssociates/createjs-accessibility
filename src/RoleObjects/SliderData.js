@@ -1,3 +1,4 @@
+import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
 import InputTagData from './InputTagData';
 
@@ -8,9 +9,27 @@ export default class SliderData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
 
-    _.bindAll(this, '_onChange');
+    _.bindAll(this, '_onChange', '_onKeyDown');
     this._reactProps.onChange = this._onChange;
+    this._reactProps.onKeyDown = this._onKeyDown;
     this._reactProps.type = 'range';
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    // keeping the keydown listener always bound for simplicity of dealing with
+    // when pageStep is set.
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -31,6 +50,28 @@ export default class SliderData extends InputTagData {
     return this._reactProps.step;
   }
 
+  /**
+   * Sets the amount to adjust the slider by for page up/down of the slider.
+   * When this is field is unset, the browser default behavior will be used for
+   * those keystrokes.
+   * @access public
+   * @param {Number} val - amount to increment or decrement the slider value by
+   * when page up or page down are pressed.  undefined to unset the field.
+   */
+  set pageStep(val) {
+    this._pageStep = val;
+  }
+
+  /**
+   * Retrieves the amount to adjust the slider by for page up/down keystrokes
+   * @access public
+   * @returns {Number} amount to increment or decrement the slider value by when
+   * page up or down is pressed.  undefined when browser default behavior is used
+   * for those keystrokes.
+   */
+  get pageStep() {
+    return this._pageStep;
+  }
 
   /**
    * Sets the orientation of slider
@@ -110,9 +151,40 @@ export default class SliderData extends InputTagData {
    * @param {SyntheticEvent} evt - React event
    */
   _onChange(evt) {
-    this._reactProps.value = evt.target.value;
+    this.value = evt.target.value;
     const event = new createjs.Event('valueChanged', false, false);
-    event.newValue = this._reactProps.value;
+    event.newValue = this.value;
     this._displayObject.dispatchEvent(event);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (!_.isUndefined(this.pageStep) && (evt.keyCode === KeyCodes.pageup || evt.keyCode === KeyCodes.pagedown)) { // eslint-disable-line max-len
+      const multiplier = evt.keyCode === KeyCodes.pageup ? 1 : -1;
+      const delta = multiplier * this.pageStep;
+      this.value = _.toNumber(this.value) + delta;
+      if (!_.isUndefined(this.min)) {
+        this.value = Math.max(this.value, this.min);
+      }
+      if (!_.isUndefined(this.max)) {
+        this.value = Math.min(this.value, this.max);
+      }
+
+      const event = new createjs.Event('valueChanged', false, false);
+      event.newValue = this.value;
+      this._displayObject.dispatchEvent(event);
+
+      evt.stopPropagation();
+      evt.preventDefault();
+    }
   }
 }
