@@ -19,7 +19,6 @@ import SingleLineTextInput from './SingleLineTextInput';
 import MultiLineTextInput from './MultiLineTextInput';
 import CheckBox from './CheckBox';
 import Search from './Search';
-import Radio from './Radio';
 import RadioGroup from './RadioGroup';
 import Draggable from './Draggable';
 import Slider from './Slider';
@@ -2099,194 +2098,51 @@ export default class AppWindow extends createjs.Container {
 
   _showGridTestCase() {
     this._clearScreen();
-    const BtnData = {
-      type: 'submit',
-      value: 'SUBMIT',
-      name: 'SUBMIT',
+
+    const squareTileDimension = 30;
+    const buttonData = {
+      value: '',
       enabled: true,
-      autoFocus: 'false',
-      form: 'form_1',
-      formAction: '',
-      formMethod: 'GET',
-      formTarget: '_blank',
-      formnoValidate: '',
-      height: 30,
-      width: 90,
+      height: squareTileDimension,
+      width: squareTileDimension,
+    };
+    const buttonClickHandler = (evt) => {
+      const prevValue = evt.currentTarget.text.text;
+      let newValue;
+      if (prevValue === '') {
+        newValue = 'X';
+      } else if (prevValue === 'X') {
+        newValue = 'O';
+      } else {
+        newValue = '';
+      }
+      evt.currentTarget.text.text = newValue;
     };
 
-    const btnText = new createjs.Text('Button', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: btnText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: btnText.text,
-      },
-    });
-    const linkData = {
-      href: 'https://www.w3.org/TR/wai-aria-1.1/#button',
-      text: 'Button',
-    };
-    const btnLink = new Link(linkData);
-    const button = new Button(BtnData, this._nextTab++, _.noop);
+    const gridData = [];
+    for (let r = 0; r < 3; r++) {
+      const row = [];
+      for (let c = 0; c < 3; c++) {
+        const button = new Button(buttonData, -1, buttonClickHandler);
+        button.setBounds(0, 0, squareTileDimension, squareTileDimension);
+        row.push({
+          value: button,
+          type: 'cell',
+          cellWidth: squareTileDimension,
+          cellHeight: squareTileDimension,
+        });
+      }
 
-    const radioText = new createjs.Text('Radio', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: radioText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: radioText.text,
-      },
-    });
-    const radioLinkData = {
-      href: 'https://www.w3.org/TR/wai-aria-1.1/#radio',
-      text: 'Radio',
-    };
-    const radioLink = new Link(radioLinkData);
-    const radio = new Radio({
-      name: 'Radio',
-      value: 'Radio',
-      position: 1,
-      size: 1,
-      tabIndex: this.tabIndex ? this.tabIndex++ : undefined,
-    });
+      gridData.push(row);
+    }
 
-    const checkBoxText = new createjs.Text('CheckBox', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: checkBoxText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: checkBoxText.text,
-      },
-    });
-    const checkBoxLinkData = {
-      href: 'https://www.w3.org/TR/wai-aria-1.1/#checkbox',
-      text: 'CheckBox',
-    };
-    const checkBoxLink = new Link(checkBoxLinkData);
-    const checkBox = new CheckBox(25, 25, this._nextTab++);
+    const grid = new Grid(gridData, this._nextTab++);
+    this._contentArea.addChild(grid);
+    this._contentArea.accessible.addChild(grid);
 
-    const labelText = new createjs.Text('Widget ', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: labelText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: labelText.text,
-      },
-    });
-    const linkText = new createjs.Text('Link ', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: linkText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: linkText.text,
-      },
-    });
-    const interactionText = new createjs.Text('Interaction ', '14px Arial');
-    AccessibilityModule.register({
-      displayObject: interactionText,
-      role: AccessibilityModule.ROLES.NONE,
-      accessibleOptions: {
-        text: interactionText.text,
-      },
-    });
-
-    const row1 = [
-      {
-        value: linkText,
-        type: 'header',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: interactionText,
-        type: 'header',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: labelText,
-        type: 'header',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-    ];
-
-    const row2 = [
-      {
-        value: btnText,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: btnLink,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: button,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-    ];
-
-    const row3 = [
-      {
-        value: checkBoxText,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: checkBoxLink,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: checkBox,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-    ];
-
-    const row4 = [
-      {
-        value: radioText,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: radioLink,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-      {
-        value: radio,
-        type: 'cell',
-        cellWidth: 265,
-        cellHeight: 70,
-      },
-    ];
-    const data = [row1, row2, row3, row4];
-    const tableBody = new Grid(data, this._nextTab++);
-    const table = new createjs.Container();
-    table.addChild(tableBody);
-    AccessibilityModule.register({
-      displayObject: table,
-      role: AccessibilityModule.ROLES.GRID,
-    });
-    table.accessible.addChild(tableBody);
-    table.accessible.rowcount = tableBody.rowCount;
-    table.accessible.colcount = tableBody.colCount;
-    this._contentArea.addChild(table);
-    this._contentArea.accessible.addChild(table);
-    table.y = 20;
+    // just moving the grid so it's not right up against the menu bar or left side of the window
+    grid.x = 50;
+    grid.y = 50;
   }
 
 
@@ -2491,7 +2347,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     const row1 = {
-      rowData: ['III', 'Anish', '420'],
+      rowData: ['III', 'Anish', '5'],
       childrenData: 1,
       type: 'cell',
       level: 1,
@@ -2518,32 +2374,23 @@ export default class AppWindow extends createjs.Container {
     };
 
     const row5 = {
-      rowData: ['XI', 'Sudhir', '20'],
+      rowData: ['XI', 'Sudhir', '30'],
       level: 1,
       type: 'cell',
       childrenData: 0,
     };
 
-    const rows = [row0, row1, row2, row3, row4, row5];
+    const rows = [ row0, row1, row2, row3, row4, row5 ];
     const data = {
       rows,
       cellWidth: 265,
       cellHeight: 60,
     };
 
-    const tableBody = new TreeGrid(data, this._nextTab++);
-    const table = new createjs.Container();
-    table.addChild(tableBody);
-    AccessibilityModule.register({
-      displayObject: table,
-      role: AccessibilityModule.ROLES.TREEGRID,
-    });
-    table.accessible.addChild(tableBody);
-    table.accessible.rowcount = tableBody.rowCount;
-    table.accessible.colcount = tableBody.colCount;
-    this._contentArea.addChild(table);
-    this._contentArea.accessible.addChild(table);
-    table.y = 20;
+    const treeGrid = new TreeGrid(data, 0);
+    this._contentArea.addChild(treeGrid);
+    this._contentArea.accessible.addChild(treeGrid);
+    treeGrid.y = 20;
   }
 
   _showTreeTestCase() {

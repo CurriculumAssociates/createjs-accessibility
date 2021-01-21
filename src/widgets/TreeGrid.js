@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import TreeGridRow from './TreeGridRow';
 
@@ -5,114 +6,126 @@ const OFFSET = 20;
 
 export default class TreeGrid extends createjs.Container {
   constructor(data, tabIndex) {
-    super(data, tabIndex);
+    super();
+    _.bindAll(this, '_onCollapseRow', '_onExpandRow');
+
     AccessibilityModule.register({
       displayObject: this,
+      role: AccessibilityModule.ROLES.TREEGRID,
+      events: [
+        {
+          eventName: 'collapseRow',
+          listener: this._onCollapseRow,
+        },
+        {
+          eventName: 'expandRow',
+          listener: this._onExpandRow,
+        },
+      ],
+    });
+
+    this._table = new createjs.Container();
+    AccessibilityModule.register({
+      displayObject: this._table,
       role: AccessibilityModule.ROLES.TABLEBODY,
     });
-    this.tabIndex = tabIndex;
-    this.data = data.rows;
-    this.rowCount = this.data.length;
-    this.colCount = this.data[0].rowData.length;
-    this.cellWidth = data.cellWidth;
-    this.cellHeight = data.cellHeight;
-    this.totalWidth = data.cellWidth * this.colCount;
-    this.totalHeight = data.cellHeight * this.rowCount;
-    this.rows = [];
-    this.setBounds(0, 0, this.totalWidth, this.totalHeight);
+    this.addChild(this._table);
+    this.accessible.addChild(this._table);
+    this._data = data.rows;
+    this._numRows = data.rows.length;
+    this._numCols = data.rows[0].rowData.length;
+    this._cellWidth = data.cellWidth;
+    this._cellHeight = data.cellHeight;
+    this._totalWidth = data.cellWidth * this._numCols;
+    this._totalHeight = data.cellHeight * this._numRows;
+    this._rows = [];
+    this.setBounds(0, 0, this._totalWidth, this._totalHeight);
 
-    this.createTable();
+    this._createTable();
+
+    const firstFocusableRow = _.find(this._table.accessible.children,
+      row => !_.isUndefined(row.accessible.tabIndex));
+    firstFocusableRow.accessible.tabIndex = tabIndex;
+
+    window.foo = this;
   }
 
-  createTable() {
-    this.createRows();
-    this.setupLayout();
+  _createTable() {
+    this._createRows();
+    this._setupLayout();
   }
 
-  createRows() {
-    const rowWidth = this.totalWidth;
-    const rowHeight = this.cellHeight;
-    const cellCount = this.colCount;
-    const { data } = this;
-    for (let i = 0; i < data.length; i++) {
-      const index = i;
-      const row = new TreeGridRow(data[i], index, rowWidth, rowHeight, cellCount, this.tabIndex++);
-      row.addEventListener('keyboardClick', this.toggleTreeVisibility.bind(this));
-      row.addEventListener('click', this.toggleTreeVisibility.bind(this));
-      row.addRowData();
-      this.addChild(row);
-      this.accessible.addChild(row);
-      this.rows.push(row);
-      if (data[i].level === 1) {
-        row.visible = true;
-      } else {
-        row.visible = false;
-      }
-      row.hasChildren = (row.data.childrenData > 0);
-      row.opened = false;
+  _createRows() {
+    const rowWidth = this._totalWidth;
+    const rowHeight = this._cellHeight;
+    const cellCount = this._numCols;
+    for (let i = 0; i < this._data.length; i++) {
+      const row = new TreeGridRow(this._data[i], i, rowWidth, rowHeight, cellCount); // eslint-disable-line max-len
+      row.collapsedArrow.addEventListener('click', this._onExpandRow);
+      row.expandedArrow.addEventListener('click', this._onCollapseRow);
+      this._table.addChild(row);
+      this._table.accessible.addChild(row);
+      this._rows.push(row);
+      row.visible = this._data[i].level === 1;
     }
   }
 
-  toggleTreeVisibility(evt) {
-    const { currentTarget } = evt;
-    currentTarget.opened = !currentTarget.opened;
-    currentTarget.hasChildren && currentTarget.toggleArrow();
-    if (currentTarget.opened) {
-      this.open(currentTarget);
-    } else {
-      this.close(currentTarget);
-    }
-    this.setupLayout();
-  }
+  _onExpandRow(evt) {
+    // to handle both CAM expandRow event and CJS click event with the same listener
+    const row = evt.rowDisplayObject || evt.target.parent;
 
-  open(currentTarget) {
-    if (currentTarget.hasChildren) {
-      const lastChild = this.updateVisibility(currentTarget, true);
-      if (lastChild.opened && lastChild.hasChildren > 0) {
-        this.open(lastChild);
-      }
+    row.expanded = true;
+    const showRowsAtLevel = row.accessible.level + 1;
+    const startUpdateIndex = _.findIndex(this._rows, row) + 1;
+    let finalUpdateIndex = _.findIndex(this._rows,
+      testRow => testRow.accessible.level <= row.accessible.level,
+      startUpdateIndex) - 1;
+    if (finalUpdateIndex < 0) {
+      finalUpdateIndex = this._rows.length - 1;
     }
-  }
-
-  close(currentTarget) {
-    if (currentTarget.data.childrenData > 0) {
-      const lastChild = this.updateVisibility(currentTarget, false);
-      if (!lastChild.visible && lastChild.data.childrenData > 0) {
-        this.close(lastChild);
+    for (let i = startUpdateIndex; i <= finalUpdateIndex; i++) {
+      const checkRow = this._rows[i];
+      const rowLevel = checkRow.accessible.level;
+      if (showRowsAtLevel === rowLevel) {
+        checkRow.visible = true;
+        if (checkRow.accessible.expanded) {
+          // need to recurse to update the visibility of rows that are expanded
+          // decendants of this one
+          this._onExpandRow({ rowDisplayObject: checkRow });
+        }
       }
     }
+
+    this._setupLayout();
   }
 
-  updateVisibility(currentTarget, visible) {
-    let lastChild;
-    const noOfchildren = currentTarget.index + currentTarget.data.childrenData;
-    for (let i = currentTarget.index + 1; i < noOfchildren + 1; i++) {
-      this.rows[i].visible = visible;
-      lastChild = this.rows[i];
+  _onCollapseRow(evt) {
+    // to handle both CAM collapseRow event and CJS click events with the same listener
+    const row = evt.rowDisplayObject || evt.currentTarget.parent;
+
+    row.expanded = false;
+    const startUpdateIndex = _.findIndex(this._rows, row) + 1;
+    let finalUpdateIndex = _.findIndex(this._rows,
+      testRow => testRow.accessible.level <= row.accessible.level,
+      startUpdateIndex) - 1;
+    if (finalUpdateIndex < 0) {
+      finalUpdateIndex = this._rows.length - 1;
     }
-    return lastChild;
+    for (let i = startUpdateIndex; i <= finalUpdateIndex; i++) {
+      this._rows[i].visible = false;
+    }
+
+    this._setupLayout();
   }
 
-  setupLayout() {
-    let previousRow = this.rows[0];
-    for (let i = 1; i < this.rows.length; i++) {
-      if (this.rows[i].visible) {
-        this.rows[i].set({
-          y: previousRow.y + this.cellHeight,
-          x: (this.rows[i].data.level - 1) * OFFSET,
-        });
-        previousRow = this.rows[i];
+  _setupLayout() {
+    let previousRow = this._rows[0];
+    for (let i = 1; i < this._rows.length; i++) {
+      if (this._rows[i].visible) {
+        this._rows[i].x = (this._rows[i].data.level - 1) * OFFSET;
+        this._rows[i].y = previousRow.y + this._cellHeight;
+        previousRow = this._rows[i];
       }
     }
-  }
-
-  onFocus(evt) {
-    this.focusRect.visible = true;
-    evt.preventDefault();
-    evt.stopPropagation();
-  }
-
-  onBlur() {
-    this.focusRect.visible = false;
   }
 }

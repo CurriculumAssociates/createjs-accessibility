@@ -24,6 +24,7 @@ module.exports = {
   ],
   rules: {
     'array-bracket-newline': 'warn',
+    'array-bracket-spacing': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
     'import/extensions': [{ js: 'always', json: 'never' }],
