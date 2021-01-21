@@ -104,6 +104,11 @@ export default class SliderData extends InputTagData {
     return this._reactProps.max;
   }
 
+  /**
+   * Event listener for React change events
+   * @access private
+   * @param {SyntheticEvent} evt - React event
+   */
   _onChange(evt) {
     this._reactProps.value = evt.target.value;
     const event = new createjs.Event('valueChanged', false, false);
