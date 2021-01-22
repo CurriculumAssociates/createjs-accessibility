@@ -11,10 +11,16 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
     this._reactProps.onSelect = this._onSelect;
   }
 
+  /**
+   * @inheritdoc
+   */
   addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }

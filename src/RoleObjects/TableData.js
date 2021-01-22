@@ -2,6 +2,9 @@ import SectionData from './SectionData';
 import { ROLES } from '../Roles';
 
 export default class TableData extends SectionData {
+  /**
+   * @inheritdoc
+   */
   addChild(displayObject) {
     if (!displayObject.accessible || [ROLES.TABLEBODY,
       ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(displayObject.accessible.role) === -1) {
@@ -10,6 +13,9 @@ export default class TableData extends SectionData {
     super.addChild(displayObject);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible || [ROLES.TABLEBODY,
       ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(displayObject.accessible.role) === -1) {

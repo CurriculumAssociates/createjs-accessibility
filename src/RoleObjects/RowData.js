@@ -2,6 +2,9 @@ import GroupData from './GroupData';
 import { ROLES } from '../Roles';
 
 export default class RowData extends GroupData {
+  /**
+   * @inheritdoc
+   */
   addChild(displayObject) {
     if (!displayObject.accessible
       || (displayObject.accessible.role !== ROLES.CELL
@@ -15,6 +18,9 @@ export default class RowData extends GroupData {
     super.addChild(displayObject);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible
       || (displayObject.accessible.role !== ROLES.CELL

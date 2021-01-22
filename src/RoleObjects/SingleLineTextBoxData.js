@@ -10,10 +10,16 @@ export default class SingleLineTextBoxData extends InputTagData {
     this._reactProps.onSelect = this._onSelect;
   }
 
+  /**
+   * @inheritdoc
+   */
   addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
