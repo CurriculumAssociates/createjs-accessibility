@@ -7,6 +7,26 @@ export default class TreeData extends SelectData {
   }
 
   /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM ) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
+    }
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM ) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
+    }
+    super.addChildAt(displayObject, index);
+  }
+
+  /**
    * @access public
    * @param {boolean} value - true if more than 1 element can be selected at a time,
    * false for only 1 at a time, undefined to unset this field
