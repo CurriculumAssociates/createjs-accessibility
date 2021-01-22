@@ -1,4 +1,5 @@
 import SectionData from './SectionData';
+import { ROLES } from '../Roles';
 
 /**
  * Class for role objects that use the ul HTML tag.

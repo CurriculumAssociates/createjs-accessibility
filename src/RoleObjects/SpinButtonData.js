@@ -14,14 +14,14 @@ export default class SpinButtonData extends RangeData {
   /**
    * @inheritdoc
    */
-  addChild(displayObject) {
+  addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
   /**
    * @inheritdoc
    */
-  addChildAt(displayObject, index) {
+  addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
 

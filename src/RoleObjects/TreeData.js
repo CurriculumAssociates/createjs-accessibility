@@ -1,4 +1,5 @@
 import SelectData from './SelectData';
+import { ROLES } from '../Roles';
 
 export default class TreeData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
@@ -10,7 +11,7 @@ export default class TreeData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM ) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
     }
     super.addChild(displayObject);
@@ -20,7 +21,7 @@ export default class TreeData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM ) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM) {
       throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
     }
     super.addChildAt(displayObject, index);
