@@ -51,6 +51,7 @@ import TreeData from './RoleObjects/TreeData';
 import TreeGridData from './RoleObjects/TreeGridData';
 import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
+import UnorderedListData from './RoleObjects/UnorderedListData';
 
 /**
  * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to
@@ -280,7 +281,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TABPANEL:
     case ROLES.TERM:
     case ROLES.TOOLTIP:
-    case ROLES.UNORDEREDLIST:
       accessibilityObject = new SectionData(displayObject, role, domIdPrefix);
       break;
 
@@ -349,6 +349,10 @@ function createAccessibilityObjectForRole(config) {
 
     case ROLES.TOOLBAR:
       accessibilityObject = new ToolBarData(displayObject, role, domIdPrefix);
+      break;
+
+    case ROLES.UNORDEREDLIST:
+      accessibilityObject = new UnorderedListData(displayObject, role, domIdPrefix);
       break;
 
     default:
