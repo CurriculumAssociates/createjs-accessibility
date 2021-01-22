@@ -5,6 +5,26 @@ import SectionData from './SectionData';
  */
 export default class OrderedListData extends SectionData {
   /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.LISTITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.LISTITEM}`);
+    }
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.LISTITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.LISTITEM}`);
+    }
+    super.addChildAt(displayObject, index);
+  }
+
+  /**
    * Sets whether the list order should be descending
    * @access public
    * @param {boolean} reverse - true if reversed should be enabled, false otherwise
