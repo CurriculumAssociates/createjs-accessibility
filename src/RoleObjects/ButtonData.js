@@ -8,17 +8,6 @@ export default class ButtonData extends AccessibilityObject {
     this._reactProps.onClick = this._onClick;
   }
 
-  _onClick(evt) {
-    const event = new createjs.Event('keyboardClick', false, evt.cancelable);
-    this._displayObject.dispatchEvent(event);
-    if (event.propagationStopped) {
-      evt.stopPropagation();
-    }
-    if (event.defaultPrevented) {
-      evt.preventDefault();
-    }
-  }
-
   /**
   * Sets whether the element should get pressed on page load
   * @access public
@@ -257,5 +246,16 @@ export default class ButtonData extends AccessibilityObject {
   */
   get value() {
     return this._reactProps.value;
+  }
+
+  _onClick(evt) {
+    const event = new createjs.Event('keyboardClick', false, evt.cancelable);
+    this._displayObject.dispatchEvent(event);
+    if (event.propagationStopped) {
+      evt.stopPropagation();
+    }
+    if (event.defaultPrevented) {
+      evt.preventDefault();
+    }
   }
 }
