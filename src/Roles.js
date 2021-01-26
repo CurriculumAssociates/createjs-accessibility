@@ -214,4 +214,20 @@ function getTagNameForDisplayObject(displayObject) {
   return tagName;
 }
 
-export { ROLES, getTagNameForDisplayObject };
+/**
+ * Predicate function for checking if a role uses an HTML tag that is interactive
+ * due to the semantics of the tag name.
+ * Note: this only checks tags that this module can actually produce and is not
+ * intended to be a generic HTML reference for interactive tags.
+ *
+ * @param {string} role - Entry from ROLES for which role to check
+ * @returns {boolean} true if the corresponding HTML tag is semantically interactive.
+ * false otherwise
+ */
+function doesRoleUseSemanticallyInteractiveTag(role) {
+  let tagName = ROLE_TAG_MAPPING[role] || 'div';
+  return tagName === 'a' || tagName === 'select' || tagName === 'input'
+    || tagName === 'textarea' || tagName === 'button';
+}
+
+export { ROLES, getTagNameForDisplayObject, doesRoleUseSemanticallyInteractiveTag };

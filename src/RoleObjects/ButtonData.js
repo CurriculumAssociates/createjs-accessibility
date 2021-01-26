@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import AccessibilityObject from './AccessibilityObject';
+import { doesRoleUseSemanticallyInteractiveTag } from '../Roles';
 
 export default class ButtonData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -12,7 +13,9 @@ export default class ButtonData extends AccessibilityObject {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || !_.isUndefined(displayObject.accessible.tabIndex)) {
+    if (!displayObject.accessible
+      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
+      || !_.isUndefined(displayObject.accessible.tabIndex)) {
       throw new Error(`Children of ${this.role} cannot be interactive`);
     }
     super.addChild(displayObject);
@@ -22,7 +25,9 @@ export default class ButtonData extends AccessibilityObject {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || !_.isUndefined(displayObject.accessible.tabIndex)) {
+    if (!displayObject.accessible
+      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
+      || !_.isUndefined(displayObject.accessible.tabIndex)) {
       throw new Error(`Children of ${this.role} cannot be interactive`);
     }
     super.addChildAt(displayObject, index);
