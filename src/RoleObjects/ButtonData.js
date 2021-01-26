@@ -9,6 +9,26 @@ export default class ButtonData extends AccessibilityObject {
   }
 
   /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible || !_.isUndefined(displayObject.accessible.tabIndex)) {
+      throw new Error(`Children of ${this.role} cannot be interactive`);
+    }
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible || !_.isUndefined(displayObject.accessible.tabIndex)) {
+      throw new Error(`Children of ${this.role} cannot be interactive`);
+    }
+    super.addChildAt(displayObject, index);
+  }
+
+  /**
   * Sets whether the element should get pressed on page load
   * @access public
   * @param {boolean} val - true if button pressed
