@@ -225,7 +225,7 @@ function getTagNameForDisplayObject(displayObject) {
  * false otherwise
  */
 function doesRoleUseSemanticallyInteractiveTag(role) {
-  let tagName = ROLE_TAG_MAPPING[role] || 'div';
+  const tagName = ROLE_TAG_MAPPING[role] || 'div';
   return tagName === 'a' || tagName === 'select' || tagName === 'input'
     || tagName === 'textarea' || tagName === 'button';
 }
