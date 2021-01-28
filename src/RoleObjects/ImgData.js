@@ -7,6 +7,20 @@ import SectionData from './SectionData';
  */
 export default class ImgData extends SectionData {
   /**
+   * @inheritdoc
+   */
+  addChild() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
    * Sets the alternate text for an image
    * @access public
    * @param {String} text - alternate text for an image

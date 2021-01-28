@@ -1,9 +1,30 @@
 import SelectData from './SelectData';
+import { ROLES } from '../Roles';
 
 export default class TreeData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
     this._reactProps['aria-orientation'] = 'vertical';
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
+    }
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.TREEITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TREEITEM}`);
+    }
+    super.addChildAt(displayObject, index);
   }
 
   /**

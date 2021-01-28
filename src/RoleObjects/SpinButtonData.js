@@ -11,6 +11,20 @@ export default class SpinButtonData extends RangeData {
     this.enableKeyEvents = true;
   }
 
+  /**
+   * @inheritdoc
+   */
+  addChild() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
     // the keydown listener is needed for this role to function per WAI-ARIA practices

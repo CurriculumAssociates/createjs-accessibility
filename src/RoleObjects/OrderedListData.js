@@ -1,11 +1,30 @@
 import SectionData from './SectionData';
+import { ROLES } from '../Roles';
 
 /**
  * Class for role objects that use the ol HTML tag.
-    This contains only setters/getters for fields that are common to all ol
-    tags regardless of the type attribute.
  */
 export default class OrderedListData extends SectionData {
+  /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.LISTITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.LISTITEM}`);
+    }
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.LISTITEM) {
+      throw new Error(`Children of ${this.role} must have a role of ${ROLES.LISTITEM}`);
+    }
+    super.addChildAt(displayObject, index);
+  }
+
   /**
    * Sets whether the list order should be descending
    * @access public

@@ -10,6 +10,9 @@ export default class MenuBarData extends SelectData {
     this._reactProps.onKeyDown = this.onKeyDown;
   }
 
+  /**
+   * @inheritdoc
+   */
   addChild(displayObject) {
     if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
       ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
@@ -18,6 +21,9 @@ export default class MenuBarData extends SelectData {
     super.addChild(displayObject);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
       ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {

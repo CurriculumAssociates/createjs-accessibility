@@ -13,6 +13,9 @@ export default class MenuItemData extends AccessibilityObject {
     this._reactProps['aria-haspopup'] = false;
   }
 
+  /**
+   * @inheritdoc
+   */
   addChild(displayObject) {
     if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
       ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
@@ -24,6 +27,9 @@ export default class MenuItemData extends AccessibilityObject {
     super.addChild(displayObject);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
       ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {

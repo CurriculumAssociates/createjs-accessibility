@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import AccessibilityObject from './AccessibilityObject';
+import { doesRoleUseSemanticallyInteractiveTag } from '../Roles';
 
 export default class ButtonData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
@@ -8,15 +9,28 @@ export default class ButtonData extends AccessibilityObject {
     this._reactProps.onClick = this._onClick;
   }
 
-  _onClick(evt) {
-    const event = new createjs.Event('keyboardClick', false, evt.cancelable);
-    this._displayObject.dispatchEvent(event);
-    if (event.propagationStopped) {
-      evt.stopPropagation();
+  /**
+   * @inheritdoc
+   */
+  addChild(displayObject) {
+    if (!displayObject.accessible
+      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
+      || !_.isUndefined(displayObject.accessible.tabIndex)) {
+      throw new Error(`Children of ${this.role} cannot be interactive`);
     }
-    if (event.defaultPrevented) {
-      evt.preventDefault();
+    super.addChild(displayObject);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt(displayObject, index) {
+    if (!displayObject.accessible
+      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
+      || !_.isUndefined(displayObject.accessible.tabIndex)) {
+      throw new Error(`Children of ${this.role} cannot be interactive`);
     }
+    super.addChildAt(displayObject, index);
   }
 
   /**
@@ -257,5 +271,16 @@ export default class ButtonData extends AccessibilityObject {
   */
   get value() {
     return this._reactProps.value;
+  }
+
+  _onClick(evt) {
+    const event = new createjs.Event('keyboardClick', false, evt.cancelable);
+    this._displayObject.dispatchEvent(event);
+    if (event.propagationStopped) {
+      evt.stopPropagation();
+    }
+    if (event.defaultPrevented) {
+      evt.preventDefault();
+    }
   }
 }

@@ -1,6 +1,20 @@
 import AccessibilityObject from './AccessibilityObject';
 
 export default class SeparatorData extends AccessibilityObject {
+  /**
+   * @inheritdoc
+   */
+  addChild() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
   set orientation(value) {
     this._reactProps['aria-orientation'] = value;
   }

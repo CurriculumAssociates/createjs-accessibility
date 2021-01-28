@@ -7,6 +7,20 @@ import AccessibilityObject from './AccessibilityObject';
  */
 export default class InputTagData extends AccessibilityObject {
   /**
+   * @inheritdoc
+   */
+  addChild() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  addChildAt() {
+    throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
    * Sets whether the element should get focus on page load
    * @access public
    * @param {boolean} enable - true if autofocus should be enabled, false otherwise

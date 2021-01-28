@@ -16,7 +16,6 @@ import ImgData from './RoleObjects/ImgData';
 import GridData from './RoleObjects/GridData';
 import GridCellData from './RoleObjects/GridCellData';
 import GroupData from './RoleObjects/GroupData';
-import HeadingData from './RoleObjects/HeadingData';
 import LinkData from './RoleObjects/LinkData';
 import ListItemData from './RoleObjects/ListItemData';
 import MathData from './RoleObjects/MathData';
@@ -44,6 +43,7 @@ import SpinButtonData from './RoleObjects/SpinButtonData';
 import SwitchData from './RoleObjects/SwitchData';
 import TabData from './RoleObjects/TabData';
 import TableData from './RoleObjects/TableData';
+import TableSectionData from './RoleObjects/TableSectionData';
 import TableHeaderData from './RoleObjects/TableHeaderData';
 import TabListData from './RoleObjects/TabListData';
 import TimerData from './RoleObjects/TimerData';
@@ -51,6 +51,7 @@ import TreeData from './RoleObjects/TreeData';
 import TreeGridData from './RoleObjects/TreeGridData';
 import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
+import UnorderedListData from './RoleObjects/UnorderedListData';
 
 /**
  * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to
@@ -117,21 +118,12 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.FORMAT_TEXT_TIME:
     case ROLES.FORMAT_TEXT_UNDERLINE:
     case ROLES.FORMAT_TEXT_VARIABLE:
-    case ROLES.HEADING1:
-    case ROLES.HEADING2:
-    case ROLES.HEADING3:
-    case ROLES.HEADING4:
-    case ROLES.HEADING5:
-    case ROLES.HEADING6:
     case ROLES.MAIN:
     case ROLES.NONE:
     case ROLES.PARAGRAPH:
     case ROLES.PRESENTATION:
     case ROLES.SPAN:
     case ROLES.SEARCH:
-    case ROLES.TABLEBODY:
-    case ROLES.TABLEFOOT:
-    case ROLES.TABLEHEAD:
       accessibilityObject = new AccessibilityObject(displayObject, role, domIdPrefix);
       break;
 
@@ -185,15 +177,6 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new GroupData(displayObject, role, domIdPrefix);
       break;
 
-    case ROLES.HEADING1: // eslint-disable-line no-duplicate-case
-    case ROLES.HEADING2: // eslint-disable-line no-duplicate-case
-    case ROLES.HEADING3: // eslint-disable-line no-duplicate-case
-    case ROLES.HEADING4: // eslint-disable-line no-duplicate-case
-    case ROLES.HEADING5: // eslint-disable-line no-duplicate-case
-    case ROLES.HEADING6: // eslint-disable-line no-duplicate-case
-      accessibilityObject = new HeadingData(displayObject, role, domIdPrefix);
-      break;
-
     case ROLES.IMG:
       accessibilityObject = new ImgData(displayObject, role, domIdPrefix);
       break;
@@ -209,6 +192,7 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.MATH:
       accessibilityObject = new MathData(displayObject, role, domIdPrefix);
       break;
+
     case ROLES.MENU:
       accessibilityObject = new MenuData(displayObject, role, domIdPrefix);
       break;
@@ -270,6 +254,9 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new SearchBoxData(displayObject, role, domIdPrefix);
       break;
 
+    // note: heading roles are here since aria-level is not needed due to using
+    // semantic markup.  Otherwise these would require their own subclass to provide
+    // getters/setters for that field.
     case ROLES.ALERT:
     case ROLES.ALERTDIALOG:
     case ROLES.BANNER:
@@ -279,6 +266,12 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.DIRECTORY:
     case ROLES.FEED:
     case ROLES.FIGURE:
+    case ROLES.HEADING1:
+    case ROLES.HEADING2:
+    case ROLES.HEADING3:
+    case ROLES.HEADING4:
+    case ROLES.HEADING5:
+    case ROLES.HEADING6:
     case ROLES.LOG:
     case ROLES.MARQUEE:
     case ROLES.NAVIGATION:
@@ -288,7 +281,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.TABPANEL:
     case ROLES.TERM:
     case ROLES.TOOLTIP:
-    case ROLES.UNORDEREDLIST:
       accessibilityObject = new SectionData(displayObject, role, domIdPrefix);
       break;
 
@@ -325,6 +317,12 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new TableHeaderData(displayObject, role, domIdPrefix);
       break;
 
+    case ROLES.TABLEBODY:
+    case ROLES.TABLEFOOT:
+    case ROLES.TABLEHEAD:
+      accessibilityObject = new TableSectionData(displayObject, role, domIdPrefix);
+      break;
+
     case ROLES.TAB:
       accessibilityObject = new TabData(displayObject, role, domIdPrefix);
       break;
@@ -351,6 +349,10 @@ function createAccessibilityObjectForRole(config) {
 
     case ROLES.TOOLBAR:
       accessibilityObject = new ToolBarData(displayObject, role, domIdPrefix);
+      break;
+
+    case ROLES.UNORDEREDLIST:
+      accessibilityObject = new UnorderedListData(displayObject, role, domIdPrefix);
       break;
 
     default:

@@ -1,10 +1,16 @@
 import AccessibilityObject from './AccessibilityObject';
 
 export default class OptionData extends AccessibilityObject {
+  /**
+   * @inheritdoc
+   */
   addChild() {
     throw new Error(`${this.role} cannot have children`);
   }
 
+  /**
+   * @inheritdoc
+   */
   addChildAt() {
     throw new Error(`${this.role} cannot have children`);
   }
