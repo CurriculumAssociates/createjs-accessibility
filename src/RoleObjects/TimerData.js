@@ -8,7 +8,7 @@ export default class TimerData extends AccessibilityObject {
    * undefined to unset the field.
    */
   set dateTime(time) {
-    this._reactProps.datetime = time;
+    this._reactProps.dateTime = time;
   }
 
   /**
@@ -18,6 +18,6 @@ export default class TimerData extends AccessibilityObject {
    * undefined if the field is unset.
    */
   get dateTime() {
-    return this._reactProps.datetime;
+    return this._reactProps.dateTime;
   }
 }
