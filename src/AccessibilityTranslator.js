@@ -131,7 +131,7 @@ export default class AccessibilityTranslator extends React.Component {
         margin: 0,
         padding: 0,
       },
-    }, displayObject.accessible.reactProps);
+    }, displayObject.accessible._reactProps);
     if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR
       || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO
       || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH
