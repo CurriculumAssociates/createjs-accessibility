@@ -720,14 +720,6 @@ export default class AccessibilityObject {
   }
 
   /**
-   * Retrieves the React props for the element translation of this object.
-   * @access package
-   */
-  get reactProps() {
-    return this._reactProps;
-  }
-
-  /**
    * Sets which notifications should be sent for live regions
    * @access public
    * @param {String} str - space separated list of values from https://www.w3.org/TR/wai-aria/states_and_properties#aria-relevant.  undefined if the field is to be cleared
