@@ -47,7 +47,8 @@ export default class ScrollBarData extends RangeData {
   /**
    * Retrieves the orientation
    * @access public
-   * @returns  {String} str "horizontal" for a horizontal slider, "vertical" for a vertical scrollbar
+   * @returns  {String} str "horizontal" for a horizontal slider,
+   * "vertical" for a vertical scrollbar
    */
   get orientation() {
     return this._reactProps['aria-orientation'];
@@ -56,7 +57,7 @@ export default class ScrollBarData extends RangeData {
   /**
    * @inheritdoc
    */
-  _onKeyDown(e) {
+  _onKeyDown(evt) {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
       if (evt.defaultPrevented) {
@@ -65,27 +66,27 @@ export default class ScrollBarData extends RangeData {
     }
 
     if (this.orientation !== 'horizontal') {
-      if (e.keyCode === KeyCodes.up || e.keyCode === KeyCodes.down) {
-        e.stopPropagation();
-        e.preventDefault();
-        if (e.keyCode === KeyCodes.up) {
+      if (evt.keyCode === KeyCodes.up || evt.keyCode === KeyCodes.down) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        if (evt.keyCode === KeyCodes.up) {
           this.value = Math.max(this.value - this.increment, this.min);
         } else {
           this.value = Math.min(this.value + this.increment, this.max);
         }
-        const event = new createjs.Event('scroll', false, e.cancelable);
+        const event = new createjs.Event('scroll', false, evt.cancelable);
         event.scrollTop = this.value;
         this._displayObject.dispatchEvent(event);
       }
-    } else if (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right) {
-      e.stopPropagation();
-      e.preventDefault();
-      if (e.keyCode === KeyCodes.left) {
+    } else if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      if (evt.keyCode === KeyCodes.left) {
         this.value = Math.max(this.value - this.increment, this.min);
       } else {
         this.value = Math.min(this.value + this.increment, this.max);
       }
-      const event = new createjs.Event('scroll', false, e.cancelable);
+      const event = new createjs.Event('scroll', false, evt.cancelable);
       event.scrollLeft = this.value;
       this._displayObject.dispatchEvent(event);
     }
