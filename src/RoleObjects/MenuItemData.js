@@ -64,7 +64,9 @@ export default class MenuItemData extends AccessibilityObject {
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
-    this._activeKeyDownListener = displayObject ? this._subMenuOpenerKeyDown : this._menuItemKeyDown;
+    this._activeKeyDownListener = displayObject
+      ? this._subMenuOpenerKeyDown
+      : this._menuItemKeyDown;
   }
 
   /**
