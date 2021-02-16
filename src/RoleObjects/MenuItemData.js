@@ -6,11 +6,12 @@ import AccessibilityObject from './AccessibilityObject';
 export default class MenuItemData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onKeyDown');
+    _.bindAll(this, '_onKeyDown', '_menuItemKeyDown', '_subMenuOpenerKeyDown');
 
     this._reactProps.onKeyDown = this._onKeyDown;
     this._isPopupOpener = false;
     this._reactProps['aria-haspopup'] = false;
+    this._activeKeyDownListener = this._menuItemKeyDown;
   }
 
   /**
@@ -63,6 +64,7 @@ export default class MenuItemData extends AccessibilityObject {
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
+    this._activeKeyDownListener = displayObject ? this._subMenuOpenerKeyDown : this._menuItemKeyDown;
   }
 
   /**
@@ -174,7 +176,7 @@ export default class MenuItemData extends AccessibilityObject {
     if ([ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX].indexOf(displayObject.accessible.role) !== -1) {
       displayObject.accessible._isPopupOpener = true;
       this._label = displayObject;
-      this._reactProps.onKeyDown = undefined; // TODO: investigate
+      this._activeKeyDownListener = undefined;
     } else if (displayObject.accessible.role === ROLES.MENU) {
       this._subMenu = displayObject;
     }
@@ -195,10 +197,8 @@ export default class MenuItemData extends AccessibilityObject {
       }
     }
 
-    if (this._subMenu) {
-      this._subMenuOpenerKeyDown(evt);
-    } else {
-      this._menuItemKeyDown(evt);
+    if (this._activeKeyDownListener) {
+      this._activeKeyDownListener(evt);
     }
   }
 }
