@@ -5,10 +5,25 @@ import InputTagData from './InputTagData';
 export default class RadioData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onRadioKeyDown');
+    _.bindAll(this, '_onKeyDown');
     this._reactProps.type = 'radio';
-    this._reactProps.onKeyDown = this._onRadioKeyDown;
-    this._reactProps.onChange = this._onRadioKeyDown;
+    this._reactProps.onKeyDown = this._onKeyDown;
+    this._reactProps.onChange = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -80,13 +95,18 @@ export default class RadioData extends InputTagData {
   }
 
   /**
-   * Keydown listener for when the radio button is pressed
-   * @access private
-   * @param {SyntheticEvent} e - React event
+   * @inheritdoc
    */
-  _onRadioKeyDown(e) {
-    if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
-      const event = new createjs.Event('keyboardClick', false, e.cancelable);
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space) {
+      const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       this._displayObject.dispatchEvent(event);
     }
   }

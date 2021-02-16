@@ -6,8 +6,23 @@ import SelectData from './SelectData';
 export default class MenuBarData extends SelectData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, 'onKeyDown');
-    this._reactProps.onKeyDown = this.onKeyDown;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -33,10 +48,16 @@ export default class MenuBarData extends SelectData {
   }
 
   /**
-   * Listener to use for keydown events
-   * @access package
+   * @inheritdoc
    */
-  onKeyDown(evt) {
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
     if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
       // close a menu if any are open
       let index = _.findIndex(this._children, menu => menu.accessible.expanded);

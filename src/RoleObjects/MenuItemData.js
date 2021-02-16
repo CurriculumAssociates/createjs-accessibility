@@ -6,11 +6,26 @@ import AccessibilityObject from './AccessibilityObject';
 export default class MenuItemData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_subMenuOpenerKeyDown', '_menuItemKeyDown');
+    _.bindAll(this, '_onKeyDown');
 
-    this._reactProps.onKeyDown = this._menuItemKeyDown;
+    this._reactProps.onKeyDown = this._onKeyDown;
     this._isPopupOpener = false;
     this._reactProps['aria-haspopup'] = false;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -48,7 +63,6 @@ export default class MenuItemData extends AccessibilityObject {
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
-    this._reactProps.onKeyDown = this._subMenuOpenerKeyDown;
   }
 
   /**
@@ -160,13 +174,31 @@ export default class MenuItemData extends AccessibilityObject {
     if ([ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX].indexOf(displayObject.accessible.role) !== -1) {
       displayObject.accessible._isPopupOpener = true;
       this._label = displayObject;
-      this._reactProps.onKeyDown = undefined;
+      this._reactProps.onKeyDown = undefined; // TODO: investigate
     } else if (displayObject.accessible.role === ROLES.MENU) {
       this._subMenu = displayObject;
     }
 
     if (this._label) {
       this._label.accessible.subMenu = this._subMenu;
+    }
+  }
+
+  /**
+   * @inheritdoc
+   */
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (this._subMenu) {
+      this._subMenuOpenerKeyDown(evt);
+    } else {
+      this._menuItemKeyDown(evt);
     }
   }
 }

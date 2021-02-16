@@ -10,11 +10,26 @@ import InputTagData from './InputTagData';
 export default class CheckBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, 'onKeyDown', 'onClick');
-    this._reactProps.onChange = this.onClick;
-    this._reactProps.onKeyDown = this.onKeyDown;
+    _.bindAll(this, '_onKeyDown', '_onChange');
+    this._reactProps.onChange = this._onChange;
+    this._reactProps.onKeyDown = this._onKeyDown;
     this._reactProps.type = 'checkbox';
     this._reactProps.checked = false;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -35,13 +50,28 @@ export default class CheckBoxData extends InputTagData {
     return this._reactProps.checked;
   }
 
-  onKeyDown(evt) {
+  /**
+   * @inheritdoc
+   */
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
     if (evt.keyCode === KeyCodes.enter) {
       this._displayObject.dispatchEvent('keyboardClick');
     }
   }
 
-  onClick() {
+  /**
+   * Event listener for change events
+   * @access protected
+   * @param {SyntheticEvent} evt - React event
+   */
+  _onChange() {
     this._displayObject.dispatchEvent('keyboardClick');
   }
 }
