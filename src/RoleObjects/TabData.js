@@ -93,7 +93,7 @@ export default class TabData extends AccessibilityObject {
   /**
    * @inheritdoc
    */
-  _onKeyDown(e) {
+  _onKeyDown(evt) {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
       if (evt.defaultPrevented) {
@@ -101,8 +101,8 @@ export default class TabData extends AccessibilityObject {
       }
     }
 
-    if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
-      const event = new createjs.Event('keyboardClick', false, e.cancelable);
+    if ([KeyCodes.enter, KeyCodes.space].indexOf(evt.keyCode) !== -1) {
+      const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       this._displayObject.dispatchEvent(event);
     }
   }
