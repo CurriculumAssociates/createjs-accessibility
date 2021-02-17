@@ -8,8 +8,23 @@ import ListItemData from './ListItemData';
 export default class TreeItemData extends ListItemData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, 'onKeyDown');
-    this._reactProps.onKeyDown = this.onKeyDown;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -84,11 +99,16 @@ export default class TreeItemData extends ListItemData {
   }
 
   /**
-   * Keydown listener for an tree item
-   * @access private
-   * @param {SyntheticEvent} evt - React event
+   * inheritdoc
    */
-  onKeyDown(evt) {
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
     if (evt.keyCode === KeyCodes.enter) {
       const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       const skipPreventDefault = this._displayObject.dispatchEvent(event);

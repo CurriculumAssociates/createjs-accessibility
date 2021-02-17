@@ -215,6 +215,9 @@ export default class SingleSelectListBoxData extends SelectData {
   _onKeyDown(evt) {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
     }
 
     if (evt.keyCode === KeyCodes.down) {

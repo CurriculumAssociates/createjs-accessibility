@@ -5,21 +5,36 @@ import CompositeData from './CompositeData';
 export default class TabListData extends CompositeData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onTabListKeyDown');
-    this._reactProps.onKeyDown = this._onTabListKeyDown;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
   }
+
   /**
-   *  hierarchical level of the tabs within other structures
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
+  }
+
+  /**
+   * hierarchical level of the tabs within other structures
    * @access public
    * @param {Number} val - aria-level is an integer greater than or equal to 1
    */
-
   set level(val) {
     this._reactProps['aria-level'] = val;
   }
 
   /**
-   *  hierarchical level of the tabs within other structures
+   * hierarchical level of the tabs within other structures
    * @access public
    * @param {Number} val - aria-level is an integer greater than or equal to 1
    */
@@ -46,30 +61,35 @@ export default class TabListData extends CompositeData {
   }
 
   /**
-    * Sets the orientation of tablist
-    * @access public
-    * @param {String} str - "horizontal" for a horizontal tablist, "vertical" for a vertical tablist
-    */
+   * Sets the orientation of tablist
+   * @access public
+   * @param {String} str - "horizontal" for a horizontal tablist, "vertical" for a vertical tablist
+   */
   set orientation(str) {
     this._reactProps['aria-orientation'] = str;
   }
 
   /**
-    * Retrieves the orientation of tablist
-    * @access public
-    * @returns  {String} str "horizontal" for a horizontal tablist,
-    "vertical" for a vertical tablist
-    */
+   * Retrieves the orientation of tablist
+   * @access public
+   * @returns  {String} str "horizontal" for a horizontal tablist,
+   * "vertical" for a vertical tablist
+   */
   get orientation() {
     return this._reactProps['aria-orientation'];
   }
 
   /**
-   * Keydown listener for when the tablist is pressed
-   * @access private
-   * @param {SyntheticEvent} e - React event
+   * @inheritdoc
    */
-  _onTabListKeyDown(e) {
+  _onKeyDown(e) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(e);
+      if (e.defaultPrevented) {
+        return;
+      }
+    }
+
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);
       this._displayObject.dispatchEvent(event);

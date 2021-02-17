@@ -5,8 +5,23 @@ import AccessibilityObject from './AccessibilityObject';
 export default class TabData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onTabKeyDown');
-    this._reactProps.onKeyDown = this._onTabKeyDown;
+    _.bindAll(this, '_onKeyDown');
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -76,11 +91,16 @@ export default class TabData extends AccessibilityObject {
   }
 
   /**
-   * Keydown listener for when the radio button is pressed
-   * @access private
-   * @param {SyntheticEvent} e - React event
+   * @inheritdoc
    */
-  _onTabKeyDown(e) {
+  _onKeyDown(e) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
     if ([KeyCodes.enter, KeyCodes.space].indexOf(e.keyCode) !== -1) {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);
       this._displayObject.dispatchEvent(event);
