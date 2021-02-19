@@ -7,7 +7,7 @@ export default class CellData extends SectionData {
    * @access public
    * @param {Number} val - positive number for column index.  undefined to unset the field.
    */
-  set colindex(val) {
+  set colIndex(val) {
     this._reactProps['aria-colindex'] = val;
   }
 
@@ -17,7 +17,7 @@ export default class CellData extends SectionData {
    * @access public
    * @returns {Number} - column index.  undefined if the field is unset
    */
-  get colindex() {
+  get colIndex() {
     return this._reactProps['aria-colindex'];
   }
 
@@ -26,7 +26,7 @@ export default class CellData extends SectionData {
    * @access public
    * @param {Number} val - number of columns spanned by this cell.  undefined to unset the field
    */
-  set colspan(val) {
+  set colSpan(val) {
     this._reactProps.colSpan = val;
   }
 
@@ -35,7 +35,7 @@ export default class CellData extends SectionData {
    * @access public
    * @returns {Number} - number of columns spanned by the cell.  undefined if the field is unset
    */
-  get colspan() {
+  get colSpan() {
     return this._reactProps.colSpan;
   }
 
@@ -45,7 +45,7 @@ export default class CellData extends SectionData {
    * @access public
    * @param {Number} val - Positive number
    */
-  set rowindex(val) {
+  set rowIndex(val) {
     this._reactProps['aria-rowindex'] = val;
   }
 
@@ -55,7 +55,7 @@ export default class CellData extends SectionData {
    * @access public
    * @returns {Number} - Positive number
    */
-  get rowindex() {
+  get rowIndex() {
     return this._reactProps['aria-rowindex'];
   }
 
@@ -64,7 +64,7 @@ export default class CellData extends SectionData {
    * @access public
    * @param {Number} val - number of rows spanned by this cell.  undefined to unset the field
    */
-  set rowspan(val) {
+  set rowSpan(val) {
     this._reactProps.rowSpan = val;
   }
 
@@ -73,7 +73,7 @@ export default class CellData extends SectionData {
    * @access public
    * @returns {Number} - number of rows spanned by the cell.  undefined if the field is unset
    */
-  get rowspan() {
+  get rowSpan() {
     return this._reactProps.rowSpan;
   }
 }

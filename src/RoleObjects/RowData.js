@@ -40,7 +40,7 @@ export default class RowData extends GroupData {
    * @access public
    * @param {Number} val - Positive number
    */
-  set colindex(val) {
+  set colIndex(val) {
     this._reactProps['aria-colindex'] = val;
   }
 
@@ -50,7 +50,7 @@ export default class RowData extends GroupData {
    * @access public
    * @returns {Number} - Positive number
    */
-  get colindex() {
+  get colIndex() {
     return this._reactProps['aria-colindex'];
   }
 
@@ -60,7 +60,7 @@ export default class RowData extends GroupData {
    * @access public
    * @param {Number} val - Positive number
    */
-  set rowindex(val) {
+  set rowIndex(val) {
     this._reactProps['aria-rowindex'] = val;
   }
 
@@ -70,7 +70,7 @@ export default class RowData extends GroupData {
    * @access public
    * @returns {Number} - Positive number
    */
-  get rowindex() {
+  get rowIndex() {
     return this._reactProps['aria-rowindex'];
   }
 

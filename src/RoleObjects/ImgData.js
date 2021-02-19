@@ -43,8 +43,8 @@ export default class ImgData extends SectionData {
    * @access public
    * @param {String} option - the type of crossorigin sharing to be used
    */
-  set crossorigin(option) {
-    this._reactProps.crossorigin = option;
+  set crossOrigin(option) {
+    this._reactProps.crossOrigin = option;
   }
 
   /**
@@ -52,8 +52,8 @@ export default class ImgData extends SectionData {
    * @access public
    * @returns {String} the type of crossoriging sharing, undefined if this field is unset
    */
-  get crossorigin() {
-    return this._reactProps.crossorigin;
+  get crossOrigin() {
+    return this._reactProps.crossOrigin;
   }
 
   /**
@@ -79,7 +79,7 @@ export default class ImgData extends SectionData {
    * @access public
    * @param {Boolean} option - whether or not this image is part of an image map
    */
-  set ismap(option) {
+  set isMap(option) {
     this._reactProps.ismap = option;
   }
 
@@ -89,7 +89,7 @@ export default class ImgData extends SectionData {
    * @returns {Boolean} whether or not this image is part of an image map,
    * undefined if this field is unset
    */
-  get ismap() {
+  get isMap() {
     return this._reactProps.ismap;
   }
 
@@ -98,7 +98,7 @@ export default class ImgData extends SectionData {
    * @access public
    * @param {String} url - a URL to a detailed description of an image
    */
-  set longdesc(url) {
+  set longDesc(url) {
     this._reactProps.longdesc = url;
   }
 
@@ -107,7 +107,7 @@ export default class ImgData extends SectionData {
    * @access public
    * @returns {String} a URL to a detailed description of an image, undefined if this field is unset
    */
-  get longdesc() {
+  get longDesc() {
     return this._reactProps.longdesc;
   }
 
@@ -152,8 +152,8 @@ export default class ImgData extends SectionData {
    * @access public
    * @param {String} url - the URL of an image to use in different situations
    */
-  set srcset(url) {
-    this._reactProps.srcset = url;
+  set srcSet(url) {
+    this._reactProps.srcSet = url;
   }
 
   /**
@@ -162,8 +162,8 @@ export default class ImgData extends SectionData {
    * @returns {String} the URL of an image to use in different situations,
    * undefined if this field is unset
    */
-  get srcset() {
-    return this._reactProps.srcset;
+  get srcSet() {
+    return this._reactProps.srcSet;
   }
 
   /**
@@ -171,8 +171,8 @@ export default class ImgData extends SectionData {
    * @access public
    * @param {String} map - the name of the map to use to make the image a client-side image map
    */
-  set usemap(map) {
-    this._reactProps.usemap = map;
+  set useMap(map) {
+    this._reactProps.useMap = map;
   }
 
   /**
@@ -181,8 +181,8 @@ export default class ImgData extends SectionData {
    * @returns {String} the name of the map to use to make the image a client-side
    * image map, undefined if this field is unset
    */
-  get usemap() {
-    return this._reactProps.usemap;
+  get useMap() {
+    return this._reactProps.useMap;
   }
 
   /**
