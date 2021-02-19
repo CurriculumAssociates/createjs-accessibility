@@ -31,7 +31,7 @@ export default class TableData extends SectionData {
    * @access public
    * @param {Number} val - Positive number , -1 if its unknown.
    */
-  set rowcount(val) {
+  set rowCount(val) {
     this._reactProps['aria-rowcount'] = val;
   }
 
@@ -42,7 +42,7 @@ export default class TableData extends SectionData {
    * @access public
    * @returns {Number} - Positive number , -1 if its unknown.
    */
-  get rowcount() {
+  get rowCount() {
     return this._reactProps['aria-rowcount'];
   }
 
@@ -53,7 +53,7 @@ export default class TableData extends SectionData {
    * @access public
    * @param {Number} val - Positive number , -1 if its unknown.
    */
-  set colcount(val) {
+  set colCount(val) {
     this._reactProps['aria-colcount'] = val;
   }
 
@@ -64,7 +64,7 @@ export default class TableData extends SectionData {
    * @access public
    * @returns {Number} - Positive number , -1 if its unknown.
    */
-  get colcount() {
+  get colCount() {
     return this._reactProps['aria-colcount'];
   }
 }
