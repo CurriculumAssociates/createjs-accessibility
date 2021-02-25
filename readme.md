@@ -128,8 +128,12 @@ There is an open source companion test app for this module at https://github.com
 
 ## Browsers Compatibility
 Since the canvas tag was introduced in HTML5, an HTML5 compatible browser is required.  While the module is intended to work across HTML5 browsers, the ones currently tested against are:
-* IE11 (with and without Jaws 18)
-* Chrome 71+
+* Chrome 88+
+* ChromeOS 88+ (with and without ChromeVox)
+* Edge 88
+* Firefox 79+ (with and without NVDA 2020.4)
+* IE11 (with and without Jaws 2019)
+* Safari 13.1.3 (with and without VoiceOver)
 
 ## License
 The Createjs Accessibility Module is released under the ISC license.  https://opensource.org/licenses/ISC
