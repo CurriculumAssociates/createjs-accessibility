@@ -51,8 +51,8 @@ export default class SingleSelectListBoxData extends SelectData {
    * @access public
    * @param {boolean} enable - true if autofocus should be enabled, false otherwise
    */
-  set autofocus(enable) {
-    this._reactProps.autofocus = enable ? 'autofocus' : undefined;
+  set autoFocus(enable) {
+    this._reactProps.autoFocus = enable ? 'autofocus' : undefined;
   }
 
   /**
@@ -60,8 +60,8 @@ export default class SingleSelectListBoxData extends SelectData {
    * @access public
    * @returns {boolean} true if autofocus is enabled, false otherwise
    */
-  get autofocus() {
-    return this._reactProps.autofocus === 'autofocus';
+  get autoFocus() {
+    return this._reactProps.autoFocus === 'autofocus';
   }
 
   /**
@@ -215,6 +215,9 @@ export default class SingleSelectListBoxData extends SelectData {
   _onKeyDown(evt) {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
     }
 
     if (evt.keyCode === KeyCodes.down) {

@@ -115,7 +115,6 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.FORMAT_TEXT_STRONG:
     case ROLES.FORMAT_TEXT_SUBSCRIPT:
     case ROLES.FORMAT_TEXT_SUPERSCRIPT:
-    case ROLES.FORMAT_TEXT_TIME:
     case ROLES.FORMAT_TEXT_UNDERLINE:
     case ROLES.FORMAT_TEXT_VARIABLE:
     case ROLES.MAIN:
@@ -331,6 +330,7 @@ function createAccessibilityObjectForRole(config) {
       accessibilityObject = new TabListData(displayObject, role, domIdPrefix);
       break;
 
+    case ROLES.FORMAT_TEXT_TIME:
     case ROLES.TIMER:
       accessibilityObject = new TimerData(displayObject, role, domIdPrefix);
       break;

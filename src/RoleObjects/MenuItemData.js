@@ -6,11 +6,27 @@ import AccessibilityObject from './AccessibilityObject';
 export default class MenuItemData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_subMenuOpenerKeyDown', '_menuItemKeyDown');
+    _.bindAll(this, '_onKeyDown', '_menuItemKeyDown', '_subMenuOpenerKeyDown');
 
-    this._reactProps.onKeyDown = this._menuItemKeyDown;
+    this._reactProps.onKeyDown = this._onKeyDown;
     this._isPopupOpener = false;
     this._reactProps['aria-haspopup'] = false;
+    this._activeKeyDownListener = this._menuItemKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    this._reactProps.onKeyDown = this._onKeyDown;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -48,7 +64,9 @@ export default class MenuItemData extends AccessibilityObject {
    */
   set subMenu(displayObject) {
     this._subMenu = displayObject;
-    this._reactProps.onKeyDown = this._subMenuOpenerKeyDown;
+    this._activeKeyDownListener = displayObject
+      ? this._subMenuOpenerKeyDown
+      : this._menuItemKeyDown;
   }
 
   /**
@@ -160,13 +178,29 @@ export default class MenuItemData extends AccessibilityObject {
     if ([ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX].indexOf(displayObject.accessible.role) !== -1) {
       displayObject.accessible._isPopupOpener = true;
       this._label = displayObject;
-      this._reactProps.onKeyDown = undefined;
+      this._activeKeyDownListener = undefined;
     } else if (displayObject.accessible.role === ROLES.MENU) {
       this._subMenu = displayObject;
     }
 
     if (this._label) {
       this._label.accessible.subMenu = this._subMenu;
+    }
+  }
+
+  /**
+   * @inheritdoc
+   */
+  _onKeyDown(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (this._activeKeyDownListener) {
+      this._activeKeyDownListener(evt);
     }
   }
 }

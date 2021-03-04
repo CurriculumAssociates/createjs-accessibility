@@ -5,10 +5,10 @@ import RangeData from './RangeData';
 export default class SpinButtonData extends RangeData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onChange');
+    _.bindAll(this, '_onKeyDown', '_onChange');
+    this._reactProps.onKeyDown = this._onKeyDown;
     this._reactProps.onChange = this._onChange;
     this._reactProps.type = 'number';
-    this.enableKeyEvents = true;
   }
 
   /**
@@ -25,6 +25,9 @@ export default class SpinButtonData extends RangeData {
     throw new Error(`${this.role} cannot have children`);
   }
 
+  /**
+   * @inheritdoc
+   */
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
     // the keydown listener is needed for this role to function per WAI-ARIA practices
@@ -32,6 +35,9 @@ export default class SpinButtonData extends RangeData {
     this._reactProps.onKeyDown = this._onKeyDown;
   }
 
+  /**
+   * @inheritdoc
+   */
   get enableKeyEvents() {
     return super.enableKeyEvents;
   }
@@ -126,9 +132,15 @@ export default class SpinButtonData extends RangeData {
     return this._reactProps['aria-required'];
   }
 
+  /**
+   * @inheritdoc
+   */
   _onKeyDown(evt) {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
     }
 
     if (evt.keyCode === KeyCodes.up) {

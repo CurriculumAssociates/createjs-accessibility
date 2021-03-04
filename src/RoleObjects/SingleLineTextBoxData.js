@@ -61,8 +61,8 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @access public
    * @param {boolean} enable - true if autocomplete should be enabled, false otherwise
    */
-  set autocomplete(enable) {
-    this._reactProps.autocomplete = enable ? 'on' : 'off';
+  set autoComplete(enable) {
+    this._reactProps.autoComplete = enable ? 'on' : 'off';
   }
 
   /**
@@ -70,8 +70,8 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @access public
    * @returns {boolean} true if autocomplete is enabled, false otherwise
    */
-  get autocomplete() {
-    return this._reactProps.autocomplete === 'on';
+  get autoComplete() {
+    return this._reactProps.autoComplete === 'on';
   }
 
   /**

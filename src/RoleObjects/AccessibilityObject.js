@@ -15,7 +15,7 @@ export default class AccessibilityObject {
      * Fields with relatively fixed values that should go into the React props for the
      * element translation of this object.  This is done as an object for easy merging
      * with the rest of the props
-     * @access private
+     * @access package
      */
     this._reactProps = {
       key: this._displayObject.id,
@@ -717,14 +717,6 @@ export default class AccessibilityObject {
    */
   get parent() {
     return this._parent;
-  }
-
-  /**
-   * Retrieves the React props for the element translation of this object.
-   * @access package
-   */
-  get reactProps() {
-    return this._reactProps;
   }
 
   /**

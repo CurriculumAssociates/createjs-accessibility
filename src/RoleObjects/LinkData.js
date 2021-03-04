@@ -45,7 +45,7 @@ export default class LinkData extends AccessibilityObject {
    * @access public
    * @param {String} lang - Specifies the language of the text in the linked document
    */
-  set hreflang(lang) {
+  set hrefLang(lang) {
     this._reactProps.hrefLang = lang;
   }
 
@@ -55,7 +55,7 @@ export default class LinkData extends AccessibilityObject {
    * @returns {String} the language of the text in the linked document, undefined
    * if this field is unset
    */
-  get hreflang() {
+  get hrefLang() {
     return this._reactProps.hrefLang;
   }
 
