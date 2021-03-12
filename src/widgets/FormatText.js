@@ -106,7 +106,7 @@ export default class FormatText extends createjs.Container {
         break;
 
       case ROLES.FORMAT_TEXT_TIME:
-        this.label.accessible._reactProps.dateTime = date;
+        this.label.accessible.dateTime = date;
         break;
       default:
         break;

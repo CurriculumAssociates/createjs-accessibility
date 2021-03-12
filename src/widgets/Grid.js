@@ -24,7 +24,7 @@ export default class Grid extends createjs.Container {
     this.cellHeight = this.data[0][0].cellHeight;
     this.totalWidth = _.sum(this.cellWidths);
     this.rows = [];
-    this.setBounds(0, 0, this.totalWidth, this.cellHeight * this.rowcount);
+    this.setBounds(0, 0, this.totalWidth, this.cellHeight * this.rowCount);
     this.createTable();
 
     const firstCellWidget = _.get(data, '[0][0]');

@@ -10,22 +10,22 @@ export default class ScrollBar extends createjs.Container {
     super();
     _.bindAll(this, 'onMouseDown', 'onPressMove', 'onPressUp', 'onScroll', 'setFocus');
 
-    this.tabIndex = tabIndex;
     this.container = container;
 
     const { width, height } = this.container.getBounds();
-    this.scrollWidth = width;
-    this.scrollHeight = height;
+    this.scrollWidth = Math.round(width);
+    this.scrollHeight = Math.round(height);
 
     this.setBounds(0, 0, TRACKWIDTH, this.scrollHeight);
     AccessibilityModule.register({
+      displayObject: this,
+      role: AccessibilityModule.ROLES.SCROLLBAR,
       accessibleOptions: {
         min: 0,
         orientation,
+        tabIndex,
         value: 0,
       },
-      displayObject: this,
-      role: AccessibilityModule.ROLES.SCROLLBAR,
       events: [
         {
           eventName: 'focus',
@@ -39,15 +39,14 @@ export default class ScrollBar extends createjs.Container {
     });
 
     this.contentContainer = this.container.getChildAt(0);
-    this.container.accessible._reactProps.style = { overflow: 'hidden' };
-    this.accessible.controls = this.contentContainer.accessible.domId;
+    this.accessible.controls = this.container;
 
     this.showTrack();
     this.createThumb();
     this.applyMask();
 
     this.thumbBounds = this.thumb.getBounds();
-    this.accessible.max = this.scrollHeight - this.thumbBounds.height;
+    this.accessible.max = this.scrollHeight - Math.round(this.thumbBounds.height);
     this.factor = this.getFactor();
     this.gapY = 0;
 
@@ -61,7 +60,6 @@ export default class ScrollBar extends createjs.Container {
     track.setBounds(0, 0, TRACKWIDTH, this.scrollHeight);
 
     this.addChild(track);
-    this.accessible._reactProps.style = { background: TRACKCOLOR };
   }
 
   createThumb() {
@@ -74,15 +72,6 @@ export default class ScrollBar extends createjs.Container {
     thumb.graphics.beginFill(THUMBCOLOR).drawRoundRect(0, 0, TRACKWIDTH,
       thumbHeight, (TRACKWIDTH / 2));
     thumb.setBounds(0, 0, TRACKWIDTH, thumbHeight);
-
-    AccessibilityModule.register({
-      displayObject: thumb,
-      parent: this,
-      role: AccessibilityModule.ROLES.NONE,
-    });
-
-    thumb.accessible._reactProps.tabIndex = this.tabIndex;
-    thumb.accessible._reactProps.style = { borderRadius: TRACKWIDTH / 2, background: THUMBCOLOR };
 
     this.addChild(thumb);
   }
@@ -138,7 +127,7 @@ export default class ScrollBar extends createjs.Container {
   }
 
   setFocus() {
-    this.thumb.accessible.requestFocus();
+    this.accessible.requestFocus();
   }
 
   set scrollTopTo(scrollTop) {

@@ -308,7 +308,6 @@ export default class AppWindow extends createjs.Container {
     this._contentArea.addChild(figure);
     this._contentArea.accessible.addChild(figure);
 
-
     const testDisplayObject1 = new createjs.Text('Welcome to the Createjs Accessibility Module test program.', '16px Arial');
     testDisplayObject1.x = 144;
     testDisplayObject1.y = 400;
@@ -1810,12 +1809,13 @@ export default class AppWindow extends createjs.Container {
     });
 
     const scrollBar = new ScrollBar(feedHolder, this._nextTab++);
-    feedHolder.addChild(scrollBar);
-    feedHolder.accessible.addChild(scrollBar);
-    scrollBar.x = holderWidth - scrollBar.getBounds().width;
+    scrollBar.x = feedHolder.x + holderWidth - scrollBar.getBounds().width;
+    scrollBar.y = feedHolder.y;
 
     this._contentArea.addChild(feedHolder);
     this._contentArea.accessible.addChild(feedHolder);
+    this._contentArea.addChild(scrollBar);
+    this._contentArea.accessible.addChild(scrollBar);
   }
 
 
@@ -2176,8 +2176,8 @@ export default class AppWindow extends createjs.Container {
     });
     table.accessible.addChild(tableBody);
 
-    table.accessible.rowcount = tableBody.rowCount;
-    table.accessible.colcount = tableBody.colCount;
+    table.accessible.rowCount = tableBody.rowCount;
+    table.accessible.colCount = tableBody.colCount;
 
     const { width, height } = table.getBounds();
     const holderWidth = width;
@@ -2202,12 +2202,13 @@ export default class AppWindow extends createjs.Container {
     });
 
     const scrollBar = new ScrollBar(tableHolder, this._nextTab++);
-    tableHolder.addChild(scrollBar);
-    tableHolder.accessible.addChild(scrollBar);
-    scrollBar.x = holderWidth - scrollBar.getBounds().width;
+    scrollBar.x = tableHolder.x + holderWidth - scrollBar.getBounds().width;
+    scrollBar.y = tableHolder.y;
 
     this._contentArea.addChild(tableHolder);
     this._contentArea.accessible.addChild(tableHolder);
+    this._contentArea.addChild(scrollBar);
+    this._contentArea.accessible.addChild(scrollBar);
   }
 
   _addTrasformationTestCase(shapeObject) {

@@ -11,7 +11,7 @@ export default class Link extends createjs.Container {
 
     this.accessible.download = options.download;
     this.accessible.href = options.href;
-    this.accessible.hreflang = options.hreflang;
+    this.accessible.hrefLang = options.hreflang;
     this.accessible.media = options.media;
     this.accessible.rel = options.rel;
     this.accessible.target = options.target;

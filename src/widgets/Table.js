@@ -73,7 +73,7 @@ export default class Table extends createjs.Container {
         y: this.cellHeight * i,
       });
       row.rowIndex = i;
-      row.accessible.rowindex = i;
+      row.accessible.rowIndex = i;
 
       _.forEach(row.children, (cell, j) => {
         cell.set({
@@ -81,10 +81,10 @@ export default class Table extends createjs.Container {
         });
         cell.rowIndex = i;
         cell.colIndex = j;
-        cell.accessible.rowindex = i;
-        cell.accessible.colindex = j;
-        cell.accessible.rowspan = 1;
-        cell.accessible.colspan = 1;
+        cell.accessible.rowIndex = i;
+        cell.accessible.colIndex = j;
+        cell.accessible.rowSpan = 1;
+        cell.accessible.colSpan = 1;
       });
     });
   }
