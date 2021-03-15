@@ -93,7 +93,7 @@ function createAccessibilityObjectForRole(config) {
     parent = displayObject.accessible.parent;
     if (parent) {
       containerIndex = _.findIndex(parent.children, child => child === displayObject);
-      parent.removedChildAt(containerIndex);
+      parent.removeChildAt(containerIndex);
     }
   }
 
