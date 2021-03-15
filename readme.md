@@ -136,4 +136,4 @@ Since the canvas tag was introduced in HTML5, an HTML5 compatible browser is req
 * Safari 13.1.3 (with and without VoiceOver)
 
 ## License
-The Createjs Accessibility Module is released under the ISC license.  https://opensource.org/licenses/ISC
+The Createjs Accessibility Module is released under the ISC license. https://opensource.org/licenses/ISC
