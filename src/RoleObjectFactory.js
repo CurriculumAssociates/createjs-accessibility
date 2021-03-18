@@ -61,14 +61,20 @@ import UnorderedListData from './RoleObjects/UnorderedListData';
  *  DisplayObject to add accessibility annotations to
  * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
  * @param {number} [config.containerIndex] - An optional value for the layer index to
- * add the DisplayObject
+ * add the DisplayObject.  If re-registering a DisplayObject that had a parent in the a11y tree
+ * when this and the parent param are unset, then the index in the previous parent will be used
+ * (effectively making the new AccessibilityObject replace the old one in the same position of the
+ * a11y tree).
+ * then the previous parent will be used.
  * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM
  * id in the translated display object.  Defaults to 'acc_'
  * @param {Object} [config.events] - event object with field eventName and listener to
  * bind event while registering displayObject
- * @param {createjs.DisplayObject} [config.parent] - DisplayObject to add the current
- * DisplayObject to as a child. Note the order of registration is important, the parent
- * object will need to be registered with the module before the child.
+ * @param {createjs.DisplayObject} [config.parent] - Optional parameter for the DisplayObject
+ * to add the current DisplayObject to as a child. Note the order of registration is important,
+ * the parent object will need to be registered with the module before the child.
+ * If re-registering a DisplayObject that had a parent in the a11y tree and this param is unset,
+ * then the previous parent will be used.
  */
 function createAccessibilityObjectForRole(config) {
   const {
@@ -90,10 +96,17 @@ function createAccessibilityObjectForRole(config) {
   }
 
   if (displayObject.accessible) {
-    parent = displayObject.accessible.parent;
-    if (parent) {
-      containerIndex = _.findIndex(parent.children, child => child === displayObject);
-      parent.removeChildAt(containerIndex);
+    const prevParent = displayObject.accessible.parent;
+    if (prevParent) {
+      const prevContainerIndex = _.findIndex(prevParent.children, child => child === displayObject);
+      prevParent.removeChildAt(prevContainerIndex);
+
+      if (!parent) {
+        parent = prevParent.displayObject;
+        if (_.isUndefined(containerIndex)) {
+          containerIndex = prevContainerIndex;
+        }
+      }
     }
   }
 
