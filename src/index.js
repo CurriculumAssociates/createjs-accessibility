@@ -28,8 +28,6 @@ function positionElemUnderStage(stage, getComponentRef) {
   const scaleX = width / attrWidth;
   const scaleY = height / attrHeight;
 
-  console.log(`mnewcomb: aw ${attrWidth} ah ${attrHeight} w ${width} h ${height} sx ${scaleX} sy ${scaleY}`);
-
   const moduleStyle = {
     overflow: 'hidden',
     position: 'absolute',
@@ -45,7 +43,6 @@ function positionElemUnderStage(stage, getComponentRef) {
     transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
     transformOrigin: 'top left',
   };
-  console.log(moduleStyle);
 
   return (
     <div style={moduleStyle}>
