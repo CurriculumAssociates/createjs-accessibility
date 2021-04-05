@@ -18,32 +18,34 @@ function positionElemUnderStage(stage, getComponentRef) {
 
   const { canvas } = stage;
 
-  const {
-    height,
-    width,
-    border,
-    boxSizing,
-    margin,
-    padding,
-    transform,
-    transformOrigin,
-  } = getComputedStyle(canvas);
+  const computedStyle = getComputedStyle(canvas);
+  const width = parseInt(computedStyle.width, 10);
+  const height = parseInt(computedStyle.height, 10);
+
+  const attrWidth = parseInt(canvas.getAttribute('width'), 10) || width;
+  const attrHeight = parseInt(canvas.getAttribute('height'), 10) || height;
+
+  const scaleX = width / attrWidth;
+  const scaleY = height / attrHeight;
+
+  console.log(`mnewcomb: aw ${attrWidth} ah ${attrHeight} w ${width} h ${height} sx ${scaleX} sy ${scaleY}`);
 
   const moduleStyle = {
     overflow: 'hidden',
     position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width'), 10) : 'auto',
+    left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
-    height,
-    width,
-    border,
-    boxSizing,
-    margin,
-    padding,
-    transform,
-    transformOrigin,
+    height: attrHeight,
+    width: attrWidth,
+    border: computedStyle.border,
+    boxSizing: computedStyle.boxSizing,
+    margin: computedStyle.margin,
+    padding: computedStyle.padding,
+    transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
+    transformOrigin: 'top left',
   };
+  console.log(moduleStyle);
 
   return (
     <div style={moduleStyle}>
