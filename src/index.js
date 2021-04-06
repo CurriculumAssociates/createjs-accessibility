@@ -37,7 +37,7 @@ function positionElemUnderStage(stage, getComponentRef) {
     height: attrHeight,
     width: attrWidth,
     border: computedStyle.border,
-    boxSizing: computedStyle.boxSizing,
+    boxSizing: computedStyle['box-sizing'],
     margin: computedStyle.margin,
     padding: computedStyle.padding,
     transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
