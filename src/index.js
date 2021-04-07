@@ -28,7 +28,7 @@ function positionElemUnderStage(stage, getComponentRef) {
   const scaleX = width / attrWidth;
   const scaleY = height / attrHeight;
 
-  const moduleStyle = {
+  const transformStyle = {
     overflow: 'hidden',
     position: 'absolute',
     left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
@@ -36,17 +36,26 @@ function positionElemUnderStage(stage, getComponentRef) {
     zIndex: debugPos ? 'auto' : -1,
     height: attrHeight,
     width: attrWidth,
+    marginLeft: computedStyle['margin-left'],
+    transform: computedStyle.transform,
+    transformOrigin: computedStyle.transformOrigin,
+  };
+
+  const moduleStyle = {
+    width: '100%',
+    height: '100%',
     border: computedStyle.border,
     boxSizing: computedStyle['box-sizing'],
-    margin: computedStyle.margin,
     padding: computedStyle.padding,
     transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
     transformOrigin: 'top left',
   };
 
   return (
-    <div style={moduleStyle}>
-      <AccessibilityTranslator stage={stage} ref={getComponentRef} />
+    <div style={transformStyle}>
+      <div style={moduleStyle}>
+        <AccessibilityTranslator stage={stage} ref={getComponentRef} />
+      </div>
     </div>
   );
 }
