@@ -18,36 +18,44 @@ function positionElemUnderStage(stage, getComponentRef) {
 
   const { canvas } = stage;
 
-  const {
-    height,
-    width,
-    border,
-    boxSizing,
-    margin,
-    padding,
-    transform,
-    transformOrigin,
-  } = getComputedStyle(canvas);
+  const computedStyle = getComputedStyle(canvas);
+  const width = parseInt(computedStyle.width, 10);
+  const height = parseInt(computedStyle.height, 10);
 
-  const moduleStyle = {
+  const attrWidth = parseInt(canvas.getAttribute('width'), 10) || width;
+  const attrHeight = parseInt(canvas.getAttribute('height'), 10) || height;
+
+  const scaleX = width / attrWidth;
+  const scaleY = height / attrHeight;
+
+  const transformStyle = {
     overflow: 'hidden',
     position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + parseInt(canvas.getAttribute('width'), 10) : 'auto',
+    left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
     top: canvas.offsetTop,
     zIndex: debugPos ? 'auto' : -1,
-    height,
-    width,
-    border,
-    boxSizing,
-    margin,
-    padding,
-    transform,
-    transformOrigin,
+    height: attrHeight,
+    width: attrWidth,
+    marginLeft: computedStyle['margin-left'],
+    transform: computedStyle.transform,
+    transformOrigin: computedStyle.transformOrigin,
+  };
+
+  const moduleStyle = {
+    width: '100%',
+    height: '100%',
+    border: computedStyle.border,
+    boxSizing: computedStyle['box-sizing'],
+    padding: computedStyle.padding,
+    transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
+    transformOrigin: 'top left',
   };
 
   return (
-    <div style={moduleStyle}>
-      <AccessibilityTranslator stage={stage} ref={getComponentRef} />
+    <div style={transformStyle}>
+      <div style={moduleStyle}>
+        <AccessibilityTranslator stage={stage} ref={getComponentRef} />
+      </div>
     </div>
   );
 }
