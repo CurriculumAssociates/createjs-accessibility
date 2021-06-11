@@ -213,6 +213,9 @@ export default class SingleSelectListBoxData extends SelectData {
    * @param {SyntheticEvent} evt - React event
    */
   _onKeyDown(evt) {
+    if (this.disabledWithInference) {
+      return;
+    }
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
       if (evt.defaultPrevented) {
