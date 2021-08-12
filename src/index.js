@@ -8,7 +8,7 @@ import { ROLES } from './Roles';
 /**
  * Positions the AccessibilityTranslator below the specified stage.
  * @param {createjs.Stage} stage - createjs stage that has been registered for accessibility
- * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
+ * @param {Function} getComponentRef - Optional callback function to set a ref to the AccessibilityTranslator
  * @returns {Object} tranlated DOM next to the canvas
  */
 function positionElemUnderStage(stage, getComponentRef) {
@@ -32,14 +32,18 @@ function positionElemUnderStage(stage, getComponentRef) {
     overflow: 'hidden',
     position: 'absolute',
     left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
-    top: canvas.offsetTop,
+    top: `${canvas.offsetTop}px`,
     zIndex: debugPos ? 'auto' : -1,
-    height: attrHeight,
-    width: attrWidth,
+    height: `${attrHeight}px`,
+    width: `${attrWidth}px`,
     marginLeft: computedStyle['margin-left'],
     transform: computedStyle.transform,
     transformOrigin: computedStyle.transformOrigin,
   };
+
+  if (!getComponentRef) {
+    return transformStyle;
+  }
 
   const moduleStyle = {
     width: '100%',
@@ -101,8 +105,11 @@ function releaseStage(stage) {
  */
 function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
-    const reactParent = stage.accessibilityTranslator.rootElem.parentElement;
-    positionElemUnderStage(reactParent, stage);
+    const camWrapperElem = stage.accessibilityTranslator.rootElem.parentElement.parentElement;
+    const newStyle = positionElemUnderStage(stage);
+    _.keys(newStyle).forEach((style) => {
+      camWrapperElem.style[style] = newStyle[style];
+    });
   } else {
     // handle this function being called before React sets the ref for rootElem
     _.defer(() => {
