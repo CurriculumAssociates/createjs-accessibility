@@ -6,14 +6,13 @@ import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
 
 /**
- * Positions the AccessibilityTranslator below the specified stage.
+ * Calculates style metrics for DOM representation of canvas stage.
  * @param {createjs.Stage} stage - createjs stage that has been registered for accessibility
- * @param {Function} getComponentRef - Callback function to set a ref to the AccessibilityTranslator
- * @returns {Object} tranlated DOM next to the canvas
+ * @returns {Object} style object for positioning associated DOM elements
  */
-function positionElemUnderStage(stage, getComponentRef) {
-  // true to put the tranlated DOM next to the canvas (useful for debugging the module),
-  // false for the translated DOM to go under it
+function calcDomStylesFromStage(stage) {
+  // true to return style object for putting the DOM element adjacent to the canvas (useful for debugging),
+  // false to return style object to put the DOM beneath the canvas
   const debugPos = false;
 
   const { canvas } = stage;
@@ -28,36 +27,29 @@ function positionElemUnderStage(stage, getComponentRef) {
   const scaleX = width / attrWidth;
   const scaleY = height / attrHeight;
 
-  const transformStyle = {
-    overflow: 'hidden',
-    position: 'absolute',
-    left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
-    top: canvas.offsetTop,
-    zIndex: debugPos ? 'auto' : -1,
-    height: attrHeight,
-    width: attrWidth,
-    marginLeft: computedStyle['margin-left'],
-    transform: computedStyle.transform,
-    transformOrigin: computedStyle.transformOrigin,
+  return {
+    transformStyle: {
+      overflow: 'hidden',
+      position: 'absolute',
+      left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
+      top: `${canvas.offsetTop}px`,
+      zIndex: debugPos ? 'auto' : -1,
+      height: `${attrHeight}px`,
+      width: `${attrWidth}px`,
+      marginLeft: computedStyle['margin-left'],
+      transform: computedStyle.transform,
+      transformOrigin: computedStyle.transformOrigin,
+    },
+    moduleStyle: {
+      width: '100%',
+      height: '100%',
+      border: computedStyle.border,
+      boxSizing: computedStyle['box-sizing'],
+      padding: computedStyle.padding,
+      transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
+      transformOrigin: 'top left',
+    },
   };
-
-  const moduleStyle = {
-    width: '100%',
-    height: '100%',
-    border: computedStyle.border,
-    boxSizing: computedStyle['box-sizing'],
-    padding: computedStyle.padding,
-    transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
-    transformOrigin: 'top left',
-  };
-
-  return (
-    <div style={transformStyle}>
-      <div style={moduleStyle}>
-        <AccessibilityTranslator stage={stage} ref={getComponentRef} />
-      </div>
-    </div>
-  );
 }
 
 /**
@@ -71,7 +63,14 @@ function positionElemUnderStage(stage, getComponentRef) {
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const moduleNode = positionElemUnderStage(stage, (c) => { component = c; });
+  const styles = calcDomStylesFromStage(stage);
+  const moduleNode = (
+    <div style={styles.transformStyle}>
+      <div style={styles.moduleStyle}>
+        <AccessibilityTranslator stage={stage} ref={(c) => { component = c; }} />
+      </div>
+    </div>
+  );
 
   if (_.isString(parentElement)) {
     parentElement = document.getElementById(parentElement);
@@ -101,8 +100,11 @@ function releaseStage(stage) {
  */
 function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
-    const reactParent = stage.accessibilityTranslator.rootElem.parentElement;
-    positionElemUnderStage(reactParent, stage);
+    const camWrapperElem = stage.accessibilityTranslator.rootElem.parentElement.parentElement;
+    const { transformStyle } = calcDomStylesFromStage(stage);
+    _.keys(transformStyle).forEach((style) => {
+      camWrapperElem.style[style] = transformStyle[style];
+    });
   } else {
     // handle this function being called before React sets the ref for rootElem
     _.defer(() => {
