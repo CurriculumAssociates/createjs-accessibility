@@ -50,12 +50,12 @@ export default class ComboBoxData extends SelectData {
   }
 
   /**
-   * Retrieves whether autocomplete is enabled or not for the combobox
+   * Retrieves whether autocomplete is enabled
    * @access public
-   * @returns {boolean} true if autocomplete is enabled, false otherwise
+   * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
    */
   get autoComplete() {
-    return this._reactProps.autoComplete === 'on';
+    return this._reactProps.autoComplete === undefined || this._reactProps.autoComplete === 'on';
   }
 
   /**
