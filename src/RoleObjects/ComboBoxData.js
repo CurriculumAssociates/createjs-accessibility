@@ -50,7 +50,7 @@ export default class ComboBoxData extends SelectData {
   }
 
   /**
-   * Retrieves whether autocomplete is enabled
+   * Retrieves whether autocomplete is enabled or not for the combobox
    * @access public
    * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
    */

@@ -47,7 +47,7 @@ export default class FormData extends SectionData {
   }
 
   /**
-   * Retrieves whether autocomplete is enabled
+   * Retrieves whether autocomplete is enabled or not for the form
    * @access public
    * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
    */
