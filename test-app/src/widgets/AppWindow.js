@@ -2381,7 +2381,7 @@ export default class AppWindow extends createjs.Container {
       childrenData: 0,
     };
 
-    const rows = [ row0, row1, row2, row3, row4, row5 ];
+    const rows = [row0, row1, row2, row3, row4, row5];
     const data = {
       rows,
       cellWidth: 265,
