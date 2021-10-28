@@ -1,4 +1,5 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
+import TimelineMax from 'gsap';
 
 const CONTENT_AREA_WIDTH = 800;
 const CONTENT_AREA_HEIGHT = 600;

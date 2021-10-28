@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
+import TimelineMax from 'gsap';
 
 const PAD = 2;
 const MODES = {
