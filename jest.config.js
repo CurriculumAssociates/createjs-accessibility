@@ -16,4 +16,6 @@ module.exports = {
   //   '^.+\\.jsx$': 'babel-jest',
   //   '^.+\\.js$': 'babel-jest'
   // },
+
+  setupFiles: ['jest-canvas-mock'],
 };

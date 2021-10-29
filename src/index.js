@@ -56,7 +56,7 @@ function calcDomStylesFromStage(stage) {
  * Setup accessibility support for a Stage. The AccessibilityTranslator instance will be
  * attached to the provided stage by adding an "accessibilityTranslator" member to the stage.
  * @param {!createjs.Stage} stage - CreateJS Stage to attach the translator
- * @param {!(DOMElement|string)} parentElement - DOM Element or its id to which the DOM
+ * @param {!(HTMLElement|string)} parentElement - HTML Element or its id to which the DOM
  * translation will be added
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
