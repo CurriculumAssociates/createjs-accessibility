@@ -24,7 +24,6 @@ describe('AccessibilityModule', () => {
       renderSpy = jest.spyOn(ReactDOM, 'render');
     });
 
-
     it('calls ReactDOM.render and renders inside parentElement', () => {
       expect(parentElement.childElementCount).toEqual(0);
 
@@ -39,7 +38,6 @@ describe('AccessibilityModule', () => {
       expect(renderSpy).toHaveBeenCalledTimes(1);
       expect(parentElement.childElementCount).toEqual(1);
     });
-
 
     it('find parentElement by id if passed a string', () => {
       const getElementByIdSpy = jest.spyOn(document, 'getElementById').mockReturnValue(parentElement);
