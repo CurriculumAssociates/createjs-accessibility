@@ -64,14 +64,5 @@ describe('AccessibilityModule', () => {
 
       expect(onReady).toBeCalled();
     });
-
-    // it('should render initial layout', () => {
-    //   // when
-    //   const stage = new createjs.Stage('stage');
-    //   console.log('stage', stage);
-    //   const wrapper = shallow(<AccessibilityTranslator stage={stage} />);
-    //   // then
-    //   expect(wrapper.getElements()).toMatchSnapshot();
-    // });
   });
 });
