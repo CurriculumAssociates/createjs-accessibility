@@ -1,5 +1,28 @@
 # Createjs Accessibility Module
 
+## Table of Contents
+- [Description](#description)
+  * [Standards](#standards)
+- [Install](#install)
+- [Usage](#usage)
+  * [Registering DisplayObject(s)](#registering-displayobject-s-)
+  * [Adding DisplayObject to Accessibility Tree](#adding-displayobject-to-accessibility-tree)
+  * [Registering the stage](#registering-the-stage)
+  * [Rendering the DOM](#rendering-the-dom)
+  * [Canvas resizing](#canvas-resizing)
+  * [Constraints](#constraints)
+  * [Events](#events)
+- [Test App](#test-app)
+  * [Usage](#usage-1)
+  * [Test Cases](#test-cases)
+  * [Adding to the test app](#adding-to-the-test-app)
+  * [Accessing the test app](#accessing-the-test-app)
+  * [Running the test app locally](#running-the-test-app-locally)
+- [Browsers Compatibility](#browsers-compatibility)
+- [License](#license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ## Description
 HTML5 provides the canvas tag which is an area that can be drawn to via Javascript.  Createjs (https://www.createjs.com/) is a library that help manage the low level canvas draw calls with higher level DisplayObjects.  This module allows for annotating those DisplayObjects with additional information needed for accessibility support, which the module uses to create and update HTML elements that are placed under the canvas.  In order to help with keyboard support and other Assistive Technologies (ATs) that cause input events, this module also sends up events to the corresponding DisplayObject that the consuming app can respond to accordingly.
 
@@ -123,9 +146,45 @@ Keyboard events on the translated DOM are communicated to the associated Display
 | tree grid | expandRow | `rowDisplayObject`: DisplayObject for the row to collapse | The specified expandable row of the grid should be collapsed |
 | tree item | click | | clicking event from keyboard interaction |
 
-### Test app and reference implementation
-There is an open source companion test app for this module at https://github.com/CurriculumAssociates/createjs-accessibility-tester.  The intent behind that app is to both test changes to this module and provide a reference implementation for the various roles.  Some roles (e.g. menubar) require a particular structure to work correctly, and this test app shows them in that structure and functional.  Please see that repo for additional details.
+## Test App
+The test-app directory contains a test app for both testing changes to this module and providing a reference implementation for the various roles.  Some roles (e.g. menubar) require a particular structure to work correctly, and this test app shows them in that structure and functional. 
+### Usage
+Since the canvas is on top of the DOM translation performed by CAM, the app can be interacted with the mouse or keyboard where the canvas and DOM remain in sync due to the communication provided by CAM.  Since the purpose of CAM is to provide the markup needed to work with ATs (e.g. screen readers or refreshable braille displays), the app can also be interacted with through those as well.
 
+### Test Cases
+The area below the menu bar and above the footer is where most test cases display.  The test case displayed in this area can be changed by using the menu bar to select another test case.  The only test cases that don't use that area are the ones that are on screen at all times, which includes the banner, menu bar, footer, as well as the content of those areas.
+
+The test cases are intended to test a role or multiple roles in a reasonably realistic way, such as mocking up a signup interface to test multiple input roles.  Each test case should be reasonably realistic in itself, but the collection of test cases at the moment does not create a clear cohesive app.  While not every permutation of attribute and value is tested for each role in a test case (which can be done via the console in the browser's dev tools during development), they do test/demonstrate correct nesting structure of roles, relationship of elements, handling of input, and passing of relevant information to CAM.
+
+Every role currently implemented in CAM should be included in at least 1 test case in this app.  This of course means that adding roles to CAM means updating this app to demonstrate and test its usage.  The process for doing so is to evaluate if the role can be added to an existing test case while keeping it reasonably realistic.  If there isn't a good existing test case, then a new one reasonably realistic one can be created. Test cases should also follow WAI-ARIA authoring practices (https://www.w3.org/TR/wai-aria-practices-1.1/).
+
+### Adding to the test app
+Once a new role has been added to CAM, a widget should be created in the test app to allow for testing and demoing it.  The widgets are not intended to be part of a fully featured and customizable UI library, but enough to test and demo the role while meeting WCAG 2.1 AA.  Each widget has a file in `src/widgets` which exports the class for the widget.  Since widgets typically need to contain multiple DisplayObjects to render in canvas properly, these classes typically extend `createjs.Container`.  The constructor should register the widget with CAM without specifying a parent, such as:
+```
+AccessibilityModule.register({
+      displayObject: this,
+      accessibleOptions: options,
+      role: AccessibilityModule.ROLES.BUTTON,
+});
+```
+Instances of the widget will be added to the accessibility tree when they are created in AppWindow.js (discussed later).  If the widget has descendant DisplayObjects that should be registered with CAM, that registration should occur while the instance is being created and those should be added as descendants of `this` on both the Createjs side and in the widget's accessibility tree.  Also, binding of event listeners for both Createjs emitted events and events emitted from CAM should be done as part of creating the instance.
+
+Using the newly created widget is done by adding at least one instance of it to a test case in `src/widgets/AppWindow.js` or creating a new test case in that file.  Test cases that use the area between the menu and the footer are written as functions where their function bodies start with `this._clearScreen();` in order to clear the previously displayed test case in that area.  Then they can create and configure whatever widgets the test case requires.  To display the widgets for a test case, they should be added as children of `this._contentArea`, both on the Createjs side and with CAM.  New test cases that use this area also need to be added to the menu bar, generally in the "Test Cases" menu before the "Show Grid" test case.
+
+If a non-code file (e.g. image) needs to be added, then it should be placed in `src/widgets/media`.
+
+### Accessing the test app
+The test app for the latest version of CAM is hosted at: https://curriculumassociates.github.io/createjs-accessibility
+
+### Running the test app locally
+The test app uses its parent folder as its CAM dependency, and can be used to test local changes. First, ensure that the parent CAM project has dependencies installed and is built:
+```
+npm install && npm run build
+```
+Then start the test app, which will run on http://localhost:8007/.
+```
+npm run start:test-app
+```
 ## Browsers Compatibility
 Since the canvas tag was introduced in HTML5, an HTML5 compatible browser is required.  While the module is intended to work across HTML5 browsers, the ones currently tested against are:
 * Chrome 88+
