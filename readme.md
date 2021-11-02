@@ -21,8 +21,6 @@
 - [Browsers Compatibility](#browsers-compatibility)
 - [License](#license)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ## Description
 HTML5 provides the canvas tag which is an area that can be drawn to via Javascript.  Createjs (https://www.createjs.com/) is a library that help manage the low level canvas draw calls with higher level DisplayObjects.  This module allows for annotating those DisplayObjects with additional information needed for accessibility support, which the module uses to create and update HTML elements that are placed under the canvas.  In order to help with keyboard support and other Assistive Technologies (ATs) that cause input events, this module also sends up events to the corresponding DisplayObject that the consuming app can respond to accordingly.
 
