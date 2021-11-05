@@ -27,6 +27,14 @@ export default class ComboBox extends createjs.Container {
     this._dropDownView.visible = false;
   }
 
+  setTabbable(tabbable) {
+    if (tabbable) {
+      this._textBox.accessible.tabIndex = 0;
+    } else {
+      this._textBox.accessible.tabIndex = -1;
+    }
+  }
+
   get text() {
     return this._textBox.text;
   }

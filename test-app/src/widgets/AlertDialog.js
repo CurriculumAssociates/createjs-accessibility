@@ -2,9 +2,9 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import Button from './Button';
 
 export default class AlertDialog extends createjs.Container {
-  constructor({ tabIndex, doneCallback, cancelCallback }) {
+  constructor({ buttonTabIndex, doneCallback, cancelCallback }) {
     super();
-    this.tabIndex = tabIndex;
+    this.buttonTabIndex = buttonTabIndex;
     AccessibilityModule.register({
       displayObject: this,
       role: AccessibilityModule.ROLES.ALERTDIALOG,
@@ -65,6 +65,6 @@ export default class AlertDialog extends createjs.Container {
       height: 60,
       width: 150,
     };
-    return new Button(btnData, this.tabIndex++, callback);
+    return new Button(btnData, this.buttonTabIndex, callback);
   }
 }

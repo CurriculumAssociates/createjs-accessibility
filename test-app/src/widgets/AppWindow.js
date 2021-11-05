@@ -595,7 +595,7 @@ export default class AppWindow extends createjs.Container {
     const clearField = () => {
       nameField._updateDisplayString('');
     };
-    const clearNameFieldBtn = this._createClearButton('Clear name field', clearField);
+    const clearNameFieldBtn = this._createClearButton('Clear name field', 0, clearField);
     form.addChild(clearNameFieldBtn);
     form.accessible.addChild(clearNameFieldBtn);
 
@@ -674,7 +674,7 @@ export default class AppWindow extends createjs.Container {
     const clearArea = () => {
       commentArea._updateDisplayString('');
     };
-    const clearCommentAreaBtn = this._createClearButton('Clear comment area', clearArea);
+    const clearCommentAreaBtn = this._createClearButton('Clear comment area', 0, clearArea);
     form.addChild(clearCommentAreaBtn);
     form.accessible.addChild(clearCommentAreaBtn);
 
@@ -811,24 +811,6 @@ export default class AppWindow extends createjs.Container {
       combobox.text = '';
     };
 
-    const alertDialog = new AlertDialog({
-      tabIndex: -1,
-      cancelCallback: () => {
-        alertDialog.visible = false;
-      },
-      doneCallback: () => {
-        resetAll();
-        alertDialog.visible = false;
-      },
-    });
-    alertDialog.visible = false;
-    this._contentArea.addChild(alertDialog);
-    this._contentArea.accessible.addChild(alertDialog);
-
-    const resetCallback = () => {
-      alertDialog.visible = true;
-    };
-
     const submitBtnData = {
       type: 'button',
       value: 'SUBMIT',
@@ -871,6 +853,51 @@ export default class AppWindow extends createjs.Container {
       width: 250,
     };
 
+    function makeFormTabbable() {
+      form.accessible.hidden = false;
+      nameField.accessible.tabIndex = 0;
+      clearNameFieldBtn.accessible.tabIndex = 0;
+      membershipList.setTabbable(true);
+      commentArea.accessible.tabIndex = 0;
+      clearCommentAreaBtn.accessible.tabIndex = 0;
+      mailingList.accessible.tabIndex = 0;
+      combobox.setTabbable(true);
+      submit.accessible.tabIndex = 0;
+      reset.accessible.tabIndex = 0;
+    }
+
+    const alertDialog = new AlertDialog({
+      buttonTabIndex: 0,
+      cancelCallback: () => {
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+      doneCallback: () => {
+        resetAll();
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+    });
+    alertDialog.visible = false;
+    this._contentArea.addChild(alertDialog);
+    this._contentArea.accessible.addChild(alertDialog);
+
+    const resetCallback = () => {
+      alertDialog.visible = true;
+      form.accessible.hidden = true;
+      nameField.accessible.tabIndex = -1;
+      clearNameFieldBtn.accessible.tabIndex = -1;
+      membershipList.setTabbable(false);
+      commentArea.accessible.tabIndex = -1;
+      clearCommentAreaBtn.accessible.tabIndex = -1;
+      mailingList.accessible.tabIndex = -1;
+      combobox.setTabbable(false);
+      submit.accessible.tabIndex = -1;
+      reset.accessible.tabIndex = -1;
+    };
+
     // Reset form button
     const reset = new Button(resetBtnData, 0, resetCallback);
     reset.x = 400;
@@ -884,7 +911,7 @@ export default class AppWindow extends createjs.Container {
     form.accessible.addChild(resetBtnToolTip);
   }
 
-  _createClearButton(name, callBack) {
+  _createClearButton(name, tabIndex, callBack) {
     const clearBtnData = {
       type: 'clear',
       value: '',
@@ -898,6 +925,7 @@ export default class AppWindow extends createjs.Container {
       formnoValidate: '',
       height: 20,
       width: 20,
+      tabIndex,
     };
 
     const button = new Button(clearBtnData, 0, callBack);
