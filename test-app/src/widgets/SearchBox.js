@@ -1,6 +1,7 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import _ from 'lodash';
 import SingleLineTextInput from './SingleLineTextInput';
+import ClearButton from './ClearButton';
 
 export default class SearchBox extends SingleLineTextInput {
   constructor(width, height, tabIndex, listArr, placeholderText) {
@@ -13,14 +14,14 @@ export default class SearchBox extends SingleLineTextInput {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.SEARCHBOX,
-      events: [{
-        eventName: 'searchForText',
-        listener: this._processSearchData,
-      }],
+      // events: [{
+      //   eventName: 'searchForText',
+      //   listener: this._processSearchData,
+      // }],
     });
     this._searchText = '';
     this.listArr = listArr;
-    this.addRemoveButton();
+    this.addClearButton();
 
     // Label to show result status
     const label = new createjs.Text('', '20px Arial', 'black');
@@ -31,38 +32,30 @@ export default class SearchBox extends SingleLineTextInput {
     this.resultLabel = label;
   }
 
-  addRemoveButton() {
-    const container = new createjs.Container();
-    // Button background
-    const bg = new createjs.Shape();
-    const height = this.getBounds().height - 5;
-    bg.graphics.beginFill('grey').drawCircle(0, 0, height * 0.5);
-    container.addChild(bg);
+  addClearButton() {
+    const clearBtnData = {
+      type: 'button',
+      value: 'Clear',
+      name: 'Clear',
+      enabled: 'true',
+      height: 20,
+      width: 20,
+      label: 'Clear search input',
+    };
 
-    // Cross
-    const cross = new createjs.Text('x', `${height}px Arial`, 'white');
-    const textBounds = cross.getBounds();
-    cross.set({ x: -(textBounds.width * 0.5), y: -(textBounds.height * 0.65) });
-    container.addChild(cross);
+    const clearButton = new ClearButton(clearBtnData, 0, () => {
+      this._clearText();
+    });
 
     // Container position
-    const containerBounds = container.getBounds();
+    const containerBounds = clearButton.getBounds();
     const bounds = this.getBounds();
-    container.set({
+    clearButton.set({
       x: bounds.width - (containerBounds.width + 3),
       y: 3 + (containerBounds.height) * 0.5,
     });
-    this.addChild(container);
-    container.visible = false;
-
-    this.crossButton = container;
-
-    // Mouseevent to clear current selection
-    container.on('click', () => {
-      super._updateDisplayString('');
-      this.searchText = '';
-      this.dispatchEvent('searchForText');
-    });
+    clearButton.visible = false;
+    this.clearButton = clearButton;
   }
 
   /**
@@ -73,7 +66,12 @@ export default class SearchBox extends SingleLineTextInput {
   _updateDisplayString(str) {
     super._updateDisplayString(str);
     this.searchText = str;
-    this.dispatchEvent('searchForText');
+  }
+
+  _clearText() {
+    this._updateDisplayString('');
+    this._processSearchData();
+    this.accessible.requestFocus();
   }
 
   /**
@@ -84,7 +82,7 @@ export default class SearchBox extends SingleLineTextInput {
   _onValueChanged(evt) {
     super._onValueChanged(evt);
     this.searchText = evt.newValue;
-    this.dispatchEvent('searchForText');
+    this.clearButton.visible = !_.isEmpty(this.searchText);
   }
 
   /**
@@ -106,7 +104,7 @@ export default class SearchBox extends SingleLineTextInput {
     this.resultLabel.text = (_.isEmpty(this.searchText)) ? '' : text;
 
     // Toggle visibility of cross button
-    this.crossButton.visible = !_.isEmpty(this.searchText);
+    this.clearButton.visible = !_.isEmpty(this.searchText);
   }
 
   get searchText() {

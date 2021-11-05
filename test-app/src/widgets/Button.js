@@ -41,7 +41,6 @@ export default class Button extends createjs.Container {
         },
       ],
     });
-    console.log('button registered', options);
 
     this._options = options;
     this.enabled = options.enabled;
