@@ -1168,7 +1168,6 @@ export default class AppWindow extends createjs.Container {
       drag.set({
         x: 50 + (i * (WIDTH + 20)),
         y: 100,
-        alpha: 0.5,
       });
       drag.origX = drag.x;
       drag.origY = drag.y;
@@ -1182,8 +1181,6 @@ export default class AppWindow extends createjs.Container {
         const { target } = evt;
         target._onFocus();
       });
-
-      console.log(dragStart, drag);
     }
 
     // As per UI drop zones will get added after the draggables

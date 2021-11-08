@@ -85,13 +85,11 @@ export default class Button extends createjs.Container {
   }
 
   _onMouseDown() {
-    // this.background.visible = false;
-    // Commenting out temporarily because I think this leads to click target area issues
+    this.background.visible = false;
   }
 
   _onMouseUp() {
-    // this.background.visible = true;
-    // Commenting out temporarily because I think this leads to click target area issues
+    this.background.visible = true;
   }
 
   _onClick(evt) {
