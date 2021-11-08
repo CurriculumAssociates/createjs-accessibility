@@ -14,10 +14,6 @@ export default class SearchBox extends SingleLineTextInput {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.SEARCHBOX,
-      // events: [{
-      //   eventName: 'searchForText',
-      //   listener: this._processSearchData,
-      // }],
     });
     this._searchText = '';
     this.listArr = listArr;
