@@ -1113,7 +1113,7 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    // Createing drop zones
+    // Creating drop zones
     for (let i = 0; i < dragDataArr.length; i++) {
       const drop = new createjs.Shape();
       drop.graphics.beginFill(dragDataArr[i]).drawRect(0, 0, WIDTH, HEIGHT);
@@ -1130,12 +1130,10 @@ export default class AppWindow extends createjs.Container {
       drop.backgroundColor = dragDataArr[i];
       drop.opacity = 0.5;
 
-      this._contentArea.addChild(drop);
       dropArr.push(drop);
     }
 
-    // creating draggables
-
+    // Creating draggables
     for (let i = 0; i < dragDataArr.length; i++) {
       const options = {
         type: 'button',
@@ -1146,12 +1144,37 @@ export default class AppWindow extends createjs.Container {
         width: WIDTH,
         height: HEIGHT,
       };
-      const drag = new Draggable(options, dropArr, 0);
-      drag.set({ x: 50 + (i * (WIDTH + 20)), y: 100 });
+
+      // Container where draggable starts, for returning draggables to their start positions
+      const dragStart = new createjs.Shape();
+      dragStart.graphics.beginFill('grey').drawRect(0, 0, WIDTH, HEIGHT);
+
+      dragStart.set({
+        x: 50 + (i * (WIDTH + 20)),
+        y: 100,
+        alpha: 0,
+      });
+      dragStart.setBounds(0, 0, WIDTH, 50);
+
+      AccessibilityModule.register({
+        displayObject: dragStart,
+        role: AccessibilityModule.ROLES.NONE,
+      });
+      this._contentArea.addChild(dragStart);
+      this._contentArea.accessible.addChild(dragStart);
+
+      // Interactive draggable
+      const drag = new Draggable(options, dropArr, 0, _.noop, dragStart);
+      drag.set({
+        x: 50 + (i * (WIDTH + 20)),
+        y: 100,
+        alpha: 0.5,
+      });
       drag.origX = drag.x;
       drag.origY = drag.y;
+
       this._contentArea.addChild(drag);
-      this._contentArea.accessible.addChild(drag);
+      dragStart.accessible.addChild(drag);
 
       dragArr.push(drag);
       drag.button.addEventListener('focus', (evt) => {
@@ -1159,6 +1182,8 @@ export default class AppWindow extends createjs.Container {
         const { target } = evt;
         target._onFocus();
       });
+
+      console.log(dragStart, drag);
     }
 
     // As per UI drop zones will get added after the draggables
@@ -1169,6 +1194,7 @@ export default class AppWindow extends createjs.Container {
       });
       drop.accessible.dropEffects = 'move';
       drop.accessible.label = `${dragDataArr[i]} drop target`;
+      this._contentArea.addChild(drop);
       this._contentArea.accessible.addChild(drop);
     });
   }
