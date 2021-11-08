@@ -2351,7 +2351,11 @@ export default class AppWindow extends createjs.Container {
     x += label.getBounds().width + padding;
 
     transformY = this.createText('0', x, y, false);
-    x += transformY.getBounds().width + padding;
+    x += transformY.getBounds().width + padding + 15;
+
+    this.createSpinButton({
+      options, textContainer: transformY, callback: transformShape, tabIndex: 0,
+    }, x, y);
   }
 
   createText(value, x, y, shouldAccesible = true) {
