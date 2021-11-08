@@ -60,13 +60,13 @@ export default class SpinButton extends createjs.Container {
       height: this.height * 0.5,
     };
     // Increment button
-    this.incBtn = new Button(options, this.tabIndex++, this.onIncrement.bind(this));
+    this.incBtn = new Button(options, -1, this.onIncrement.bind(this));
     this.addChild(this.incBtn);
 
     // Decrement button
     options.value = '-';
     options.name = 'Decrement';
-    this.decBtn = new Button(options, this.tabIndex++, this.onDecrement.bind(this));
+    this.decBtn = new Button(options, -1, this.onDecrement.bind(this));
     this.addChild(this.decBtn);
 
     this.decBtn.y = this.height * 0.5;

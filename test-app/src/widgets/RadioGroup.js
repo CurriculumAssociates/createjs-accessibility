@@ -23,7 +23,7 @@ export default class RadioGroup extends createjs.Container {
         value: data.value,
         position: data.position,
         size: data.size,
-        tabIndex: this.tabIndex++,
+        tabIndex: 0,
       });
       radio.y = 35 * (i + 1);
       this.addChild(radio);
@@ -56,6 +56,7 @@ export default class RadioGroup extends createjs.Container {
   }
 
   onOptionClick(evt) {
+    console.log('onOptionClick');
     this.radioOption.forEach((opt) => {
       opt.checked = false;
     });
