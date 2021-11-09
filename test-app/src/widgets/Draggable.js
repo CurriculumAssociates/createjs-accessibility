@@ -191,7 +191,6 @@ export default class Draggable extends createjs.Container {
       x: this.origX,
       y: this.origY,
     });
-    this.targetId = undefined;
     this.startContainer.accessible.addChild(this);
   }
 
