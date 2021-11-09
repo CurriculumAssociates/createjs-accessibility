@@ -75,17 +75,12 @@ export default class Draggable extends createjs.Container {
     const { currentTarget } = evt;
     const dropTarget = _.find(this.dropTargets, drop => drop.label === currentTarget.label);
 
-    // if target is empty, just drop
     if (!dropTarget.placed) {
       this.drop(dropTarget);
+    } else if (this.targetId === dropTarget.id) {
+      this.revert();
     } else {
-      const prevTarget = _.find(this.dropTargets, drop => drop.id === this.targetId);
-      // if moving from target to same target, reverts to starting position
-      if (!_.isUndefined(prevTarget) && prevTarget.label === dropTarget.label) {
-        this.revert();
-      } else {
-        this.swap(dropTarget);
-      }
+      this.swap(dropTarget);
     }
     this.toggleMenuVisibility(false);
   }
@@ -158,6 +153,7 @@ export default class Draggable extends createjs.Container {
       const dropTarget = _.find(this.dropTargets, drop => drop.id === this.targetId);
       dropTarget.accessible.removeChild(this);
       dropTarget.placed = false;
+      dropTarget.draggable = undefined;
     } else {
       this.startContainer.accessible.removeChild(this);
     }
