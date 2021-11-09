@@ -67,6 +67,7 @@ export default class SearchBox extends SingleLineTextInput {
   _clearText() {
     this._updateDisplayString('');
     this._processSearchData();
+    this._cursorToIndex();
     this.accessible.requestFocus();
   }
 
