@@ -56,7 +56,6 @@ export default class RadioGroup extends createjs.Container {
   }
 
   onOptionClick(evt) {
-    console.log('onOptionClick');
     this.radioOption.forEach((opt) => {
       opt.checked = false;
     });
