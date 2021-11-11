@@ -4,9 +4,11 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   extends: [
     'airbnb',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -22,7 +24,9 @@ module.exports = {
   },
   plugins: [
     'react',
+    '@typescript-eslint',
   ],
+  root: true,
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
@@ -63,13 +67,14 @@ module.exports = {
     'no-multi-spaces': 'warn',
     'arrow-spacing': ['error', { before: true, after: true }],
     'space-in-parens': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'prefer-destructuring': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],
     'import/resolver': {
       node: {
+        'extensions': ['.js', '.ts', '.tsx'],
         moduleDirectory: [
           'node_modules',
           'src',
