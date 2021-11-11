@@ -61,7 +61,7 @@ function calcDomStylesFromStage(stage) {
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
  */
-function setupStage(stage, parentElement, onReady = () => {}) {
+function setupStage(stage, parentElement, onReady = () => {}) { // eslint-disable-line @typescript-eslint/no-empty-function
   let component;
   const styles = calcDomStylesFromStage(stage);
   const moduleNode = (
