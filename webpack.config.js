@@ -31,7 +31,7 @@ const config = {
   },
   mode: 'production',
   resolve: {
-    extensions: ['', '.js', '.ts', '.tsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
 };
 
