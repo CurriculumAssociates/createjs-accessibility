@@ -80,6 +80,7 @@ module.exports = {
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],
+    'import/extensions': ['.js', '.ts', '.tsx'],
     'import/resolver': {
       node: {
         'extensions': ['.js', '.ts', '.tsx'],
