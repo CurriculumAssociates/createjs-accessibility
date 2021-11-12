@@ -30,6 +30,9 @@ const config = {
     ],
   },
   mode: 'production',
+  resolve: {
+    extensions: ['', '.js', '.ts', '.tsx'],
+  },
 };
 
 if (process.env.NODE_ENV !== 'production') {
