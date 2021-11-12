@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     'airbnb',
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -30,7 +29,16 @@ module.exports = {
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
-    'import/extensions': [{ js: 'always', json: 'never' }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        'js': 'never',
+        'jsx': 'never',
+        'ts': 'never',
+        'tsx': 'never'
+      }
+    ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
     'object-shorthand': 'error',

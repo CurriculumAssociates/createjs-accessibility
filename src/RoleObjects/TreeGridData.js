@@ -70,7 +70,7 @@ export default class TreeGridData extends GridData {
       const higherLevelRowIndex = _.findLastIndex(
         tableSectionDisplayObject.accessible.children,
         testRow => testRow.accessible.visibleWithInference && testRow.accessible.level < rowLevel,
-        rowIndex
+        rowIndex,
       );
 
       if (higherLevelRowIndex !== -1) {
@@ -158,7 +158,7 @@ export default class TreeGridData extends GridData {
         this.children[sectionIndex].accessible.children,
         testRow => !_.isUndefined(testRow.accessible.tabIndex)
           && testRow.accessible.visibleWithInference,
-        targetData.rowIndex - 1
+        targetData.rowIndex - 1,
       );
       if (gotoRowIndex === -1) {
         for (sectionIndex = targetData.sectionIndex - 1;
@@ -167,7 +167,7 @@ export default class TreeGridData extends GridData {
           gotoRowIndex = _.findLastIndex(
             this.children[sectionIndex].accessible.children,
             testRow => !_.isUndefined(testRow.accessible.tabIndex)
-               && testRow.accessible.visibleWithInference
+               && testRow.accessible.visibleWithInference,
           );
         }
       }
@@ -200,7 +200,7 @@ export default class TreeGridData extends GridData {
         this.children[sectionIndex].accessible.children,
         testRow => !_.isUndefined(testRow.accessible.tabIndex)
           && testRow.accessible.visibleWithInference,
-        targetData.rowIndex + 1
+        targetData.rowIndex + 1,
       );
       if (gotoRowIndex === -1) {
         for (sectionIndex = targetData.sectionIndex + 1;
@@ -209,7 +209,7 @@ export default class TreeGridData extends GridData {
           gotoRowIndex = _.findIndex(
             this.children[sectionIndex].accessible.children,
             testRow => !_.isUndefined(testRow.accessible.tabIndex)
-              && testRow.accessible.visibleWithInference
+              && testRow.accessible.visibleWithInference,
           );
         }
       }

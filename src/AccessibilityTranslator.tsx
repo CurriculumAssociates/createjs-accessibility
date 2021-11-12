@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {ReactElement} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ROLES, getTagNameForDisplayObject } from './Roles';
 
@@ -63,7 +63,7 @@ export default class AccessibilityTranslator extends React.Component<Props> {
 
   /**
    * @return {Object} properties accepted by this component.
-   * @property {string} className
+   * @property {object} stage
    * @see https://facebook.github.io/react/docs/component-specs.html#proptypes
    */
   static get propTypes(): Props {
@@ -108,7 +108,7 @@ export default class AccessibilityTranslator extends React.Component<Props> {
   }
 
   _processDisplayObject(displayObject: AccessibleDisplayObject,
-                        parentBoundsInGlobalSpace: ElementBounds): ReactElement {
+    parentBoundsInGlobalSpace: ElementBounds): React.ReactElement {
     if (!displayObject.accessible) {
       return;
     }
