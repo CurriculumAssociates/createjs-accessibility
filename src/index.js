@@ -11,6 +11,7 @@ import { ROLES } from './Roles';
  * @returns {Object} style object for positioning associated DOM elements
  */
 function calcDomStylesFromStage(stage) {
+  // eslint-disable-next-line max-len
   // true to return style object for putting the DOM element adjacent to the canvas (useful for debugging),
   // false to return style object to put the DOM beneath the canvas
   const debugPos = false;
@@ -61,7 +62,7 @@ function calcDomStylesFromStage(stage) {
  * @param {Function} onReady - An optional function to call when the module is mounted into the
  * parentElement
  */
-function setupStage(stage, parentElement, onReady = () => {}) { // eslint-disable-line @typescript-eslint/no-empty-function
+function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
   const styles = calcDomStylesFromStage(stage);
   const moduleNode = (
