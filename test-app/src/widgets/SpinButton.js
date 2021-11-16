@@ -3,11 +3,10 @@ import Button from './Button';
 
 export default class SpinButton extends createjs.Container {
   constructor({
-    options, textContainer, callback, tabIndex,
+    options, textContainer, callback,
   }) {
     super();
     const { maxValue, minValue } = options;
-    this.tabIndex = tabIndex;
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.targetContainer = textContainer;
@@ -24,7 +23,7 @@ export default class SpinButton extends createjs.Container {
         min: minValue,
         readOnly: false,
         required: true,
-        tabIndex,
+        tabIndex: 0,
         value: this.currentValue,
       },
       displayObject: this,

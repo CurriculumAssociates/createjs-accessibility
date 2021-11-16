@@ -2291,7 +2291,7 @@ export default class AppWindow extends createjs.Container {
     x += horizontalScale.getBounds().width + padding;
 
     const scaleXButton = this.createSpinButton({
-      options, textContainer: horizontalScale, callback: transformShape, tabIndex: 0,
+      options, textContainer: horizontalScale, callback: transformShape,
     }, x, y);
     x += scaleXButton.getBounds().width + padding;
 
@@ -2302,7 +2302,7 @@ export default class AppWindow extends createjs.Container {
     x += verticalScale.getBounds().width + padding;
 
     const scaleYButton = this.createSpinButton({
-      options, textContainer: verticalScale, callback: transformShape, tabIndex: 0,
+      options, textContainer: verticalScale, callback: transformShape,
     }, x, y);
     x += scaleYButton.getBounds().width + padding + 20;
 
@@ -2316,7 +2316,7 @@ export default class AppWindow extends createjs.Container {
     x += horizontalSkew.getBounds().width + padding;
 
     const skewXButton = this.createSpinButton({
-      options, textContainer: horizontalSkew, callback: transformShape, tabIndex: 0,
+      options, textContainer: horizontalSkew, callback: transformShape,
     }, x, y);
     x += skewXButton.getBounds().width + padding;
 
@@ -2327,7 +2327,7 @@ export default class AppWindow extends createjs.Container {
     x += verticalSkew.getBounds().width + padding;
 
     const skewYButton = this.createSpinButton({
-      options, textContainer: verticalSkew, callback: transformShape, tabIndex: 0,
+      options, textContainer: verticalSkew, callback: transformShape,
     }, x, y);
     x += skewYButton.getBounds().width + padding + 20;
 
@@ -2343,7 +2343,7 @@ export default class AppWindow extends createjs.Container {
     x += transformX.getBounds().width + padding + 15;
 
     const transformXButton = this.createSpinButton({
-      options, textContainer: transformX, callback: transformShape, tabIndex: 0,
+      options, textContainer: transformX, callback: transformShape,
     }, x, y);
     x += transformXButton.getBounds().width + padding;
 
@@ -2354,7 +2354,7 @@ export default class AppWindow extends createjs.Container {
     x += transformY.getBounds().width + padding + 15;
 
     this.createSpinButton({
-      options, textContainer: transformY, callback: transformShape, tabIndex: 0,
+      options, textContainer: transformY, callback: transformShape,
     }, x, y);
   }
 
