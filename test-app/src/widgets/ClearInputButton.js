@@ -1,7 +1,7 @@
 import _, { noop } from 'lodash';
 import Button from './Button';
 
-export default class CrossButton extends Button {
+export default class ClearInputButton extends Button {
   constructor(options, tabIndex, callBack = _.noop) {
     super(options, tabIndex, callBack);
   }

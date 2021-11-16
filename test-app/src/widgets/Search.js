@@ -16,8 +16,8 @@ export default class Search extends createjs.Container {
     this.accessible.addChild(this.searchBox);
 
     // Adding Clear button
-    this.addChild(this.searchBox.clearButton);
-    this.accessible.addChild(this.searchBox.clearButton);
+    this.addChild(this.searchBox.clearInputButton);
+    this.accessible.addChild(this.searchBox.clearInputButton);
 
     // Adding Search button
     this.searchButton = new Button(options.buttonOptions, 0, this.searchBox._processSearchData);
