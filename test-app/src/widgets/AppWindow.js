@@ -501,7 +501,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup1 = new RadioGroup({
-      radioData: PizzaCrustData, name: 'Pizza Crust', tabIndex: -1, callBack: _.once(onRadioSelect),
+      radioData: PizzaCrustData, name: 'Pizza Crust', callBack: _.once(onRadioSelect),
     });
     radioGroup1.x = 100;
     radioGroup1.y = 100;
@@ -523,7 +523,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup2 = new RadioGroup({
-      radioData: PizzaDeliveryData, name: 'Pizza Delivery', tabIndex: -1, callBack: _.once(onRadioSelect),
+      radioData: PizzaDeliveryData, name: 'Pizza Delivery', callBack: _.once(onRadioSelect),
     });
     radioGroup2.x = radioGroup1.x;
     radioGroup2.y = 300;
