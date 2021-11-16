@@ -583,12 +583,15 @@ export default class AppWindow extends createjs.Container {
       },
     });
     form.addChild(label);
+    form.accessible.autoComplete = true;
 
     const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
     nameField.x = 160;
     nameField.y = 100;
     form.addChild(nameField);
     form.accessible.addChild(nameField);
+    nameField.accessible.autoComplete = 'name';
+    nameField.accessible.name = 'name';
 
     // Tooltip for field
     const nameFieldToolTip = new Tooltip({ target: nameField, content: 'Enter username', position: 'top' });
@@ -608,7 +611,51 @@ export default class AppWindow extends createjs.Container {
       y: nameField.y,
     });
 
-    let clearBtnToolTip = new Tooltip({ target: clearNameFieldBtn, content: 'Clear name field' });
+    let clearBtnToolTip = new Tooltip({ target: clearNameFieldBtn, content: 'Clear name field', position: 'top' });
+    form.addChild(clearBtnToolTip);
+    form.accessible.addChild(clearBtnToolTip);
+
+    // Label for Address Field
+    label = new createjs.Text('Address', '14px Arial');
+    label.x = 160 + OPTION_WIDTH + 150;
+    label.y = 100;
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+    form.addChild(label);
+
+    // Address Field
+    const addressField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    addressField.x = 160 + OPTION_WIDTH + 150 + 90;
+    addressField.y = 100;
+    addressField.accessible.name = 'address';
+    addressField.accessible.autoComplete = 'off';
+    form.addChild(addressField);
+    form.accessible.addChild(addressField);
+
+    // Tooltip for Address field
+    const addressFieldToolTip = new Tooltip({ target: addressField, content: 'Enter address', position: 'top' });
+    form.addChild(addressFieldToolTip);
+    form.accessible.addChild(addressFieldToolTip);
+
+    const clearAddressField = () => {
+      addressField._updateDisplayString('');
+    };
+    const clearAddressFieldBtn = this._createClearButton('Clear address field', clearAddressField);
+    form.addChild(clearAddressFieldBtn);
+    form.accessible.addChild(clearAddressFieldBtn);
+
+    clearAddressFieldBtn.set({
+      x: addressField.x + OPTION_WIDTH + 10,
+      y: addressField.y,
+    });
+
+    clearBtnToolTip = new Tooltip({ target: clearAddressFieldBtn, content: 'Clear address field', position: 'top' });
     form.addChild(clearBtnToolTip);
     form.accessible.addChild(clearBtnToolTip);
 
@@ -646,6 +693,49 @@ export default class AppWindow extends createjs.Container {
     const membershipListToolTip = new Tooltip({ target: membershipList, content: 'Select membership level' });
     form.addChild(membershipListToolTip);
     form.accessible.addChild(membershipListToolTip);
+
+    // Label for Email field
+    label = new createjs.Text('Email ID', '14px Arial');
+    label.x = 160 + OPTION_WIDTH + 150;
+    label.y = 118;
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+    form.addChild(label);
+
+    // Email Field
+    const emailField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    emailField.x = 160 + OPTION_WIDTH + 150 + 90;
+    emailField.y = 118;
+    emailField.accessible.name = 'email';
+    form.addChild(emailField);
+    form.accessible.addChild(emailField);
+
+    // Tooltip for Email field
+    const emailFieldToolTip = new Tooltip({ target: emailField, content: 'Enter email', position: 'bottom' });
+    form.addChild(emailFieldToolTip);
+    form.accessible.addChild(emailFieldToolTip);
+
+    const clearEmailField = () => {
+      emailField._updateDisplayString('');
+    };
+    const clearEmailFieldBtn = this._createClearButton('Clear address field', clearEmailField);
+    form.addChild(clearEmailFieldBtn);
+    form.accessible.addChild(clearEmailFieldBtn);
+
+    clearEmailFieldBtn.set({
+      x: emailField.x + OPTION_WIDTH + 10,
+      y: emailField.y,
+    });
+
+    clearBtnToolTip = new Tooltip({ target: clearEmailFieldBtn, content: 'Clear email field', position: 'bottom' });
+    form.addChild(clearBtnToolTip);
+    form.accessible.addChild(clearBtnToolTip);
 
     label = new createjs.Text('Comments', '14px Arial');
     label.x = 10;
@@ -798,6 +888,16 @@ export default class AppWindow extends createjs.Container {
         alert.visible = false;
         clearTimeout(timeId);
       }, 1000);
+
+      const frame = document.createElement('iframe')
+      frame.setAttribute('id', 'hiddenFrame')
+      frame.setAttribute('name', 'hiddenFrame')
+      frame.style.display = 'none';
+
+      const f = document.querySelector('form');
+      f.append(frame);
+      f.target = 'hiddenFrame';
+      f.submit();
     };
 
 
@@ -813,6 +913,10 @@ export default class AppWindow extends createjs.Container {
       mailingList._unhighlightAll();
       mailingList.accessible.selected = [];
       combobox.text = '';
+      emailField._updateDisplayString('');
+      emailField.onBlur();
+      addressField._updateDisplayString('');
+      addressField.onBlur();
     };
 
     const alertDialog = new AlertDialog({
@@ -835,12 +939,12 @@ export default class AppWindow extends createjs.Container {
     };
 
     const submitBtnData = {
-      type: 'button',
+      type: 'submit',
       value: 'SUBMIT',
       name: 'SUBMIT',
       enabled: true,
       autoFocus: false,
-      form: 'form_1',
+      // form: 'form_1',
       formAction: '',
       formMethod: 'GET',
       formTarget: '_blank',
@@ -848,6 +952,8 @@ export default class AppWindow extends createjs.Container {
       height: 60,
       width: 250,
     };
+    form.accessible.action = '';
+    form.accessible.method = 'GET';
 
     // Submit form button
     const submit = new Button(submitBtnData, this._nextTab++, submitCallBack);
