@@ -185,8 +185,6 @@ export default class AppWindow extends createjs.Container {
   }
 
   _createMenu(width) {
-    this._nextTab = 1;
-
     this.nav = new createjs.Container();
     this.addChild(this.nav);
     AccessibilityModule.register({
@@ -200,7 +198,7 @@ export default class AppWindow extends createjs.Container {
     this.nav.addChild(this._menuBar);
     this.nav.accessible.addChild(this._menuBar);
 
-    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, this._nextTab++, 'T');
+    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, 0, 'T');
     this._menuBar.addMenu(testCasesMenu);
     const testCasesGroup = {
       group1: {
@@ -240,7 +238,7 @@ export default class AppWindow extends createjs.Container {
       _.forEach(testCases, (testCase) => {
         const item = new ClassRef(
           testCase.name,
-          this._nextTab++,
+          0,
           listenerAsCallback ? testCase.listener : _.noop(),
         );
         !listenerAsCallback && item.addEventListener('click', testCase.listener);
@@ -255,7 +253,7 @@ export default class AppWindow extends createjs.Container {
     });
 
 
-    const testCasesMenuItemRadio = new Menu('Contrast Radio', MENU_HEIGHT, this._nextTab++, 'c');
+    const testCasesMenuItemRadio = new Menu('Contrast Radio', MENU_HEIGHT, 0, 'c');
     this._menuBar.addMenu(testCasesMenuItemRadio);
     const testCasesMenuRadio = [
       { name: ' Black-Yellow', bgColor: '#000000', textColor: '#ffff00' },
@@ -265,7 +263,7 @@ export default class AppWindow extends createjs.Container {
 
     const menuItemRadioArray = [];
     testCasesMenuRadio.forEach((testCase) => {
-      const item = new MenuItemRadio(testCase.name, this._nextTab++,
+      const item = new MenuItemRadio(testCase.name, 0,
         this._showMenuItemRadioTestCase);
       item.radio.bgColor = testCase.bgColor;
       item.radio.textColor = testCase.textColor;
@@ -274,8 +272,8 @@ export default class AppWindow extends createjs.Container {
     });
     this.menuItemRadioArray = menuItemRadioArray;
 
-    const help = new Menu('Help', MENU_HEIGHT, this._nextTab++, 'h');
-    const about = new MenuItem('About', this._nextTab++);
+    const help = new Menu('Help', MENU_HEIGHT, 0, 'h');
+    const about = new MenuItem('About', 0);
     about.addEventListener('click', this._showAboutDialog);
     about.addEventListener('keyboardClick', this._showAboutDialog);
     help.addMenuItem(about);
@@ -503,7 +501,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup1 = new RadioGroup({
-      radioData: PizzaCrustData, name: 'Pizza Crust', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect),
+      radioData: PizzaCrustData, name: 'Pizza Crust', callBack: _.once(onRadioSelect),
     });
     radioGroup1.x = 100;
     radioGroup1.y = 100;
@@ -512,8 +510,6 @@ export default class AppWindow extends createjs.Container {
     radioGroup1.accessible.labelledBy = labelGroup1;
     labelGroup1.y = radioGroup1.x;
     labelGroup1.x = radioGroup1.y;
-
-    this._nextTab += 3;
 
     const labelGroup2 = new createjs.Text('Pizza Delivery', 'bold 24px Arial', '#000');
     this._contentArea.addChild(labelGroup2);
@@ -527,7 +523,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup2 = new RadioGroup({
-      radioData: PizzaDeliveryData, name: 'Pizza Delivery', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect),
+      radioData: PizzaDeliveryData, name: 'Pizza Delivery', callBack: _.once(onRadioSelect),
     });
     radioGroup2.x = radioGroup1.x;
     radioGroup2.y = 300;
@@ -548,7 +544,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // Submit form button
-    submit = new Button(submitBtnData, this._nextTab++, appendProgressBar);
+    submit = new Button(submitBtnData, 0, appendProgressBar);
     const { width } = labelGroup2.getBounds();
     submit.x = labelGroup2.x + (width - submit.getBounds().width) / 2;
     submit.y = 420;
@@ -584,7 +580,7 @@ export default class AppWindow extends createjs.Container {
     });
     form.addChild(label);
 
-    const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, 0);
     nameField.x = 160;
     nameField.y = 100;
     form.addChild(nameField);
@@ -599,7 +595,7 @@ export default class AppWindow extends createjs.Container {
     const clearField = () => {
       nameField._updateDisplayString('');
     };
-    const clearNameFieldBtn = this._createClearButton('Clear name field', clearField);
+    const clearNameFieldBtn = this._createClearButton('Clear name field', 0, clearField);
     form.addChild(clearNameFieldBtn);
     form.accessible.addChild(clearNameFieldBtn);
 
@@ -634,7 +630,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     // List box
-    const membershipList = new ListBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const membershipList = new ListBox(options, OPTION_WIDTH, OPTION_HEIGHT, 0);
     const membershipOption = options;
     membershipList.x = 160;
     membershipList.y = 118;
@@ -662,7 +658,7 @@ export default class AppWindow extends createjs.Container {
 
     // Implementing MULTI LINE TEXT BOX
     const commentArea = new MultiLineTextInput(OPTION_WIDTH,
-      OPTION_HEIGHT * 5, 14, this._nextTab++);
+      OPTION_HEIGHT * 5, 14, 0);
     commentArea.x = 160;
     commentArea.y = 140;
     form.addChild(commentArea);
@@ -678,7 +674,7 @@ export default class AppWindow extends createjs.Container {
     const clearArea = () => {
       commentArea._updateDisplayString('');
     };
-    const clearCommentAreaBtn = this._createClearButton('Clear comment area', clearArea);
+    const clearCommentAreaBtn = this._createClearButton('Clear comment area', 0, clearArea);
     form.addChild(clearCommentAreaBtn);
     form.accessible.addChild(clearCommentAreaBtn);
 
@@ -712,7 +708,7 @@ export default class AppWindow extends createjs.Container {
       options.push(new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, false));
     });
     // Multi select list box
-    const mailingList = new MultiListBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const mailingList = new MultiListBox(options, OPTION_WIDTH, OPTION_HEIGHT, 0);
     mailingList.x = 160;
     mailingList.y = 233;
     mailingList.accessible.labelledBy = label;
@@ -739,7 +735,7 @@ export default class AppWindow extends createjs.Container {
     form.addChild(label);
     optionLabels = ['Graphics', 'Game Engines', 'AI', 'Pathfinding', 'Game Design'];
     options = _.map(optionLabels, optionLabel => new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, true)); // eslint-disable-line max-len
-    const combobox = new ComboBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const combobox = new ComboBox(options, OPTION_WIDTH, OPTION_HEIGHT, 0);
     combobox.x = 160;
     combobox.y = 350;
     form.addChild(combobox);
@@ -815,25 +811,6 @@ export default class AppWindow extends createjs.Container {
       combobox.text = '';
     };
 
-    const alertDialog = new AlertDialog({
-      tabIndex: this._nextTab++,
-      cancelCallback: () => {
-        alertDialog.visible = false;
-      },
-      doneCallback: () => {
-        resetAll();
-        alertDialog.visible = false;
-      },
-    });
-    alertDialog.visible = false;
-    this._contentArea.addChild(alertDialog);
-    this._contentArea.accessible.addChild(alertDialog);
-    this._nextTab++;
-
-    const resetCallback = () => {
-      alertDialog.visible = true;
-    };
-
     const submitBtnData = {
       type: 'button',
       value: 'SUBMIT',
@@ -850,7 +827,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // Submit form button
-    const submit = new Button(submitBtnData, this._nextTab++, submitCallBack);
+    const submit = new Button(submitBtnData, 0, submitCallBack);
     submit.x = 50;
     submit.y = 410;
     form.addChild(submit);
@@ -876,8 +853,53 @@ export default class AppWindow extends createjs.Container {
       width: 250,
     };
 
+    function makeFormTabbable() {
+      form.accessible.hidden = false;
+      nameField.accessible.tabIndex = 0;
+      clearNameFieldBtn.accessible.tabIndex = 0;
+      membershipList.setTabbable(true);
+      commentArea.accessible.tabIndex = 0;
+      clearCommentAreaBtn.accessible.tabIndex = 0;
+      mailingList.accessible.tabIndex = 0;
+      combobox.setTabbable(true);
+      submit.accessible.tabIndex = 0;
+      reset.accessible.tabIndex = 0;
+    }
+
+    const alertDialog = new AlertDialog({
+      buttonTabIndex: 0,
+      cancelCallback: () => {
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+      doneCallback: () => {
+        resetAll();
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+    });
+    alertDialog.visible = false;
+    this._contentArea.addChild(alertDialog);
+    this._contentArea.accessible.addChild(alertDialog);
+
+    const resetCallback = () => {
+      alertDialog.visible = true;
+      form.accessible.hidden = true;
+      nameField.accessible.tabIndex = -1;
+      clearNameFieldBtn.accessible.tabIndex = -1;
+      membershipList.setTabbable(false);
+      commentArea.accessible.tabIndex = -1;
+      clearCommentAreaBtn.accessible.tabIndex = -1;
+      mailingList.accessible.tabIndex = -1;
+      combobox.setTabbable(false);
+      submit.accessible.tabIndex = -1;
+      reset.accessible.tabIndex = -1;
+    };
+
     // Reset form button
-    const reset = new Button(resetBtnData, this._nextTab++, resetCallback);
+    const reset = new Button(resetBtnData, 0, resetCallback);
     reset.x = 400;
     reset.y = 410;
     form.addChild(reset);
@@ -889,7 +911,7 @@ export default class AppWindow extends createjs.Container {
     form.accessible.addChild(resetBtnToolTip);
   }
 
-  _createClearButton(name, callBack) {
+  _createClearButton(name, tabIndex, callBack) {
     const clearBtnData = {
       type: 'clear',
       value: '',
@@ -903,9 +925,10 @@ export default class AppWindow extends createjs.Container {
       formnoValidate: '',
       height: 20,
       width: 20,
+      tabIndex,
     };
 
-    const button = new Button(clearBtnData, this._nextTab++, callBack);
+    const button = new Button(clearBtnData, 0, callBack);
     button.accessible.text = name;
 
     const shape = new createjs.Shape();
@@ -1011,7 +1034,7 @@ export default class AppWindow extends createjs.Container {
     // Checkboxes with labels
     for (let i = 0; i < labelArray.length; i++) {
       // checkbox
-      const checkBox = new CheckBox(25, 25, this._nextTab++, callBack);
+      const checkBox = new CheckBox(25, 25, 0, callBack);
       checkBox.set({ x: X, y: (title.y + V_GAP) + (i * V_GAP) });
       const boxBounds = checkBox.getBounds();
       this._contentArea.addChild(checkBox);
@@ -1090,7 +1113,7 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    // Createing drop zones
+    // Creating drop zones
     for (let i = 0; i < dragDataArr.length; i++) {
       const drop = new createjs.Shape();
       drop.graphics.beginFill(dragDataArr[i]).drawRect(0, 0, WIDTH, HEIGHT);
@@ -1107,12 +1130,10 @@ export default class AppWindow extends createjs.Container {
       drop.backgroundColor = dragDataArr[i];
       drop.opacity = 0.5;
 
-      this._contentArea.addChild(drop);
       dropArr.push(drop);
     }
 
-    // creating draggables
-
+    // Creating draggables
     for (let i = 0; i < dragDataArr.length; i++) {
       const options = {
         type: 'button',
@@ -1123,14 +1144,37 @@ export default class AppWindow extends createjs.Container {
         width: WIDTH,
         height: HEIGHT,
       };
-      const drag = new Draggable(options, dropArr, this._nextTab++);
-      drag.set({ x: 50 + (i * (WIDTH + 20)), y: 100 });
+
+      // Container where draggable starts, for returning draggables to their start positions
+      const dragStart = new createjs.Shape();
+      dragStart.graphics.beginFill('grey').drawRect(0, 0, WIDTH, HEIGHT);
+
+      dragStart.set({
+        x: 50 + (i * (WIDTH + 20)),
+        y: 100,
+        alpha: 0,
+      });
+      dragStart.setBounds(0, 0, WIDTH, 50);
+
+      AccessibilityModule.register({
+        displayObject: dragStart,
+        role: AccessibilityModule.ROLES.NONE,
+      });
+      this._contentArea.addChild(dragStart);
+      this._contentArea.accessible.addChild(dragStart);
+
+      // Interactive draggable
+      const drag = new Draggable(options, dropArr, 0, _.noop, dragStart);
+      drag.set({
+        x: 50 + (i * (WIDTH + 20)),
+        y: 100,
+      });
       drag.origX = drag.x;
       drag.origY = drag.y;
-      this._contentArea.addChild(drag);
-      this._contentArea.accessible.addChild(drag);
 
-      this._nextTab += drag.menuItemContainer.children.length;
+      this._contentArea.addChild(drag);
+      dragStart.accessible.addChild(drag);
+
       dragArr.push(drag);
       drag.button.addEventListener('focus', (evt) => {
         _.forEach(dragArr, draggable => draggable.toggleMenuVisibility(false));
@@ -1147,6 +1191,7 @@ export default class AppWindow extends createjs.Container {
       });
       drop.accessible.dropEffects = 'move';
       drop.accessible.label = `${dragDataArr[i]} drop target`;
+      this._contentArea.addChild(drop);
       this._contentArea.accessible.addChild(drop);
     });
   }
@@ -1172,7 +1217,7 @@ export default class AppWindow extends createjs.Container {
       role: AccessibilityModule.ROLES.NONE,
     });
 
-    const dialog = new Dialog(clearBtnData, 600, 400, this._nextTab++);
+    const dialog = new Dialog(clearBtnData, 600, 400, -1);
     parentContainer.addChild(dialog);
     parentContainer.accessible.addChild(dialog);
     dialog.visible = true;
@@ -1606,7 +1651,7 @@ export default class AppWindow extends createjs.Container {
         tabPanel.dataLink.accessible.href = currentData.link.href;
       };
 
-      const planetBtn = new Button(planet.buttonData, this._nextTab++, planetClick);
+      const planetBtn = new Button(planet.buttonData, 0, planetClick);
       directory.addChild(planetBtn);
       directory.accessible.addChild(planetBtn);
       this.planetBtnArry.push(planetBtn);
@@ -1639,7 +1684,7 @@ export default class AppWindow extends createjs.Container {
         height: 50,
         position: index,
         size: tabArr.length,
-        tabIndex: this._nextTab++,
+        tabIndex: 0,
         callback: _showTabPanel,
       });
       tabList.addTab(tab);
@@ -1808,7 +1853,7 @@ export default class AppWindow extends createjs.Container {
       y: (contentAreaBounds.height - holderHeight) * 0.3,
     });
 
-    const scrollBar = new ScrollBar(feedHolder, this._nextTab++);
+    const scrollBar = new ScrollBar(feedHolder, 0);
     scrollBar.x = feedHolder.x + holderWidth - scrollBar.getBounds().width;
     scrollBar.y = feedHolder.y;
 
@@ -1850,7 +1895,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // colorEditor button
-    const colorEditor = new Button(ColorEditorBtnData, this._nextTab++, _showColorEditor);
+    const colorEditor = new Button(ColorEditorBtnData, 0, _showColorEditor);
     colorEditor.text.font = 'bold 14px Arial';
     toolBar.addTool(colorEditor);
 
@@ -1880,7 +1925,7 @@ export default class AppWindow extends createjs.Container {
       this.colorSliderContainer.visible = false;
     };
     const transformControl = new Button(transformControlBtnData,
-      this._nextTab++, _showTransformTool);
+      0, _showTransformTool);
     transformControl.text.font = 'bold 14px Arial';
     toolBar.addTool(transformControl);
     const alphaControlBtnData = {
@@ -1905,7 +1950,7 @@ export default class AppWindow extends createjs.Container {
       this.transformControlContainer.visible = false;
       this.colorSliderContainer.visible = false;
     };
-    const alphaControl = new Button(alphaControlBtnData, this._nextTab++, _showAlphaTool);
+    const alphaControl = new Button(alphaControlBtnData, 0, _showAlphaTool);
     alphaControl.text.font = 'bold 16px Arial';
     toolBar.addTool(alphaControl);
     alphaControl.addEventListener('click', _showAlphaTool);
@@ -1973,7 +2018,7 @@ export default class AppWindow extends createjs.Container {
       this.alphaVal = val ? 1 : 0.5;
       callBack();
     };
-    const switchBtn = new Switch(90, 45, this._nextTab++, switchCallBack);
+    const switchBtn = new Switch(90, 45, 0, switchCallBack);
     switchBtn.set({ x: 475, y: 90 });
     this.alphaControlContainer.addChild(switchBtn);
 
@@ -1996,7 +2041,7 @@ export default class AppWindow extends createjs.Container {
       });
       this.colorSliderContainer.accessible.addChild(labelValue);
 
-      const slider = new Slider(min, max, 200, 50, 'horizontal', step, value, this._nextTab++, callBack);
+      const slider = new Slider(min, max, 200, 50, 'horizontal', step, value, 0, callBack);
       slider.set({ x: 100, y: i === 0 ? 200 : 200 + (i * 50) });
       const sliderBounds = slider.getBounds();
       this.colorSliderContainer.addChild(slider);
@@ -2083,17 +2128,15 @@ export default class AppWindow extends createjs.Container {
         value: 'Search',
         name: 'Search',
         enabled: 'true',
-        autoFocus: 'false',
         width: 85,
         height: OPTION_HEIGHT + 10,
       },
     };
 
-    const search = new Search(options, this._nextTab++);
+    const search = new Search(options, 0);
     search.set({ x: 50, y: 10 });
     this._contentArea.addChild(search);
     this._contentArea.accessible.addChildAt(search, 1);
-    this._nextTab++;
   }
 
   _showGridTestCase() {
@@ -2136,7 +2179,7 @@ export default class AppWindow extends createjs.Container {
       gridData.push(row);
     }
 
-    const grid = new Grid(gridData, this._nextTab++);
+    const grid = new Grid(gridData, 0);
     this._contentArea.addChild(grid);
     this._contentArea.accessible.addChild(grid);
 
@@ -2201,7 +2244,7 @@ export default class AppWindow extends createjs.Container {
       y: (contentAreaBounds.height - holderHeight) / 2,
     });
 
-    const scrollBar = new ScrollBar(tableHolder, this._nextTab++);
+    const scrollBar = new ScrollBar(tableHolder, 0);
     scrollBar.x = tableHolder.x + holderWidth - scrollBar.getBounds().width;
     scrollBar.y = tableHolder.y;
 
@@ -2248,7 +2291,7 @@ export default class AppWindow extends createjs.Container {
     x += horizontalScale.getBounds().width + padding;
 
     const scaleXButton = this.createSpinButton({
-      options, textContainer: horizontalScale, callback: transformShape, tabIndex: this._nextTab++,
+      options, textContainer: horizontalScale, callback: transformShape,
     }, x, y);
     x += scaleXButton.getBounds().width + padding;
 
@@ -2259,7 +2302,7 @@ export default class AppWindow extends createjs.Container {
     x += verticalScale.getBounds().width + padding;
 
     const scaleYButton = this.createSpinButton({
-      options, textContainer: verticalScale, callback: transformShape, tabIndex: this._nextTab++,
+      options, textContainer: verticalScale, callback: transformShape,
     }, x, y);
     x += scaleYButton.getBounds().width + padding + 20;
 
@@ -2273,7 +2316,7 @@ export default class AppWindow extends createjs.Container {
     x += horizontalSkew.getBounds().width + padding;
 
     const skewXButton = this.createSpinButton({
-      options, textContainer: horizontalSkew, callback: transformShape, tabIndex: this._nextTab++,
+      options, textContainer: horizontalSkew, callback: transformShape,
     }, x, y);
     x += skewXButton.getBounds().width + padding;
 
@@ -2284,7 +2327,7 @@ export default class AppWindow extends createjs.Container {
     x += verticalSkew.getBounds().width + padding;
 
     const skewYButton = this.createSpinButton({
-      options, textContainer: verticalSkew, callback: transformShape, tabIndex: this._nextTab++,
+      options, textContainer: verticalSkew, callback: transformShape,
     }, x, y);
     x += skewYButton.getBounds().width + padding + 20;
 
@@ -2300,7 +2343,7 @@ export default class AppWindow extends createjs.Container {
     x += transformX.getBounds().width + padding + 15;
 
     const transformXButton = this.createSpinButton({
-      options, textContainer: transformX, callback: transformShape, tabIndex: this._nextTab++,
+      options, textContainer: transformX, callback: transformShape,
     }, x, y);
     x += transformXButton.getBounds().width + padding;
 
@@ -2308,7 +2351,11 @@ export default class AppWindow extends createjs.Container {
     x += label.getBounds().width + padding;
 
     transformY = this.createText('0', x, y, false);
-    x += transformY.getBounds().width + padding;
+    x += transformY.getBounds().width + padding + 15;
+
+    this.createSpinButton({
+      options, textContainer: transformY, callback: transformShape,
+    }, x, y);
   }
 
   createText(value, x, y, shouldAccesible = true) {
@@ -2494,7 +2541,7 @@ export default class AppWindow extends createjs.Container {
       childArr: vehicleArr,
     };
 
-    const addAsTreeItem = obj => new TreeItem(obj.label, this._nextTab++);
+    const addAsTreeItem = obj => new TreeItem(obj.label, 0);
 
     const makeTree = (obj, parentContainer, parentItem) => {
       const element = addAsTreeItem(obj);
