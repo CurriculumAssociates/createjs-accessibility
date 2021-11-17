@@ -50,23 +50,9 @@ export default class Button extends createjs.Container {
     this.width = options.width || 300;
     this.height = options.height || 60;
 
-    this.background = new createjs.Shape();
-    this.background.name = 'background';
-    this.background.graphics.beginStroke('black').beginFill('#fff').drawRect(0, 0, this.width, this.height);
-    this.addChild(this.background);
-
-    this.focusRect = new createjs.Shape();
-    this.focusRect.name = 'focusRect';
-    this.focusRect.graphics.beginStroke('black').setStrokeStyle(3).beginFill('#fff').drawRect(0, 0, this.width, this.height);
-    this.addChild(this.focusRect);
-    this.focusRect.visible = false;
-
-    this.text = new createjs.Text(this.value, 'bold 24px Arial', '#000');
-    this.text.textAlign = 'center';
-    this.text.textBaseline = 'middle';
-    this.text.x = this.width / 2;
-    this.text.y = this.height / 2;
-    this.addChild(this.text);
+    this._addBackground();
+    this._addFocusIndicator();
+    this._addText();
     this.accessible.text = this.text.text;
     this.accessible.pressed = options.pressed;
   }
@@ -91,11 +77,11 @@ export default class Button extends createjs.Container {
   }
 
   _onFocus() {
-    this.focusRect.visible = true;
+    this.focusIndicator.visible = true;
   }
 
   _onBlur() {
-    this.focusRect.visible = false;
+    this.focusIndicator.visible = false;
   }
 
   _onMouseDown() {
@@ -109,5 +95,29 @@ export default class Button extends createjs.Container {
   _onClick(evt) {
     this.accessible.requestFocus();
     this.callBack(evt);
+  }
+
+  _addBackground() {
+    this.background = new createjs.Shape();
+    this.background.name = 'background';
+    this.background.graphics.beginStroke('black').beginFill('#fff').drawRect(0, 0, this.width, this.height);
+    this.addChild(this.background);
+  }
+
+  _addFocusIndicator() {
+    this.focusIndicator = new createjs.Shape();
+    this.focusIndicator.name = 'focusIndicator';
+    this.focusIndicator.graphics.beginStroke('black').setStrokeStyle(3).beginFill('#fff').drawRect(0, 0, this.width, this.height);
+    this.addChild(this.focusIndicator);
+    this.focusIndicator.visible = false;
+  }
+
+  _addText() {
+    this.text = new createjs.Text(this.value, 'bold 24px Arial', '#000');
+    this.text.textAlign = 'center';
+    this.text.textBaseline = 'middle';
+    this.text.x = this.width / 2;
+    this.text.y = this.height / 2;
+    this.addChild(this.text);
   }
 }

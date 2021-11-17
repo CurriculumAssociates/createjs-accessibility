@@ -26,6 +26,14 @@ export default class ListBox extends createjs.Container {
     this._updateSelectedOption(selectedOption);
   }
 
+  setTabbable(tabbable) {
+    if (tabbable) {
+      this._collapsedView.accessible.tabIndex = 0;
+    } else {
+      this._collapsedView.accessible.tabIndex = -1;
+    }
+  }
+
   onFocus() {
     this._focusIndicator.visible = true;
   }

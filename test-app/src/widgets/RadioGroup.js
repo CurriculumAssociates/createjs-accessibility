@@ -4,7 +4,7 @@ import Radio from './Radio';
 
 export default class RadioGroup extends createjs.Container {
   constructor({
-    radioData, name, tabIndex, callBack = _.noop,
+    radioData, name, callBack = _.noop,
   }) {
     super();
     _.bindAll(this, 'onOptionClick');
@@ -16,14 +16,13 @@ export default class RadioGroup extends createjs.Container {
     this.callBack = callBack;
     this.options = radioData;
     this.radioOption = [];
-    this.tabIndex = tabIndex;
     this.options.forEach((data, i) => {
       const radio = new Radio({
         name: data.name,
         value: data.value,
         position: data.position,
         size: data.size,
-        tabIndex: this.tabIndex++,
+        tabIndex: 0,
       });
       radio.y = 35 * (i + 1);
       this.addChild(radio);

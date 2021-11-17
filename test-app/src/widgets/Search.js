@@ -1,5 +1,4 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
-import _ from 'lodash';
 import SearchBox from './SearchBox';
 import Button from './Button';
 
@@ -16,18 +15,12 @@ export default class Search extends createjs.Container {
     this.addChild(this.searchBox);
     this.accessible.addChild(this.searchBox);
 
-    // Removing auto searching whenever there is input
-    const callBack = this.searchBox._processSearchData;
-    this.searchBox.removeEventListener('searchForText', callBack);
-
-    // Managing cross button and placeholder visibility
-    this.searchBox.addEventListener('searchForText', () => {
-      this.searchBox.crossButton.visible = !_.isEmpty(this.searchBox.searchText);
-    });
+    // Adding Clear button
+    this.addChild(this.searchBox.clearInputButton);
+    this.accessible.addChild(this.searchBox.clearInputButton);
 
     // Adding Search button
-    const buttonTabIndex = (tabIndex + 1);
-    this.searchButton = new Button(options.buttonOptions, buttonTabIndex, callBack);
+    this.searchButton = new Button(options.buttonOptions, 0, this.searchBox._processSearchData);
     this.searchButton.set({ x: options.width });
     this.addChild(this.searchButton);
     this.accessible.addChild(this.searchButton);
