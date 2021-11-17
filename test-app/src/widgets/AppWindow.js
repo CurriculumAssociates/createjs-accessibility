@@ -885,9 +885,9 @@ export default class AppWindow extends createjs.Container {
         clearTimeout(timeId);
       }, 1000);
 
-      const frame = document.createElement('iframe')
-      frame.setAttribute('id', 'hiddenFrame')
-      frame.setAttribute('name', 'hiddenFrame')
+      const frame = document.createElement('iframe');
+      frame.setAttribute('id', 'hiddenFrame');
+      frame.setAttribute('name', 'hiddenFrame');
       frame.style.display = 'none';
 
       const f = document.querySelector('form');
@@ -958,6 +958,7 @@ export default class AppWindow extends createjs.Container {
       height: 60,
       width: 250,
     };
+    let reset;
 
     function makeFormTabbable() {
       form.accessible.hidden = false;
@@ -1005,7 +1006,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // Reset form button
-    const reset = new Button(resetBtnData, 0, resetCallback);
+    reset = new Button(resetBtnData, 0, resetCallback);
     reset.x = 400;
     reset.y = 410;
     form.addChild(reset);
