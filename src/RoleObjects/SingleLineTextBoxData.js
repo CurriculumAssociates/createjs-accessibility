@@ -63,7 +63,7 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   set autoComplete(enable) {
     const validValues = ['off', 'on', 'name', 'email', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address', 'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3', 'address-level2', 'address-level1', 'country', 'country-name', 'postal-code', 'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp', 'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency', 'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year', 'sex', 'tel', 'tel-extension', 'impp', 'url', 'photo'];
-    if (typeof(enable) === 'boolean') {
+    if (typeof (enable) === 'boolean') {
       this._reactProps.autoComplete = enable ? 'on' : 'off';
     } else {
       this._reactProps.autoComplete = validValues.includes(enable) ? enable : 'off';
@@ -77,7 +77,7 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   get autoComplete() {
     if (this._reactProps.autoComplete !== undefined) return this._reactProps.autoComplete;
-    else return false;
+    return false;
   }
 
   /**
