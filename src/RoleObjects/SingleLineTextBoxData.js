@@ -67,8 +67,8 @@ export default class SingleLineTextBoxData extends InputTagData {
     if (typeof (value) === 'boolean') {
       this._reactProps.autoComplete = value ? 'on' : 'off';
     } else {
-      if (validValues.includes(value)) this._reactProps.autoComplete = value;
-      else throw new Error(`Unable to set autoComplete to ${value}, expected one of: ${validValues.join(', ')}`);
+      if (!validValues.includes(value)) throw new Error(`Unable to set autoComplete to ${value}, expected one of: ${validValues.join(', ')}`);
+      this._reactProps.autoComplete = value;
     }
   }
 
