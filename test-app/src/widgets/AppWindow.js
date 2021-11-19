@@ -626,7 +626,7 @@ export default class AppWindow extends createjs.Container {
     form.addChild(label);
 
     // Address Field
-    const addressField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const addressField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, 0);
     addressField.x = 160 + OPTION_WIDTH + 150 + 90;
     addressField.y = 100;
     addressField.accessible.name = 'address';
@@ -705,7 +705,7 @@ export default class AppWindow extends createjs.Container {
     form.addChild(label);
 
     // Email Field
-    const emailField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const emailField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, 0);
     emailField.x = 160 + OPTION_WIDTH + 150 + 90;
     emailField.y = 118;
     emailField.accessible.name = 'email';
@@ -921,7 +921,7 @@ export default class AppWindow extends createjs.Container {
       name: 'SUBMIT',
       enabled: true,
       autoFocus: false,
-      // form: 'form_1',
+      form: 'form_1',
       formAction: '',
       formMethod: 'GET',
       formTarget: '_blank',
