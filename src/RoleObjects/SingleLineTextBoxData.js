@@ -79,7 +79,7 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   get autoComplete() {
     if (this._reactProps.autoComplete !== undefined) return this._reactProps.autoComplete;
-    return false;
+    return true;
   }
 
   /**
