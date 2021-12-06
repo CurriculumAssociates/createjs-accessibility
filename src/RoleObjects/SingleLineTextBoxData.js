@@ -59,19 +59,27 @@ export default class SingleLineTextBoxData extends InputTagData {
   /**
    * Sets whether the form should have autocomplete enabled
    * @access public
-   * @param {boolean} enable - true if autocomplete should be enabled, false otherwise
+   * @param {string | boolean} value - valid autocomplete attribute value to enable, false or off otherwise
+   * @throws error if the specified value is invalid
    */
-  set autoComplete(enable) {
-    this._reactProps.autoComplete = enable ? 'on' : 'off';
+  set autoComplete(value) {
+    const validValues = ['off', 'on', 'name', 'email', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address', 'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3', 'address-level2', 'address-level1', 'country', 'country-name', 'postal-code', 'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp', 'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency', 'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year', 'sex', 'tel', 'tel-extension', 'impp', 'url', 'photo'];
+    if (typeof (value) === 'boolean') {
+      this._reactProps.autoComplete = value ? 'on' : 'off';
+    } else {
+      if (!validValues.includes(value)) throw new Error(`Unable to set autoComplete to ${value}, expected one of: ${validValues.join(', ')}`);
+      this._reactProps.autoComplete = value;
+    }
   }
 
   /**
    * Retrieves whether autocomplete is enabled
    * @access public
-   * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
+   * @returns {string | boolean} attribute value if autocomplete is enabled by default or explicitly (note: true if undefined because autocomplete is enabled by default)
    */
   get autoComplete() {
-    return this._reactProps.autoComplete === undefined || this._reactProps.autoComplete === 'on';
+    if (this._reactProps.autoComplete !== undefined) return this._reactProps.autoComplete;
+    return true;
   }
 
   /**
