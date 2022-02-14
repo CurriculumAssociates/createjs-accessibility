@@ -54,7 +54,7 @@
     "babel-polyfill": "^6.26.0",
     "jquery": "^3.4.1",
     "keycodes-enum": "0.0.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   }
