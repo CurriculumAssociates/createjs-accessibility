@@ -119,8 +119,8 @@ Keyboard events on the translated DOM are communicated to the associated Display
 |---|---|---|---|
 | Any | focus | | Element has received focus |
 |   | blur | | Element has lost focus |
-| Any when enabled via `displayObject.accessible.enableKeyEvents = true` | keydown | `keyCode`: code for which key was pressed | A key was pressed on the keyboard |
-| | keyup | `keyCode`: code for which key was released | A key was released on the keyboard |
+| Any when enabled via `displayObject.accessible.enableKeyEvents = true` | keydown | `keyCode`: code for which key was pressed <br> `key`: value of the Key which was pressed | A key was pressed on the keyboard |
+| | keyup | `keyCode`: code for which key was released <br> `key`: value of the Key which was released| A key was released on the keyboard |
 | button | keyboardClick | | clicking event from keyboard interaction |
 | checkbox | keyboardClick | | clicking event from keyboard interaction |
 | menu item | closeMenu | | the menu should close |
