@@ -827,11 +827,12 @@ export default class AccessibilityObject {
     event.key = evt.key;
     event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
-      get: function(){
+      keyCode() {
+        // eslint-disable-next-line no-console
         console.warn('"keyCode" Property is being Deprecated use "key" property instead');
         return evt.keyCode;
-      }
-    })
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
@@ -851,11 +852,12 @@ export default class AccessibilityObject {
     event.key = evt.key;
     event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
-      get: function(){
+      keyCode() {
+        // eslint-disable-next-line no-console
         console.warn('"keyCode" Property is being Deprecated use "key" property instead');
         return evt.keyCode;
-      }
-    })
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
