@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as createjs from 'createjs-module';
 
 /**
  * Container for the accessibility information for a DisplayObject.
@@ -823,13 +824,14 @@ export default class AccessibilityObject {
    */
   _onKeyDown(evt) {
     const event = new createjs.Event('keydown', false, evt.cancelable);
+    event.key = evt.key;
+    event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
       get: function(){
         console.warn('"keyCode" Property is being Deprecated use "key" property instead');
         return evt.keyCode;
       }
     })
-    event.key = evt.key;
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
@@ -846,13 +848,14 @@ export default class AccessibilityObject {
    */
   _onKeyUp(evt) {
     const event = new createjs.Event('keyup', false, evt.cancelable);
+    event.key = evt.key;
+    event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
       get: function(){
         console.warn('"keyCode" Property is being Deprecated use "key" property instead');
         return evt.keyCode;
       }
     })
-    event.key = evt.key;
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
