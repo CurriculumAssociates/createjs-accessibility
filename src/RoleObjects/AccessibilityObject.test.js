@@ -7,16 +7,15 @@ describe('Accessibility Objects', () => {
     const keyboardClickListener = jest.fn();
     const canvas = document.createElement('canvas');
     const parentEl = document.createElement('div');
-    parentEl.id = 'parent-element';
     const stage = new createjs.Stage(canvas);
     const container = new createjs.Container();
 
-    AccessibilityModule.setupStage(stage, parentEl);
     AccessibilityModule.register({
       displayObject: container,
       role: AccessibilityModule.ROLES.MAIN,
       accessibleOptions: { enableKeyEvents: true },
     });
+    AccessibilityModule.setupStage(stage, parentEl);
     container.on('keydown', keyboardClickListener);
     stage.accessibilityTranslator.root = container;
     stage.addChild(container);
