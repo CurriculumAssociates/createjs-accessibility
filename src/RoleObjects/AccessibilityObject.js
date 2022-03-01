@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import * as createjs from 'createjs-module';
+
 /**
  * Container for the accessibility information for a DisplayObject.
  */
@@ -826,7 +827,7 @@ export default class AccessibilityObject {
     event.key = evt.key;
     event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
-      keyCode() {
+      get() {
         // eslint-disable-next-line no-console
         console.warn('"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.');
         return evt.keyCode;
@@ -851,7 +852,7 @@ export default class AccessibilityObject {
     event.key = evt.key;
     event.keyCode = evt.keyCode;
     Object.defineProperty(event, 'keyCode', {
-      keyCode() {
+      get() {
         // eslint-disable-next-line no-console
         console.warn('"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.');
         return evt.keyCode;
