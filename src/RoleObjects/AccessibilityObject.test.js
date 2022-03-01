@@ -16,9 +16,9 @@ describe('Accessibility Objects', () => {
       accessibleOptions: { enableKeyEvents: true },
     });
     AccessibilityModule.setupStage(stage, parentEl);
-    container.on('keydown', keyboardClickListener);
     stage.accessibilityTranslator.root = container;
     stage.addChild(container);
+    container.on('keydown', keyboardClickListener);
     stage.update();
     stage.accessibilityTranslator.update();
 
