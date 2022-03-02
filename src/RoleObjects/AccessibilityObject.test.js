@@ -9,7 +9,7 @@ describe('Accessibility Objects', () => {
     const parentEl = document.createElement('div');
     const stage = new createjs.Stage(canvas);
     const container = new createjs.Container();
-
+    window.createjs = createjs;
     AccessibilityModule.register({
       displayObject: container,
       role: AccessibilityModule.ROLES.MAIN,
