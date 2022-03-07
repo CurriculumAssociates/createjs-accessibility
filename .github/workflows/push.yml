@@ -33,7 +33,7 @@ jobs:
         # Main doesn't have a PR for comments so skip that branch
         # We don't want multiple comments about code coverage, just just run it once on 14.x on Linux
         # if: ${{ github.ref != 'refs/heads/main' && matrix.node-version == '14.x' && matrix.os == 'ubuntu-latest' }}
-        uses: romeovs/lcov-reporter-action@v0.2.16
+        uses: romeovs/lcov-reporter-action@v0.2.19
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: ./coverage/lcov.info
