@@ -20,9 +20,20 @@ jobs:
           npm ci
           npm run lint
           npm run build
-      - name: Lint and build test app
-        working-directory: ./test-app
-        run: |
-          npm ci
-          npm run lint
-          npm run build
+#      - name: Lint and build test app
+#        working-directory: ./test-app
+#        run: |
+#          npm ci
+#          npm run lint
+#          npm run build
+#      - name: Run Unit Tests
+#        run: |
+#          npm run test
+      - name: Test Coverage
+        # Main doesn't have a PR for comments so skip that branch
+        # We don't want multiple comments about code coverage, just just run it once on 14.x on Linux
+        # if: ${{ github.ref != 'refs/heads/main' && matrix.node-version == '14.x' && matrix.os == 'ubuntu-latest' }}
+        uses: ArtiomTr/jest-coverage-report-action@v2
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          lcov-file: ./coverage/lcov.info
