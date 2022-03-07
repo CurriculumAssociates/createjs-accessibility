@@ -823,7 +823,15 @@ export default class AccessibilityObject {
    */
   _onKeyDown(evt) {
     const event = new createjs.Event('keydown', false, evt.cancelable);
+    event.key = evt.key;
     event.keyCode = evt.keyCode;
+    Object.defineProperty(event, 'keyCode', {
+      get() {
+        // eslint-disable-next-line no-console
+        console.warn('"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.');
+        return evt.keyCode;
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
@@ -840,7 +848,15 @@ export default class AccessibilityObject {
    */
   _onKeyUp(evt) {
     const event = new createjs.Event('keyup', false, evt.cancelable);
+    event.key = evt.key;
     event.keyCode = evt.keyCode;
+    Object.defineProperty(event, 'keyCode', {
+      get() {
+        // eslint-disable-next-line no-console
+        console.warn('"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.');
+        return evt.keyCode;
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
