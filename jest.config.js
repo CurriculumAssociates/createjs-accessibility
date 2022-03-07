@@ -9,14 +9,14 @@ module.exports = {
   coverageDirectory: 'coverage',
 
   // This will be used to configure minimum threshold enforcement for coverage results.
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 10,
-  //     functions: 5,
-  //     lines: 8,
-  //     statements: 8,
-  //   },
-  // },
+  coverageThreshold: {
+    global: {
+      branches: 10,
+      functions: 5,
+      lines: 8,
+      statements: 8,
+    },
+  },
 
   // The paths to modules that run some code to configure or set up the testing environment before
   // each test
