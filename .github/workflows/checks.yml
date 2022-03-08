@@ -28,3 +28,6 @@ jobs:
           npm run build
       - name: Test Coverage
         uses: ArtiomTr/jest-coverage-report-action@v2.0.4
+        with:
+          ref: ${{ env.BRANCH }}
+          fetch-depth: 0
