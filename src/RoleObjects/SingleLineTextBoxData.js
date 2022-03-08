@@ -59,7 +59,8 @@ export default class SingleLineTextBoxData extends InputTagData {
   /**
    * Sets whether the form should have autocomplete enabled
    * @access public
-   * @param {string | boolean} value - valid autocomplete attribute value to enable, false or off otherwise
+   * @param {string | boolean} value - valid autocomplete attribute value to enable,
+   *    false or off otherwise
    * @throws error if the specified value is invalid
    */
   set autoComplete(value) {
@@ -75,7 +76,8 @@ export default class SingleLineTextBoxData extends InputTagData {
   /**
    * Retrieves whether autocomplete is enabled
    * @access public
-   * @returns {string | boolean} attribute value if autocomplete is enabled by default or explicitly (note: true if undefined because autocomplete is enabled by default)
+   * @returns {string | boolean} attribute value if autocomplete is enabled by default
+   *    or explicitly (note: true if undefined because autocomplete is enabled by default)
    */
   get autoComplete() {
     if (this._reactProps.autoComplete !== undefined) return this._reactProps.autoComplete;

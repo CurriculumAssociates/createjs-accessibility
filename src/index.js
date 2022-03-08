@@ -11,8 +11,11 @@ import { ROLES } from './Roles';
  * @returns {Object} style object for positioning associated DOM elements
  */
 function calcDomStylesFromStage(stage) {
-  // true to return style object for putting the DOM element adjacent to the canvas (useful for debugging),
-  // false to return style object to put the DOM beneath the canvas
+  // true
+  //    to return style object for putting the DOM element adjacent to the canvas
+  //    (useful for debugging)
+  // false
+  //    to return style object to put the DOM beneath the canvas
   const debugPos = false;
 
   const { canvas } = stage;
