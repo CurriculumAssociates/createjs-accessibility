@@ -27,4 +27,4 @@ jobs:
           npm run lint
           npm run build
       - name: Test Coverage
-        uses: ArtiomTr/jest-coverage-report-action@v2
+        uses: ArtiomTr/jest-coverage-report-action@v2.0.4
