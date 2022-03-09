@@ -20,18 +20,17 @@ jobs:
           npm ci
           npm run lint
           npm run build
-      - name: Lint and build test app
-        working-directory: ./test-app
+#      - name: Lint and build test app
+#        working-directory: ./test-app
+#        run: |
+#          npm ci
+#          npm run lint
+#          npm run build
+      - name: Run Unit Tests
         run: |
-          npm ci
-          npm run lint
-          npm run build
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
+          npx jest --ci --json --coverage --testLocationInResults --outputFile=report.json
       - name: Test Coverage
         uses: ArtiomTr/jest-coverage-report-action@v2.0.4
-
+        with:
+#          coverage-file: ./coverage/report.json
+          base-coverage-file: ./coverage/report.json
