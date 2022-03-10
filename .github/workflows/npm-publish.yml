@@ -54,10 +54,13 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Generated gh-pages files"
-          git push  
+          git push
       - name: Checkout main before publish
         uses: actions/checkout@v2
       - name: Publish
-        run: npm publish
+        run: |
+          npm ci
+          npm run build
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
