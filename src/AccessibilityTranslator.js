@@ -58,8 +58,8 @@ export default class AccessibilityTranslator extends React.Component {
    * the accessibility information for all DisplayObjects has been completed(e.g. just after
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
-  update() {
-    this.forceUpdate();
+  update(callback = _.noop) {
+    this.forceUpdate(callback);
   }
 
   _processDisplayObject(displayObject, parentBoundsInGlobalSpace) {
