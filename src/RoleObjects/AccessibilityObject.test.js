@@ -2,7 +2,7 @@ import * as createjs from 'createjs-module';
 import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../index';
 
-describe('Accessibility Objects', () => {
+describe('AccessibilityObject', () => {
   it('Accessibility Object should provide event and keycode with the event', () => {
     const keyboardClickListener = jest.fn();
     const canvas = document.createElement('canvas');
