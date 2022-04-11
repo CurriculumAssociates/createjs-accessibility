@@ -49,7 +49,7 @@ describe('ArticleData', () => {
       });
 
       it('sets "aria-position" attribute', () => {
-        articleEl = parentEl.querySelector(`article`);
+        articleEl = parentEl.querySelector('article');
         expect(articleEl.ariaPosInSet).toEqual(positionVal);
       });
 
