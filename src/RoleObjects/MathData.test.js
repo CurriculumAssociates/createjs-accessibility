@@ -43,7 +43,7 @@ describe('MathData', () => {
     });
 
     describe('options getters and setters', () => {
-      it('can read and set \'mathML\' property', () => {
+      it('can read and set "mathML" property', () => {
         const mathML = (
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <mi>&#x03C0;</mi>

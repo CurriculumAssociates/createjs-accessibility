@@ -47,14 +47,14 @@ describe('MenuItemCheckBoxData', () => {
         expect(liEl).not.toBeNull();
       });
 
-      it('sets \'aria-readonly\' attribute', () => {
+      it('sets "aria-readonly" attribute', () => {
         liEl = parentEl.querySelector(`li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false][aria-readonly='${isReadOnly}']`);
         expect(liEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'checked\' property [for \'aria-checked\']', () => {
+      it('can read and set "checked" property [for "aria-checked"]', () => {
         expect(cjsMenuItemCheckBox.accessible.checked).toEqual(isChecked);
 
         const newVal = true;
@@ -62,7 +62,7 @@ describe('MenuItemCheckBoxData', () => {
         expect(cjsMenuItemCheckBox.accessible.checked).toEqual(newVal);
       });
 
-      it('can read and set \'readOnly\' property [for \'aria-readonly\']', () => {
+      it('can read and set "readOnly" property [for "aria-readonly"]', () => {
         expect(cjsMenuItemCheckBox.accessible.readOnly).toEqual(isReadOnly);
 
         const newVal = true;

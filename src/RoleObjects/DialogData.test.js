@@ -45,14 +45,14 @@ describe('DialogData', () => {
         expect(dialogEl).not.toBeNull();
       });
 
-      it('sets \'aria-expanded\' attribute', () => {
+      it('sets "aria-expanded" attribute', () => {
         dialogEl = parentEl.querySelector(`div[role=dialog][aria-expanded='${isExpanded}']`);
         expect(dialogEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'expanded\' property [for \'aria-expanded\']', () => {
+      it('can read and set "expanded" property [for "aria-expanded"]', () => {
         expect(cjsDialog.accessible.expanded).toEqual(isExpanded);
 
         const newVal = true;

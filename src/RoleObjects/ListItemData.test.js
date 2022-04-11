@@ -45,14 +45,14 @@ describe('ListItemData', () => {
         expect(liEl).not.toBeNull();
       });
 
-      it('sets \'value\' attribute', () => {
+      it('sets "value" attribute', () => {
         liEl = parentEl.querySelector(`li[value='${valueVal}']`);
         expect(liEl).not.toBeNull();
       });
     });
 
     describe('options getters and setters', () => {
-      it('can read and set \'value\' property', () => {
+      it('can read and set "value" property', () => {
         expect(cjsListItem.accessible.value).toEqual(valueVal);
 
         const newVal = 99;

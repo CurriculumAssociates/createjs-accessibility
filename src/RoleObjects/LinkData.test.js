@@ -63,44 +63,44 @@ describe('LinkData', () => {
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'download\' attribute', () => {
+      it('sets "download" attribute', () => {
         anchorEl = parentEl.querySelector(`a[download='${downloadVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'href\' attribute', () => {
+      it('sets "href" attribute', () => {
         anchorEl = parentEl.querySelector(`a[href='${hrefVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'hreflang\' attribute', () => {
+      it('sets "hreflang" attribute', () => {
         anchorEl = parentEl.querySelector(`a[hreflang='${hrefLangVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'media\' attribute', () => {
+      it('sets "media" attribute', () => {
         anchorEl = parentEl.querySelector(`a[media='${mediaVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'rel\' attribute', () => {
+      it('sets "rel" attribute', () => {
         anchorEl = parentEl.querySelector(`a[rel='${relVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'target\' attribute', () => {
+      it('sets "target" attribute', () => {
         anchorEl = parentEl.querySelector(`a[target='${targetVal}']`);
         expect(anchorEl).not.toBeNull();
       });
 
-      it('sets \'type\' attribute', () => {
+      it('sets "type" attribute', () => {
         anchorEl = parentEl.querySelector(`a[type='${typeVal}']`);
         expect(anchorEl).not.toBeNull();
       });
     });
 
     describe('options getters and setters', () => {
-      it('can read and set \'download\' property', () => {
+      it('can read and set "download" property', () => {
         expect(cjsInput.accessible.download).toEqual(downloadVal);
 
         const newVal = 'file2';
@@ -108,7 +108,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.download).toEqual(newVal);
       });
 
-      it('can read and set \'href\' property', () => {
+      it('can read and set "href" property', () => {
         expect(cjsInput.accessible.href).toEqual(hrefVal);
 
         const newVal = 'newpage.html';
@@ -116,7 +116,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.href).toEqual(newVal);
       });
 
-      it('can read and set \'hrefLang\' property', () => {
+      it('can read and set "hrefLang" property', () => {
         expect(cjsInput.accessible.hrefLang).toEqual(hrefLangVal);
 
         const newVal = 'ES';
@@ -124,7 +124,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.hrefLang).toEqual(newVal);
       });
 
-      it('can read and set \'media\' property', () => {
+      it('can read and set "media" property', () => {
         expect(cjsInput.accessible.media).toEqual(mediaVal);
 
         const newVal = 'screen';
@@ -132,7 +132,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.media).toEqual(newVal);
       });
 
-      it('can read and set \'rel\' property', () => {
+      it('can read and set "rel" property', () => {
         expect(cjsInput.accessible.rel).toEqual(relVal);
 
         const newVal = 'search';
@@ -140,7 +140,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.rel).toEqual(newVal);
       });
 
-      it('can read and set \'target\' property', () => {
+      it('can read and set "target" property', () => {
         expect(cjsInput.accessible.target).toEqual(targetVal);
 
         const newVal = '_new';
@@ -148,7 +148,7 @@ describe('LinkData', () => {
         expect(cjsInput.accessible.target).toEqual(newVal);
       });
 
-      it('can read and set \'type\' property', () => {
+      it('can read and set "type" property', () => {
         expect(cjsInput.accessible.type).toEqual(typeVal);
 
         const newVal = 'application/csvm+json';

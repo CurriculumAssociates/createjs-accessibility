@@ -54,29 +54,29 @@ describe('CellData', () => {
         expect(tdEl).not.toBeNull();
       });
 
-      it('sets \'aria-colindex\' attribute', () => {
+      it('sets "aria-colindex" attribute', () => {
         tdEl = parentEl.querySelector(`td[aria-colindex='${colIndexVal}']`);
         expect(tdEl).not.toBeNull();
       });
 
-      it('sets \'aria-rowindex\' attribute', () => {
+      it('sets "aria-rowindex" attribute', () => {
         tdEl = parentEl.querySelector(`td[aria-rowindex='${rowIndexVal}']`);
         expect(tdEl).not.toBeNull();
       });
 
-      it('sets \'colspan\' attribute', () => {
+      it('sets "colspan" attribute', () => {
         tdEl = parentEl.querySelector(`td[colspan='${colSpanVal}']`);
         expect(tdEl).not.toBeNull();
       });
 
-      it('sets \'rowspan\' attribute', () => {
+      it('sets "rowspan" attribute', () => {
         tdEl = parentEl.querySelector(`td[rowspan='${rowSpanVal}']`);
         expect(tdEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'colIndex\' property [for \'aria-colindex\']', () => {
+      it('can read and set "colIndex" property [for "aria-colindex"]', () => {
         expect(cjsCell.accessible.colIndex).toEqual(colIndexVal);
 
         const newVal = 111;
@@ -84,7 +84,7 @@ describe('CellData', () => {
         expect(cjsCell.accessible.colIndex).toEqual(newVal);
       });
 
-      it('can read and set \'rowIndex\' property [for \'aria-rowindex\']', () => {
+      it('can read and set "rowIndex" property [for "aria-rowindex"]', () => {
         expect(cjsCell.accessible.rowIndex).toEqual(rowIndexVal);
 
         const newVal = 222;
@@ -94,7 +94,7 @@ describe('CellData', () => {
     });
 
     describe('other options getters and setters', () => {
-      it('can read and set \'colSpan\' property', () => {
+      it('can read and set "colSpan" property', () => {
         expect(cjsCell.accessible.colSpan).toEqual(colSpanVal);
 
         const newVal = 333;
@@ -102,7 +102,7 @@ describe('CellData', () => {
         expect(cjsCell.accessible.colSpan).toEqual(newVal);
       });
 
-      it('can read and set \'rowspan\' property', () => {
+      it('can read and set "rowspan" property', () => {
         expect(cjsCell.accessible.rowSpan).toEqual(rowSpanVal);
 
         const newVal = 444;

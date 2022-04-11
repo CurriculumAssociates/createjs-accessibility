@@ -48,19 +48,19 @@ describe('ArticleData', () => {
         expect(articleEl).not.toBeNull();
       });
 
-      it('sets \'aria-position\' attribute', () => {
+      it('sets "aria-position" attribute', () => {
         articleEl = parentEl.querySelector(`article[aria-posinset='${positionVal}']`);
         expect(articleEl).not.toBeNull();
       });
 
-      it('sets \'aria-setsize\' attribute', () => {
+      it('sets "aria-setsize" attribute', () => {
         articleEl = parentEl.querySelector(`article[aria-setsize='${sizeVal}']`);
         expect(articleEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'size\' property [for \'aria-setsize\']', () => {
+      it('can read and set "size" property [for "aria-setsize"]', () => {
         expect(cjsArticle.accessible.size).toEqual(sizeVal);
 
         const newVal = -1;
@@ -68,7 +68,7 @@ describe('ArticleData', () => {
         expect(cjsArticle.accessible.size).toEqual(newVal);
       });
 
-      it('can read and set \'position\' property [for \'aria-posinset\']', () => {
+      it('can read and set "position" property [for "aria-posinset"]', () => {
         expect(cjsArticle.accessible.position).toEqual(positionVal);
 
         const newVal = -1;

@@ -72,52 +72,52 @@ describe('ImgData', () => {
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'alt\' attribute', () => {
+      it('sets "alt" attribute', () => {
         imgEl = parentEl.querySelector(`img[alt='${altVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'crossOrigin\' attribute', () => {
+      it('sets "crossOrigin" attribute', () => {
         imgEl = parentEl.querySelector(`img[crossOrigin='${crossOriginVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'height\' attribute', () => {
+      it('sets "height" attribute', () => {
         imgEl = parentEl.querySelector(`img[height='${heightVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'isMap\' attribute', () => {
+      it('sets "isMap" attribute', () => {
         imgEl = parentEl.querySelector(`img[isMap='${isIsMap}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'longDesc\' attribute', () => {
+      it('sets "longDesc" attribute', () => {
         imgEl = parentEl.querySelector(`img[longDesc='${longDescVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'sizes\' attribute', () => {
+      it('sets "sizes" attribute', () => {
         imgEl = parentEl.querySelector(`img[sizes='${sizesVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'src\' attribute', () => {
+      it('sets "src" attribute', () => {
         imgEl = parentEl.querySelector(`img[src='${srcVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'srcSet\' attribute', () => {
+      it('sets "srcSet" attribute', () => {
         imgEl = parentEl.querySelector(`img[srcSet='${srcSetVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'useMap\' attribute', () => {
+      it('sets "useMap" attribute', () => {
         imgEl = parentEl.querySelector(`img[useMap='${useMapVal}']`);
         expect(imgEl).not.toBeNull();
       });
 
-      it('sets \'width\' attribute', () => {
+      it('sets "width" attribute', () => {
         imgEl = parentEl.querySelector(`img[width='${widthVal}']`);
         expect(imgEl).not.toBeNull();
       });
@@ -144,7 +144,7 @@ describe('ImgData', () => {
     });
 
     describe('options getters and setters', () => {
-      it('can read and set \'alt\' property', () => {
+      it('can read and set "alt" property', () => {
         expect(cjsImg.accessible.alt).toEqual(altVal);
 
         const newVal = 'a new image';
@@ -152,7 +152,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.alt).toEqual(newVal);
       });
 
-      it('can read and set \'crossOrigin\' property', () => {
+      it('can read and set "crossOrigin" property', () => {
         expect(cjsImg.accessible.crossOrigin).toEqual(crossOriginVal);
 
         const newVal = 'use-credentials';
@@ -160,7 +160,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.crossOrigin).toEqual(newVal);
       });
 
-      it('can read and set \'height\' property', () => {
+      it('can read and set "height" property', () => {
         expect(cjsImg.accessible.height).toEqual(heightVal);
 
         const newVal = 100;
@@ -168,7 +168,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.height).toEqual(newVal);
       });
 
-      it('can read and set \'isMap\' property', () => {
+      it('can read and set "isMap" property', () => {
         expect(cjsImg.accessible.isMap).toEqual(isIsMap);
 
         const newVal = false;
@@ -176,7 +176,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.isMap).toEqual(newVal);
       });
 
-      it('can read and set \'longDesc\' property', () => {
+      it('can read and set "longDesc" property', () => {
         expect(cjsImg.accessible.longDesc).toEqual(longDescVal);
 
         const newVal = 'new_url.html';
@@ -184,7 +184,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.longDesc).toEqual(newVal);
       });
 
-      it('can read and set \'sizes\' property', () => {
+      it('can read and set "sizes" property', () => {
         expect(cjsImg.accessible.sizes).toEqual(sizesVal);
 
         const newVal = '(max-height = 999px) 9999px';
@@ -192,7 +192,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.sizes).toEqual(newVal);
       });
 
-      it('can read and set \'src\' property', () => {
+      it('can read and set "src" property', () => {
         expect(cjsImg.accessible.src).toEqual(srcVal);
 
         const newVal = 'img_new.jpg';
@@ -200,7 +200,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.src).toEqual(newVal);
       });
 
-      it('can read and set \'srcSet\' property', () => {
+      it('can read and set "srcSet" property', () => {
         expect(cjsImg.accessible.srcSet).toEqual(srcSetVal);
 
         const newVal = 'img960.jpg 960w; img1920.jpg 1920w';
@@ -208,7 +208,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.srcSet).toEqual(newVal);
       });
 
-      it('can read and set \'useMap\' property', () => {
+      it('can read and set "useMap" property', () => {
         expect(cjsImg.accessible.useMap).toEqual(useMapVal);
 
         const newVal = '#newmap';
@@ -216,7 +216,7 @@ describe('ImgData', () => {
         expect(cjsImg.accessible.useMap).toEqual(newVal);
       });
 
-      it('can read and set \'width\' property', () => {
+      it('can read and set "width" property', () => {
         expect(cjsImg.accessible.width).toEqual(widthVal);
 
         const newVal = 1000;

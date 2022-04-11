@@ -52,7 +52,7 @@ describe('CheckBoxData', () => {
       expect(cjsCheckbox.accessible.enableKeyEvents).toEqual(false);
     });
 
-    it('can read and set \'checked\' property', () => {
+    it('can read and set "checked" property', () => {
       cjsCheckbox.accessible.checked = true;
       expect(cjsCheckbox.accessible.checked).toEqual(true);
 

@@ -63,44 +63,44 @@ describe('FormData', () => {
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'action\' attribute', () => {
+      it('sets "action" attribute', () => {
         formEl = parentEl.querySelector(`form[action='${actionVal}']`);
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'autocomplete\' attribute', () => {
+      it('sets "autocomplete" attribute', () => {
         formEl = parentEl.querySelector('form[autocomplete]');
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'accept-charset\' attribute', () => {
+      it('sets "accept-charset" attribute', () => {
         formEl = parentEl.querySelector(`form[accept-charset='${charSetVal}']`);
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'enctype\' attribute', () => {
+      it('sets "enctype" attribute', () => {
         formEl = parentEl.querySelector(`form[enctype='${enctypeVal}']`);
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'method\' attribute', () => {
+      it('sets "method" attribute', () => {
         formEl = parentEl.querySelector(`form[method='${methodVal}']`);
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'name\' attribute', () => {
+      it('sets "name" attribute', () => {
         formEl = parentEl.querySelector(`form[name='${nameVal}']`);
         expect(formEl).not.toBeNull();
       });
 
-      it('sets \'target\' attribute', () => {
+      it('sets "target" attribute', () => {
         formEl = parentEl.querySelector(`form[target='${targetVal}']`);
         expect(formEl).not.toBeNull();
       });
     });
 
     describe('options getters and setters', () => {
-      it('can read and set \'action\' property', () => {
+      it('can read and set "action" property', () => {
         expect(cjsForm.accessible.action).toEqual(actionVal);
 
         const newVal = 'new.php';
@@ -108,7 +108,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.action).toEqual(newVal);
       });
 
-      it('can read and set \'autoComplete\' property', () => {
+      it('can read and set "autoComplete" property', () => {
         expect(cjsForm.accessible.autoComplete).toEqual(shouldAutoComplete);
 
         const newVal = false;
@@ -116,7 +116,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.autoComplete).toEqual(newVal);
       });
 
-      it('can read and set \'charSet\' property', () => {
+      it('can read and set "charSet" property', () => {
         expect(cjsForm.accessible.charSet).toEqual(charSetVal);
 
         const newVal = 'iso-8859-1';
@@ -124,7 +124,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.charSet).toEqual(newVal);
       });
 
-      it('can read and set \'enctype\' property', () => {
+      it('can read and set "enctype" property', () => {
         expect(cjsForm.accessible.enctype).toEqual(enctypeVal);
 
         const newVal = 'multipart/form-data';
@@ -132,7 +132,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.enctype).toEqual(newVal);
       });
 
-      it('can read and set \'method\' property', () => {
+      it('can read and set "method" property', () => {
         expect(cjsForm.accessible.method).toEqual(methodVal);
 
         const newVal = 'post';
@@ -140,7 +140,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.method).toEqual(newVal);
       });
 
-      it('can read and set \'name\' property', () => {
+      it('can read and set "name" property', () => {
         expect(cjsForm.accessible.name).toEqual(nameVal);
 
         const newVal = 'btn_new_name';
@@ -148,7 +148,7 @@ describe('FormData', () => {
         expect(cjsForm.accessible.name).toEqual(newVal);
       });
 
-      it('can read and set \'target\' property', () => {
+      it('can read and set "target" property', () => {
         expect(cjsForm.accessible.target).toEqual(targetVal);
 
         const newVal = '_new';

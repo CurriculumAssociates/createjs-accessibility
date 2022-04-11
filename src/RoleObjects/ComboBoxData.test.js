@@ -54,19 +54,19 @@ describe('ComboBoxData', () => {
         expect(comboBoxEl).not.toBeNull();
       });
 
-      it('sets \'aria-expanded\' attribute', () => {
+      it('sets "aria-expanded" attribute', () => {
         comboBoxEl = parentEl.querySelector(`div[role=combobox][aria-expanded='${isExpanded}']`);
         expect(comboBoxEl).not.toBeNull();
       });
 
-      it('sets \'aria-readonly\' attribute', () => {
+      it('sets "aria-readonly" attribute', () => {
         comboBoxEl = parentEl.querySelector(`div[role=combobox][aria-readonly='${isReadOnly}']`);
         expect(comboBoxEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'expanded\' property [for \'aria-expanded\']', () => {
+      it('can read and set "expanded" property [for "aria-expanded"]', () => {
         expect(cjsComboBox.accessible.expanded).toEqual(isExpanded);
 
         const newVal = true;
@@ -74,7 +74,7 @@ describe('ComboBoxData', () => {
         expect(cjsComboBox.accessible.expanded).toEqual(newVal);
       });
 
-      it('can read and set \'readOnly\' property [for \'aria-readonly\']', () => {
+      it('can read and set "readOnly" property [for "aria-readonly"]', () => {
         expect(cjsComboBox.accessible.readOnly).toEqual(isReadOnly);
 
         const newVal = true;
@@ -82,7 +82,7 @@ describe('ComboBoxData', () => {
         expect(cjsComboBox.accessible.readOnly).toEqual(newVal);
       });
 
-      it('can read and set \'required\' property [for \'aria-required\']', () => {
+      it('can read and set "required" property [for "aria-required"]', () => {
         expect(cjsComboBox.accessible.required).toEqual(isRequired);
 
         const newVal = true;
@@ -92,7 +92,7 @@ describe('ComboBoxData', () => {
     });
 
     describe('other options getters and setters', () => {
-      it('can read and set \'autoComplete\' property', () => {
+      it('can read and set "autoComplete" property', () => {
         expect(cjsComboBox.accessible.autoComplete).toEqual(shouldAutoComplete);
 
         const newVal = false;

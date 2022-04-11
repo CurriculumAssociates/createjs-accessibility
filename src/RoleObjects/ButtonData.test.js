@@ -81,19 +81,19 @@ describe('ButtonData', () => {
         expect(buttonEl).not.toBeNull();
       });
 
-      it('sets \'aria-expanded\' attribute', () => {
+      it('sets "aria-expanded" attribute', () => {
         buttonEl = parentEl.querySelector(`button[aria-expanded='${isExpanded}']`);
         expect(buttonEl).not.toBeNull();
       });
 
-      it('sets \'aria-pressed\' attribute', () => {
+      it('sets "aria-pressed" attribute', () => {
         buttonEl = parentEl.querySelector(`button[aria-pressed='${isPressed}']`);
         expect(buttonEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'expanded\' property [for \'aria-expanded\']', () => {
+      it('can read and set "expanded" property [for "aria-expanded"]', () => {
         expect(cjsButton.accessible.expanded).toEqual(isExpanded);
 
         const newVal = true;
@@ -101,7 +101,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.expanded).toEqual(newVal);
       });
 
-      it('can read and set \'pressed\' property [for \'aria-pressed\']', () => {
+      it('can read and set "pressed" property [for "aria-pressed"]', () => {
         expect(cjsButton.accessible.pressed).toEqual(isPressed);
 
         const newVal = true;
@@ -111,7 +111,7 @@ describe('ButtonData', () => {
     });
 
     describe('other options getters and setters', () => {
-      it('can read and set \'autoFocus\' property', () => {
+      it('can read and set "autoFocus" property', () => {
         expect(cjsButton.accessible.autoFocus).toEqual(shouldAutoFocus);
 
         const newVal = false;
@@ -119,7 +119,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.autoFocus).toEqual(newVal);
       });
 
-      it('can read and set \'enabled\' property', () => {
+      it('can read and set "enabled" property', () => {
         expect(cjsButton.accessible.enabled).toEqual(isEnabled);
 
         const newVal = true;
@@ -127,7 +127,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.enabled).toEqual(newVal);
       });
 
-      it('can read and set \'form\' property', () => {
+      it('can read and set "form" property', () => {
         expect(cjsButton.accessible.form).toEqual(formVal);
 
         const newVal = 'new';
@@ -135,7 +135,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.form).toEqual(newVal);
       });
 
-      it('can read and set \'formaction\' property', () => {
+      it('can read and set "formaction" property', () => {
         expect(cjsButton.accessible.formaction).toEqual(formactionVal);
 
         const newVal = 'new.php';
@@ -143,7 +143,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.formaction).toEqual(newVal);
       });
 
-      it('can read and set \'formenctype\' property', () => {
+      it('can read and set "formenctype" property', () => {
         expect(cjsButton.accessible.formenctype).toEqual(formenctypeVal);
 
         const newVal = 'multipart/form-data';
@@ -151,7 +151,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.formenctype).toEqual(newVal);
       });
 
-      it('can read and set \'formmethod\' property', () => {
+      it('can read and set "formmethod" property', () => {
         expect(cjsButton.accessible.formmethod).toEqual(formmethodVal);
 
         const newVal = 'post';
@@ -159,7 +159,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.formmethod).toEqual(newVal);
       });
 
-      it('can read and set \'formnovalidate\' property', () => {
+      it('can read and set "formnovalidate" property', () => {
         expect(cjsButton.accessible.formnovalidate).toEqual(shouldValidateForm);
 
         const newVal = false;
@@ -167,7 +167,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.formnovalidate).toEqual(newVal);
       });
 
-      it('can read and set \'formtarget\' property', () => {
+      it('can read and set "formtarget" property', () => {
         expect(cjsButton.accessible.formtarget).toEqual(formtargetVal);
 
         const newVal = '_new';
@@ -175,7 +175,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.formtarget).toEqual(newVal);
       });
 
-      it('can read and set \'name\' property', () => {
+      it('can read and set "name" property', () => {
         expect(cjsButton.accessible.name).toEqual(nameVal);
 
         const newVal = 'btn_new_name';
@@ -183,7 +183,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.name).toEqual(newVal);
       });
 
-      it('can read and set \'type\' property', () => {
+      it('can read and set "type" property', () => {
         expect(cjsButton.accessible.type).toEqual(typeVal);
 
         const newVal = 'submit';
@@ -191,7 +191,7 @@ describe('ButtonData', () => {
         expect(cjsButton.accessible.type).toEqual(newVal);
       });
 
-      it('can read and set \'value\' property', () => {
+      it('can read and set "value" property', () => {
         expect(cjsButton.accessible.value).toEqual(valueVal);
 
         const newVal = 99;

@@ -54,24 +54,24 @@ describe('GridData', () => {
         expect(tableEl).not.toBeNull();
       });
 
-      it('sets \'aria-level\' attribute', () => {
+      it('sets "aria-level" attribute', () => {
         tableEl = parentEl.querySelector(`table[role=grid][aria-level='${levelVal}']`);
         expect(tableEl).not.toBeNull();
       });
 
-      it('sets \'aria-multiselectable\' attribute', () => {
+      it('sets "aria-multiselectable" attribute', () => {
         tableEl = parentEl.querySelector(`table[role=grid][aria-multiselectable='${isMultiselectable}']`);
         expect(tableEl).not.toBeNull();
       });
 
-      it('sets \'aria-readonly\' attribute', () => {
+      it('sets "aria-readonly" attribute', () => {
         tableEl = parentEl.querySelector(`table[role=grid][aria-readonly='${isReadOnly}']`);
         expect(tableEl).not.toBeNull();
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'level\' property [for \'aria-level\']', () => {
+      it('can read and set "level" property [for "aria-level"]', () => {
         expect(cjsGrid.accessible.level).toEqual(levelVal);
 
         const newVal = -1;
@@ -79,7 +79,7 @@ describe('GridData', () => {
         expect(cjsGrid.accessible.level).toEqual(newVal);
       });
 
-      it('can read and set \'multiselectable\' property [for \'aria-multiselectable\']', () => {
+      it('can read and set "multiselectable" property [for "aria-multiselectable"]', () => {
         expect(cjsGrid.accessible.multiselectable).toEqual(isMultiselectable);
 
         const newVal = true;
@@ -87,7 +87,7 @@ describe('GridData', () => {
         expect(cjsGrid.accessible.multiselectable).toEqual(newVal);
       });
 
-      it('can read and set \'readOnly\' property [for \'aria-readonly\']', () => {
+      it('can read and set "readOnly" property [for "aria-readonly"]', () => {
         expect(cjsGrid.accessible.readOnly).toEqual(isReadOnly);
 
         const newVal = true;
@@ -97,7 +97,7 @@ describe('GridData', () => {
     });
 
     describe('other options getters and setters', () => {
-      it('can read and set \'enableKeyEvents\' property', () => {
+      it('can read and set "enableKeyEvents" property', () => {
         expect(cjsGrid.accessible.enableKeyEvents).toEqual(shouldEnableKeyEvents);
 
         const newVal = true;

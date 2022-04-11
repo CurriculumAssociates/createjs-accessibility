@@ -51,12 +51,12 @@ describe('InputTagData', () => {
         expect(inputEl).not.toBeNull();
       });
 
-      it('sets \'aria-disabled\' attribute', () => {
+      it('sets "aria-disabled" attribute', () => {
         inputEl = parentEl.querySelector(`input[type=radio][aria-disabled='${!isEnabled}']`);
         expect(inputEl).not.toBeNull();
       });
 
-      it('sets \'name\' attribute', () => {
+      it('sets "name" attribute', () => {
         inputEl = parentEl.querySelector(`input[type=radio][name='${nameVal}']`);
         expect(inputEl).not.toBeNull();
       });
@@ -83,7 +83,7 @@ describe('InputTagData', () => {
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set \'enabled\' property [for \'aria-disabled\']', () => {
+      it('can read and set "enabled" property [for "aria-disabled"]', () => {
         expect(cjsInput.accessible.enabled).toEqual(isEnabled);
 
         const newVal = true;
@@ -93,7 +93,7 @@ describe('InputTagData', () => {
     });
 
     describe('other options getters and setters', () => {
-      it('can read and set \'autoFocus\' property', () => {
+      it('can read and set "autoFocus" property', () => {
         expect(cjsInput.accessible.autoFocus).toEqual(shouldAutoFocus);
 
         const newVal = false;
@@ -101,7 +101,7 @@ describe('InputTagData', () => {
         expect(cjsInput.accessible.autoFocus).toEqual(newVal);
       });
 
-      it('can read and set \'enabled\' property', () => {
+      it('can read and set "enabled" property', () => {
         expect(cjsInput.accessible.enabled).toEqual(isEnabled);
 
         const newVal = true;
@@ -109,7 +109,7 @@ describe('InputTagData', () => {
         expect(cjsInput.accessible.enabled).toEqual(newVal);
       });
 
-      it('can read and set \'name\' property', () => {
+      it('can read and set "name" property', () => {
         expect(cjsInput.accessible.name).toEqual(nameVal);
 
         const newVal = 'input_new_name';
