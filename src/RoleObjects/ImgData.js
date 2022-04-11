@@ -91,9 +91,7 @@ export default class ImgData extends SectionData {
    */
   get isMap() {
     const { ismap } = this._reactProps;
-    let retVal;
-    ismap && (retVal = (ismap === 'true'));
-    return retVal;
+    return ismap && ismap === 'true';
   }
 
   /**
