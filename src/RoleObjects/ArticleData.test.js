@@ -49,8 +49,8 @@ describe('ArticleData', () => {
       });
 
       it('sets "aria-position" attribute', () => {
-        articleEl = parentEl.querySelector(`article[aria-posinset='${positionVal}']`);
-        expect(articleEl).not.toBeNull();
+        articleEl = parentEl.querySelector(`article`);
+        expect(articleEl.ariaPosInSet).toEqual(positionVal);
       });
 
       it('sets "aria-setsize" attribute', () => {
