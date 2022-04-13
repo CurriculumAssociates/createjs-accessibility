@@ -65,7 +65,6 @@
   },
   "dependencies": {
     "@types/jest": "^27.0.2",
-    "core-js": "*",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "keycodes-enum": "^0.0.2",
