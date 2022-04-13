@@ -80,7 +80,7 @@ export default class ImgData extends SectionData {
    * @param {Boolean} option - whether or not this image is part of an image map
    */
   set isMap(option) {
-    this._reactProps.ismap = option;
+    this._reactProps.ismap = option.toString();
   }
 
   /**
@@ -90,7 +90,8 @@ export default class ImgData extends SectionData {
    * undefined if this field is unset
    */
   get isMap() {
-    return this._reactProps.ismap;
+    const { ismap } = this._reactProps;
+    return ismap && ismap === 'true';
   }
 
   /**
