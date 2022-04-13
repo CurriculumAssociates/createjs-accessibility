@@ -1,12 +1,12 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('CellData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
+    let cjsTable;
+    let cjsTableBody;
+    let cjsRow;
     let cjsCell;
     let tdEl;
     let colIndexVal;
@@ -15,10 +15,9 @@ describe('CellData', () => {
     let rowSpanVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
+      cjsTable = new createjs.Shape(); // dummy object
+      cjsTableBody = new createjs.Shape(); // dummy object
+      cjsRow = new createjs.Shape(); // dummy object
       cjsCell = new createjs.Shape(); // dummy object
       colIndexVal = 10;
       colSpanVal = 20;
@@ -26,12 +25,22 @@ describe('CellData', () => {
       rowSpanVal = 40;
 
       AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
+        displayObject: cjsTable,
+        parent: container,
+        role: AccessibilityModule.ROLES.TABLE,
       });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
+
+      AccessibilityModule.register({
+        displayObject: cjsTableBody,
+        parent: cjsTable,
+        role: AccessibilityModule.ROLES.TABLEBODY,
+      });
+
+      AccessibilityModule.register({
+        displayObject: cjsRow,
+        parent: cjsTableBody,
+        role: AccessibilityModule.ROLES.ROW,
+      });
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -41,37 +50,33 @@ describe('CellData', () => {
           rowSpan: rowSpanVal,
         },
         displayObject: cjsCell,
-        parent: container,
+        parent: cjsRow,
         role: AccessibilityModule.ROLES.CELL,
       });
 
       stage.accessibilityTranslator.update();
+      tdEl = parentEl.querySelector('td');
     });
 
     describe('rendering', () => {
       it('creates form element', () => {
-        tdEl = parentEl.querySelector('td');
         expect(tdEl).not.toBeNull();
       });
 
       it('sets "aria-colindex" attribute', () => {
-        tdEl = parentEl.querySelector(`td[aria-colindex='${colIndexVal}']`);
-        expect(tdEl).not.toBeNull();
+        expect(parseInt(tdEl.getAttribute('aria-colindex'), 10)).toEqual(colIndexVal);
       });
 
       it('sets "aria-rowindex" attribute', () => {
-        tdEl = parentEl.querySelector(`td[aria-rowindex='${rowIndexVal}']`);
-        expect(tdEl).not.toBeNull();
+        expect(parseInt(tdEl.getAttribute('aria-rowindex'), 10)).toEqual(rowIndexVal);
       });
 
       it('sets "colspan" attribute', () => {
-        tdEl = parentEl.querySelector(`td[colspan='${colSpanVal}']`);
-        expect(tdEl).not.toBeNull();
+        expect(tdEl.colSpan).toEqual(colSpanVal);
       });
 
       it('sets "rowspan" attribute', () => {
-        tdEl = parentEl.querySelector(`td[rowspan='${rowSpanVal}']`);
-        expect(tdEl).not.toBeNull();
+        expect(tdEl.rowSpan).toEqual(rowSpanVal);
       });
     });
 

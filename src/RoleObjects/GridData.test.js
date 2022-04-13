@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('GridData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsGrid;
     let tableEl;
     let shouldEnableKeyEvents;
@@ -15,23 +12,11 @@ describe('GridData', () => {
     let isReadOnly;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsGrid = new createjs.Shape(); // dummy object
       shouldEnableKeyEvents = false;
       levelVal = 99;
       isMultiselectable = false;
       isReadOnly = false;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -46,27 +31,26 @@ describe('GridData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      tableEl = parentEl.querySelector('table[role=grid]');
     });
 
     describe('rendering', () => {
       it('creates table[role=grid] element', () => {
-        tableEl = parentEl.querySelector('table[role=grid]');
         expect(tableEl).not.toBeNull();
       });
 
       it('sets "aria-level" attribute', () => {
-        tableEl = parentEl.querySelector(`table[role=grid][aria-level='${levelVal}']`);
-        expect(tableEl).not.toBeNull();
+        expect(parseInt(tableEl.getAttribute('aria-level'), 10)).toEqual(levelVal);
       });
 
       it('sets "aria-multiselectable" attribute', () => {
-        tableEl = parentEl.querySelector(`table[role=grid][aria-multiselectable='${isMultiselectable}']`);
-        expect(tableEl).not.toBeNull();
+        const ariaMultiselectable = tableEl.getAttribute('aria-multiselectable') === 'true';
+        expect(ariaMultiselectable).toEqual(isMultiselectable);
       });
 
       it('sets "aria-readonly" attribute', () => {
-        tableEl = parentEl.querySelector(`table[role=grid][aria-readonly='${isReadOnly}']`);
-        expect(tableEl).not.toBeNull();
+        const ariaReadOnly = tableEl.getAttribute('aria-readonly') === 'true';
+        expect(ariaReadOnly).toEqual(isReadOnly);
       });
     });
 

@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('ButtonData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsButton;
     let buttonEl;
     let isExpanded;
@@ -24,10 +21,6 @@ describe('ButtonData', () => {
     let valueVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsButton = new createjs.Shape(); // dummy object
       isExpanded = false;
       isPressed = false;
@@ -42,14 +35,6 @@ describe('ButtonData', () => {
       nameVal = 'btn_name';
       typeVal = 'button';
       valueVal = 7;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -73,22 +58,22 @@ describe('ButtonData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      buttonEl = parentEl.querySelector('button');
     });
 
     describe('rendering', () => {
       it('creates button element', () => {
-        buttonEl = parentEl.querySelector('button');
         expect(buttonEl).not.toBeNull();
       });
 
       it('sets "aria-expanded" attribute', () => {
-        buttonEl = parentEl.querySelector(`button[aria-expanded='${isExpanded}']`);
-        expect(buttonEl).not.toBeNull();
+        const ariaExpanded = buttonEl.getAttribute('aria-expanded') === 'true';
+        expect(ariaExpanded).toEqual(isExpanded);
       });
 
       it('sets "aria-pressed" attribute', () => {
-        buttonEl = parentEl.querySelector(`button[aria-pressed='${isPressed}']`);
-        expect(buttonEl).not.toBeNull();
+        const ariaPressed = buttonEl.getAttribute('aria-pressed') === 'true';
+        expect(ariaPressed).toEqual(isPressed);
       });
     });
 

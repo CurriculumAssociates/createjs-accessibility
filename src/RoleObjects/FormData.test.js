@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('FormData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsForm;
     let formEl;
     let actionVal;
@@ -18,10 +15,6 @@ describe('FormData', () => {
     let targetVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsForm = new createjs.Shape(); // dummy object
       actionVal = 'formsubmit.php';
       shouldAutoComplete = false;
@@ -30,14 +23,6 @@ describe('FormData', () => {
       methodVal = 'get';
       nameVal = 'form_name';
       targetVal = '_blank';
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -55,47 +40,41 @@ describe('FormData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      formEl = parentEl.querySelector('form');
     });
 
     describe('rendering', () => {
       it('creates form element', () => {
-        formEl = parentEl.querySelector('form');
         expect(formEl).not.toBeNull();
       });
 
       it('sets "action" attribute', () => {
-        formEl = parentEl.querySelector(`form[action='${actionVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.getAttribute('action')).toEqual(actionVal);
       });
 
       it('sets "autocomplete" attribute', () => {
-        formEl = parentEl.querySelector('form[autocomplete]');
-        expect(formEl).not.toBeNull();
+        const shouldAutoCompleteParsed = shouldAutoComplete ? 'on' : 'off'; // parsed by the setter
+        expect(formEl.getAttribute('autocomplete')).toEqual(shouldAutoCompleteParsed);
       });
 
       it('sets "accept-charset" attribute', () => {
-        formEl = parentEl.querySelector(`form[accept-charset='${charSetVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.getAttribute('accept-charset')).toEqual(charSetVal);
       });
 
       it('sets "enctype" attribute', () => {
-        formEl = parentEl.querySelector(`form[enctype='${enctypeVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.enctype).toEqual(enctypeVal);
       });
 
       it('sets "method" attribute', () => {
-        formEl = parentEl.querySelector(`form[method='${methodVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.method).toEqual(methodVal);
       });
 
       it('sets "name" attribute', () => {
-        formEl = parentEl.querySelector(`form[name='${nameVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.name).toEqual(nameVal);
       });
 
       it('sets "target" attribute', () => {
-        formEl = parentEl.querySelector(`form[target='${targetVal}']`);
-        expect(formEl).not.toBeNull();
+        expect(formEl.target).toEqual(targetVal);
       });
     });
 

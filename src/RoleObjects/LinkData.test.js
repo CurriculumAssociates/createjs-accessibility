@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('LinkData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsInput;
     let anchorEl;
     let downloadVal;
@@ -18,10 +15,6 @@ describe('LinkData', () => {
     let typeVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsInput = new createjs.Shape(); // dummy object
       downloadVal = 'filename';
       hrefVal = 'page.html';
@@ -55,47 +48,40 @@ describe('LinkData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      anchorEl = parentEl.querySelector('a');
     });
 
     describe('rendering', () => {
       it('creates <a /> [anchor] element', () => {
-        anchorEl = parentEl.querySelector('a');
         expect(anchorEl).not.toBeNull();
       });
 
       it('sets "download" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[download='${downloadVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.download).toEqual(downloadVal);
       });
 
       it('sets "href" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[href='${hrefVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.getAttribute('href')).toEqual(hrefVal);
       });
 
       it('sets "hreflang" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[hreflang='${hrefLangVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.hreflang).toEqual(hrefLangVal);
       });
 
       it('sets "media" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[media='${mediaVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.getAttribute('media')).toEqual(mediaVal);
       });
 
       it('sets "rel" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[rel='${relVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.rel).toEqual(relVal);
       });
 
       it('sets "target" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[target='${targetVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.target).toEqual(targetVal);
       });
 
       it('sets "type" attribute', () => {
-        anchorEl = parentEl.querySelector(`a[type='${typeVal}']`);
-        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.type).toEqual(typeVal);
       });
     });
 

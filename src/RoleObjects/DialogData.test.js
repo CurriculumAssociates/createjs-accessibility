@@ -1,31 +1,16 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('DialogData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsDialog;
     let dialogEl;
     let isExpanded;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsDialog = new createjs.Shape(); // dummy object
       isExpanded = false;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -37,17 +22,17 @@ describe('DialogData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      dialogEl = parentEl.querySelector('div[role=dialog]');
     });
 
     describe('rendering', () => {
       it('creates div[role=dialog] element', () => {
-        dialogEl = parentEl.querySelector('div[role=dialog]');
         expect(dialogEl).not.toBeNull();
       });
 
       it('sets "aria-expanded" attribute', () => {
-        dialogEl = parentEl.querySelector(`div[role=dialog][aria-expanded='${isExpanded}']`);
-        expect(dialogEl).not.toBeNull();
+        const ariaExpanded = dialogEl.getAttribute('aria-expanded') === 'true';
+        expect(ariaExpanded).toEqual(isExpanded);
       });
     });
 

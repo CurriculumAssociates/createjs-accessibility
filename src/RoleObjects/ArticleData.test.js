@@ -1,33 +1,18 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('ArticleData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsArticle;
     let articleEl;
     let positionVal;
     let sizeVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsArticle = new createjs.Shape(); // dummy object
       positionVal = 7;
       sizeVal = 99;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -40,22 +25,20 @@ describe('ArticleData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      articleEl = parentEl.querySelector('article');
     });
 
     describe('rendering', () => {
       it('creates article element', () => {
-        articleEl = parentEl.querySelector('article');
         expect(articleEl).not.toBeNull();
       });
 
-      it('sets "aria-position" attribute', () => {
-        articleEl = parentEl.querySelector('article');
-        expect(articleEl.ariaPosInSet).toEqual(positionVal);
+      it('sets "aria-posinset" attribute', () => {
+        expect(parseInt(articleEl.getAttribute('aria-posinset'), 10)).toEqual(positionVal);
       });
 
       it('sets "aria-setsize" attribute', () => {
-        articleEl = parentEl.querySelector(`article[aria-setsize='${sizeVal}']`);
-        expect(articleEl).not.toBeNull();
+        expect(parseInt(articleEl.getAttribute('aria-setsize'), 10)).toEqual(sizeVal);
       });
     });
 

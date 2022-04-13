@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('InputTagData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsInput;
     let inputEl;
     let shouldAutoFocus;
@@ -14,22 +11,10 @@ describe('InputTagData', () => {
     let nameVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsInput = new createjs.Shape(); // dummy object
       shouldAutoFocus = true;
       isEnabled = false;
       nameVal = 'an_input';
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -43,11 +28,11 @@ describe('InputTagData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      inputEl = parentEl.querySelector('input[type=radio]');
     });
 
     describe('rendering', () => {
       it('creates input[type=radio] element', () => {
-        inputEl = parentEl.querySelector('input[type=radio]');
         expect(inputEl).not.toBeNull();
       });
 
@@ -57,8 +42,7 @@ describe('InputTagData', () => {
       });
 
       it('sets "name" attribute', () => {
-        inputEl = parentEl.querySelector(`input[type=radio][name='${nameVal}']`);
-        expect(inputEl).not.toBeNull();
+        expect(inputEl.name).toEqual(nameVal);
       });
     });
 

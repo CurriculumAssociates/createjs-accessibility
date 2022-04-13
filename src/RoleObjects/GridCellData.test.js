@@ -1,12 +1,12 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('GridCellData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
+    let cjsTable;
+    let cjsTableBody;
+    let cjsRow;
     let cjsGridCell;
     let tdEl;
     let isReadOnly;
@@ -14,22 +14,31 @@ describe('GridCellData', () => {
     let isSelected;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
+      cjsTable = new createjs.Shape(); // dummy object
+      cjsTableBody = new createjs.Shape(); // dummy object
+      cjsRow = new createjs.Shape(); // dummy object
       cjsGridCell = new createjs.Shape(); // dummy object
       isReadOnly = false;
       isRequired = false;
       isSelected = false;
 
       AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
+        displayObject: cjsTable,
+        parent: container,
+        role: AccessibilityModule.ROLES.TABLE,
       });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
+
+      AccessibilityModule.register({
+        displayObject: cjsTableBody,
+        parent: cjsTable,
+        role: AccessibilityModule.ROLES.TABLEBODY,
+      });
+
+      AccessibilityModule.register({
+        displayObject: cjsRow,
+        parent: cjsTableBody,
+        role: AccessibilityModule.ROLES.ROW,
+      });
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -38,7 +47,7 @@ describe('GridCellData', () => {
           selected: isSelected,
         },
         displayObject: cjsGridCell,
-        parent: container,
+        parent: cjsRow,
         role: AccessibilityModule.ROLES.GRIDCELL,
       });
 
@@ -52,18 +61,18 @@ describe('GridCellData', () => {
       });
 
       it('sets "aria-readonly" attribute', () => {
-        tdEl = parentEl.querySelector(`td[role=gridcell][aria-readonly='${isReadOnly}']`);
-        expect(tdEl).not.toBeNull();
+        const ariaReadOnly = tdEl.getAttribute('aria-readonly') === 'true';
+        expect(ariaReadOnly).toEqual(isReadOnly);
       });
 
       it('sets "aria-required" attribute', () => {
-        tdEl = parentEl.querySelector(`td[role=gridcell][aria-required='${isRequired}']`);
-        expect(tdEl).not.toBeNull();
+        const ariaRequired = tdEl.getAttribute('aria-required') === 'true';
+        expect(ariaRequired).toEqual(isRequired);
       });
 
-      it('sets "aria-required" attribute', () => {
-        tdEl = parentEl.querySelector(`td[role=gridcell][aria-selected='${isSelected}']`);
-        expect(tdEl).not.toBeNull();
+      it('sets "aria-selected" attribute', () => {
+        const ariaSelected = tdEl.getAttribute('aria-selected') === 'true';
+        expect(ariaSelected).toEqual(isSelected);
       });
     });
 

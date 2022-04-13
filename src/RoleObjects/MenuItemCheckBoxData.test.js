@@ -1,33 +1,18 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('MenuItemCheckBoxData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsMenuItemCheckBox;
     let liEl;
     let isChecked;
     let isReadOnly;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsMenuItemCheckBox = new createjs.Shape(); // dummy object
       isChecked = false;
       isReadOnly = false;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -39,17 +24,17 @@ describe('MenuItemCheckBoxData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      liEl = parentEl.querySelector('li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false]');
     });
 
     describe('rendering', () => {
       it('creates li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false] element', () => {
-        liEl = parentEl.querySelector('li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false]');
         expect(liEl).not.toBeNull();
       });
 
       it('sets "aria-readonly" attribute', () => {
-        liEl = parentEl.querySelector(`li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false][aria-readonly='${isReadOnly}']`);
-        expect(liEl).not.toBeNull();
+        const ariaReadOnly = liEl.getAttribute('aria-readonly') === 'true';
+        expect(ariaReadOnly).toEqual(isReadOnly);
       });
     });
 

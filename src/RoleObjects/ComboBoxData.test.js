@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('ComboBoxData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsComboBox;
     let comboBoxEl;
     let isExpanded;
@@ -15,23 +12,11 @@ describe('ComboBoxData', () => {
     let shouldAutoComplete;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsComboBox = new createjs.Shape(); // dummy object
       isExpanded = false;
       isReadOnly = false;
       isRequired = false;
       shouldAutoComplete = true;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -46,22 +31,22 @@ describe('ComboBoxData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      comboBoxEl = parentEl.querySelector('div[role=combobox]');
     });
 
     describe('rendering', () => {
       it('creates div[role=combobox] element', () => {
-        comboBoxEl = parentEl.querySelector('div[role=combobox]');
         expect(comboBoxEl).not.toBeNull();
       });
 
       it('sets "aria-expanded" attribute', () => {
-        comboBoxEl = parentEl.querySelector(`div[role=combobox][aria-expanded='${isExpanded}']`);
-        expect(comboBoxEl).not.toBeNull();
+        const ariaExpanded = comboBoxEl.getAttribute('aria-expanded') === 'true';
+        expect(ariaExpanded).toEqual(isExpanded);
       });
 
       it('sets "aria-readonly" attribute', () => {
-        comboBoxEl = parentEl.querySelector(`div[role=combobox][aria-readonly='${isReadOnly}']`);
-        expect(comboBoxEl).not.toBeNull();
+        const ariaReadOnly = comboBoxEl.getAttribute('aria-readonly') === 'true';
+        expect(ariaReadOnly).toEqual(isReadOnly);
       });
     });
 

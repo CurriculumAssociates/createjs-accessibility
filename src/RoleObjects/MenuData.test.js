@@ -1,12 +1,9 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('MenuData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsMenu;
     let cjsMenuItem;
     let cjsCell;
@@ -14,22 +11,10 @@ describe('MenuData', () => {
     let shouldEnableKeyEvents;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsMenu = new createjs.Shape(); // dummy object
       cjsMenuItem = new createjs.Shape(); // dummy child object
       cjsCell = new createjs.Shape(); // dummy child object
       shouldEnableKeyEvents = false;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {

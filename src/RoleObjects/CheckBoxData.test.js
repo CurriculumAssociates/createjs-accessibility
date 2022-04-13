@@ -3,6 +3,7 @@ import 'core-js/stable';
 import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('CheckBoxData', () => {
   describe('setupStage', () => {

@@ -1,31 +1,16 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
+import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('ListItemData', () => {
   describe('register role', () => {
-    let canvasEl;
-    let parentEl;
-    let stage;
-    let container;
     let cjsListItem;
     let liEl;
     let valueVal;
 
     beforeEach(() => {
-      canvasEl = document.createElement('canvas');
-      parentEl = document.createElement('div');
-      stage = new createjs.Stage(canvasEl);
-      container = new createjs.Container();
       cjsListItem = new createjs.Shape(); // dummy object
       valueVal = 7;
-
-      AccessibilityModule.register({
-        displayObject: container,
-        role: AccessibilityModule.ROLES.MAIN,
-      });
-      AccessibilityModule.setupStage(stage, parentEl);
-      stage.accessibilityTranslator.root = container;
-      stage.addChild(container);
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -37,17 +22,16 @@ describe('ListItemData', () => {
       });
 
       stage.accessibilityTranslator.update();
+      liEl = parentEl.querySelector('li');
     });
 
     describe('rendering', () => {
       it('creates li element', () => {
-        liEl = parentEl.querySelector('li');
         expect(liEl).not.toBeNull();
       });
 
       it('sets "value" attribute', () => {
-        liEl = parentEl.querySelector(`li[value='${valueVal}']`);
-        expect(liEl).not.toBeNull();
+        expect(liEl.value).toEqual(valueVal);
       });
     });
 
