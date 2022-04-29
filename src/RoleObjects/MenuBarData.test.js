@@ -77,7 +77,9 @@ describe('MenuBarData', () => {
 
     describe('options getters and setters', () => {
       it('can read and set "enableKeyEvents" property', () => {
-        expect(cjsMenuBar.accessible.enableKeyEvents).toEqual(shouldEnableKeyEvents);
+        expect(cjsMenuBar.accessible.enableKeyEvents).toEqual(
+          shouldEnableKeyEvents
+        );
 
         const newVal = true;
         cjsMenuBar.accessible.enableKeyEvents = newVal;

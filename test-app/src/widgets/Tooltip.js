@@ -45,7 +45,9 @@ export default class Tooltip extends createjs.Container {
 
     const { width, height } = content.getBounds();
     const background = new createjs.Shape();
-    background.graphics.beginFill('black').drawRoundRect(0, 0, width + 10, height + 10, 5);
+    background.graphics
+      .beginFill('black')
+      .drawRoundRect(0, 0, width + 10, height + 10, 5);
     this.addChildAt(background, 0);
   }
 

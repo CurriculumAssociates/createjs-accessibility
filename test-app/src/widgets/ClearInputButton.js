@@ -7,7 +7,9 @@ export default class ClearInputButton extends Button {
   }
 
   _fillBackground(color) {
-    this.background.graphics.beginFill(color).drawCircle(0, 0, this.height * 0.5);
+    this.background.graphics
+      .beginFill(color)
+      .drawCircle(0, 0, this.height * 0.5);
   }
 
   _onMouseDown() {
@@ -27,7 +29,10 @@ export default class ClearInputButton extends Button {
   _addFocusIndicator() {
     this.focusIndicator = new createjs.Shape();
     this.focusIndicator.name = 'focusIndicator';
-    this.focusIndicator.graphics.beginStroke('black').setStrokeStyle(3).drawCircle(0, 0, this.height * 0.55);
+    this.focusIndicator.graphics
+      .beginStroke('black')
+      .setStrokeStyle(3)
+      .drawCircle(0, 0, this.height * 0.55);
     this.addChild(this.focusIndicator);
     this.focusIndicator.visible = false;
   }
@@ -35,7 +40,10 @@ export default class ClearInputButton extends Button {
   _addText() {
     this.text = new createjs.Text('x', `${this.height}px Arial`, 'white');
     const textBounds = this.text.getBounds();
-    this.text.set({ x: -(textBounds.width * 0.5), y: -(textBounds.height * 0.5) });
+    this.text.set({
+      x: -(textBounds.width * 0.5),
+      y: -(textBounds.height * 0.5),
+    });
     this.addChild(this.text);
   }
 }

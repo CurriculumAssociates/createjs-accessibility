@@ -33,9 +33,18 @@ export default class MenuItemData extends AccessibilityObject {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
-      ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO} `);
+    if (
+      !displayObject.accessible
+      || [
+        ROLES.MENUITEM,
+        ROLES.MENU,
+        ROLES.MENUITEMCHECKBOX,
+        ROLES.MENUITEMRADIO,
+      ].indexOf(displayObject.accessible.role) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO} `
+      );
     }
 
     this._addingChild(displayObject);
@@ -47,9 +56,18 @@ export default class MenuItemData extends AccessibilityObject {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENU,
-      ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`);
+    if (
+      !displayObject.accessible
+      || [
+        ROLES.MENUITEM,
+        ROLES.MENU,
+        ROLES.MENUITEMCHECKBOX,
+        ROLES.MENUITEMRADIO,
+      ].indexOf(displayObject.accessible.role) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MENUITEM} or ${ROLES.MENU} or ${ROLES.MENUITEMCHECKBOX} or ${ROLES.MENUITEMRADIO}`
+      );
     }
 
     this._addingChild(displayObject);
@@ -133,12 +151,18 @@ export default class MenuItemData extends AccessibilityObject {
    * @param {SyntheticEvent} evt - React event
    */
   _subMenuOpenerKeyDown(evt) {
-    const toggleMenu = evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space
+    const toggleMenu = evt.keyCode === KeyCodes.enter
+      || evt.keyCode === KeyCodes.space
       || (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
-    const focusToFirstItem = evt.keyCode === KeyCodes.down || (!this._subMenu.visible
+    const focusToFirstItem = evt.keyCode === KeyCodes.down
+      || (!this._subMenu.visible
         && (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space));
     if (toggleMenu) {
-      const event = new createjs.Event(this._subMenu.visible ? 'closeMenu' : 'openMenu', false, evt.cancelable);
+      const event = new createjs.Event(
+        this._subMenu.visible ? 'closeMenu' : 'openMenu',
+        false,
+        evt.cancelable
+      );
       const skipPreventDefault = this._displayObject.dispatchEvent(event);
       if (!skipPreventDefault) {
         evt.preventDefault();
@@ -175,7 +199,11 @@ export default class MenuItemData extends AccessibilityObject {
    * @param {createjs.DisplayObject} displayObject - DisplayObject being added
    */
   _addingChild(displayObject) {
-    if ([ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX].indexOf(displayObject.accessible.role) !== -1) {
+    if (
+      [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX].indexOf(
+        displayObject.accessible.role
+      ) !== -1
+    ) {
       displayObject.accessible._isPopupOpener = true;
       this._label = displayObject;
       this._activeKeyDownListener = undefined;

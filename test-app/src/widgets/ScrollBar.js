@@ -8,7 +8,14 @@ const THUMBCOLOR = '#808080';
 export default class ScrollBar extends createjs.Container {
   constructor(container, tabIndex, orientation = 'vertical') {
     super();
-    _.bindAll(this, 'onMouseDown', 'onPressMove', 'onPressUp', 'onScroll', 'setFocus');
+    _.bindAll(
+      this,
+      'onMouseDown',
+      'onPressMove',
+      'onPressUp',
+      'onScroll',
+      'setFocus'
+    );
 
     this.container = container;
 
@@ -46,7 +53,8 @@ export default class ScrollBar extends createjs.Container {
     this.applyMask();
 
     this.thumbBounds = this.thumb.getBounds();
-    this.accessible.max = this.scrollHeight - Math.round(this.thumbBounds.height);
+    this.accessible.max =
+      this.scrollHeight - Math.round(this.thumbBounds.height);
     this.factor = this.getFactor();
     this.gapY = 0;
 
@@ -56,7 +64,9 @@ export default class ScrollBar extends createjs.Container {
   showTrack() {
     // to just to show on canvas
     const track = new createjs.Shape();
-    track.graphics.beginFill(TRACKCOLOR).drawRect(0, 0, TRACKWIDTH, this.scrollHeight);
+    track.graphics
+      .beginFill(TRACKCOLOR)
+      .drawRect(0, 0, TRACKWIDTH, this.scrollHeight);
     track.setBounds(0, 0, TRACKWIDTH, this.scrollHeight);
 
     this.addChild(track);
@@ -64,13 +74,14 @@ export default class ScrollBar extends createjs.Container {
 
   createThumb() {
     const { height } = this.contentContainer.getBounds();
-    const percent = 1 - ((height - this.scrollHeight) / height);
-    const thumbHeight = (this.scrollHeight * percent);
+    const percent = 1 - (height - this.scrollHeight) / height;
+    const thumbHeight = this.scrollHeight * percent;
 
     const thumb = new createjs.Shape();
     this.thumb = thumb;
-    thumb.graphics.beginFill(THUMBCOLOR).drawRoundRect(0, 0, TRACKWIDTH,
-      thumbHeight, (TRACKWIDTH / 2));
+    thumb.graphics
+      .beginFill(THUMBCOLOR)
+      .drawRoundRect(0, 0, TRACKWIDTH, thumbHeight, TRACKWIDTH / 2);
     thumb.setBounds(0, 0, TRACKWIDTH, thumbHeight);
 
     this.addChild(thumb);
@@ -79,7 +90,10 @@ export default class ScrollBar extends createjs.Container {
   applyMask() {
     const { x, y } = this.container;
     const shape = new createjs.Shape();
-    shape.graphics.s('#ff0000').beginStroke(3).drawRect(0, 0, this.scrollWidth, this.scrollHeight);
+    shape.graphics
+      .s('#ff0000')
+      .beginStroke(3)
+      .drawRect(0, 0, this.scrollWidth, this.scrollHeight);
     shape.x = x;
     shape.y = y;
     this.container.mask = shape;
@@ -132,7 +146,7 @@ export default class ScrollBar extends createjs.Container {
 
   set scrollTopTo(scrollTop) {
     const { height } = this.thumbBounds;
-    this.thumb.y = Math.max(0, Math.min(scrollTop, (this.scrollHeight - height)));
+    this.thumb.y = Math.max(0, Math.min(scrollTop, this.scrollHeight - height));
     this.accessible.value = this.thumb.y;
     this.accessible.scrollAmount = this.thumb.y;
     this.contentContainer.y = -(this.thumb.y * this.factor);

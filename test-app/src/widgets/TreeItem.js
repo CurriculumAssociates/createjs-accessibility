@@ -42,7 +42,10 @@ export default class TreeItem extends createjs.Container {
     const height = 25;
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('black').beginFill('#cccbbb').dr(0, 0, width, height);
+    bg.graphics
+      .beginStroke('black')
+      .beginFill('#cccbbb')
+      .dr(0, 0, width, height);
     bg.setBounds(0, 0, width, height);
     this.addChild(bg);
 
@@ -89,7 +92,7 @@ export default class TreeItem extends createjs.Container {
     _.forEach(this.treeItems, (treeItem, i) => {
       const { height } = treeItem.getBounds();
       treeItem.x = 20;
-      treeItem.y = height + (i * height);
+      treeItem.y = height + i * height;
     });
   }
 
@@ -116,7 +119,8 @@ export default class TreeItem extends createjs.Container {
 
   update() {
     for (let i = 1; i < this.treeItems.length; i++) {
-      this.treeItems[i].y = this.treeItems[i - 1].y + this.treeItems[i - 1].getBounds().height;
+      this.treeItems[i].y =
+        this.treeItems[i - 1].y + this.treeItems[i - 1].getBounds().height;
     }
     if (_.isFunction(this.parent.update)) {
       this.parent.update();

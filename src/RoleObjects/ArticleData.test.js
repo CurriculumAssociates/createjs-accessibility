@@ -34,11 +34,15 @@ describe('ArticleData', () => {
       });
 
       it('sets "aria-posinset" attribute', () => {
-        expect(parseInt(articleEl.getAttribute('aria-posinset'), 10)).toEqual(positionVal);
+        expect(parseInt(articleEl.getAttribute('aria-posinset'), 10)).toEqual(
+          positionVal
+        );
       });
 
       it('sets "aria-setsize" attribute', () => {
-        expect(parseInt(articleEl.getAttribute('aria-setsize'), 10)).toEqual(sizeVal);
+        expect(parseInt(articleEl.getAttribute('aria-setsize'), 10)).toEqual(
+          sizeVal
+        );
       });
     });
 

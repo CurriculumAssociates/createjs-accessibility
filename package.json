@@ -7,6 +7,7 @@
     "clobber": "rm -rf node_modules/ && npm cache clean --force",
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint --color src",
+    "lint:fix": "eslint --color src",
     "pre-commit": "lint-staged",
     "prettier": "prettier './{src,test-app}/**/*.{js,test.js}' --check",
     "prettier:fix": "prettier './{src,test-app}/**/*.{js,test.js}' --write",
@@ -19,8 +20,8 @@
   ],
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
       "prettier --write",
+      "eslint --fix",
       "git add"
     ]
   },

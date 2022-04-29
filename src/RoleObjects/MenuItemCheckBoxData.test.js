@@ -24,7 +24,9 @@ describe('MenuItemCheckBoxData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      liEl = parentEl.querySelector('li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false]');
+      liEl = parentEl.querySelector(
+        'li[role=menuitemcheckbox][aria-haspopup=false][aria-checked=false]'
+      );
     });
 
     describe('rendering', () => {

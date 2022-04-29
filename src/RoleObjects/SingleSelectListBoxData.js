@@ -30,8 +30,13 @@ export default class SingleSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
+    if (
+      !displayObject.accessible
+      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -40,8 +45,13 @@ export default class SingleSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`);
+    if (
+      !displayObject.accessible
+      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`
+      );
     }
     super.addChildAt(displayObject, index);
   }
@@ -92,12 +102,19 @@ export default class SingleSelectListBoxData extends SelectData {
     null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible
-      || displayObject.accessible.role !== ROLES.FORM)) {
-      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
+    if (
+      displayObject
+      && (!displayObject.accessible
+        || displayObject.accessible.role !== ROLES.FORM)
+    ) {
+      throw new Error(
+        `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`
+      );
     }
     this._form = displayObject;
-    this._reactProps.form = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps.form = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -160,11 +177,18 @@ export default class SingleSelectListBoxData extends SelectData {
    * @param {createjs.DisplayObject} displayObject - selected option
    */
   set selected(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION) {
-      throw new Error(`Selected value must have a role of ${ROLES.SINGLESELECTOPTION}`);
+    if (
+      !displayObject.accessible
+      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+    ) {
+      throw new Error(
+        `Selected value must have a role of ${ROLES.SINGLESELECTOPTION}`
+      );
     }
     if (!displayObject.accessible.value) {
-      throw new Error('The selected option must have its value field populated');
+      throw new Error(
+        'The selected option must have its value field populated'
+      );
     }
 
     this._selected = displayObject;

@@ -67,7 +67,12 @@ function setupStage(stage, parentElement, onReady = () => {}) {
   const moduleNode = (
     <div style={styles.transformStyle}>
       <div style={styles.moduleStyle}>
-        <AccessibilityTranslator stage={stage} ref={(c) => { component = c; }} />
+        <AccessibilityTranslator
+          stage={stage}
+          ref={(c) => {
+            component = c;
+          }}
+        />
       </div>
     </div>
   );
@@ -126,11 +131,11 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(
-    objectConfig => createAccessibilityObjectForRole(objectConfig),
-  );
+  const accessiblityObjects = objects.map(objectConfig => createAccessibilityObjectForRole(objectConfig));
 
-  return accessiblityObjects.length > 1 ? accessiblityObjects : accessiblityObjects[0];
+  return accessiblityObjects.length > 1
+    ? accessiblityObjects
+    : accessiblityObjects[0];
 }
 
 const AccessibilityModule = {

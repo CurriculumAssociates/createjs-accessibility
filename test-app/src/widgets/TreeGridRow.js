@@ -33,12 +33,17 @@ export default class TreeGridRow extends createjs.Container {
     this.cellHeight = rowHeight;
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('black').beginFill('#cccbbb').drawRect(0, 0, rowWidth, rowHeight);
+    bg.graphics
+      .beginStroke('black')
+      .beginFill('#cccbbb')
+      .drawRect(0, 0, rowWidth, rowHeight);
     bg.setBounds(0, 0, rowWidth, rowHeight);
     this.addChild(bg);
 
     this._focusRect = new createjs.Shape();
-    this._focusRect.graphics.beginFill('#5FC1FA').drawRect(0, 0, rowWidth, rowHeight);
+    this._focusRect.graphics
+      .beginFill('#5FC1FA')
+      .drawRect(0, 0, rowWidth, rowHeight);
     this.addChild(this._focusRect);
     this._focusRect.visible = false;
 
@@ -116,13 +121,13 @@ export default class TreeGridRow extends createjs.Container {
     });
   }
 
-
-  _createCell({
-    data, align = 'center', bold, fontSize,
-  }) {
+  _createCell({ data, align = 'center', bold, fontSize }) {
     const cell = this._createContainer(this.cellWidth, this.cellHeight);
     const text = this._createText({
-      value: data, maxWidth: this.cellWidth, bold, fontSize,
+      value: data,
+      maxWidth: this.cellWidth,
+      bold,
+      fontSize,
     });
     const textBounds = text.getBounds();
     cell.addChild(text);
@@ -132,24 +137,39 @@ export default class TreeGridRow extends createjs.Container {
         left = 5;
         break;
       case 'right':
-        left = (this.cellWidth - textBounds.width);
+        left = this.cellWidth - textBounds.width;
         break;
       default:
-        left = (this.cellWidth * 0.5 - textBounds.width * 0.5);
+        left = this.cellWidth * 0.5 - textBounds.width * 0.5;
         break;
     }
     text.x = left;
-    text.y = ((this.cellHeight - textBounds.height) >= 0)
-      ? ((this.cellHeight - textBounds.height) / 2)
-      : 0;
+    text.y =
+      this.cellHeight - textBounds.height >= 0
+        ? (this.cellHeight - textBounds.height) / 2
+        : 0;
 
     cell.text = data;
     const shape = new createjs.Shape();
-    shape.graphics.beginStroke('fff').drawRect(0, 0, this.cellWidth, _.max([this.cellHeight, cell.getBounds().height]));
+    shape.graphics
+      .beginStroke('fff')
+      .drawRect(
+        0,
+        0,
+        this.cellWidth,
+        _.max([this.cellHeight, cell.getBounds().height])
+      );
     cell.addChild(shape);
 
     const focusRect = new createjs.Shape();
-    focusRect.graphics.beginFill('#fff').drawRect(0, 0, this.cellWidth, _.max([this.cellHeight, cell.getBounds().height]));
+    focusRect.graphics
+      .beginFill('#fff')
+      .drawRect(
+        0,
+        0,
+        this.cellWidth,
+        _.max([this.cellHeight, cell.getBounds().height])
+      );
     cell.addChildAt(focusRect, 0);
     focusRect.visible = false;
     cell.focusRect = focusRect;
@@ -158,19 +178,13 @@ export default class TreeGridRow extends createjs.Container {
     return cell;
   }
 
-
   _createContainer(width, height) {
     const container = new createjs.Container();
     container.setBounds(0, 0, width, height);
     return container;
   }
 
-  _createText({
-    value,
-    maxWidth,
-    bold = false,
-    fontSize = 18,
-  }) {
+  _createText({ value, maxWidth, bold = false, fontSize = 18 }) {
     const boldOption = bold ? 'bold' : '';
     const text = new createjs.Text().set({
       text: value,
@@ -188,8 +202,10 @@ export default class TreeGridRow extends createjs.Container {
 
     const focusablesInRow = _.flatten(
       _.map(this.accessible.children, (cellDisplayObject) => {
-        const interactiveChildren = _.filter(cellDisplayObject.accessible.children,
-          widget => !_.isUndefined(widget.accessible.tabIndex));
+        const interactiveChildren = _.filter(
+          cellDisplayObject.accessible.children,
+          (widget) => !_.isUndefined(widget.accessible.tabIndex)
+        );
         return interactiveChildren;
       })
     );

@@ -22,8 +22,16 @@ describe('AccessibilityObject', () => {
     stage.update();
     stage.accessibilityTranslator.update();
 
-    [['Enter', 13], ['a', 65], ['t', 84], ['Tab', 9]].forEach(([key, keyCode], i) => {
-      ReactTestUtils.Simulate.keyDown(parentEl.querySelector('main'), { keyCode, key });
+    [
+      ['Enter', 13],
+      ['a', 65],
+      ['t', 84],
+      ['Tab', 9],
+    ].forEach(([key, keyCode], i) => {
+      ReactTestUtils.Simulate.keyDown(parentEl.querySelector('main'), {
+        keyCode,
+        key,
+      });
       const keyboardListenerArgument = keyboardClickListener.mock.calls[i][0];
       const receivedKey = keyboardListenerArgument.key;
       const receivedkeyCode = keyboardListenerArgument.keyCode;

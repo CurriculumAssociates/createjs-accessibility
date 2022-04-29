@@ -48,7 +48,7 @@ export default class SearchBox extends SingleLineTextInput {
     const bounds = this.getBounds();
     clearInputButton.set({
       x: bounds.width - (containerBounds.width + 3),
-      y: 3 + (containerBounds.height) * 0.5,
+      y: 3 + containerBounds.height * 0.5,
     });
     clearInputButton.visible = false;
     this.clearInputButton = clearInputButton;
@@ -91,14 +91,15 @@ export default class SearchBox extends SingleLineTextInput {
 
     _.forEach(this.listArr, (sentence) => {
       const reg = new RegExp(this.searchText, 'gmi');
-      sentence.visible = (_.isArray(sentence.text.match(reg)));
+      sentence.visible = _.isArray(sentence.text.match(reg));
       sentence.bullet.visible = sentence.visible;
       if (sentence.visible) visibleCount++;
     });
 
     // Show result status
-    const text = (visibleCount > 0) ? 'Here are the results....' : 'No results found';
-    this.resultLabel.text = (_.isEmpty(this.searchText)) ? '' : text;
+    const text =
+      visibleCount > 0 ? 'Here are the results....' : 'No results found';
+    this.resultLabel.text = _.isEmpty(this.searchText) ? '' : text;
 
     // Toggle visibility of cross button
     this.clearInputButton.visible = !_.isEmpty(this.searchText);

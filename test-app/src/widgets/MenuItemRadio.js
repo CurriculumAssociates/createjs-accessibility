@@ -24,8 +24,12 @@ export default class MenuItemRadio extends MenuItem {
     this.callBack = callBack;
     this.radio.addEventListener('click', callBack);
     this.radio.addEventListener('keyboardClick', callBack);
-    this.radio.addEventListener('focus', () => { this.radio.focus = true; });
-    this.radio.addEventListener('blur', () => { this.radio.focus = false; });
+    this.radio.addEventListener('focus', () => {
+      this.radio.focus = true;
+    });
+    this.radio.addEventListener('blur', () => {
+      this.radio.focus = false;
+    });
     AccessibilityModule.register({
       accessibleOptions: {
         tabIndex,

@@ -6,14 +6,16 @@ export default class RowData extends GroupData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible
+    if (
+      !displayObject.accessible
       || (displayObject.accessible.role !== ROLES.CELL
-          && displayObject.accessible.role !== ROLES.GRIDCELL
-          && displayObject.accessible.role !== ROLES.COLUMNHEADER
-          && displayObject.accessible.role !== ROLES.ROWHEADER
-      )
+        && displayObject.accessible.role !== ROLES.GRIDCELL
+        && displayObject.accessible.role !== ROLES.COLUMNHEADER
+        && displayObject.accessible.role !== ROLES.ROWHEADER)
     ) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.CELL}, ${ROLES.GRIDCELL}, ${ROLES.COLUMNHEADER}, or ${ROLES.ROWHEADER}`);
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.CELL}, ${ROLES.GRIDCELL}, ${ROLES.COLUMNHEADER}, or ${ROLES.ROWHEADER}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -22,14 +24,16 @@ export default class RowData extends GroupData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible
+    if (
+      !displayObject.accessible
       || (displayObject.accessible.role !== ROLES.CELL
-          && displayObject.accessible.role !== ROLES.GRIDCELL
-          && displayObject.accessible.role !== ROLES.COLUMNHEADER
-          && displayObject.accessible.role !== ROLES.ROWHEADER
-      )
+        && displayObject.accessible.role !== ROLES.GRIDCELL
+        && displayObject.accessible.role !== ROLES.COLUMNHEADER
+        && displayObject.accessible.role !== ROLES.ROWHEADER)
     ) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.CELL}, ${ROLES.GRIDCELL}, ${ROLES.COLUMNHEADER}, or ${ROLES.ROWHEADER}`);
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.CELL}, ${ROLES.GRIDCELL}, ${ROLES.COLUMNHEADER}, or ${ROLES.ROWHEADER}`
+      );
     }
     super.addChildAt(displayObject, index);
   }

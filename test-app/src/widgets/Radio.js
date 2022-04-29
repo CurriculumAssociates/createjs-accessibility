@@ -12,8 +12,16 @@ export default class Radio extends createjs.Container {
    */
 
   constructor({
-    name, value, position = 1, size = 1, enabled = true, checked = false, tabIndex,
-    outerRadius = 9, innerRadius = 3, highlighterBorder = 4,
+    name,
+    value,
+    position = 1,
+    size = 1,
+    enabled = true,
+    checked = false,
+    tabIndex,
+    outerRadius = 9,
+    innerRadius = 3,
+    highlighterBorder = 4,
   } = {}) {
     super();
     // will be used in radio group
@@ -89,7 +97,10 @@ export default class Radio extends createjs.Container {
    */
   _createRadioButton() {
     const outerCircle = this._createCircle({
-      r: this.outerRadius + (this.border * 0.5), color: '#bdbdbd', stroke: true, border: this.border,
+      r: this.outerRadius + this.border * 0.5,
+      color: '#bdbdbd',
+      stroke: true,
+      border: this.border,
     });
     this.outerCircle = outerCircle;
     outerCircle.x = this.outerRadius + this.border * 0.5;
@@ -97,12 +108,20 @@ export default class Radio extends createjs.Container {
 
     const container = new createjs.Container();
 
-    const inCircle = this._createCircle({ r: this.outerRadius, color: '#3896fc', fill: true });
+    const inCircle = this._createCircle({
+      r: this.outerRadius,
+      color: '#3896fc',
+      fill: true,
+    });
     inCircle.x = outerCircle.x;
     inCircle.y = outerCircle.y;
     this.radioContainer = inCircle;
 
-    const innerCircle = this._createCircle({ r: this.innerRadius, color: '#FFFFFF', fill: true });
+    const innerCircle = this._createCircle({
+      r: this.innerRadius,
+      color: '#FFFFFF',
+      fill: true,
+    });
     innerCircle.x = outerCircle.x;
     innerCircle.y = outerCircle.y;
 
@@ -115,7 +134,8 @@ export default class Radio extends createjs.Container {
    * @access private
    */
   _createHighlighter() {
-    const hightlightRadius = (this.outerRadius + (this.border + this.highlighterBorder) * 0.5);
+    const hightlightRadius =
+      this.outerRadius + (this.border + this.highlighterBorder) * 0.5;
     const highlighter = this._createCircle({
       r: hightlightRadius,
       stroke: true,
@@ -132,12 +152,15 @@ export default class Radio extends createjs.Container {
    * Setup the hit area for interaction
    */
   _setHitArea() {
-    const hitArea = this._createCircle({ r: this.outerRadius, fill: true, border: this.border });
+    const hitArea = this._createCircle({
+      r: this.outerRadius,
+      fill: true,
+      border: this.border,
+    });
     hitArea.x = this.outerCircle.x;
     hitArea.y = this.outerCircle.y;
     this.hitArea = hitArea;
   }
-
 
   /**
    * Create circular shape
@@ -147,9 +170,7 @@ export default class Radio extends createjs.Container {
    * @param {String} color color code
    * @param {Number} border border value
    */
-  _createCircle({
-    r, fill = false, color = '#000000', border = 1,
-  }) {
+  _createCircle({ r, fill = false, color = '#000000', border = 1 }) {
     const shape = new createjs.Shape();
     const g = shape.graphics;
     g.setStrokeStyle(border);

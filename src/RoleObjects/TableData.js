@@ -6,9 +6,15 @@ export default class TableData extends SectionData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.TABLEBODY,
-      ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TABLEBODY}, ${ROLES.TABLEFOOT}, or ${ROLES.TABLEHEAD}`);
+    if (
+      !displayObject.accessible
+      || [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
+        displayObject.accessible.role
+      ) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.TABLEBODY}, ${ROLES.TABLEFOOT}, or ${ROLES.TABLEHEAD}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -17,9 +23,15 @@ export default class TableData extends SectionData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.TABLEBODY,
-      ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.TABLEBODY}, ${ROLES.TABLEFOOT}, or ${ROLES.TABLEHEAD}`);
+    if (
+      !displayObject.accessible
+      || [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
+        displayObject.accessible.role
+      ) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.TABLEBODY}, ${ROLES.TABLEFOOT}, or ${ROLES.TABLEHEAD}`
+      );
     }
     super.addChildAt(displayObject, index);
   }

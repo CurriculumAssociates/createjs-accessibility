@@ -14,7 +14,10 @@ export default class AlertDialog extends createjs.Container {
 
   _createView(cancelCallback, doneCallback) {
     const blackTintBg = new createjs.Shape();
-    blackTintBg.graphics.beginStroke('black').beginFill('black').drawRect(0, 0, 800, 600);
+    blackTintBg.graphics
+      .beginStroke('black')
+      .beginFill('black')
+      .drawRect(0, 0, 800, 600);
     blackTintBg.alpha = 0.7;
     this.addChild(blackTintBg);
 
@@ -29,10 +32,18 @@ export default class AlertDialog extends createjs.Container {
     this.accessible.addChild(dialogBox);
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('black').beginFill('white').setStrokeStyle(4).drawRoundRect(0, 0, 400, 250, 7);
+    bg.graphics
+      .beginStroke('black')
+      .beginFill('white')
+      .setStrokeStyle(4)
+      .drawRoundRect(0, 0, 400, 250, 7);
     dialogBox.addChild(bg);
 
-    const alertLabel = new createjs.Text('Do you want to reset form?', 'Bold 18px Arial', 'black');
+    const alertLabel = new createjs.Text(
+      'Do you want to reset form?',
+      'Bold 18px Arial',
+      'black'
+    );
     alertLabel.set({ x: 50, y: 50 });
     AccessibilityModule.register({
       displayObject: alertLabel,

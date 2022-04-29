@@ -18,7 +18,9 @@ export default class MenuItem extends createjs.Container {
 
     const bounds = this._label.getBounds();
     this._label.hitArea = new createjs.Shape();
-    this._label.hitArea.graphics.beginFill('#ff0000').drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    this._label.hitArea.graphics
+      .beginFill('#ff0000')
+      .drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
 
     AccessibilityModule.register({
       accessibleOptions: { tabIndex, text: label },

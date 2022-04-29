@@ -32,7 +32,6 @@ export default class AccessibilityTranslator extends React.Component {
     _.bindAll(this, 'update');
   }
 
-
   /**
    * Sets the DisplayObject to use as the root of the accessibility tree.
    * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root of
@@ -40,7 +39,9 @@ export default class AccessibilityTranslator extends React.Component {
    */
   set root(displayObject) {
     if (!displayObject.accessible) {
-      throw new Error('The root of the accessibility tree must have accessibility information when being added to the tree');
+      throw new Error(
+        'The root of the accessibility tree must have accessibility information when being added to the tree'
+      );
     }
     this._root = displayObject;
   }
@@ -72,9 +73,14 @@ export default class AccessibilityTranslator extends React.Component {
     const children = accessible.children || [];
 
     let { text } = accessible;
-    if (role === ROLES.MENUBAR || role === ROLES.MENU
-      || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX
-      || role === ROLES.MENUITEMRADIO) && children.length > 0)) {
+    if (
+      role === ROLES.MENUBAR
+      || role === ROLES.MENU
+      || ((role === ROLES.MENUITEM
+        || role === ROLES.MENUITEMCHECKBOX
+        || role === ROLES.MENUITEMRADIO)
+        && children.length > 0)
+    ) {
       text = null;
     }
 
@@ -91,8 +97,10 @@ export default class AccessibilityTranslator extends React.Component {
     try {
       const bounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
-      const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width,
-        bounds.y + bounds.height);
+      const lowerRight = displayObject.localToGlobal(
+        bounds.x + bounds.width,
+        bounds.y + bounds.height
+      );
       posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x)
         * (1 / displayObject.stage.scaleX);
       posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y)
@@ -121,23 +129,37 @@ export default class AccessibilityTranslator extends React.Component {
       });
     }
 
-    const props = _.merge({
-      style: {
-        position: 'absolute',
-        left: `${posParentSpace.x}px`,
-        top: `${posParentSpace.y}px`,
-        width: `${posParentSpace.width}px`,
-        height: `${posParentSpace.height}px`,
-        margin: 0,
-        padding: 0,
+    const props = _.merge(
+      {
+        style: {
+          position: 'absolute',
+          left: `${posParentSpace.x}px`,
+          top: `${posParentSpace.y}px`,
+          width: `${posParentSpace.width}px`,
+          height: `${posParentSpace.height}px`,
+          margin: 0,
+          padding: 0,
+        },
       },
-    }, displayObject.accessible._reactProps);
-    if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR
-      || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO
-      || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH
-      || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL
-      || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM
-      || role === ROLES.DEFINITION || role === ROLES.TERM) {
+      displayObject.accessible._reactProps
+    );
+    if (
+      (tagName === 'div' && role !== ROLES.NONE)
+      || role === ROLES.MENUBAR
+      || role === ROLES.MENUITEMCHECKBOX
+      || role === ROLES.MENUITEMRADIO
+      || role === ROLES.MENU
+      || role === ROLES.MENUITEM
+      || role === ROLES.SWITCH
+      || role === ROLES.SPINBUTTON
+      || role === ROLES.GRID
+      || role === ROLES.GRIDCELL
+      || role === ROLES.TREE
+      || role === ROLES.TREEGRID
+      || role === ROLES.TREEITEM
+      || role === ROLES.DEFINITION
+      || role === ROLES.TERM
+    ) {
       props.role = role;
     } else if (role === ROLES.SINGLESELECTLISTBOX) {
       props.role = 'listbox';
@@ -165,8 +187,12 @@ export default class AccessibilityTranslator extends React.Component {
     if (this._root) {
       const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
       back = (
-        <div ref={(elem) => { this.rootElem = elem; }}>
-          { tree }
+        <div
+          ref={(elem) => {
+            this.rootElem = elem;
+          }}
+        >
+          {tree}
         </div>
       );
     }

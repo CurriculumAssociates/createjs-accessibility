@@ -32,10 +32,14 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject being set as the active descendant must have accessibility information');
+      throw new Error(
+        'DisplayObject being set as the active descendant must have accessibility information'
+      );
     }
     this._active = displayObject;
-    this._reactProps['aria-activedescendant'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-activedescendant'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -63,11 +67,62 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @throws error if the specified value is invalid
    */
   set autoComplete(value) {
-    const validValues = ['off', 'on', 'name', 'email', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title', 'organization', 'street-address', 'address-line1', 'address-line2', 'address-line3', 'address-level4', 'address-level3', 'address-level2', 'address-level1', 'country', 'country-name', 'postal-code', 'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp', 'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency', 'transaction-amount', 'language', 'bday', 'bday-day', 'bday-month', 'bday-year', 'sex', 'tel', 'tel-extension', 'impp', 'url', 'photo'];
-    if (typeof (value) === 'boolean') {
+    const validValues = [
+      'off',
+      'on',
+      'name',
+      'email',
+      'username',
+      'new-password',
+      'current-password',
+      'one-time-code',
+      'organization-title',
+      'organization',
+      'street-address',
+      'address-line1',
+      'address-line2',
+      'address-line3',
+      'address-level4',
+      'address-level3',
+      'address-level2',
+      'address-level1',
+      'country',
+      'country-name',
+      'postal-code',
+      'cc-name',
+      'cc-given-name',
+      'cc-additional-name',
+      'cc-family-name',
+      'cc-number',
+      'cc-exp',
+      'cc-exp-month',
+      'cc-exp-year',
+      'cc-csc',
+      'cc-type',
+      'transaction-currency',
+      'transaction-amount',
+      'language',
+      'bday',
+      'bday-day',
+      'bday-month',
+      'bday-year',
+      'sex',
+      'tel',
+      'tel-extension',
+      'impp',
+      'url',
+      'photo',
+    ];
+    if (typeof value === 'boolean') {
       this._reactProps.autoComplete = value ? 'on' : 'off';
     } else {
-      if (!validValues.includes(value)) throw new Error(`Unable to set autoComplete to ${value}, expected one of: ${validValues.join(', ')}`);
+      if (!validValues.includes(value)) {
+        throw new Error(
+          `Unable to set autoComplete to ${value}, expected one of: ${validValues.join(
+            ', '
+          )}`
+        );
+      }
       this._reactProps.autoComplete = value;
     }
   }

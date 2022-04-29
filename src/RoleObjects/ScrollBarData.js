@@ -78,7 +78,10 @@ export default class ScrollBarData extends RangeData {
         event.scrollTop = this.value;
         this._displayObject.dispatchEvent(event);
       }
-    } else if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
+    } else if (
+      evt.keyCode === KeyCodes.left
+      || evt.keyCode === KeyCodes.right
+    ) {
       evt.stopPropagation();
       evt.preventDefault();
       if (evt.keyCode === KeyCodes.left) {

@@ -6,17 +6,19 @@ export default class ComboBoxData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible
+    if (
+      !displayObject.accessible
       || (displayObject.accessible.role !== ROLES.SINGLELINETEXTBOX
-          && displayObject.accessible.role !== ROLES.SEARCH
-          && displayObject.accessible.role !== ROLES.BUTTON
-          && displayObject.accessible.role !== ROLES.SINGLESELECTLISTBOX
-          && displayObject.accessible.role !== ROLES.TREE
-          && displayObject.accessible.role !== ROLES.GRID
-          && displayObject.accessible.role !== ROLES.DIALOG
-      )
+        && displayObject.accessible.role !== ROLES.SEARCH
+        && displayObject.accessible.role !== ROLES.BUTTON
+        && displayObject.accessible.role !== ROLES.SINGLESELECTLISTBOX
+        && displayObject.accessible.role !== ROLES.TREE
+        && displayObject.accessible.role !== ROLES.GRID
+        && displayObject.accessible.role !== ROLES.DIALOG)
     ) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLELINETEXTBOX}, ${ROLES.SEARCH}, ${ROLES.BUTTON}, ${ROLES.SINGLESELECTLISTBOX}, ${ROLES.TREE}, ${ROLES.GRID}, or ${ROLES.DIALOG}`);
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.SINGLELINETEXTBOX}, ${ROLES.SEARCH}, ${ROLES.BUTTON}, ${ROLES.SINGLESELECTLISTBOX}, ${ROLES.TREE}, ${ROLES.GRID}, or ${ROLES.DIALOG}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -25,17 +27,19 @@ export default class ComboBoxData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible
+    if (
+      !displayObject.accessible
       || (displayObject.accessible.role !== ROLES.SINGLELINETEXTBOX
-          && displayObject.accessible.role !== ROLES.SEARCH
-          && displayObject.accessible.role !== ROLES.BUTTON
-          && displayObject.accessible.role !== ROLES.SINGLESELECTLISTBOX
-          && displayObject.accessible.role !== ROLES.TREE
-          && displayObject.accessible.role !== ROLES.GRID
-          && displayObject.accessible.role !== ROLES.DIALOG
-      )
+        && displayObject.accessible.role !== ROLES.SEARCH
+        && displayObject.accessible.role !== ROLES.BUTTON
+        && displayObject.accessible.role !== ROLES.SINGLESELECTLISTBOX
+        && displayObject.accessible.role !== ROLES.TREE
+        && displayObject.accessible.role !== ROLES.GRID
+        && displayObject.accessible.role !== ROLES.DIALOG)
     ) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.SINGLELINETEXTBOX}, ${ROLES.SEARCH}, ${ROLES.BUTTON}, ${ROLES.SINGLESELECTLISTBOX}, ${ROLES.TREE}, ${ROLES.GRID}, or ${ROLES.DIALOG}`);
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.SINGLELINETEXTBOX}, ${ROLES.SEARCH}, ${ROLES.BUTTON}, ${ROLES.SINGLESELECTLISTBOX}, ${ROLES.TREE}, ${ROLES.GRID}, or ${ROLES.DIALOG}`
+      );
     }
     super.addChildAt(displayObject, index);
   }
@@ -55,7 +59,10 @@ export default class ComboBoxData extends SelectData {
    * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
    */
   get autoComplete() {
-    return this._reactProps.autoComplete === undefined || this._reactProps.autoComplete === 'on';
+    return (
+      this._reactProps.autoComplete === undefined
+      || this._reactProps.autoComplete === 'on'
+    );
   }
 
   /**

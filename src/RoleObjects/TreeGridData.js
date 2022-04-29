@@ -60,22 +60,30 @@ export default class TreeGridData extends GridData {
     let targetData = null;
 
     const rowLevel = rowDisplayObject.accessible.level;
-    let sectionIndex = _.findIndex(this.children, rowDisplayObject.accessible.parent.displayObject);
+    let sectionIndex = _.findIndex(
+      this.children,
+      rowDisplayObject.accessible.parent.displayObject
+    );
     for (; sectionIndex >= 0 && !targetData; sectionIndex--) {
       const tableSectionDisplayObject = this.children[sectionIndex];
-      let rowIndex = _.findIndex(tableSectionDisplayObject.accessible.children, rowDisplayObject);
+      let rowIndex = _.findIndex(
+        tableSectionDisplayObject.accessible.children,
+        rowDisplayObject
+      );
       if (rowIndex < 0) {
         rowIndex = tableSectionDisplayObject.accessible.children.length - 1;
       }
       const higherLevelRowIndex = _.findLastIndex(
         tableSectionDisplayObject.accessible.children,
-        testRow => testRow.accessible.visibleWithInference && testRow.accessible.level < rowLevel,
+        testRow => testRow.accessible.visibleWithInference
+          && testRow.accessible.level < rowLevel,
         rowIndex
       );
 
       if (higherLevelRowIndex !== -1) {
         targetData = {
-          displayObject: tableSectionDisplayObject.accessible.children[higherLevelRowIndex],
+          displayObject:
+            tableSectionDisplayObject.accessible.children[higherLevelRowIndex],
           sectionIndex,
           rowIndex: higherLevelRowIndex,
           colIndex: -1,
@@ -113,7 +121,11 @@ export default class TreeGridData extends GridData {
       super._updateTargetDataLeft(targetData);
 
       // if on the first cell of the row and the row can't receive focus, then focus should not move
-      if (targetData.colIndex < 0 && _.isUndefined(targetData.displayObject.accessible.parent.tabIndex)) { // eslint-disable-line max-len
+      if (
+        targetData.colIndex < 0
+        && _.isUndefined(targetData.displayObject.accessible.parent.tabIndex)
+      ) {
+        // eslint-disable-line max-len
         return false;
       }
     }
@@ -161,13 +173,15 @@ export default class TreeGridData extends GridData {
         targetData.rowIndex - 1
       );
       if (gotoRowIndex === -1) {
-        for (sectionIndex = targetData.sectionIndex - 1;
+        for (
+          sectionIndex = targetData.sectionIndex - 1;
           sectionIndex >= 0 && gotoRowIndex === -1;
-          sectionIndex--) {
+          sectionIndex--
+        ) {
           gotoRowIndex = _.findLastIndex(
             this.children[sectionIndex].accessible.children,
             testRow => !_.isUndefined(testRow.accessible.tabIndex)
-               && testRow.accessible.visibleWithInference
+              && testRow.accessible.visibleWithInference
           );
         }
       }
@@ -203,9 +217,11 @@ export default class TreeGridData extends GridData {
         targetData.rowIndex + 1
       );
       if (gotoRowIndex === -1) {
-        for (sectionIndex = targetData.sectionIndex + 1;
+        for (
+          sectionIndex = targetData.sectionIndex + 1;
           sectionIndex < this.children.length && gotoRowIndex === -1;
-          sectionIndex++) {
+          sectionIndex++
+        ) {
           gotoRowIndex = _.findIndex(
             this.children[sectionIndex].accessible.children,
             testRow => !_.isUndefined(testRow.accessible.tabIndex)
@@ -248,10 +264,19 @@ export default class TreeGridData extends GridData {
         cellChildIndex: -1,
       };
     } else {
-      _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
-        matchingData = this._searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex);
-        return !matchingData;
-      });
+      _.forEach(
+        rowDisplayObject.accessible.children,
+        (cellDisplayObject, colIndex) => {
+          matchingData = this._searchCell(
+            id,
+            cellDisplayObject,
+            sectionIndex,
+            rowIndex,
+            colIndex
+          );
+          return !matchingData;
+        }
+      );
     }
 
     return matchingData;
@@ -284,8 +309,10 @@ export default class TreeGridData extends GridData {
         // be in the tab order.  Other rows, if they can receive focus should get a
         // tabIndex of -1 (and due to the way focus works, only the row losing it
         // needs to be udpated).
-        if (targetData.currFocusRowIndex !== targetData.rowIndex
-          || targetData.currFocusSectionIndex !== targetData.sectionIndex) {
+        if (
+          targetData.currFocusRowIndex !== targetData.rowIndex
+          || targetData.currFocusSectionIndex !== targetData.sectionIndex
+        ) {
           const currSection = this.children[targetData.currFocusSectionIndex];
           const nextSection = this.children[targetData.sectionIndex];
           const currRow = currSection.accessible.children[targetData.currFocusRowIndex];

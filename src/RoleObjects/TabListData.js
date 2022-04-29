@@ -94,7 +94,10 @@ export default class TabListData extends CompositeData {
       const event = new createjs.Event('keyboardClick', false, e.cancelable);
       this._displayObject.dispatchEvent(event);
     }
-    if ((e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right) && this.orientation === 'horizontal') {
+    if (
+      (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right)
+      && this.orientation === 'horizontal'
+    ) {
       let index = _.findIndex(this._children, tab => tab.accessible.selected);
 
       if (e.keyCode === KeyCodes.left) {
@@ -109,7 +112,10 @@ export default class TabListData extends CompositeData {
       e.preventDefault();
     }
 
-    if ((e.keyCode === KeyCodes.up || e.keyCode === KeyCodes.down) && this.orientation === 'vertical') {
+    if (
+      (e.keyCode === KeyCodes.up || e.keyCode === KeyCodes.down)
+      && this.orientation === 'vertical'
+    ) {
       const targetId = e.target.id;
       const currIndex = this._domIdToChildIndex(targetId);
       let nextIndex;
