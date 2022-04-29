@@ -19,9 +19,14 @@
     "pre-commit"
   ],
   "lint-staged": {
-    "*.js": [
+    "(*Test).(js)": [
+      "eslint --no-eslintrc -c test-app/eslint.json --max-warnings=0",
       "prettier --write",
-      "eslint --fix",
+      "git add"
+    ],
+    "!(*Test).(js)": [
+      "eslint --max-warnings=0 --fix --no-ignore",
+      "prettier --write",
       "git add"
     ]
   },

@@ -5,9 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: 'babel-eslint',
-  extends: [
-    'airbnb',
-  ],
+  extends: ['airbnb'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -20,9 +18,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-  ],
+  plugins: ['react'],
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
@@ -49,10 +45,13 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/no-unused-prop-types': 'off',
     'comma-dangle': ['error', 'always-multiline'],
-    'no-restricted-properties': ['off', {
-      object: 'Math',
-      property: 'pow',
-    }],
+    'no-restricted-properties': [
+      'off',
+      {
+        object: 'Math',
+        property: 'pow',
+      },
+    ],
     'no-continue': 'warn',
     'max-len': 'warn',
     'no-param-reassign': 'off',
@@ -65,16 +64,14 @@ module.exports = {
     'space-in-parens': 'warn',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'prefer-destructuring': 'off',
-    'import/no-unresolved': [2, { caseSensitive: false }],
+    'import/no-unresolved': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],
     'import/resolver': {
       node: {
-        moduleDirectory: [
-          'node_modules',
-          'src',
-        ],
+        moduleDirectory: ['node_modules', 'src'],
+        extensions: ['.js'],
       },
     },
   },
