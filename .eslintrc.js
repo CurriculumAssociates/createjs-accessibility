@@ -18,6 +18,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
+  root: true,
   plugins: ['react'],
   rules: {
     'array-bracket-newline': 'warn',

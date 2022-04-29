@@ -20,7 +20,7 @@
   ],
   "lint-staged": {
     "(*Test).(js)": [
-      "eslint --no-eslintrc -c test-app/eslint.json --max-warnings=0",
+      "eslint   --max-warnings=0",
       "prettier --write",
       "git add"
     ],
