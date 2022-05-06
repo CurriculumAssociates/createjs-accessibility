@@ -7,7 +7,7 @@
     "clobber": "rm -rf node_modules/ && npm cache clean --force",
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint --color src",
-    "lint:fix": "eslint --color src",
+    "lint:fix": "eslint --color src --fix",
     "pre-commit": "lint-staged",
     "prettier": "prettier './{src,test-app}/**/*.{js,test.js}' --check",
     "prettier:fix": "prettier './{src,test-app}/**/*.{js,test.js}' --write",
@@ -19,15 +19,9 @@
     "pre-commit"
   ],
   "lint-staged": {
-    "(*Test).(js)": [
-      "eslint --no-eslintrc -c test-app/.eslintrc.js --max-warnings=0",
-      "prettier --write",
-      "git add"
-    ],
-    "!(*Test).(js)": [
-      "eslint --max-warnings=0 --fix --no-ignore",
-      "prettier --write",
-      "git add"
+    "*.js": [
+      "npm run lint:fix",
+      "prettier --write"
     ]
   },
   "files": [
