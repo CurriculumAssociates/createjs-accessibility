@@ -53,7 +53,6 @@ module.exports = {
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
     'react/no-unused-prop-types': 'off',
-    'comma-dangle': ['error', 'always-multiline'],
     'no-restricted-properties': [
       'off',
       {
