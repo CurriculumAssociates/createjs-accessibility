@@ -31,8 +31,8 @@ export default class SingleSelectListBoxData extends SelectData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`
@@ -46,8 +46,8 @@ export default class SingleSelectListBoxData extends SelectData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.SINGLESELECTOPTION}`
@@ -103,9 +103,9 @@ export default class SingleSelectListBoxData extends SelectData {
    */
   set form(displayObject) {
     if (
-      displayObject
-      && (!displayObject.accessible
-        || displayObject.accessible.role !== ROLES.FORM)
+      displayObject &&
+      (!displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.FORM)
     ) {
       throw new Error(
         `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`
@@ -178,8 +178,8 @@ export default class SingleSelectListBoxData extends SelectData {
    */
   set selected(displayObject) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.SINGLESELECTOPTION
     ) {
       throw new Error(
         `Selected value must have a role of ${ROLES.SINGLESELECTOPTION}`
@@ -278,7 +278,7 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   _getSelectionIndex() {
-    return _.findIndex(this.children, child => child === this.selected);
+    return _.findIndex(this.children, (child) => child === this.selected);
   }
 
   _onListBoxChanged() {

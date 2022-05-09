@@ -12,8 +12,8 @@ export default class TreeData extends SelectData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.TREEITEM
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.TREEITEM
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.TREEITEM}`
@@ -27,8 +27,8 @@ export default class TreeData extends SelectData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.TREEITEM
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.TREEITEM
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.TREEITEM}`

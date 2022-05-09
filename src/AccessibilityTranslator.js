@@ -74,12 +74,12 @@ export default class AccessibilityTranslator extends React.Component {
 
     let { text } = accessible;
     if (
-      role === ROLES.MENUBAR
-      || role === ROLES.MENU
-      || ((role === ROLES.MENUITEM
-        || role === ROLES.MENUITEMCHECKBOX
-        || role === ROLES.MENUITEMRADIO)
-        && children.length > 0)
+      role === ROLES.MENUBAR ||
+      role === ROLES.MENU ||
+      ((role === ROLES.MENUITEM ||
+        role === ROLES.MENUITEMCHECKBOX ||
+        role === ROLES.MENUITEMRADIO) &&
+        children.length > 0)
     ) {
       text = null;
     }
@@ -101,12 +101,16 @@ export default class AccessibilityTranslator extends React.Component {
         bounds.x + bounds.width,
         bounds.y + bounds.height
       );
-      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x)
-        * (1 / displayObject.stage.scaleX);
-      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y)
-        * (1 / displayObject.stage.scaleY);
-      posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
-      posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      posParentSpace.x =
+        (posGlobalSpace.x - parentBoundsInGlobalSpace.x) *
+        (1 / displayObject.stage.scaleX);
+      posParentSpace.y =
+        (posGlobalSpace.y - parentBoundsInGlobalSpace.y) *
+        (1 / displayObject.stage.scaleY);
+      posParentSpace.width =
+        (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.height =
+        (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
       if (posParentSpace.width < 0) {
         posParentSpace.width = -posParentSpace.width;
         posParentSpace.x -= posParentSpace.width;
@@ -144,21 +148,21 @@ export default class AccessibilityTranslator extends React.Component {
       displayObject.accessible._reactProps
     );
     if (
-      (tagName === 'div' && role !== ROLES.NONE)
-      || role === ROLES.MENUBAR
-      || role === ROLES.MENUITEMCHECKBOX
-      || role === ROLES.MENUITEMRADIO
-      || role === ROLES.MENU
-      || role === ROLES.MENUITEM
-      || role === ROLES.SWITCH
-      || role === ROLES.SPINBUTTON
-      || role === ROLES.GRID
-      || role === ROLES.GRIDCELL
-      || role === ROLES.TREE
-      || role === ROLES.TREEGRID
-      || role === ROLES.TREEITEM
-      || role === ROLES.DEFINITION
-      || role === ROLES.TERM
+      (tagName === 'div' && role !== ROLES.NONE) ||
+      role === ROLES.MENUBAR ||
+      role === ROLES.MENUITEMCHECKBOX ||
+      role === ROLES.MENUITEMRADIO ||
+      role === ROLES.MENU ||
+      role === ROLES.MENUITEM ||
+      role === ROLES.SWITCH ||
+      role === ROLES.SPINBUTTON ||
+      role === ROLES.GRID ||
+      role === ROLES.GRIDCELL ||
+      role === ROLES.TREE ||
+      role === ROLES.TREEGRID ||
+      role === ROLES.TREEITEM ||
+      role === ROLES.DEFINITION ||
+      role === ROLES.TERM
     ) {
       props.role = role;
     } else if (role === ROLES.SINGLESELECTLISTBOX) {

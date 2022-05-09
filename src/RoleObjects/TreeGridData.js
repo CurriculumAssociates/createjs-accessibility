@@ -75,8 +75,9 @@ export default class TreeGridData extends GridData {
       }
       const higherLevelRowIndex = _.findLastIndex(
         tableSectionDisplayObject.accessible.children,
-        testRow => testRow.accessible.visibleWithInference
-          && testRow.accessible.level < rowLevel,
+        (testRow) =>
+          testRow.accessible.visibleWithInference &&
+          testRow.accessible.level < rowLevel,
         rowIndex
       );
 
@@ -122,8 +123,8 @@ export default class TreeGridData extends GridData {
 
       // if on the first cell of the row and the row can't receive focus, then focus should not move
       if (
-        targetData.colIndex < 0
-        && _.isUndefined(targetData.displayObject.accessible.parent.tabIndex)
+        targetData.colIndex < 0 &&
+        _.isUndefined(targetData.displayObject.accessible.parent.tabIndex)
       ) {
         // eslint-disable-line max-len
         return false;
@@ -168,8 +169,9 @@ export default class TreeGridData extends GridData {
       let sectionIndex = targetData.sectionIndex;
       let gotoRowIndex = _.findLastIndex(
         this.children[sectionIndex].accessible.children,
-        testRow => !_.isUndefined(testRow.accessible.tabIndex)
-          && testRow.accessible.visibleWithInference,
+        (testRow) =>
+          !_.isUndefined(testRow.accessible.tabIndex) &&
+          testRow.accessible.visibleWithInference,
         targetData.rowIndex - 1
       );
       if (gotoRowIndex === -1) {
@@ -180,8 +182,9 @@ export default class TreeGridData extends GridData {
         ) {
           gotoRowIndex = _.findLastIndex(
             this.children[sectionIndex].accessible.children,
-            testRow => !_.isUndefined(testRow.accessible.tabIndex)
-              && testRow.accessible.visibleWithInference
+            (testRow) =>
+              !_.isUndefined(testRow.accessible.tabIndex) &&
+              testRow.accessible.visibleWithInference
           );
         }
       }
@@ -212,8 +215,9 @@ export default class TreeGridData extends GridData {
       let sectionIndex = targetData.sectionIndex;
       let gotoRowIndex = _.findIndex(
         this.children[sectionIndex].accessible.children,
-        testRow => !_.isUndefined(testRow.accessible.tabIndex)
-          && testRow.accessible.visibleWithInference,
+        (testRow) =>
+          !_.isUndefined(testRow.accessible.tabIndex) &&
+          testRow.accessible.visibleWithInference,
         targetData.rowIndex + 1
       );
       if (gotoRowIndex === -1) {
@@ -224,8 +228,9 @@ export default class TreeGridData extends GridData {
         ) {
           gotoRowIndex = _.findIndex(
             this.children[sectionIndex].accessible.children,
-            testRow => !_.isUndefined(testRow.accessible.tabIndex)
-              && testRow.accessible.visibleWithInference
+            (testRow) =>
+              !_.isUndefined(testRow.accessible.tabIndex) &&
+              testRow.accessible.visibleWithInference
           );
         }
       }
@@ -310,12 +315,13 @@ export default class TreeGridData extends GridData {
         // tabIndex of -1 (and due to the way focus works, only the row losing it
         // needs to be udpated).
         if (
-          targetData.currFocusRowIndex !== targetData.rowIndex
-          || targetData.currFocusSectionIndex !== targetData.sectionIndex
+          targetData.currFocusRowIndex !== targetData.rowIndex ||
+          targetData.currFocusSectionIndex !== targetData.sectionIndex
         ) {
           const currSection = this.children[targetData.currFocusSectionIndex];
           const nextSection = this.children[targetData.sectionIndex];
-          const currRow = currSection.accessible.children[targetData.currFocusRowIndex];
+          const currRow =
+            currSection.accessible.children[targetData.currFocusRowIndex];
           const nextRow = nextSection.accessible.children[targetData.rowIndex];
           nextRow.accessible.tabIndex = currRow.accessible.tabIndex;
           currRow.accessible.tabIndex = -1;

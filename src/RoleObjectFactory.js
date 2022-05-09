@@ -100,7 +100,7 @@ function createAccessibilityObjectForRole(config) {
     if (prevParent) {
       const prevContainerIndex = _.findIndex(
         prevParent.children,
-        child => child === displayObject
+        (child) => child === displayObject
       );
       prevParent.removeChildAt(prevContainerIndex);
 
@@ -146,7 +146,7 @@ function createAccessibilityObjectForRole(config) {
       );
       break;
 
-      // rest of the roles in alphabetical order by its class entry
+    // rest of the roles in alphabetical order by its class entry
 
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);

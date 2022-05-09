@@ -133,7 +133,8 @@ export default class SingleLineTextBoxData extends InputTagData {
    * @returns {string | boolean} attribute value if autocomplete is enabled by default or explicitly (note: true if undefined because autocomplete is enabled by default)
    */
   get autoComplete() {
-    if (this._reactProps.autoComplete !== undefined) return this._reactProps.autoComplete;
+    if (this._reactProps.autoComplete !== undefined)
+      return this._reactProps.autoComplete;
     return true;
   }
 

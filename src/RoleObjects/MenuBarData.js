@@ -30,8 +30,8 @@ export default class MenuBarData extends SelectData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(
+      !displayObject.accessible ||
+      [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(
         displayObject.accessible.role
       ) === -1
     ) {
@@ -47,8 +47,8 @@ export default class MenuBarData extends SelectData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(
+      !displayObject.accessible ||
+      [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX, ROLES.MENUITEMRADIO].indexOf(
         displayObject.accessible.role
       ) === -1
     ) {
@@ -74,7 +74,7 @@ export default class MenuBarData extends SelectData {
       // close a menu if any are open
       let index = _.findIndex(
         this._children,
-        menu => menu.accessible.expanded
+        (menu) => menu.accessible.expanded
       );
       if (index !== -1) {
         this._children[index]._label.dispatchEvent('closeMenu');
@@ -89,7 +89,8 @@ export default class MenuBarData extends SelectData {
       const nextMenu = this._children[index];
       nextMenu._label.dispatchEvent('openMenu');
 
-      const firstSubMenuItem = nextMenu.accessible._subMenu.accessible.children[0];
+      const firstSubMenuItem =
+        nextMenu.accessible._subMenu.accessible.children[0];
       nextMenu.accessible._subMenu.accessible._forceShow();
       firstSubMenuItem.accessible.requestFocus();
 

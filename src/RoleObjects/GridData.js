@@ -131,7 +131,8 @@ export default class GridData extends TableData {
     if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
       // handles rolling into the prior table section
       targetData.sectionIndex--;
-      targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
+      targetData.rowIndex =
+        this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
     }
 
     return true;
@@ -153,8 +154,8 @@ export default class GridData extends TableData {
     const rows = this.children[targetData.sectionIndex].accessible.children;
     targetData.rowIndex++;
     if (
-      targetData.rowIndex >= rows.length
-      && targetData.sectionIndex < this.children.length - 1
+      targetData.rowIndex >= rows.length &&
+      targetData.sectionIndex < this.children.length - 1
     ) {
       // handles rolling over into the next table section
       targetData.sectionIndex++;
@@ -232,7 +233,8 @@ export default class GridData extends TableData {
    */
   _updateTargetDataEnd(targetData) {
     const rows = this.children[targetData.sectionIndex].accessible.children;
-    targetData.colIndex = rows[targetData.rowIndex].accessible.children.length - 1;
+    targetData.colIndex =
+      rows[targetData.rowIndex].accessible.children.length - 1;
 
     return true;
   }

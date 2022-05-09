@@ -5,7 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: 'babel-eslint',
-  extends: ['airbnb'],
+  extends: ['airbnb', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -23,7 +23,15 @@ module.exports = {
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
-    'import/extensions': [{ js: 'always', json: 'never' }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
     'object-shorthand': 'error',

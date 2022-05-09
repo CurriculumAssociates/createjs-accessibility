@@ -7,8 +7,8 @@ export default class TableData extends SectionData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
+      !displayObject.accessible ||
+      [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
         displayObject.accessible.role
       ) === -1
     ) {
@@ -24,8 +24,8 @@ export default class TableData extends SectionData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
+      !displayObject.accessible ||
+      [ROLES.TABLEBODY, ROLES.TABLEFOOT, ROLES.TABLEHEAD].indexOf(
         displayObject.accessible.role
       ) === -1
     ) {

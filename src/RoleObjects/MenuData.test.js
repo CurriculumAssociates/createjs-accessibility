@@ -47,7 +47,8 @@ describe('MenuData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj = /Children of menu must have a role of menuitem, menuitemcheckbox, menuitemradio or separator/;
+      const errorObj =
+        /Children of menu must have a role of menuitem, menuitemcheckbox, menuitemradio or separator/;
       it('throws error attempting to add prohibited child using addChild() ', () => {
         expect(() => {
           stage.accessibilityTranslator.update();

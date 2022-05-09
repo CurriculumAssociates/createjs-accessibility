@@ -118,7 +118,7 @@ export default class AccessibilityObject {
    * @param {createjs.DisplayObject} displayObject - child DisplayObject to remove
    */
   removeChild(displayObject) {
-    const index = _.findIndex(this._children, test => test === displayObject);
+    const index = _.findIndex(this._children, (test) => test === displayObject);
     this.removeChildAt(index);
   }
 
@@ -144,8 +144,8 @@ export default class AccessibilityObject {
     if (elem) {
       // handle elements that won't be visible until the next render pass
       if (
-        this.visibleWithInference
-        && getComputedStyle(elem).display === 'none'
+        this.visibleWithInference &&
+        getComputedStyle(elem).display === 'none'
       ) {
         this._forceShow();
       }
@@ -155,8 +155,8 @@ export default class AccessibilityObject {
       }
       // handle elements that won't get tabindex updated until the next render pass
       if (
-        !_.isUndefined(this.tabIndex)
-        && elem.getAttribute('tabindex') === null
+        !_.isUndefined(this.tabIndex) &&
+        elem.getAttribute('tabindex') === null
       ) {
         elem.setAttribute('tabindex', this.tabIndex);
       }
@@ -461,7 +461,8 @@ export default class AccessibilityObject {
    * if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
-    this._reactProps['aria-disabled'] = enable === undefined ? undefined : !enable;
+    this._reactProps['aria-disabled'] =
+      enable === undefined ? undefined : !enable;
   }
 
   /**
@@ -485,10 +486,10 @@ export default class AccessibilityObject {
   get disabledWithInference() {
     return this._reactProps['aria-disabled'] !== undefined
       ? this._reactProps['aria-disabled']
-      : !this._displayObject.mouseEnabled
-          && (this._displayObject.hasEventListener('click')
-            || this._displayObject.hasEventListener('mousedown')
-            || this._displayObject.hasEventListener('pressup'));
+      : !this._displayObject.mouseEnabled &&
+          (this._displayObject.hasEventListener('click') ||
+            this._displayObject.hasEventListener('mousedown') ||
+            this._displayObject.hasEventListener('pressup'));
   }
 
   /**
@@ -598,9 +599,9 @@ export default class AccessibilityObject {
    */
   get hiddenWithInference() {
     return (
-      this._reactProps['aria-hidden']
-      || (!this._displayObject.visible
-        && this._reactProps['aria-hidden'] === undefined)
+      this._reactProps['aria-hidden'] ||
+      (!this._displayObject.visible &&
+        this._reactProps['aria-hidden'] === undefined)
     );
   }
 
@@ -858,7 +859,7 @@ export default class AccessibilityObject {
   _domIdToChildIndex(id) {
     return _.findIndex(
       this._children,
-      displayObject => id === displayObject.accessible._domId
+      (displayObject) => id === displayObject.accessible._domId
     );
   }
 

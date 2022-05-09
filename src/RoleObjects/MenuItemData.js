@@ -34,8 +34,8 @@ export default class MenuItemData extends AccessibilityObject {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || [
+      !displayObject.accessible ||
+      [
         ROLES.MENUITEM,
         ROLES.MENU,
         ROLES.MENUITEMCHECKBOX,
@@ -57,8 +57,8 @@ export default class MenuItemData extends AccessibilityObject {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || [
+      !displayObject.accessible ||
+      [
         ROLES.MENUITEM,
         ROLES.MENU,
         ROLES.MENUITEMCHECKBOX,
@@ -151,12 +151,14 @@ export default class MenuItemData extends AccessibilityObject {
    * @param {SyntheticEvent} evt - React event
    */
   _subMenuOpenerKeyDown(evt) {
-    const toggleMenu = evt.keyCode === KeyCodes.enter
-      || evt.keyCode === KeyCodes.space
-      || (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
-    const focusToFirstItem = evt.keyCode === KeyCodes.down
-      || (!this._subMenu.visible
-        && (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space));
+    const toggleMenu =
+      evt.keyCode === KeyCodes.enter ||
+      evt.keyCode === KeyCodes.space ||
+      (evt.keyCode === KeyCodes.down && !this._subMenu.visible);
+    const focusToFirstItem =
+      evt.keyCode === KeyCodes.down ||
+      (!this._subMenu.visible &&
+        (evt.keyCode === KeyCodes.enter || evt.keyCode === KeyCodes.space));
     if (toggleMenu) {
       const event = new createjs.Event(
         this._subMenu.visible ? 'closeMenu' : 'openMenu',

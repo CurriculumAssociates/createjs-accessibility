@@ -46,7 +46,8 @@ describe('GridData', () => {
       });
 
       it('sets "aria-multiselectable" attribute', () => {
-        const ariaMultiselectable = tableEl.getAttribute('aria-multiselectable') === 'true';
+        const ariaMultiselectable =
+          tableEl.getAttribute('aria-multiselectable') === 'true';
         expect(ariaMultiselectable).toEqual(isMultiselectable);
       });
 

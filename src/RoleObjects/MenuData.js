@@ -30,8 +30,8 @@ export default class MenuData extends SelectData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || [
+      !displayObject.accessible ||
+      [
         ROLES.MENUITEM,
         ROLES.MENUITEMCHECKBOX,
         ROLES.MENUITEMRADIO,
@@ -50,8 +50,8 @@ export default class MenuData extends SelectData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || [
+      !displayObject.accessible ||
+      [
         ROLES.MENUITEM,
         ROLES.MENUITEMCHECKBOX,
         ROLES.MENUITEMRADIO,
@@ -81,7 +81,8 @@ export default class MenuData extends SelectData {
       const currIndex = this._domIdToChildIndex(targetId);
       let nextIndex;
       if (evt.keyCode === KeyCodes.up) {
-        nextIndex = (this._children.length + currIndex - 1) % this._children.length;
+        nextIndex =
+          (this._children.length + currIndex - 1) % this._children.length;
       } else {
         nextIndex = (currIndex + 1) % this._children.length;
       }

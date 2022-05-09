@@ -15,8 +15,8 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.MULTISELECTOPTION
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`
@@ -30,8 +30,8 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.MULTISELECTOPTION
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`
@@ -87,9 +87,9 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   set form(displayObject) {
     if (
-      displayObject
-      && (!displayObject.accessible
-        || displayObject.accessible.role !== ROLES.FORM)
+      displayObject &&
+      (!displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.FORM)
     ) {
       throw new Error(
         `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`
@@ -163,8 +163,8 @@ export default class MultiSelectListBoxData extends SelectData {
   set selected(displayObjects) {
     displayObjects.forEach((displayObject) => {
       if (
-        !displayObject.accessible
-        || displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+        !displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.MULTISELECTOPTION
       ) {
         throw new Error(
           `Selected value must have a role of ${ROLES.MULTISELECTOPTION}`
@@ -180,7 +180,7 @@ export default class MultiSelectListBoxData extends SelectData {
     this._selected = displayObjects;
     this._reactProps.value = _.map(
       this._selected,
-      option => option.accessible.value
+      (option) => option.accessible.value
     );
   }
 
@@ -229,9 +229,11 @@ export default class MultiSelectListBoxData extends SelectData {
     const event = new createjs.Event('valueChanged', false, false);
     event.selectedValues = _.filter(
       evt.target.options,
-      option => option.selected
-    ).map(option => option.value);
-    event.selectedDisplayObjects = _.map(event.selectedValues, val => _.find(this.children, child => child.accessible.value === val));
+      (option) => option.selected
+    ).map((option) => option.value);
+    event.selectedDisplayObjects = _.map(event.selectedValues, (val) =>
+      _.find(this.children, (child) => child.accessible.value === val)
+    );
     this.selected = event.selectedDisplayObjects;
     this._displayObject.dispatchEvent(event);
   }

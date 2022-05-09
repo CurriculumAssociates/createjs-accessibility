@@ -126,9 +126,9 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    */
   set form(displayObject) {
     if (
-      displayObject
-      && (!displayObject.accessible
-        || displayObject.accessible.role !== ROLES.FORM)
+      displayObject &&
+      (!displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.FORM)
     ) {
       throw new Error(
         `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`

@@ -10,8 +10,8 @@ export default class OrderedListData extends SectionData {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.LISTITEM
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.LISTITEM
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.LISTITEM}`
@@ -25,8 +25,8 @@ export default class OrderedListData extends SectionData {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || displayObject.accessible.role !== ROLES.LISTITEM
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.LISTITEM
     ) {
       throw new Error(
         `Children of ${this.role} must have a role of ${ROLES.LISTITEM}`
