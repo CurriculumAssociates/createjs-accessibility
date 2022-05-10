@@ -14,9 +14,9 @@ export default class ButtonData extends AccessibilityObject {
    */
   addChild(displayObject) {
     if (
-      !displayObject.accessible
-      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
-      || !_.isUndefined(displayObject.accessible.tabIndex)
+      !displayObject.accessible ||
+      doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role) ||
+      !_.isUndefined(displayObject.accessible.tabIndex)
     ) {
       throw new Error(`Children of ${this.role} cannot be interactive`);
     }
@@ -28,9 +28,9 @@ export default class ButtonData extends AccessibilityObject {
    */
   addChildAt(displayObject, index) {
     if (
-      !displayObject.accessible
-      || doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role)
-      || !_.isUndefined(displayObject.accessible.tabIndex)
+      !displayObject.accessible ||
+      doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role) ||
+      !_.isUndefined(displayObject.accessible.tabIndex)
     ) {
       throw new Error(`Children of ${this.role} cannot be interactive`);
     }
@@ -38,7 +38,7 @@ export default class ButtonData extends AccessibilityObject {
   }
 
   /**
-   * Sets whether the element should get pressed on page load
+   * Sets whether the element should get pressed
    * @access public
    * @param {boolean} val - true if button pressed
    */
@@ -56,7 +56,7 @@ export default class ButtonData extends AccessibilityObject {
   }
 
   /**
-   * Sets whether the element should get expanded on page load
+   * Sets whether the element should get expanded
    * @access public
    * @param {boolean} val - true if button expanded, false if button not expanded,
    *  undefined if the field is unset
@@ -76,7 +76,7 @@ export default class ButtonData extends AccessibilityObject {
   }
 
   /**
-   * Sets whether the element should get focus on page load
+   * Sets whether the element should get focus
    * @access public
    * @param {boolean} enable - true if autofocus should be enabled, false otherwise
    */
