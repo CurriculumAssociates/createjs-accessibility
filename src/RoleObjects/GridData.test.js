@@ -40,11 +40,14 @@ describe('GridData', () => {
       });
 
       it('sets "aria-level" attribute', () => {
-        expect(parseInt(tableEl.getAttribute('aria-level'), 10)).toEqual(levelVal);
+        expect(parseInt(tableEl.getAttribute('aria-level'), 10)).toEqual(
+          levelVal
+        );
       });
 
       it('sets "aria-multiselectable" attribute', () => {
-        const ariaMultiselectable = tableEl.getAttribute('aria-multiselectable') === 'true';
+        const ariaMultiselectable =
+          tableEl.getAttribute('aria-multiselectable') === 'true';
         expect(ariaMultiselectable).toEqual(isMultiselectable);
       });
 
@@ -82,7 +85,9 @@ describe('GridData', () => {
 
     describe('other options getters and setters', () => {
       it('can read and set "enableKeyEvents" property', () => {
-        expect(cjsGrid.accessible.enableKeyEvents).toEqual(shouldEnableKeyEvents);
+        expect(cjsGrid.accessible.enableKeyEvents).toEqual(
+          shouldEnableKeyEvents
+        );
 
         const newVal = true;
         cjsGrid.accessible.enableKeyEvents = newVal;

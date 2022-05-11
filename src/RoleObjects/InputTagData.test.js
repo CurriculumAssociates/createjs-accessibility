@@ -37,7 +37,9 @@ describe('InputTagData', () => {
       });
 
       it('sets "aria-disabled" attribute', () => {
-        inputEl = parentEl.querySelector(`input[type=radio][aria-disabled='${!isEnabled}']`);
+        inputEl = parentEl.querySelector(
+          `input[type=radio][aria-disabled='${!isEnabled}']`
+        );
         expect(inputEl).not.toBeNull();
       });
 

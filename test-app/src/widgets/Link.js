@@ -23,7 +23,14 @@ export default class Link extends createjs.Container {
         this._text.color = '#542189';
       });
       const hit = new createjs.Shape();
-      hit.graphics.beginFill('#000').drawRect(0, 0, this._text.getMeasuredWidth(), this._text.getMeasuredHeight());
+      hit.graphics
+        .beginFill('#000')
+        .drawRect(
+          0,
+          0,
+          this._text.getMeasuredWidth(),
+          this._text.getMeasuredHeight()
+        );
       this._text.hitArea = hit;
       this.addChild(this._text);
       this.accessible.text = options.text;

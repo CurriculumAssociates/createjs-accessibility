@@ -29,9 +29,18 @@ export default class MenuData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
-      ROLES.MENUITEMRADIO, ROLES.SEPARATOR].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM}, ${ROLES.MENUITEMCHECKBOX}, ${ROLES.MENUITEMRADIO} or ${ROLES.SEPARATOR}`);
+    if (
+      !displayObject.accessible ||
+      [
+        ROLES.MENUITEM,
+        ROLES.MENUITEMCHECKBOX,
+        ROLES.MENUITEMRADIO,
+        ROLES.SEPARATOR,
+      ].indexOf(displayObject.accessible.role) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MENUITEM}, ${ROLES.MENUITEMCHECKBOX}, ${ROLES.MENUITEMRADIO} or ${ROLES.SEPARATOR}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -40,9 +49,18 @@ export default class MenuData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || [ROLES.MENUITEM, ROLES.MENUITEMCHECKBOX,
-      ROLES.MENUITEMRADIO, ROLES.SEPARATOR].indexOf(displayObject.accessible.role) === -1) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MENUITEM}, ${ROLES.MENUITEMCHECKBOX}, ${ROLES.MENUITEMRADIO} or ${ROLES.SEPARATOR}`);
+    if (
+      !displayObject.accessible ||
+      [
+        ROLES.MENUITEM,
+        ROLES.MENUITEMCHECKBOX,
+        ROLES.MENUITEMRADIO,
+        ROLES.SEPARATOR,
+      ].indexOf(displayObject.accessible.role) === -1
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MENUITEM}, ${ROLES.MENUITEMCHECKBOX}, ${ROLES.MENUITEMRADIO} or ${ROLES.SEPARATOR}`
+      );
     }
     super.addChildAt(displayObject, index);
   }
@@ -63,7 +81,8 @@ export default class MenuData extends SelectData {
       const currIndex = this._domIdToChildIndex(targetId);
       let nextIndex;
       if (evt.keyCode === KeyCodes.up) {
-        nextIndex = (this._children.length + currIndex - 1) % this._children.length;
+        nextIndex =
+          (this._children.length + currIndex - 1) % this._children.length;
       } else {
         nextIndex = (currIndex + 1) % this._children.length;
       }

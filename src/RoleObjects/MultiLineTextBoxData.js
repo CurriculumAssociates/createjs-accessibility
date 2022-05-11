@@ -33,10 +33,14 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject being set as the active descendant must have accessibility information');
+      throw new Error(
+        'DisplayObject being set as the active descendant must have accessibility information'
+      );
     }
     this._active = displayObject;
-    this._reactProps['aria-activedescendant'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-activedescendant'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -121,12 +125,19 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    * null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible
-      || displayObject.accessible.role !== ROLES.FORM)) {
-      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
+    if (
+      displayObject &&
+      (!displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.FORM)
+    ) {
+      throw new Error(
+        `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`
+      );
     }
     this._form = displayObject;
-    this._reactProps.form = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps.form = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**

@@ -39,7 +39,8 @@ describe('MenuItemData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj = /Children of menuitem must have a role of menuitem or menu or menuitemcheckbox or menuitemradio/;
+      const errorObj =
+        /Children of menuitem must have a role of menuitem or menu or menuitemcheckbox or menuitemradio/;
       it('throws error attempting to add prohibited child using addChild() ', () => {
         expect(() => {
           stage.accessibilityTranslator.update();
@@ -69,7 +70,9 @@ describe('MenuItemData', () => {
 
     describe('options getters and setters', () => {
       it('can read and set "enableKeyEvents" property', () => {
-        expect(cjsMenuItem.accessible.enableKeyEvents).toEqual(shouldEnableKeyEvents);
+        expect(cjsMenuItem.accessible.enableKeyEvents).toEqual(
+          shouldEnableKeyEvents
+        );
 
         const newVal = true;
         cjsMenuItem.accessible.enableKeyEvents = newVal;

@@ -29,9 +29,25 @@ export default class OrderedList extends createjs.Container {
   addListItem(listItem, y, value = listItem.value) {
     let label;
     if (this.accessible.reversed) {
-      label = new createjs.Text(`${String.fromCharCode(this.accessible.type.charCodeAt(0) + parseInt(this.accessible.start, 10) - value - 1)}.`, '16px Arial');
+      label = new createjs.Text(
+        `${String.fromCharCode(
+          this.accessible.type.charCodeAt(0) +
+            parseInt(this.accessible.start, 10) -
+            value -
+            1
+        )}.`,
+        '16px Arial'
+      );
     } else {
-      label = new createjs.Text(`${String.fromCharCode(this.accessible.type.charCodeAt(0) + parseInt(this.accessible.start, 10) + value - 1)}.`, '16px Arial');
+      label = new createjs.Text(
+        `${String.fromCharCode(
+          this.accessible.type.charCodeAt(0) +
+            parseInt(this.accessible.start, 10) +
+            value -
+            1
+        )}.`,
+        '16px Arial'
+      );
     }
     label.y = y;
     this.addChild(label);

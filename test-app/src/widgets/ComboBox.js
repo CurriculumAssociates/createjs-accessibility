@@ -10,7 +10,16 @@ import SingleLineTextInput from './SingleLineTextInput';
 export default class ComboBox extends createjs.Container {
   constructor(options, width, height, tabIndex) {
     super();
-    _.bindAll(this, '_onCollapedViewClick', '_onCollapedViewKeyDown', '_onCollapedViewChange', '_onOptionClick', '_onDropDownViewBlur', '_onDropDownKeyDown', '_onValueChanged');
+    _.bindAll(
+      this,
+      '_onCollapedViewClick',
+      '_onCollapedViewKeyDown',
+      '_onCollapedViewChange',
+      '_onOptionClick',
+      '_onDropDownViewBlur',
+      '_onDropDownKeyDown',
+      '_onValueChanged'
+    );
     AccessibilityModule.register({
       displayObject: this,
       role: AccessibilityModule.ROLES.COMBOBOX,
@@ -58,11 +67,16 @@ export default class ComboBox extends createjs.Container {
 
     this._arrow = new createjs.Shape();
     this._arrow.graphics.beginFill('#aaaaaa').drawRect(0, 0, height, height); // background
-    this._arrow.graphics.endFill().beginStroke('#000000')
+    this._arrow.graphics
+      .endFill()
+      .beginStroke('#000000')
       .moveTo(height * 0.25, height * 0.25)
       .lineTo(height * 0.5, height * 0.75)
       .lineTo(height * 0.75, height * 0.25); // arrow
-    this._arrow.graphics.beginStroke('#000000').setStrokeStyle(1).drawRect(0, 0, height, height); // border
+    this._arrow.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .drawRect(0, 0, height, height); // border
     this._arrow.x = width - height;
     AccessibilityModule.register({
       displayObject: this._arrow,
@@ -103,7 +117,9 @@ export default class ComboBox extends createjs.Container {
       this.parent.addChild(this);
 
       this._dropDownView.accessible.requestFocus();
-      this._updateSelectedOption(this._getAdjacentOption(evt.keyCode === KeyCodes.down));
+      this._updateSelectedOption(
+        this._getAdjacentOption(evt.keyCode === KeyCodes.down)
+      );
 
       evt.stopPropagation();
       evt.preventDefault();
@@ -111,7 +127,7 @@ export default class ComboBox extends createjs.Container {
   }
 
   _getAdjacentOption(next) {
-    let index = _.findIndex(this._options, child => child.selected);
+    let index = _.findIndex(this._options, (child) => child.selected);
     if (next) {
       index = Math.min(index + 1, this._options.length - 1);
     } else {
@@ -137,7 +153,10 @@ export default class ComboBox extends createjs.Container {
     _.forEach(this._options, (opt) => {
       opt.selected = false;
     });
-    const matchingOption = _.find(this._options, option => option.value === evt.newValue);
+    const matchingOption = _.find(
+      this._options,
+      (option) => option.value === evt.newValue
+    );
     if (matchingOption) {
       matchingOption.selected = true;
     }
@@ -163,7 +182,11 @@ export default class ComboBox extends createjs.Container {
     this._dropDownView.addEventListener('blur', this._onDropDownViewBlur);
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('#000000').setStrokeStyle(1).beginFill('#ffffff').drawRect(0, 0, width, optionHeight * this._options.length);
+    bg.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .beginFill('#ffffff')
+      .drawRect(0, 0, width, optionHeight * this._options.length);
     this._dropDownView.addChild(bg);
 
     this._options.forEach((option, i) => {

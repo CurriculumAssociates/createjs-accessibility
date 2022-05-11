@@ -54,7 +54,9 @@ describe('FormData', () => {
 
       it('sets "autocomplete" attribute', () => {
         const shouldAutoCompleteParsed = shouldAutoComplete ? 'on' : 'off'; // parsed by the setter
-        expect(formEl.getAttribute('autocomplete')).toEqual(shouldAutoCompleteParsed);
+        expect(formEl.getAttribute('autocomplete')).toEqual(
+          shouldAutoCompleteParsed
+        );
       });
 
       it('sets "accept-charset" attribute', () => {

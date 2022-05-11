@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
-
 /**
  * See https://www.w3.org/TR/wai-aria/roles#menu
  */
@@ -51,9 +50,7 @@ export default class Menu extends createjs.Container {
     }
 
     const underlineStartX = this._label.x + totalWidth;
-    const {
-      x, y, width, height,
-    } = this._label.getBounds();
+    const { x, y, width, height } = this._label.getBounds();
     const underLine = new createjs.Shape();
     underLine.graphics.setStrokeStyle(3);
     underLine.graphics.beginStroke('#FF4500');
@@ -80,7 +77,9 @@ export default class Menu extends createjs.Container {
     this._itemContainer.addChild(this._itemContainer._bg);
 
     this._label.hitArea = new createjs.Shape();
-    this._label.hitArea.graphics.beginFill('#ff0000').drawRect(x, y, width, height);
+    this._label.hitArea.graphics
+      .beginFill('#ff0000')
+      .drawRect(x, y, width, height);
     this._label.addEventListener('click', this._onClick);
     this._label.addEventListener('openMenu', this.openMenu);
     this._label.addEventListener('closeMenu', this.closeMenu);
@@ -93,10 +92,12 @@ export default class Menu extends createjs.Container {
    * @param {!MenuItem} menuItem - Menu item to add
    */
   addMenuItem(menuItem) {
-    if (this._itemContainer.children.length === 1) { // note: 1 due to background
+    if (this._itemContainer.children.length === 1) {
+      // note: 1 due to background
       menuItem.y = 0;
     } else {
-      const oldLastItem = this._itemContainer.children[this._itemContainer.children.length - 1];
+      const oldLastItem =
+        this._itemContainer.children[this._itemContainer.children.length - 1];
       const tmpBounds = oldLastItem.getBounds();
       menuItem.y = oldLastItem.y + tmpBounds.y + tmpBounds.height;
     }

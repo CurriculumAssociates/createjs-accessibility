@@ -131,7 +131,8 @@ export default class GridData extends TableData {
     if (targetData.rowIndex < 0 && targetData.sectionIndex > 0) {
       // handles rolling into the prior table section
       targetData.sectionIndex--;
-      targetData.rowIndex = this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
+      targetData.rowIndex =
+        this.children[targetData.sectionIndex].accessible.children.length - 1;
     }
 
     return true;
@@ -152,8 +153,10 @@ export default class GridData extends TableData {
   _updateTargetDataDown(targetData) {
     const rows = this.children[targetData.sectionIndex].accessible.children;
     targetData.rowIndex++;
-    if (targetData.rowIndex >= rows.length
-      && targetData.sectionIndex < (this.children.length - 1)) {
+    if (
+      targetData.rowIndex >= rows.length &&
+      targetData.sectionIndex < this.children.length - 1
+    ) {
       // handles rolling over into the next table section
       targetData.sectionIndex++;
       targetData.rowIndex = 0;
@@ -230,7 +233,8 @@ export default class GridData extends TableData {
    */
   _updateTargetDataEnd(targetData) {
     const rows = this.children[targetData.sectionIndex].accessible.children;
-    targetData.colIndex = rows[targetData.rowIndex].accessible.children.length - 1;
+    targetData.colIndex =
+      rows[targetData.rowIndex].accessible.children.length - 1;
 
     return true;
   }
@@ -301,7 +305,11 @@ export default class GridData extends TableData {
 
     const id = elem.getAttribute('id');
     _.forEach(this.children, (tableSectionDisplayObject, sectionIndex) => {
-      matchingData = this._searchSection(id, tableSectionDisplayObject, sectionIndex);
+      matchingData = this._searchSection(
+        id,
+        tableSectionDisplayObject,
+        sectionIndex
+      );
       return !matchingData;
     });
 
@@ -323,10 +331,18 @@ export default class GridData extends TableData {
   _searchSection(id, tableSectionDisplayObject, sectionIndex) {
     let matchingData = null;
 
-    _.forEach(tableSectionDisplayObject.accessible.children, (rowDisplayObject, rowIndex) => {
-      matchingData = this._searchRow(id, rowDisplayObject, sectionIndex, rowIndex);
-      return !matchingData;
-    });
+    _.forEach(
+      tableSectionDisplayObject.accessible.children,
+      (rowDisplayObject, rowIndex) => {
+        matchingData = this._searchRow(
+          id,
+          rowDisplayObject,
+          sectionIndex,
+          rowIndex
+        );
+        return !matchingData;
+      }
+    );
 
     return matchingData;
   }
@@ -347,10 +363,19 @@ export default class GridData extends TableData {
   _searchRow(id, rowDisplayObject, sectionIndex, rowIndex) {
     let matchingData = null;
 
-    _.forEach(rowDisplayObject.accessible.children, (cellDisplayObject, colIndex) => {
-      matchingData = this._searchCell(id, cellDisplayObject, sectionIndex, rowIndex, colIndex);
-      return !matchingData;
-    });
+    _.forEach(
+      rowDisplayObject.accessible.children,
+      (cellDisplayObject, colIndex) => {
+        matchingData = this._searchCell(
+          id,
+          cellDisplayObject,
+          sectionIndex,
+          rowIndex,
+          colIndex
+        );
+        return !matchingData;
+      }
+    );
 
     return matchingData;
   }
@@ -380,19 +405,22 @@ export default class GridData extends TableData {
         cellChildIndex: -1,
       };
     } else {
-      _.forEach(cellDisplayObject.accessible.children, (cellChildDisplayObject, cellChildIndex) => { // eslint-disable-line max-len
-        if (cellChildDisplayObject.accessible.domId === id) {
-          matchingData = {
-            displayObject: cellChildDisplayObject,
-            sectionIndex,
-            rowIndex,
-            colIndex,
-            cellChildIndex,
-          };
-        }
+      _.forEach(
+        cellDisplayObject.accessible.children,
+        (cellChildDisplayObject, cellChildIndex) => {
+          if (cellChildDisplayObject.accessible.domId === id) {
+            matchingData = {
+              displayObject: cellChildDisplayObject,
+              sectionIndex,
+              rowIndex,
+              colIndex,
+              cellChildIndex,
+            };
+          }
 
-        return !matchingData;
-      });
+          return !matchingData;
+        }
+      );
     }
 
     return matchingData;

@@ -64,11 +64,15 @@ describe('CellData', () => {
       });
 
       it('sets "aria-colindex" attribute', () => {
-        expect(parseInt(tdEl.getAttribute('aria-colindex'), 10)).toEqual(colIndexVal);
+        expect(parseInt(tdEl.getAttribute('aria-colindex'), 10)).toEqual(
+          colIndexVal
+        );
       });
 
       it('sets "aria-rowindex" attribute', () => {
-        expect(parseInt(tdEl.getAttribute('aria-rowindex'), 10)).toEqual(rowIndexVal);
+        expect(parseInt(tdEl.getAttribute('aria-rowindex'), 10)).toEqual(
+          rowIndexVal
+        );
       });
 
       it('sets "colspan" attribute', () => {

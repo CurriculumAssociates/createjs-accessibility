@@ -3,9 +3,7 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import Radio from './Radio';
 
 export default class RadioGroup extends createjs.Container {
-  constructor({
-    radioData, name, callBack = _.noop,
-  }) {
+  constructor({ radioData, name, callBack = _.noop }) {
     super();
     _.bindAll(this, 'onOptionClick');
     AccessibilityModule.register({
@@ -28,7 +26,11 @@ export default class RadioGroup extends createjs.Container {
       this.addChild(radio);
       this.accessible.addChild(radio);
 
-      const labelText = new createjs.Text(data.value, 'bold 18px Arial', '#000');
+      const labelText = new createjs.Text(
+        data.value,
+        'bold 18px Arial',
+        '#000'
+      );
       labelText.x = 30;
       labelText.y = 35 * (i + 1);
       this.addChild(labelText);
@@ -49,8 +51,12 @@ export default class RadioGroup extends createjs.Container {
     this.radioOption.forEach((radio) => {
       radio.addEventListener('click', this.onOptionClick);
       radio.addEventListener('keyboardClick', this.onOptionClick);
-      radio.addEventListener('focus', () => { radio.focus = true; });
-      radio.addEventListener('blur', () => { radio.focus = false; });
+      radio.addEventListener('focus', () => {
+        radio.focus = true;
+      });
+      radio.addEventListener('blur', () => {
+        radio.focus = false;
+      });
     });
   }
 

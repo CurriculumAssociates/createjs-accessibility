@@ -6,7 +6,10 @@ const DURATION = 30;
 
 export default class Marquee extends createjs.Container {
   constructor({
-    text, behaviour = 'scroll', direction = 'left', loop = -1,
+    text,
+    behaviour = 'scroll',
+    direction = 'left',
+    loop = -1,
   } = {}) {
     super();
     AccessibilityModule.register({

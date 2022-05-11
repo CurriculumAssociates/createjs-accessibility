@@ -7,7 +7,17 @@ import Button from './Button';
 export default class Draggable extends createjs.Container {
   constructor(options, dropArr, tabIndex, callBack, startContainer) {
     super();
-    _.bindAll(this, 'onDragStart', 'onDrag', 'onDragEnd', 'moveToTarget', 'cancelMoving', 'showHideMenu', 'toggleMenuVisibility', 'navigateMenu');
+    _.bindAll(
+      this,
+      'onDragStart',
+      'onDrag',
+      'onDragEnd',
+      'moveToTarget',
+      'cancelMoving',
+      'showHideMenu',
+      'toggleMenuVisibility',
+      'navigateMenu'
+    );
     this.dropTargets = dropArr;
     this.tabIndex = tabIndex;
     this.startContainer = startContainer;
@@ -73,7 +83,10 @@ export default class Draggable extends createjs.Container {
 
   moveToTarget(evt) {
     const { currentTarget } = evt;
-    const dropTarget = _.find(this.dropTargets, drop => drop.label === currentTarget.label);
+    const dropTarget = _.find(
+      this.dropTargets,
+      (drop) => drop.label === currentTarget.label
+    );
 
     if (!dropTarget.placed) {
       this.drop(dropTarget);
@@ -108,8 +121,8 @@ export default class Draggable extends createjs.Container {
     evt.stopPropagation();
     evt.preventDefault();
     this.set({
-      x: (evt.stageX - this.hGap),
-      y: (evt.stageY - this.vGap),
+      x: evt.stageX - this.hGap,
+      y: evt.stageY - this.vGap,
     });
   }
 
@@ -143,14 +156,21 @@ export default class Draggable extends createjs.Container {
     const rect2Bounds = rect2.getBounds();
     rect2.set({ width: rect2Bounds.width, height: rect2Bounds.height });
 
-    return !(rect1.x >= rect2.x + rect2.width || rect1.x + rect1.width <= rect2.x
-      || rect1.y >= rect2.y + rect2.height || rect1.y + rect1.height <= rect2.y);
+    return !(
+      rect1.x >= rect2.x + rect2.width ||
+      rect1.x + rect1.width <= rect2.x ||
+      rect1.y >= rect2.y + rect2.height ||
+      rect1.y + rect1.height <= rect2.y
+    );
   }
 
   removeFromPrevTarget() {
     // remove from either start or previous container
     if (!_.isUndefined(this.targetId)) {
-      const dropTarget = _.find(this.dropTargets, drop => drop.id === this.targetId);
+      const dropTarget = _.find(
+        this.dropTargets,
+        (drop) => drop.id === this.targetId
+      );
       dropTarget.accessible.removeChild(this);
       dropTarget.placed = false;
       dropTarget.draggable = undefined;
@@ -211,11 +231,14 @@ export default class Draggable extends createjs.Container {
     if (evt.keyCode === KeyCodes.up || evt.keyCode === KeyCodes.down) {
       let nextIndex;
       if (evt.keyCode === KeyCodes.up) {
-        nextIndex = (this.currentIndex - 1 < 0) ? this.currentIndex : this.currentIndex - 1;
+        nextIndex =
+          this.currentIndex - 1 < 0 ? this.currentIndex : this.currentIndex - 1;
       } else {
         const menuItemChildLength = this.menuItemContainer.children.length;
-        nextIndex = (this.currentIndex + 1 > menuItemChildLength - 1)
-          ? this.currentIndex : this.currentIndex + 1;
+        nextIndex =
+          this.currentIndex + 1 > menuItemChildLength - 1
+            ? this.currentIndex
+            : this.currentIndex + 1;
       }
 
       if (nextIndex >= 0) {

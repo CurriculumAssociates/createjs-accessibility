@@ -52,7 +52,10 @@ export default class FormData extends SectionData {
    * @returns {boolean} true if autocomplete is enabled (by default or explicitly), false otherwise
    */
   get autoComplete() {
-    return this._reactProps.autoComplete === undefined || this._reactProps.autoComplete === 'on';
+    return (
+      this._reactProps.autoComplete === undefined
+      || this._reactProps.autoComplete === 'on'
+    );
   }
 
   /**

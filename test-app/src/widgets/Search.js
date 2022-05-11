@@ -11,7 +11,13 @@ export default class Search extends createjs.Container {
     });
 
     // Adding Search Box
-    this.searchBox = new SearchBox(options.width, options.height, tabIndex, options.listArr, 'Search substring here');
+    this.searchBox = new SearchBox(
+      options.width,
+      options.height,
+      tabIndex,
+      options.listArr,
+      'Search substring here'
+    );
     this.addChild(this.searchBox);
     this.accessible.addChild(this.searchBox);
 
@@ -20,7 +26,11 @@ export default class Search extends createjs.Container {
     this.accessible.addChild(this.searchBox.clearInputButton);
 
     // Adding Search button
-    this.searchButton = new Button(options.buttonOptions, 0, this.searchBox._processSearchData);
+    this.searchButton = new Button(
+      options.buttonOptions,
+      0,
+      this.searchBox._processSearchData
+    );
     this.searchButton.set({ x: options.width });
     this.addChild(this.searchButton);
     this.accessible.addChild(this.searchButton);

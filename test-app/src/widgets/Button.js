@@ -4,7 +4,14 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 export default class Button extends createjs.Container {
   constructor(options, tabIndex, callBack = _.noop) {
     super();
-    _.bindAll(this, '_onFocus', '_onBlur', '_onMouseDown', '_onMouseUp', '_onClick');
+    _.bindAll(
+      this,
+      '_onFocus',
+      '_onBlur',
+      '_onMouseDown',
+      '_onMouseUp',
+      '_onClick'
+    );
     this.callBack = callBack;
     this.addEventListener('focus', this._onFocus);
     this.addEventListener('blur', this._onBlur);
@@ -100,14 +107,21 @@ export default class Button extends createjs.Container {
   _addBackground() {
     this.background = new createjs.Shape();
     this.background.name = 'background';
-    this.background.graphics.beginStroke('black').beginFill('#fff').drawRect(0, 0, this.width, this.height);
+    this.background.graphics
+      .beginStroke('black')
+      .beginFill('#fff')
+      .drawRect(0, 0, this.width, this.height);
     this.addChild(this.background);
   }
 
   _addFocusIndicator() {
     this.focusIndicator = new createjs.Shape();
     this.focusIndicator.name = 'focusIndicator';
-    this.focusIndicator.graphics.beginStroke('black').setStrokeStyle(3).beginFill('#fff').drawRect(0, 0, this.width, this.height);
+    this.focusIndicator.graphics
+      .beginStroke('black')
+      .setStrokeStyle(3)
+      .beginFill('#fff')
+      .drawRect(0, 0, this.width, this.height);
     this.addChild(this.focusIndicator);
     this.focusIndicator.visible = false;
   }
