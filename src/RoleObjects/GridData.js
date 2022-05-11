@@ -132,7 +132,7 @@ export default class GridData extends TableData {
       // handles rolling into the prior table section
       targetData.sectionIndex--;
       targetData.rowIndex =
-        this.children[targetData.sectionIndex].accessible.children.length - 1; // eslint-disable-line max-len
+        this.children[targetData.sectionIndex].accessible.children.length - 1;
     }
 
     return true;
