@@ -408,7 +408,6 @@ export default class GridData extends TableData {
       _.forEach(
         cellDisplayObject.accessible.children,
         (cellChildDisplayObject, cellChildIndex) => {
-          // eslint-disable-line max-len
           if (cellChildDisplayObject.accessible.domId === id) {
             matchingData = {
               displayObject: cellChildDisplayObject,
