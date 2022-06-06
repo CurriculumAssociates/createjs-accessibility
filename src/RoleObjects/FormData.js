@@ -53,8 +53,8 @@ export default class FormData extends SectionData {
    */
   get autoComplete() {
     return (
-      this._reactProps.autoComplete === undefined
-      || this._reactProps.autoComplete === 'on'
+      this._reactProps.autoComplete === undefined ||
+      this._reactProps.autoComplete === 'on'
     );
   }
 

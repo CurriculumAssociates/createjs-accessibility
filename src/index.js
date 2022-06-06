@@ -105,7 +105,8 @@ function releaseStage(stage) {
  */
 function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
-    const camWrapperElem = stage.accessibilityTranslator.rootElem.parentElement.parentElement;
+    const camWrapperElem =
+      stage.accessibilityTranslator.rootElem.parentElement.parentElement;
     const { transformStyle } = calcDomStylesFromStage(stage);
     _.keys(transformStyle).forEach((style) => {
       camWrapperElem.style[style] = transformStyle[style];
@@ -131,7 +132,9 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(objectConfig => createAccessibilityObjectForRole(objectConfig));
+  const accessiblityObjects = objects.map((objectConfig) =>
+    createAccessibilityObjectForRole(objectConfig)
+  );
 
   return accessiblityObjects.length > 1
     ? accessiblityObjects

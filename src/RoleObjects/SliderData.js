@@ -169,8 +169,8 @@ export default class SliderData extends InputTagData {
     }
 
     if (
-      !_.isUndefined(this.pageStep)
-      && (evt.keyCode === KeyCodes.pageup || evt.keyCode === KeyCodes.pagedown)
+      !_.isUndefined(this.pageStep) &&
+      (evt.keyCode === KeyCodes.pageup || evt.keyCode === KeyCodes.pagedown)
     ) {
       const multiplier = evt.keyCode === KeyCodes.pageup ? 1 : -1;
       const delta = multiplier * this.pageStep;

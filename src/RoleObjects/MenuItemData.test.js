@@ -6,7 +6,7 @@ describe('MenuItemData', () => {
   describe('register role', () => {
     let cjsMenuItem;
     let cjsCell;
-    let ilEl;
+    let liEl;
     let shouldEnableKeyEvents;
 
     beforeEach(() => {
@@ -33,8 +33,8 @@ describe('MenuItemData', () => {
 
     describe('rendering', () => {
       it('creates li[role=menuitem] element', () => {
-        ilEl = parentEl.querySelector('li[role=menuitem]');
-        expect(ilEl).not.toBeNull();
+        liEl = parentEl.querySelector('li[role=menuitem]');
+        expect(liEl).not.toBeNull();
       });
     });
 

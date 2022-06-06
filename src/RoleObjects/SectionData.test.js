@@ -2,48 +2,47 @@ import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
-describe('DocumentData', () => {
+describe('SectionData', () => {
   describe('register role', () => {
-    let cjsDocument;
-    let documentEl;
+    let cjsSection;
+    let sectionEl;
     let isExpanded;
 
     beforeEach(() => {
-      cjsDocument = new createjs.Shape(); // dummy object
+      cjsSection = new createjs.Shape(); // dummy object
       isExpanded = false;
 
       AccessibilityModule.register({
         accessibleOptions: {
           expanded: isExpanded,
         },
-        displayObject: cjsDocument,
+        displayObject: cjsSection,
         parent: container,
-        role: AccessibilityModule.ROLES.DOCUMENT,
+        role: AccessibilityModule.ROLES.HEADING1,
       });
 
       stage.accessibilityTranslator.update();
-      documentEl = parentEl.querySelector('div[role=document]');
+      sectionEl = parentEl.querySelector('h1');
     });
 
     describe('rendering', () => {
-      it('creates div[role=document] element', () => {
-        expect(documentEl).not.toBeNull();
+      it('creates h1 element', () => {
+        expect(sectionEl).not.toBeNull();
       });
 
       it('sets "aria-expanded" attribute', () => {
-        const ariaExpanded =
-          documentEl.getAttribute('aria-expanded') === 'true';
+        const ariaExpanded = sectionEl.getAttribute('aria-expanded') === 'true';
         expect(ariaExpanded).toEqual(isExpanded);
       });
     });
 
     describe('accessible options getters and setters', () => {
       it('can read and set "expanded" property [for "aria-expanded"]', () => {
-        expect(cjsDocument.accessible.expanded).toEqual(isExpanded);
+        expect(cjsSection.accessible.expanded).toEqual(isExpanded);
 
         const newVal = true;
-        cjsDocument.accessible.expanded = newVal;
-        expect(cjsDocument.accessible.expanded).toEqual(newVal);
+        cjsSection.accessible.expanded = newVal;
+        expect(cjsSection.accessible.expanded).toEqual(newVal);
       });
     });
   });

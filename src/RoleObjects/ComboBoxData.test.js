@@ -40,12 +40,14 @@ describe('ComboBoxData', () => {
       });
 
       it('sets "aria-expanded" attribute', () => {
-        const ariaExpanded = comboBoxEl.getAttribute('aria-expanded') === 'true';
+        const ariaExpanded =
+          comboBoxEl.getAttribute('aria-expanded') === 'true';
         expect(ariaExpanded).toEqual(isExpanded);
       });
 
       it('sets "aria-readonly" attribute', () => {
-        const ariaReadOnly = comboBoxEl.getAttribute('aria-readonly') === 'true';
+        const ariaReadOnly =
+          comboBoxEl.getAttribute('aria-readonly') === 'true';
         expect(ariaReadOnly).toEqual(isReadOnly);
       });
     });
