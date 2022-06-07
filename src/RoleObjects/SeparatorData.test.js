@@ -77,17 +77,21 @@ describe('SeparatorData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj = /separator cannot have children/;
+      let errorObj;
+
+      beforeEach(() => {
+        errorObj = /separator cannot have children/;
+        stage.accessibilityTranslator.update();
+      });
+
       it('throws error attempting to add child using addChild() ', () => {
         expect(() => {
-          stage.accessibilityTranslator.update();
           cjsSeparator.accessible.addChild(cjsSpan);
         }).toThrowError(errorObj);
       });
 
       it('throws error attempting to add child using addChildAt()', () => {
         expect(() => {
-          stage.accessibilityTranslator.update();
           cjsSeparator.accessible.addChildAt(cjsSpan, 0);
         }).toThrowError(errorObj);
       });

@@ -64,39 +64,51 @@ describe('SingleSelectListBoxData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj =
-        /Children of singleselectlistbox must have a role of singleselectoption/;
-      it('throws error attempting to add prohibited child using addChild() ', () => {
-        expect(() => {
+      describe('prohibited children', () => {
+        let errorObj;
+
+        beforeEach(() => {
+          errorObj =
+            /Children of singleselectlistbox must have a role of singleselectoption/;
           stage.accessibilityTranslator.update();
-          cjsListBox.accessible.addChild(cjsSpan);
-        }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChild() ', () => {
+          expect(() => {
+            cjsListBox.accessible.addChild(cjsSpan);
+          }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChildAt()', () => {
+          expect(() => {
+            cjsListBox.accessible.addChildAt(cjsSpan, 0);
+          }).toThrowError(errorObj);
+        });
       });
 
-      it('throws error attempting to add prohibited child using addChildAt()', () => {
-        expect(() => {
+      describe('permitted children', () => {
+        let cjsDummy;
+
+        beforeEach(() => {
+          cjsDummy = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
+          });
           stage.accessibilityTranslator.update();
-          cjsListBox.accessible.addChildAt(cjsSpan, 0);
-        }).toThrowError(errorObj);
-      });
+        });
 
-      const cjsDummy = new createjs.Shape();
-      AccessibilityModule.register({
-        displayObject: cjsDummy,
-        role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
-      });
+        it('throws NO error when adding permitted child using addChild', () => {
+          expect(() => {
+            cjsListBox.accessible.addChild(cjsDummy, 0);
+          }).not.toThrowError();
+        });
 
-      it('throws NO error when adding permitted child using addChild()', () => {
-        expect(() => {
-          cjsListBox.accessible.addChild(cjsDummy, 0);
-        }).not.toThrowError();
-      });
-
-      it('throws NO error when adding permitted child using addChildAt()', () => {
-        expect(() => {
-          stage.accessibilityTranslator.update();
-          cjsListBox.accessible.addChildAt(cjsDummy, 0);
-        }).not.toThrowError();
+        it('throws NO error when adding permitted child using addChildAt()', () => {
+          expect(() => {
+            cjsListBox.accessible.addChildAt(cjsDummy, 0);
+          }).not.toThrowError();
+        });
       });
     });
 
@@ -184,10 +196,22 @@ describe('SingleSelectListBoxData', () => {
       });
 
       describe('can read and set "selected" property', () => {
-        const cjsListItem = new createjs.Shape();
-        AccessibilityModule.register({
-          displayObject: cjsListItem,
-          role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
+        let cjsListItem;
+        let cjsDummy;
+
+        beforeEach(() => {
+          cjsListItem = new createjs.Shape();
+          cjsDummy = new createjs.Shape();
+
+          AccessibilityModule.register({
+            displayObject: cjsListItem,
+            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
+          });
+
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.SPAN,
+          });
         });
 
         it('with valid displayObject role and value', () => {
@@ -200,12 +224,6 @@ describe('SingleSelectListBoxData', () => {
         });
 
         it('throws error with INVALID displayObject role', () => {
-          const cjsDummy = new createjs.Shape();
-          AccessibilityModule.register({
-            displayObject: cjsDummy,
-            role: AccessibilityModule.ROLES.SPAN,
-          });
-
           expect(() => {
             cjsListBox.accessible.selected = cjsDummy;
           }).toThrowError(

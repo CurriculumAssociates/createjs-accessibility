@@ -57,28 +57,30 @@ describe('ProgressBarData', () => {
         );
       });
 
-      //  below props are inherited from RangeData
+      describe('inherits props from RangeData', () => {
+        it('sets "aria-valuemax" attribute', () => {
+          expect(
+            parseInt(progressEl.getAttribute('aria-valuemax'), 10)
+          ).toEqual(maxVal);
+        });
 
-      it('sets "aria-valuemax" attribute', () => {
-        expect(parseInt(progressEl.getAttribute('aria-valuemax'), 10)).toEqual(
-          maxVal
-        );
-      });
+        it('sets "aria-valuemin" attribute', () => {
+          expect(
+            parseInt(progressEl.getAttribute('aria-valuemin'), 10)
+          ).toEqual(minVal);
+        });
 
-      it('sets "aria-valuemin" attribute', () => {
-        expect(parseInt(progressEl.getAttribute('aria-valuemin'), 10)).toEqual(
-          minVal
-        );
-      });
+        it('sets "aria-valuenow" attribute', () => {
+          expect(
+            parseInt(progressEl.getAttribute('aria-valuenow'), 10)
+          ).toEqual(valueVal);
+        });
 
-      it('sets "aria-valuenow" attribute', () => {
-        expect(parseInt(progressEl.getAttribute('aria-valuenow'), 10)).toEqual(
-          valueVal
-        );
-      });
-
-      it('sets "aria-valuetext" attribute', () => {
-        expect(progressEl.getAttribute('aria-valuetext')).toEqual(valueTextVal);
+        it('sets "aria-valuetext" attribute', () => {
+          expect(progressEl.getAttribute('aria-valuetext')).toEqual(
+            valueTextVal
+          );
+        });
       });
     });
 

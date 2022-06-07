@@ -45,39 +45,50 @@ describe('OrderedListData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj = /Children of orderedlist must have a role of listitem/;
-      it('throws error attempting to add prohibited child using addChild() ', () => {
-        expect(() => {
+      describe('prohibited children', () => {
+        let errorObj;
+
+        beforeEach(() => {
+          errorObj = /Children of orderedlist must have a role of listitem/;
           stage.accessibilityTranslator.update();
-          cjsOrderedList.accessible.addChild(cjsCell);
-        }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChild() ', () => {
+          expect(() => {
+            cjsOrderedList.accessible.addChild(cjsCell);
+          }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChildAt()', () => {
+          expect(() => {
+            cjsOrderedList.accessible.addChildAt(cjsCell, 0);
+          }).toThrowError(errorObj);
+        });
       });
 
-      it('throws error attempting to add prohibited child using addChildAt()', () => {
-        expect(() => {
-          stage.accessibilityTranslator.update();
-          cjsOrderedList.accessible.addChildAt(cjsCell, 0);
-        }).toThrowError(errorObj);
-      });
+      describe('permitted children', () => {
+        let cjsDummy;
 
-      const cjsDummy = new createjs.Shape();
-      AccessibilityModule.register({
-        displayObject: cjsDummy,
-        role: AccessibilityModule.ROLES.LISTITEM,
-      });
-
-      it('throws NO error when adding permitted child using addChild', () => {
-        expect(() => {
+        beforeEach(() => {
+          cjsDummy = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.LISTITEM,
+          });
           stage.accessibilityTranslator.update();
-          cjsOrderedList.accessible.addChild(cjsDummy, 0);
-        }).not.toThrowError();
-      });
+        });
 
-      it('throws NO error when adding permitted child using addChildAt()', () => {
-        expect(() => {
-          stage.accessibilityTranslator.update();
-          cjsOrderedList.accessible.addChildAt(cjsDummy, 0);
-        }).not.toThrowError();
+        it('throws NO error when adding permitted child using addChild', () => {
+          expect(() => {
+            cjsOrderedList.accessible.addChild(cjsDummy, 0);
+          }).not.toThrowError();
+        });
+
+        it('throws NO error when adding permitted child using addChildAt()', () => {
+          expect(() => {
+            cjsOrderedList.accessible.addChildAt(cjsDummy, 0);
+          }).not.toThrowError();
+        });
       });
     });
 

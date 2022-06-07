@@ -77,43 +77,51 @@ describe('RowData', () => {
     });
 
     describe('children checking', () => {
-      const errorObj =
-        /Children of row must have a role of cell, gridcell, columnheader, or rowheader/;
-      it('throws error attempting to add prohibited child using addChild() ', () => {
-        expect(() => {
-          stage.accessibilityTranslator.update();
-          cjsRow.accessible.addChild(cjsSpan);
-        }).toThrowError(errorObj);
-      });
+      describe('prohibited children', () => {
+        let errorObj;
 
-      it('throws error attempting to add prohibited child using addChildAt()', () => {
-        expect(() => {
+        beforeEach(() => {
+          errorObj =
+            /Children of row must have a role of cell, gridcell, columnheader, or rowheader/;
           stage.accessibilityTranslator.update();
-          cjsRow.accessible.addChildAt(cjsSpan, 0);
-        }).toThrowError(errorObj);
-      });
-
-      const cjsDummy = new createjs.Shape();
-      it('throws NO error when adding permitted child using addChild', () => {
-        AccessibilityModule.register({
-          displayObject: cjsDummy,
-          role: AccessibilityModule.ROLES.CELL,
         });
-        expect(() => {
-          stage.accessibilityTranslator.update();
-          cjsRow.accessible.addChild(cjsDummy, 0);
-        }).not.toThrowError();
+
+        it('throws error attempting to add prohibited child using addChild() ', () => {
+          expect(() => {
+            cjsRow.accessible.addChild(cjsSpan);
+          }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChildAt()', () => {
+          expect(() => {
+            cjsRow.accessible.addChildAt(cjsSpan, 0);
+          }).toThrowError(errorObj);
+        });
       });
 
-      it('throws NO error when adding permitted child using addChildAt()', () => {
-        AccessibilityModule.register({
-          displayObject: cjsDummy,
-          role: AccessibilityModule.ROLES.CELL,
-        });
-        expect(() => {
+      describe('permitted children', () => {
+        let cjsDummy;
+
+        beforeEach(() => {
+          cjsDummy = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.CELL,
+          });
           stage.accessibilityTranslator.update();
-          cjsRow.accessible.addChildAt(cjsDummy, 0);
-        }).not.toThrowError();
+        });
+
+        it('throws NO error when adding permitted child using addChild', () => {
+          expect(() => {
+            cjsRow.accessible.addChild(cjsDummy, 0);
+          }).not.toThrowError();
+        });
+
+        it('throws NO error when adding permitted child using addChildAt()', () => {
+          expect(() => {
+            cjsRow.accessible.addChildAt(cjsDummy, 0);
+          }).not.toThrowError();
+        });
       });
     });
 
