@@ -95,10 +95,10 @@ export default class TabListData extends CompositeData {
       this._displayObject.dispatchEvent(event);
     }
     if (
-      (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right)
-      && this.orientation === 'horizontal'
+      (e.keyCode === KeyCodes.left || e.keyCode === KeyCodes.right) &&
+      this.orientation === 'horizontal'
     ) {
-      let index = _.findIndex(this._children, tab => tab.accessible.selected);
+      let index = _.findIndex(this._children, (tab) => tab.accessible.selected);
 
       if (e.keyCode === KeyCodes.left) {
         index = (this._children.length + index - 1) % this._children.length;
@@ -113,14 +113,15 @@ export default class TabListData extends CompositeData {
     }
 
     if (
-      (e.keyCode === KeyCodes.up || e.keyCode === KeyCodes.down)
-      && this.orientation === 'vertical'
+      (e.keyCode === KeyCodes.up || e.keyCode === KeyCodes.down) &&
+      this.orientation === 'vertical'
     ) {
       const targetId = e.target.id;
       const currIndex = this._domIdToChildIndex(targetId);
       let nextIndex;
       if (e.keyCode === KeyCodes.up) {
-        nextIndex = (this._children.length + currIndex - 1) % this._children.length;
+        nextIndex =
+          (this._children.length + currIndex - 1) % this._children.length;
       } else {
         nextIndex = (currIndex + 1) % this._children.length;
       }

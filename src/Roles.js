@@ -206,8 +206,8 @@ function getTagNameForDisplayObject(displayObject) {
   let tagName = ROLE_TAG_MAPPING[role] || 'div';
 
   if (
-    role === ROLES.MENUITEM
-    && displayObject.accessible.parent.role === ROLES.MENUITEM
+    role === ROLES.MENUITEM &&
+    displayObject.accessible.parent.role === ROLES.MENUITEM
   ) {
     // the DisplayObject is for a popup menu (e.g. child of a menu bar), so this DisplayObject
     // is grouping the label and menu
@@ -230,11 +230,11 @@ function getTagNameForDisplayObject(displayObject) {
 function doesRoleUseSemanticallyInteractiveTag(role) {
   const tagName = ROLE_TAG_MAPPING[role] || 'div';
   return (
-    tagName === 'a'
-    || tagName === 'select'
-    || tagName === 'input'
-    || tagName === 'textarea'
-    || tagName === 'button'
+    tagName === 'a' ||
+    tagName === 'select' ||
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'button'
   );
 }
 
