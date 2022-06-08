@@ -79,8 +79,8 @@ export default class ScrollBarData extends RangeData {
         this._displayObject.dispatchEvent(event);
       }
     } else if (
-      evt.keyCode === KeyCodes.left
-      || evt.keyCode === KeyCodes.right
+      evt.keyCode === KeyCodes.left ||
+      evt.keyCode === KeyCodes.right
     ) {
       evt.stopPropagation();
       evt.preventDefault();

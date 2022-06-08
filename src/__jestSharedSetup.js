@@ -33,6 +33,4 @@ afterEach(() => {
   }
 });
 
-export {
-  canvasEl, container, parentEl, stage,
-};
+export { canvasEl, container, parentEl, stage };
