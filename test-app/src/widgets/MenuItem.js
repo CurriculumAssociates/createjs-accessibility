@@ -9,12 +9,10 @@ export default class MenuItem extends createjs.Container {
     super();
     _.bindAll(this, 'onFocus', 'onBlur');
 
-    this._focusIndicator = new createjs.Shape();
-    this._focusIndicator.visible = false;
-    this.addChild(this._focusIndicator);
-
     this._label = new createjs.Text(label, '16px Arial');
     this.addChild(this._label);
+
+    this.setupFocusIndicator();
 
     const bounds = this._label.getBounds();
     this._label.hitArea = new createjs.Shape();
@@ -39,12 +37,23 @@ export default class MenuItem extends createjs.Container {
     });
   }
 
-  setMenuWidth(x, width) {
+  setupFocusIndicator() {
+    const paddingTopLeft = -1.5;
+    const paddingWidthHeight = 3;
     const bounds = this.getBounds();
+    this._focusIndicator = new createjs.Shape();
+    this._focusIndicator.visible = false;
     this._focusIndicator.graphics
       .clear()
-      .beginFill('#31c7ec')
-      .drawRect(x, bounds.y, width, bounds.height);
+      .setStrokeStyle(2)
+      .beginStroke('#000000')
+      .drawRect(
+        bounds.x + paddingTopLeft,
+        bounds.y + paddingTopLeft,
+        bounds.width + paddingWidthHeight,
+        bounds.height + paddingWidthHeight
+      );
+    this.addChild(this._focusIndicator);
   }
 
   onFocus() {

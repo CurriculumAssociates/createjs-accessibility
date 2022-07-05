@@ -39,10 +39,19 @@ export default class SpinButton extends createjs.Container {
           eventName: 'change',
           listener: this.onChange,
         },
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
       ],
     });
 
     this.setBounds(0, 0, this.width, this.height);
+    this.setupFocusIndicator(0, 0, this.width, this.height);
     this.createButtons();
   }
 
@@ -52,18 +61,18 @@ export default class SpinButton extends createjs.Container {
       value: '+',
       name: 'Increment',
       enabled: true,
-      autoFocus: false,
+      autoFocus: true,
       width: this.width,
       height: this.height * 0.5,
     };
     // Increment button
-    this.incBtn = new Button(options, -1, this.onIncrement.bind(this));
+    this.incBtn = new Button(options, 0, this.onIncrement.bind(this));
     this.addChild(this.incBtn);
 
     // Decrement button
     options.value = '-';
     options.name = 'Decrement';
-    this.decBtn = new Button(options, -1, this.onDecrement.bind(this));
+    this.decBtn = new Button(options, 0, this.onDecrement.bind(this));
     this.addChild(this.decBtn);
 
     this.decBtn.y = this.height * 0.5;
@@ -94,6 +103,25 @@ export default class SpinButton extends createjs.Container {
     this.targetContainer.text = this.currentValue;
     this.accessible.value = this.currentValue;
     this.callback();
+  }
+
+  setupFocusIndicator(x, y, width, height) {
+    this._focusIndicator = new createjs.Shape();
+    this._focusIndicator.visible = false;
+    this._focusIndicator.graphics
+      .setStrokeStyle(4)
+      .beginStroke('#000000')
+      .drawRect(x, y, width, height);
+
+    this.addChild(this._focusIndicator);
+  }
+
+  onFocus() {
+    this._focusIndicator.visible = true;
+  }
+
+  onBlur() {
+    this._focusIndicator.visible = false;
   }
 
   get width() {
