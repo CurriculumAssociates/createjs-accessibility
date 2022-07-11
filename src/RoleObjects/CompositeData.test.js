@@ -2,7 +2,7 @@ import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
-describe('SingleLineTextBoxData', () => {
+describe('CompositeData', () => {
   describe('register role', () => {
     let cjsComposite;
     let compositeEl;
