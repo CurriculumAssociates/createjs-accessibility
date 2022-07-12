@@ -7,7 +7,7 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 describe('TabData', () => {
   describe('register role', () => {
     let cjsTab;
-    let tabEl;
+    let divEl;
     const accessibleOptions = {};
 
     beforeEach(() => {
@@ -24,12 +24,12 @@ describe('TabData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      tabEl = parentEl.querySelector(`#${cjsTab.accessible.domId}`);
+      divEl = parentEl.querySelector('div[role=tab]');
     });
 
     describe('rendering', () => {
-      it('creates tree element', () => {
-        expect(tabEl).not.toBeUndefined();
+      it('creates div[role=tab] element', () => {
+        expect(divEl).not.toBeNull();
       });
     });
 
@@ -38,95 +38,94 @@ describe('TabData', () => {
         expect(cjsTab.accessible.enableKeyEvents).toBe(false);
 
         cjsTab.accessible.enableKeyEvents = true;
-        stage.accessibilityTranslator.update();
         expect(cjsTab.accessible.enableKeyEvents).toBe(true);
       });
 
-      it('can set and get "size" property', () => {
+      it('can set and get "size" property for "[aria-setsize]"', () => {
         expect(cjsTab.accessible.size).toBe(accessibleOptions.size);
 
         cjsTab.accessible.size = 2;
         stage.accessibilityTranslator.update();
         expect(cjsTab.accessible.size).toBe(2);
+        expect(+divEl.getAttribute('aria-setsize')).toBe(2);
       });
 
-      it('can set and get "position" property', () => {
+      it('can set and get "position" property for "[aria-posinset]"', () => {
         expect(cjsTab.accessible.position).toBe(accessibleOptions.position);
 
         cjsTab.accessible.position = 2;
         stage.accessibilityTranslator.update();
         expect(cjsTab.accessible.position).toBe(2);
+        expect(+divEl.getAttribute('aria-posinset')).toBe(2);
       });
 
-      it('can set and get "controls" property', () => {
+      it('can set and get "controls" property for "[aria-controls]"', () => {
         expect(cjsTab.accessible.controls).toBe(accessibleOptions.controls);
 
         cjsTab.accessible.controls = 'tabpanel2';
         stage.accessibilityTranslator.update();
         expect(cjsTab.accessible.controls).toBe('tabpanel2');
+        expect(divEl.getAttribute('aria-controls')).toBe('tabpanel2');
       });
 
-      it('can set and get "selected" property', () => {
+      it('can set and get "selected" property for "[aria-selected]"', () => {
         expect(cjsTab.accessible.selected).toBe(accessibleOptions.selected);
 
         cjsTab.accessible.selected = true;
         stage.accessibilityTranslator.update();
         expect(cjsTab.accessible.selected).toBe(true);
+        expect(divEl.getAttribute('aria-selected')).toBe('true');
       });
     });
 
     describe('keydown event handlers', () => {
+      let onKeyboardClick;
+      beforeEach(() => {
+        onKeyboardClick = jest.fn();
+        cjsTab.on('keyboardClick', onKeyboardClick);
+      });
       it('can dispatch "keyboardClick" event when Enter key is clicked', () => {
-        const onKeydown = jest.fn();
-        cjsTab.on('keyboardClick', onKeydown);
-
         const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(tabEl, { keyCode });
-        expect(onKeydown).toBeCalledTimes(1);
+        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('can dispatch "keyboardClick" event when Space key is clicked', () => {
-        const onKeydown = jest.fn();
-        cjsTab.on('keyboardClick', onKeydown);
-
         const keyCode = KeyCodes.space;
-        ReactTestUtils.Simulate.keyDown(tabEl, { keyCode });
-        expect(onKeydown).toBeCalledTimes(1);
+        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('does not dispatch "keyboardClick" event Enter or Space key is not pressed', () => {
-        const onKeydown = jest.fn();
-        cjsTab.on('keyboardClick', onKeydown);
-
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(tabEl, { keyCode });
-        expect(onKeydown).not.toBeCalled();
+        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        expect(onKeyboardClick).not.toBeCalled();
       });
 
-      it('does not dispatch "keyboardClick" event when default is prevented', () => {
-        cjsTab.accessible.enableKeyEvents = true;
-        const onKeydown = jest.fn();
-        cjsTab.on('keyboardClick', onKeydown);
-
-        const keyCode = KeyCodes.space;
-        ReactTestUtils.Simulate.keyDown(tabEl, {
-          keyCode,
-          defaultPrevented: true,
+      describe('"enableKeyEvents" is true', () => {
+        let onKeydown;
+        beforeEach(() => {
+          cjsTab.accessible.enableKeyEvents = true;
+          onKeydown = jest.fn();
+          cjsTab.on('keydown', onKeydown);
         });
-        expect(onKeydown).not.toBeCalled();
-      });
 
-      it('can also dispatch "keydown" event enableKeyEvents is true and default is not prevented', () => {
-        const onKeydown = jest.fn();
-        const onKeyboardClick = jest.fn();
-        cjsTab.accessible.enableKeyEvents = true;
-        cjsTab.on('keydown', onKeydown);
-        cjsTab.on('keyboardClick', onKeyboardClick);
+        it('does not dispatch "keyboardClick" event when default is prevented', () => {
+          const keyCode = KeyCodes.space;
+          ReactTestUtils.Simulate.keyDown(divEl, {
+            keyCode,
+            defaultPrevented: true,
+          });
+          expect(onKeydown).toBeCalledTimes(1);
+          expect(onKeyboardClick).not.toBeCalled();
+        });
 
-        const keyCode = KeyCodes.space;
-        ReactTestUtils.Simulate.keyDown(tabEl, { keyCode });
-        expect(onKeydown).toBeCalledTimes(1);
-        expect(onKeyboardClick).toBeCalledTimes(1);
+        it('can also dispatch "keydown" event enableKeyEvents is true and default is not prevented', () => {
+          const keyCode = KeyCodes.space;
+          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          expect(onKeydown).toBeCalledTimes(1);
+          expect(onKeyboardClick).toBeCalledTimes(1);
+        });
       });
     });
   });

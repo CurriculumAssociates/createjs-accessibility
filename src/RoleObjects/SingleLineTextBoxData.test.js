@@ -31,7 +31,7 @@ describe('SingleLineTextBoxData', () => {
 
     describe('rendering', () => {
       it('creates input[type=text] element', () => {
-        expect(inputEl).not.toBeUndefined();
+        expect(inputEl).not.toBeNull();
       });
     });
 
@@ -55,24 +55,21 @@ describe('SingleLineTextBoxData', () => {
       });
     });
 
-    describe('accessible options getters and setters', () => {
+    describe('getters and setters methods', () => {
       it('can set and get "autoComplete" property', () => {
         expect(cjsInput.accessible.autoComplete).toBe(true);
         const newVal = 'username';
         cjsInput.accessible.autoComplete = newVal;
-        stage.accessibilityTranslator.update();
         expect(cjsInput.accessible.autoComplete).toBe(newVal);
       });
 
       it('boolean value for "autoComplete" property is converted into "on" or "off"', () => {
         let newVal = true;
         cjsInput.accessible.autoComplete = newVal;
-        stage.accessibilityTranslator.update();
         expect(cjsInput.accessible.autoComplete).toBe('on');
 
         newVal = false;
         cjsInput.accessible.autoComplete = newVal;
-        stage.accessibilityTranslator.update();
         expect(cjsInput.accessible.autoComplete).toBe('off');
       });
 
@@ -95,7 +92,6 @@ describe('SingleLineTextBoxData', () => {
             accessibleOptions[property]
           );
           cjsInput.accessible[property] = newVal;
-          stage.accessibilityTranslator.update();
         });
       });
 
@@ -116,7 +112,6 @@ describe('SingleLineTextBoxData', () => {
           role: AccessibilityModule.ROLES.SINGLELINETEXTBOX,
         });
         cjsInput.accessible.active = dummyObj;
-        stage.accessibilityTranslator.update();
         expect(cjsInput.accessible.active).toEqual(dummyObj);
         expect(cjsInput.accessible.activeId).toBe(dummyObj.accessible.domId);
       });
@@ -127,7 +122,6 @@ describe('SingleLineTextBoxData', () => {
         };
         const updatedValue = 'updated value';
         cjsInput.accessible.value = updatedValue;
-        stage.accessibilityTranslator.update();
         expect(inputEl.value).toEqual(updatedValue);
       });
     });

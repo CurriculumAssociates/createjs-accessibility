@@ -5,7 +5,7 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 describe('CompositeData', () => {
   describe('register role', () => {
     let cjsComposite;
-    let compositeEl;
+    let divEl;
 
     beforeEach(() => {
       cjsComposite = new createjs.Shape();
@@ -16,16 +16,16 @@ describe('CompositeData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      compositeEl = parentEl.querySelector(`#${cjsComposite.accessible.domId}`);
+      divEl = parentEl.querySelector('div[role=application]');
     });
 
     describe('rendering', () => {
-      it('creates composite application element', () => {
-        expect(compositeEl).not.toBeUndefined();
+      it('creates div[role=application] element', () => {
+        expect(divEl).not.toBeNull();
       });
     });
 
-    describe('accessible options getters and setters', () => {
+    describe('getters and setters methods', () => {
       it('throws error if non accessible object is passed to "active" property', () => {
         const dummyObj = new createjs.Shape();
         expect(() => {
@@ -35,7 +35,7 @@ describe('CompositeData', () => {
         );
       });
 
-      it(`can set and get "active" property`, () => {
+      it('can set and get "active" property', () => {
         const dummyObj = new createjs.Shape();
         AccessibilityModule.register({
           displayObject: dummyObj,
@@ -43,7 +43,6 @@ describe('CompositeData', () => {
           role: AccessibilityModule.ROLES.TABLE,
         });
         cjsComposite.accessible.active = dummyObj;
-        stage.accessibilityTranslator.update();
         expect(cjsComposite.accessible.active).toEqual(dummyObj);
         expect(cjsComposite.accessible.activeId).toBe(
           dummyObj.accessible.domId

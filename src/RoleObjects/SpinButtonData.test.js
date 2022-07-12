@@ -7,7 +7,7 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 describe('SpinButtonData', () => {
   describe('register role', () => {
     let cjsSpin;
-    let spinEl;
+    let inputEl;
     const accessibleOptions = {};
 
     beforeEach(() => {
@@ -26,17 +26,17 @@ describe('SpinButtonData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      spinEl = parentEl.querySelector(`#${cjsSpin.accessible.domId}`);
+      inputEl = parentEl.querySelector('input[role=spinbutton]');
     });
 
     describe('rendering', () => {
-      it('creates spin Button element', () => {
-        expect(spinEl).not.toBeUndefined();
+      it('creates input[role=spinbutton] element', () => {
+        expect(inputEl).not.toBeNull();
       });
     });
 
     describe('"addChild" and "addChildAt"', () => {
-      it('thorws Error if child is added', () => {
+      it('throws Error if child is added', () => {
         const childObj = new createjs.Shape();
         expect(() => {
           cjsSpin.accessible.addChild(childObj);
@@ -47,7 +47,7 @@ describe('SpinButtonData', () => {
       });
     });
 
-    describe('Accessible getters and setters methods', () => {
+    describe('getters and setters methods', () => {
       it('can get and set "enableKeyEvent" property', () => {
         expect(cjsSpin.accessible.enableKeyEvents).toBe(false);
 
@@ -61,42 +61,52 @@ describe('SpinButtonData', () => {
         cjsSpin.accessible.value = 25;
         stage.accessibilityTranslator.update();
         expect(cjsSpin.accessible.value).toBe(25);
-        expect(+spinEl.getAttribute('value')).toBe(25);
+        expect(+inputEl.getAttribute('value')).toBe(25);
       });
 
-      it('can get and set "min" and "max" property', () => {
+      it('can get and set "min" property', () => {
         expect(cjsSpin.accessible.min).toBe(accessibleOptions.min);
-        expect(cjsSpin.accessible.max).toBe(accessibleOptions.max);
 
         cjsSpin.accessible.min = 0;
-        cjsSpin.accessible.max = 100;
         stage.accessibilityTranslator.update();
         expect(cjsSpin.accessible.min).toBe(0);
-        expect(cjsSpin.accessible.max).toBe(100);
-        expect(+spinEl.getAttribute('min')).toBe(0);
-        expect(+spinEl.getAttribute('max')).toBe(100);
+        expect(+inputEl.getAttribute('min')).toBe(0);
       });
 
-      it('can get and set "readOnly" and "required" property', () => {
+      it('can get and set "max" property', () => {
+        expect(cjsSpin.accessible.max).toBe(accessibleOptions.max);
+
+        cjsSpin.accessible.max = 100;
+        stage.accessibilityTranslator.update();
+        expect(cjsSpin.accessible.max).toBe(100);
+        expect(+inputEl.getAttribute('max')).toBe(100);
+      });
+
+      it('can get and set "readOnly" property', () => {
         expect(cjsSpin.accessible.readOnly).toBe(accessibleOptions.readOnly);
-        expect(cjsSpin.accessible.required).toBe(accessibleOptions.required);
 
         cjsSpin.accessible.readOnly = true;
-        cjsSpin.accessible.required = true;
         stage.accessibilityTranslator.update();
         expect(cjsSpin.accessible.readOnly).toBe(true);
+        expect(inputEl.getAttribute('aria-readonly')).toBe('true');
+      });
+
+      it('can get and set "required" property', () => {
+        expect(cjsSpin.accessible.required).toBe(accessibleOptions.required);
+
+        cjsSpin.accessible.required = true;
+        stage.accessibilityTranslator.update();
         expect(cjsSpin.accessible.required).toBe(true);
-        expect(spinEl.getAttribute('aria-readonly')).toBe('true');
-        expect(spinEl.getAttribute('aria-required')).toBe('true');
+        expect(inputEl.getAttribute('aria-required')).toBe('true');
       });
     });
 
-    describe('"onKeyDown" and "onChange" event listeneres', () => {
+    describe('"onKeyDown" and "onChange" event listeners', () => {
       it('can dispatch "increment" event when key up is clicked', () => {
         const onIncrement = jest.fn();
         cjsSpin.on('increment', onIncrement);
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onIncrement).toBeCalledTimes(1);
       });
 
@@ -104,7 +114,7 @@ describe('SpinButtonData', () => {
         const onDecrement = jest.fn();
         cjsSpin.on('decrement', onDecrement);
         const keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onDecrement).toBeCalledTimes(1);
       });
 
@@ -113,11 +123,11 @@ describe('SpinButtonData', () => {
         cjsSpin.on('keydown', onKeyDown);
 
         const keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onKeyDown).toBeCalledTimes(0);
 
         cjsSpin.accessible.enableKeyEvents = true;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
@@ -129,7 +139,7 @@ describe('SpinButtonData', () => {
 
         const keyCode = KeyCodes.down;
         cjsSpin.accessible.enableKeyEvents = true;
-        ReactTestUtils.Simulate.keyDown(spinEl, {
+        ReactTestUtils.Simulate.keyDown(inputEl, {
           keyCode,
           defaultPrevented: true,
         });
@@ -141,7 +151,7 @@ describe('SpinButtonData', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
         const keyCode = KeyCodes.home;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         const eventData = onChange.mock.calls[0][0];
         expect(onChange).toBeCalledTimes(1);
         expect(eventData.value).toBe(accessibleOptions.min);
@@ -151,7 +161,7 @@ describe('SpinButtonData', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
         const keyCode = KeyCodes.end;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         const eventData = onChange.mock.calls[0][0];
         expect(onChange).toBeCalledTimes(1);
         expect(eventData.value).toBe(accessibleOptions.max);
@@ -160,7 +170,7 @@ describe('SpinButtonData', () => {
       it('can dispatch "change" event when the value is changed', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
-        ReactTestUtils.Simulate.change(spinEl, {
+        ReactTestUtils.Simulate.change(inputEl, {
           target: { value: 25 },
         });
         const eventData = onChange.mock.calls[0][0];
@@ -173,7 +183,7 @@ describe('SpinButtonData', () => {
         cjsSpin.on('change', onChange);
         cjsSpin.accessible.min = undefined;
         const keyCode = KeyCodes.home;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onChange).toBeCalledTimes(0);
       });
 
@@ -182,7 +192,7 @@ describe('SpinButtonData', () => {
         cjsSpin.on('change', onChange);
         cjsSpin.accessible.max = undefined;
         const keyCode = KeyCodes.end;
-        ReactTestUtils.Simulate.keyDown(spinEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
         expect(onChange).toBeCalledTimes(0);
       });
     });

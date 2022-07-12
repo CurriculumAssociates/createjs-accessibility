@@ -16,41 +16,55 @@ describe('TableSectionData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      tableEl = parentEl.querySelector(`#${cjsTableSection.accessible.domId}`);
+      tableEl = parentEl.querySelector('tbody');
     });
 
     describe('rendering', () => {
-      it('creates tree element', () => {
-        expect(tableEl).not.toBeUndefined();
+      it('creates tbody element', () => {
+        expect(tableEl).not.toBeNull();
       });
     });
 
     describe('"addChild" and "addChildAt"', () => {
-      it('throws error if the child is not accessible object or not a Row', () => {
-        const childObj = new createjs.Shape();
-        expect(() => {
-          cjsTableSection.accessible.addChild(childObj);
-        }).toThrowError(/Children of tableBody must have a role of row/);
-
-        expect(() => {
-          cjsTableSection.accessible.addChildAt(childObj, 0);
-        }).toThrowError(/Children of tableBody must have a role of row/);
+      let childObj;
+      const errorMsg = /Children of tableBody must have a role of row/;
+      beforeEach(() => {
+        childObj = new createjs.Shape();
       });
 
-      it('does not throws error if the child accessible object and a Row', () => {
-        const childObj = new createjs.Shape();
-        AccessibilityModule.register({
-          displayObject: childObj,
-          role: AccessibilityModule.ROLES.ROW,
+      describe('child is not accessible and not a Row', () => {
+        it('"addChild" method throws error if the child is not accessible object or not a Row', () => {
+          expect(() => {
+            cjsTableSection.accessible.addChild(childObj);
+          }).toThrowError(errorMsg);
         });
 
-        expect(() => {
-          cjsTableSection.accessible.addChild(childObj);
-        }).not.toThrowError(/Children of tableBody must have a role of row/);
+        it('"addChildAt" method throws error if the child is not accessible object or not a Row', () => {
+          expect(() => {
+            cjsTableSection.accessible.addChildAt(childObj, 1);
+          }).toThrowError(errorMsg);
+        });
+      });
 
-        expect(() => {
-          cjsTableSection.accessible.addChildAt(childObj, 0);
-        }).not.toThrowError(/Children of tableBody must have a role of row/);
+      describe('child is accessible and has a role of ROW', () => {
+        beforeEach(() => {
+          AccessibilityModule.register({
+            displayObject: childObj,
+            role: AccessibilityModule.ROLES.ROW,
+          });
+        });
+
+        it('"addChild" does not throws error if the child accessible object and a Row', () => {
+          expect(() => {
+            cjsTableSection.accessible.addChild(childObj);
+          }).not.toThrowError(errorMsg);
+        });
+
+        it('"addChildAt" does not throws error if the child accessible object and a Row', () => {
+          expect(() => {
+            cjsTableSection.accessible.addChildAt(childObj, 0);
+          }).not.toThrowError(errorMsg);
+        });
       });
     });
   });

@@ -16,61 +16,55 @@ describe('UnorderedListData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      ulEl = parentEl.querySelector(`#${cjsUl.accessible.domId}`);
+      ulEl = parentEl.querySelector('ul');
     });
 
     describe('rendering', () => {
       it('creates ul element', () => {
-        expect(ulEl).not.toBeUndefined();
+        expect(ulEl).not.toBeNull();
       });
     });
 
     describe('"addChild" and "addChildAt"', () => {
-      it('thorws Error if child is not LISTITEM or child is not accessible', () => {
-        const childObj = new createjs.Shape();
-        expect(() => {
-          cjsUl.accessible.addChild(childObj);
-        }).toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
-        expect(() => {
-          cjsUl.accessible.addChildAt(childObj, 0);
-        }).toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
+      let childObj;
+      const errorMsg = /Children of unorderedlist must have a role of listitem/;
+      beforeEach(() => {
+        childObj = new createjs.Shape();
+      });
 
-        AccessibilityModule.register({
-          displayObject: childObj,
-          role: AccessibilityModule.ROLES.HEADING1,
+      describe('child is not Accessible and not a LISTITEM', () => {
+        it('"addChild" throws Error if child is not LISTITEM or child is not accessible', () => {
+          expect(() => {
+            cjsUl.accessible.addChild(childObj);
+          }).toThrowError(errorMsg);
         });
-        stage.accessibilityTranslator.update();
 
-        expect(() => {
-          cjsUl.accessible.addChild(childObj);
-        }).toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
-        expect(() => {
-          cjsUl.accessible.addChildAt(childObj, 0);
-        }).toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
-
-        AccessibilityModule.register({
-          displayObject: childObj,
-          role: AccessibilityModule.ROLES.LISTITEM,
+        it('"addChildAt" throws Error if child is not LISTITEM or child is not accessible', () => {
+          expect(() => {
+            cjsUl.accessible.addChildAt(childObj, 0);
+          }).toThrowError(errorMsg);
         });
-        stage.accessibilityTranslator.update();
-        expect(() => {
-          cjsUl.accessible.addChild(childObj);
-        }).not.toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
-        expect(() => {
-          cjsUl.accessible.addChildAt(childObj, 0);
-        }).not.toThrowError(
-          /Children of unorderedlist must have a role of listitem/
-        );
+      });
+
+      describe('child is Accessible and has role LISTITEM', () => {
+        beforeEach(() => {
+          AccessibilityModule.register({
+            displayObject: childObj,
+            role: AccessibilityModule.ROLES.LISTITEM,
+          });
+        });
+
+        it('"addChild" does not throw Error if child is Accessible and has role LISTITEM', () => {
+          expect(() => {
+            cjsUl.accessible.addChild(childObj);
+          }).not.toThrowError(errorMsg);
+        });
+
+        it('"addChildAT" does not throw Error if child is Accessible and has role LISTITEM', () => {
+          expect(() => {
+            cjsUl.accessible.addChildAt(childObj, 0);
+          }).not.toThrowError(errorMsg);
+        });
       });
     });
   });

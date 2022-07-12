@@ -5,7 +5,7 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 describe('TreeData', () => {
   describe('register role', () => {
     let cjsTree;
-    let treeEl;
+    let ulEl;
 
     beforeEach(() => {
       cjsTree = new createjs.Shape();
@@ -16,41 +16,54 @@ describe('TreeData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      treeEl = parentEl.querySelector(`#${cjsTree.accessible.domId}`);
+      ulEl = parentEl.querySelector('ul[role=tree]');
     });
 
     describe('rendering', () => {
-      it('creates tree element', () => {
-        expect(treeEl).not.toBeUndefined();
+      it('creates ul[role=tree] element', () => {
+        expect(ulEl).not.toBeNull();
       });
     });
 
     describe('"addChild" and "addChildAt"', () => {
-      it('throws error if the child is not accessible object or not a treeItem', () => {
-        const childObj = new createjs.Shape();
-        expect(() => {
-          cjsTree.accessible.addChild(childObj);
-        }).toThrowError(/Children of tree must have a role of treeitem/);
-
-        expect(() => {
-          cjsTree.accessible.addChildAt(childObj, 0);
-        }).toThrowError(/Children of tree must have a role of treeitem/);
+      let childObj;
+      const errorMsg = /Children of tree must have a role of treeitem/;
+      beforeEach(() => {
+        childObj = new createjs.Shape();
       });
-
-      it('does not throws error if the child accessible object and a treeItem', () => {
-        const childObj = new createjs.Shape();
-        AccessibilityModule.register({
-          displayObject: childObj,
-          role: AccessibilityModule.ROLES.TREEITEM,
+      describe('child is not Accessible and not a TreeItem', () => {
+        it('"addChild" throws error if the child is not accessible object or not a treeItem', () => {
+          expect(() => {
+            cjsTree.accessible.addChild(childObj);
+          }).toThrowError(errorMsg);
         });
 
-        expect(() => {
-          cjsTree.accessible.addChild(childObj);
-        }).not.toThrowError(/Children of tree must have a role of treeitem/);
+        it('"addChildAt" throws error if the child is not accessible object or not a treeItem', () => {
+          expect(() => {
+            cjsTree.accessible.addChildAt(childObj, 0);
+          }).toThrowError(errorMsg);
+        });
+      });
 
-        expect(() => {
-          cjsTree.accessible.addChildAt(childObj, 0);
-        }).not.toThrowError(/Children of tree must have a role of treeitem/);
+      describe('child is Accessible and has role TREEITEM', () => {
+        beforeEach(() => {
+          AccessibilityModule.register({
+            displayObject: childObj,
+            role: AccessibilityModule.ROLES.TREEITEM,
+          });
+        });
+
+        it('"addChild" does not throws error if the child accessible object and a treeItem', () => {
+          expect(() => {
+            cjsTree.accessible.addChild(childObj);
+          }).not.toThrowError(errorMsg);
+        });
+
+        it('"addChildAt" does not throws error if the child accessible object and a treeItem', () => {
+          expect(() => {
+            cjsTree.accessible.addChildAt(childObj, 0);
+          }).not.toThrowError(errorMsg);
+        });
       });
     });
 
@@ -61,7 +74,7 @@ describe('TreeData', () => {
         stage.accessibilityTranslator.update();
 
         expect(cjsTree.accessible.multiselectable).toBe(true);
-        expect(treeEl.getAttribute('aria-multiselectable')).toBe('true');
+        expect(ulEl.getAttribute('aria-multiselectable')).toBe('true');
       });
 
       it('can set and get "required" property', () => {
@@ -70,7 +83,7 @@ describe('TreeData', () => {
         stage.accessibilityTranslator.update();
 
         expect(cjsTree.accessible.required).toBe(true);
-        expect(treeEl.getAttribute('aria-required')).toBe('true');
+        expect(ulEl.getAttribute('aria-required')).toBe('true');
       });
     });
   });

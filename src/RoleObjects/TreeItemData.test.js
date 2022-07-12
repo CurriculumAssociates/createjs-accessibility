@@ -6,37 +6,30 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('TreeItemData', () => {
   describe('register role', () => {
-    let cjsTree;
     let cjsTreeItem;
-    let treeItemEl;
+    let liEl;
     const accessibleOptions = {};
 
     beforeEach(() => {
       cjsTreeItem = new createjs.Shape();
-      cjsTree = new createjs.Shape();
-      AccessibilityModule.register({
-        displayObject: cjsTree,
-        parent: container,
-        role: AccessibilityModule.ROLES.TREEITEM,
-      });
       accessibleOptions.positionInSet = 0;
       accessibleOptions.setSize = 1;
       accessibleOptions.selected = false;
       accessibleOptions.checked = false;
       AccessibilityModule.register({
         displayObject: cjsTreeItem,
-        parent: cjsTree,
+        parent: container,
         role: AccessibilityModule.ROLES.TREEITEM,
         accessibleOptions,
       });
       stage.accessibilityTranslator.update();
 
-      treeItemEl = parentEl.querySelector(`#${cjsTreeItem.accessible.domId}`);
+      liEl = parentEl.querySelector('li[role=treeitem]');
     });
 
     describe('rendering', () => {
-      it('creates tree item element', () => {
-        expect(treeItemEl).not.toBeUndefined();
+      it('creates li[role=treeitem] element', () => {
+        expect(liEl).not.toBeNull();
       });
     });
 
@@ -82,47 +75,46 @@ describe('TreeItemData', () => {
     });
 
     describe('onKeydown event Listener', () => {
+      let onKeyboardClick;
+      beforeEach(() => {
+        onKeyboardClick = jest.fn();
+        cjsTreeItem.on('keyboardClick', onKeyboardClick);
+      });
+
       it('can dispatch "keyboardClick" event if Enter key is pressed', () => {
-        const onKeyboardClick = jest.fn();
-        cjsTreeItem.on('keyboardClick', onKeyboardClick);
         const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(treeItemEl, {
-          keyCode,
-          cancelable: true,
-        });
-        expect(onKeyboardClick).toBeCalledTimes(1);
-      });
-
-      it('does not dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is called', () => {
-        const onKeyboardClick = jest.fn();
-        cjsTreeItem.accessible.enableKeyEvents = true;
-        cjsTreeItem.on('keyboardClick', onKeyboardClick);
-        const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(treeItemEl, {
-          keyCode,
-          defaultPrevented: true,
-        });
-        expect(onKeyboardClick).toBeCalledTimes(0);
-      });
-
-      it('can dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is not called', () => {
-        const onKeyboardClick = jest.fn();
-        cjsTreeItem.accessible.enableKeyEvents = true;
-        cjsTreeItem.on('keyboardClick', onKeyboardClick);
-        const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(treeItemEl, {
-          keyCode,
-          defaultPrevented: false,
-        });
+        ReactTestUtils.Simulate.keyDown(liEl, { keyCode });
         expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('does not dispatch "keyboardClick" event if enter key is not pressed', () => {
-        const onKeyboardClick = jest.fn();
-        cjsTreeItem.on('keyboardClick', onKeyboardClick);
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(treeItemEl, { keyCode });
+        ReactTestUtils.Simulate.keyDown(liEl, { keyCode });
         expect(onKeyboardClick).toBeCalledTimes(0);
+      });
+
+      describe('"enableKeyEvents" is true', () => {
+        beforeEach(() => {
+          cjsTreeItem.accessible.enableKeyEvents = true;
+        });
+
+        it('does not dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is called', () => {
+          const keyCode = KeyCodes.enter;
+          ReactTestUtils.Simulate.keyDown(liEl, {
+            keyCode,
+            defaultPrevented: true,
+          });
+          expect(onKeyboardClick).toBeCalledTimes(0);
+        });
+
+        it('can dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is not called', () => {
+          const keyCode = KeyCodes.enter;
+          ReactTestUtils.Simulate.keyDown(liEl, {
+            keyCode,
+            defaultPrevented: false,
+          });
+          expect(onKeyboardClick).toBeCalledTimes(1);
+        });
       });
     });
   });
