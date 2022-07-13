@@ -38,21 +38,14 @@ export default class MenuItem extends createjs.Container {
   }
 
   setupFocusIndicator() {
-    const paddingTopLeft = -1.5;
-    const paddingWidthHeight = 3;
     const bounds = this.getBounds();
     this._focusIndicator = new createjs.Shape();
     this._focusIndicator.visible = false;
     this._focusIndicator.graphics
       .clear()
-      .setStrokeStyle(2)
-      .beginStroke('#000000')
-      .drawRect(
-        bounds.x + paddingTopLeft,
-        bounds.y + paddingTopLeft,
-        bounds.width + paddingWidthHeight,
-        bounds.height + paddingWidthHeight
-      );
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, bounds.width + 5, bounds.height + 5);
     this.addChild(this._focusIndicator);
   }
 

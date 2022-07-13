@@ -42,18 +42,11 @@ export default class Link extends createjs.Container {
       this._text = new createjs.Text(options.text, '16px Arial', '#0921EA');
       this._text.addEventListener('click', this._onClick);
 
-      const { x, width, height } = this._text.getBounds();
-      const paddingTopLeft = -3;
-      const paddingWidthHeight = 5;
+      const { width, height } = this._text.getBounds();
       this._focusIndicator.graphics
-        .setStrokeStyle(2)
-        .beginStroke('#000000')
-        .drawRect(
-          x + paddingTopLeft,
-          paddingTopLeft,
-          width + paddingWidthHeight,
-          height + paddingWidthHeight
-        );
+        .setStrokeStyle(5)
+        .beginStroke('#5FC1FA')
+        .drawRect(-2.5, -2.5, width + 5, height + 5);
 
       this._text.addEventListener('focus', this._onFocus);
       this._text.addEventListener('blur', this._onBlur);

@@ -84,10 +84,7 @@ export default class Button extends createjs.Container {
     this.background.name = 'background';
     this.background.graphics
       .beginStroke('black')
-      .beginFill('yellow')
-      .drawRect(0, 0, this.width, this.height)
-      .endFill()
-      .endStroke();
+      .drawRect(0, 0, this.width, this.height);
     this.addChild(this.background);
   }
 
@@ -95,12 +92,9 @@ export default class Button extends createjs.Container {
     this.focusIndicator = new createjs.Shape();
     this.focusIndicator.name = 'focusIndicator';
     this.focusIndicator.graphics
-      .beginStroke('black')
-      .setStrokeStyle(3)
-      .beginFill('#fff')
-      .drawRect(0, 0, this.width, this.height)
-      .endFill()
-      .endStroke();
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, this.width + 5, this.height + 5);
     this.addChild(this.focusIndicator);
     this.focusIndicator.visible = false;
   }

@@ -51,7 +51,7 @@ export default class SpinButton extends createjs.Container {
     });
 
     this.setBounds(0, 0, this.width, this.height);
-    this.setupFocusIndicator(0, 0, this.width, this.height);
+    this.setupFocusIndicator(this.width, this.height);
     this.createButtons();
   }
 
@@ -105,14 +105,13 @@ export default class SpinButton extends createjs.Container {
     this.callback();
   }
 
-  setupFocusIndicator(x, y, width, height) {
+  setupFocusIndicator(width, height) {
     this._focusIndicator = new createjs.Shape();
     this._focusIndicator.visible = false;
     this._focusIndicator.graphics
-      .setStrokeStyle(4)
-      .beginStroke('#000000')
-      .drawRect(x, y, width, height);
-
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, width + 5, height + 5);
     this.addChild(this._focusIndicator);
   }
 
