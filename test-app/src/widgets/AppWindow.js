@@ -1272,6 +1272,7 @@ export default class AppWindow extends createjs.Container {
 
     let options = {
       href: 'https://www.w3.org/WAI/WCAG20/quickref/?currentsidebar=#col_customize&levels=aaa',
+      tabIndex: 0,
       text: "W3C's guide to meeting WCAG requirements",
     };
     const wcag = new Link(options);
@@ -1282,6 +1283,7 @@ export default class AppWindow extends createjs.Container {
 
     options = {
       href: 'https://www.w3.org/TR/wai-aria-1.1/',
+      tabIndex: 0,
       text: "W3C's general guide to Accessible Rich Internet Applications",
     };
     const aria = new Link(options);
@@ -1291,6 +1293,7 @@ export default class AppWindow extends createjs.Container {
     document.accessible.addChild(aria);
     options = {
       href: 'https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties',
+      tabIndex: 0,
       text: "W3C's guide to allowed ARIA roles, states, and properties",
     };
     const allowedAria = new Link(options);
