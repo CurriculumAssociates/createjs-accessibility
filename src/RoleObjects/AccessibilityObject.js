@@ -484,12 +484,20 @@ export default class AccessibilityObject {
    * @returns {boolean} true if disabled, false otherwise
    */
   get disabledWithInference() {
-    return this._reactProps['aria-disabled'] !== undefined
-      ? this._reactProps['aria-disabled']
-      : !this._displayObject.mouseEnabled &&
-          (this._displayObject.hasEventListener('click') ||
-            this._displayObject.hasEventListener('mousedown') ||
-            this._displayObject.hasEventListener('pressup'));
+    const one = this._reactProps['aria-disabled'] !== undefined;
+    const two = this._reactProps['aria-disabled'];
+    const three = !this._displayObject.mouseEnabled;
+    const four =
+      this._displayObject.hasEventListener('click') ||
+      this._displayObject.hasEventListener('mousedown') ||
+      this._displayObject.hasEventListener('pressup');
+    const five = one ? two : three && four;
+    // console.warn('1', one);
+    // console.warn('2', two);
+    // console.warn('3', three)
+    // console.warn('4', four)
+    // console.warn('5', five)
+    return five;
   }
 
   /**
@@ -875,9 +883,9 @@ export default class AccessibilityObject {
     Object.defineProperty(event, 'keyCode', {
       get() {
         // eslint-disable-next-line no-console
-        console.warn(
-          '"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.'
-        );
+        // console.warn(
+        //   '"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.'
+        // );
         return evt.keyCode;
       },
     });
