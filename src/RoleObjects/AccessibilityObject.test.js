@@ -1,5 +1,7 @@
+import * as createjs from 'createjs-module';
 import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
+import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('AccessibilityObject', () => {
@@ -60,6 +62,73 @@ describe('AccessibilityObject', () => {
     describe('rendering', () => {
       it('creates main element', () => {
         expect(mainEl).not.toBeNull();
+      });
+    });
+
+    describe('children checking', () => {
+      describe('prohibited children', () => {
+        let errorObj;
+
+        beforeEach(() => {
+          errorObj =
+            /DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree/;
+          stage.accessibilityTranslator.update();
+        });
+
+        it('throws error attempting to add prohibited child using addChild() ', () => {
+          expect(() => {
+            container.accessible.addChild({});
+          }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChildAt()', () => {
+          expect(() => {
+            container.accessible.addChildAt({}, 0);
+          }).toThrowError(errorObj);
+        });
+      });
+
+      describe('permitted children', () => {
+        let cjsDummy;
+
+        beforeEach(() => {
+          cjsDummy = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.SPAN,
+          });
+          stage.accessibilityTranslator.update();
+        });
+
+        it('throws NO error when adding permitted child using addChild', () => {
+          expect(() => {
+            container.accessible.addChild(cjsDummy, 0);
+          }).not.toThrowError();
+        });
+
+        it('throws NO error when adding permitted child using addChildAt()', () => {
+          expect(() => {
+            container.accessible.addChildAt(cjsDummy, 0);
+          }).not.toThrowError();
+        });
+
+        it('can remove all children', () => {
+          container.accessible.addChild(cjsDummy, 0);
+          expect(container.accessible.children.length).toEqual(1);
+
+          container.accessible.removeAllChildren();
+          expect(container.accessible.children.length).toEqual(0);
+          expect(container.accessible.children).toEqual([]);
+        });
+
+        it('can reparent', () => {
+          container.accessible.addChild(cjsDummy, 0);
+          expect(container.accessible.children.length).toEqual(1);
+          container.accessible.addChild(cjsDummy, 0);
+          expect(container.accessible.children).toEqual([cjsDummy]);
+          container.accessible.addChildAt(cjsDummy, 0);
+          expect(container.accessible.children).toEqual([cjsDummy]);
+        });
       });
     });
 
@@ -139,6 +208,19 @@ describe('AccessibilityObject', () => {
           expect(keyReturned).toBe(key);
           expect(keyCodeReturned).toBe(keyCode);
         });
+      });
+
+      it('can request focus', () => {
+        jest.spyOn(mainEl, 'focus');
+        document.getElementById = (query) => {
+          return parentEl.querySelector(`#${query}`);
+        };
+
+        mainEl.setAttribute('disabled', true);
+        mainEl.removeAttribute('tabindex');
+        container.accessible.enabled = true;
+        container.accessible.requestFocus();
+        expect(mainEl.focus).toHaveBeenCalled();
       });
 
       describe('"onKeyUp" event listener', () => {
