@@ -122,8 +122,8 @@ describe('AccessibilityObject', () => {
 
     describe('event listeners', () => {
       it('Accessibility Object should provide event and keycode with the event', () => {
-        const keyboardClickListener = jest.fn();
-        container.on('keydown', keyboardClickListener);
+        const keyDownListener = jest.fn();
+        container.on('keydown', keyDownListener);
 
         [
           ['Enter', 13],
@@ -131,41 +131,39 @@ describe('AccessibilityObject', () => {
           ['t', 84],
           ['Tab', 9],
         ].forEach(([key, keyCode], i) => {
-          ReactTestUtils.Simulate.keyDown(mainEl, { keyCode, key });
-          const keyboardListenerArgument =
-            keyboardClickListener.mock.calls[i][0];
-          const receivedKey = keyboardListenerArgument.key;
-          const receivedkeyCode = keyboardListenerArgument.keyCode;
+          ReactTestUtils.Simulate.keyDown(mainEl, { key, keyCode });
+          const keyDownReturn = keyDownListener.mock.calls[i][0];
+          const keyReturned = keyDownReturn.key;
+          const keyCodeReturned = keyDownReturn.keyCode;
 
-          expect(receivedKey).toBe(key);
-          expect(receivedkeyCode).toBe(keyCode);
+          expect(keyReturned).toBe(key);
+          expect(keyCodeReturned).toBe(keyCode);
         });
       });
 
       describe('"onKeyUp" event listener', () => {
-        let keyCode;
         let onKeyUp;
 
         beforeEach(() => {
           onKeyUp = jest.fn();
           container.on('keyup', onKeyUp);
+          // createjs.Event = (arg1, arg2, arg3) => {
+          //   console.log('arg1', arg1, 'arg2', arg2, 'arg3', arg3);
+          //   function handleKeyUp(event) {
+          //     console.log('event happened', event)
+          //   }
+          //   return container.addEventListener("keyup", handleKeyUp);
+          //   // return 'blah';
+          // };
         });
 
         it('can dispatch "keyUp" event', () => {
-          keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyUp(mainEl, { keyCode });
+          const keyCode = KeyCodes.up;
+          ReactTestUtils.Simulate.keyUp(mainEl, { keyCode, cancelable: true });
           expect(onKeyUp).toBeCalledTimes(1);
-        });
 
-        it('can prevent default events if "defaultPrevented" is true', () => {
-          keyCode = KeyCodes.up;
-          container.accessible.enableKeyEvents = true;
-
-          ReactTestUtils.Simulate.keyUp(mainEl, {
-            keyCode,
-            defaultPrevented: true,
-          });
-          expect(onKeyUp).toBeCalledTimes(1);
+          const keyCodeReturned = onKeyUp.mock.calls[0][0].keyCode;
+          expect(keyCodeReturned).toBe(keyCode);
         });
       });
     });
