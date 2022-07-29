@@ -49,7 +49,6 @@ describe('TableData', () => {
 
       stage.accessibilityTranslator.update();
       tableEl = parentEl.querySelector('table');
-      console.log(tableEl.outerHTML);
     });
 
     describe('rendering', () => {

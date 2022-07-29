@@ -51,7 +51,6 @@ describe('MultiLineTextBoxData', () => {
 
       stage.accessibilityTranslator.update();
       textareaEl = parentEl.querySelector('textarea[aria-multiline=true]');
-      console.log(textareaEl.outerHTML);
     });
 
     describe('rendering', () => {
@@ -111,7 +110,7 @@ describe('MultiLineTextBoxData', () => {
         );
       });
 
-      it(`can read and set (and unset) "active" property`, () => {
+      it('can read and set (and unset) "active" property', () => {
         const dummyObj = new createjs.Shape();
         AccessibilityModule.register({
           displayObject: dummyObj,
@@ -228,7 +227,7 @@ describe('MultiLineTextBoxData', () => {
         expect(cjsTextarea.accessible.rows).toEqual(newVal);
       });
 
-      it(`can read and set "value" property`, () => {
+      it('can read and set "value" property', () => {
         document.getElementById = (query) => {
           return parentEl.querySelector(`#${query}`);
         };

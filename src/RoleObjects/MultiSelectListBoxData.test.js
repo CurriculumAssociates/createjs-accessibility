@@ -271,7 +271,6 @@ describe('MultiSelectListBoxData', () => {
         stage.accessibilityTranslator.update();
         cjsOption1.selected = true;
         cjsOption1.value = '999';
-        console.log(selectEl.outerHTML);
       });
 
       it('can dispatch "valueChanged" event with the newValue', () => {
