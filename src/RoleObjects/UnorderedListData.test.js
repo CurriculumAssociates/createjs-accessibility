@@ -60,7 +60,7 @@ describe('UnorderedListData', () => {
           }).not.toThrowError(errorMsg);
         });
 
-        it('"addChildAT" does not throw Error if child is Accessible and has role LISTITEM', () => {
+        it('"addChildAt" does not throw Error if child is Accessible and has role LISTITEM', () => {
           expect(() => {
             cjsUl.accessible.addChildAt(childObj, 0);
           }).not.toThrowError(errorMsg);

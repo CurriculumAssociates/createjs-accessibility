@@ -101,7 +101,7 @@ describe('MultiSelectListBoxData', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsListBox.accessible.addChild(cjsDummy, 0);
+            cjsListBox.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 

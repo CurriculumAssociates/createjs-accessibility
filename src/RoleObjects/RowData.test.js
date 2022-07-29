@@ -113,7 +113,7 @@ describe('RowData', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsRow.accessible.addChild(cjsDummy, 0);
+            cjsRow.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 

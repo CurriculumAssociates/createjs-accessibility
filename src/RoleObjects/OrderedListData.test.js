@@ -80,7 +80,7 @@ describe('OrderedListData', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsOrderedList.accessible.addChild(cjsDummy, 0);
+            cjsOrderedList.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 

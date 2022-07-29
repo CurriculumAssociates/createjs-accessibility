@@ -107,7 +107,7 @@ describe('TableData', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsTable.accessible.addChild(cjsDummy, 0);
+            cjsTable.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 

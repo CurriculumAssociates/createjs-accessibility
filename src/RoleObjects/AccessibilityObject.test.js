@@ -6,11 +6,13 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('AccessibilityObject', () => {
   describe('register role', () => {
+    let cjsDummy;
     let accessibleOptions;
     let mainEl;
     let shouldEnableKeyEvents;
 
     beforeEach(() => {
+      cjsDummy = new createjs.Shape();
       shouldEnableKeyEvents = true;
       accessibleOptions = {
         enableKeyEvents: shouldEnableKeyEvents,
@@ -56,7 +58,7 @@ describe('AccessibilityObject', () => {
           `[tabindex=${accessibleOptions.tabIndex}]` +
           `[title=${accessibleOptions.title}]`
       );
-      console.log(mainEl.outerHTML);
+      // console.log(mainEl.outerHTML);
     });
 
     describe('rendering', () => {
@@ -89,10 +91,7 @@ describe('AccessibilityObject', () => {
       });
 
       describe('permitted children', () => {
-        let cjsDummy;
-
         beforeEach(() => {
-          cjsDummy = new createjs.Shape();
           AccessibilityModule.register({
             displayObject: cjsDummy,
             role: AccessibilityModule.ROLES.SPAN,
@@ -102,7 +101,7 @@ describe('AccessibilityObject', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            container.accessible.addChild(cjsDummy, 0);
+            container.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 
@@ -113,7 +112,7 @@ describe('AccessibilityObject', () => {
         });
 
         it('can remove all children', () => {
-          container.accessible.addChild(cjsDummy, 0);
+          container.accessible.addChild(cjsDummy);
           expect(container.accessible.children.length).toEqual(1);
 
           container.accessible.removeAllChildren();
@@ -122,9 +121,9 @@ describe('AccessibilityObject', () => {
         });
 
         it('can reparent', () => {
-          container.accessible.addChild(cjsDummy, 0);
+          container.accessible.addChild(cjsDummy);
           expect(container.accessible.children.length).toEqual(1);
-          container.accessible.addChild(cjsDummy, 0);
+          container.accessible.addChild(cjsDummy);
           expect(container.accessible.children).toEqual([cjsDummy]);
           container.accessible.addChildAt(cjsDummy, 0);
           expect(container.accessible.children).toEqual([cjsDummy]);
@@ -157,6 +156,115 @@ describe('AccessibilityObject', () => {
           expect(container.accessible[property]).toBe(newVal);
         });
       });
+
+      it('can read "controlsId" property and read, set and clear "controls" property [for "aria-controls"]', () => {
+        expect(() => {
+          container.accessible.controls = cjsDummy;
+        }).toThrowError(
+          /DisplayObject being controlled by another must have accessibility information/
+        );
+
+        AccessibilityModule.register({
+          displayObject: cjsDummy,
+          role: AccessibilityModule.ROLES.SPAN,
+        });
+
+        container.accessible.controls = cjsDummy;
+        expect(container.accessible.controls).toEqual(cjsDummy);
+        expect(container.accessible.controlsId).toMatch(/^acc_?/);
+
+        container.accessible.controls = undefined;
+        expect(container.accessible.controls).toEqual(undefined);
+      });
+
+      it('can read "describedById" property and read, set and clear "describedBy" property [for "aria-describedby"]', () => {
+        expect(() => {
+          container.accessible.describedBy = cjsDummy;
+        }).toThrowError(
+          /DisplayObject describing another must have accessibility information/
+        );
+
+        AccessibilityModule.register({
+          displayObject: cjsDummy,
+          role: AccessibilityModule.ROLES.SPAN,
+        });
+
+        container.accessible.describedBy = cjsDummy;
+        expect(container.accessible.describedBy).toEqual(cjsDummy);
+        expect(container.accessible.describedById).toMatch(/^acc_?/);
+
+        container.accessible.describedBy = undefined;
+        expect(container.accessible.describedBy).toEqual(undefined);
+      });
+
+      it('can clear "enabled" property [for "aria-disabled"]', () => {
+        container.accessible.enabled = undefined;
+        expect(container.accessible.enabled).toEqual(undefined);
+      });
+
+      it('can read "flowToId" property and read, set and clear "flowTo" property [for "aria-flowto"]', () => {
+        expect(() => {
+          container.accessible.flowTo = cjsDummy;
+        }).toThrowError(
+          /DisplayObject to flow to must have accessibility information/
+        );
+
+        AccessibilityModule.register({
+          displayObject: cjsDummy,
+          role: AccessibilityModule.ROLES.SPAN,
+        });
+
+        container.accessible.flowTo = cjsDummy;
+        expect(container.accessible.flowTo).toEqual(cjsDummy);
+        expect(container.accessible.flowToId).toMatch(/^acc_?/);
+
+        container.accessible.flowTo = undefined;
+        expect(container.accessible.flowTo).toEqual(undefined);
+      });
+
+      it('can read "labelledById" property and read, set and clear "labelledBy" property [for "aria-labelledby"]', () => {
+        expect(() => {
+          container.accessible.labelledBy = cjsDummy;
+        }).toThrowError(
+          /DisplayObjects used to label another DisplayObject must have accessibility information when being provided as a label/
+        );
+
+        expect(() => {
+          container.accessible.labelledBy = container;
+        }).toThrowError(/An object cannot be used as its own labelledBy/);
+
+        AccessibilityModule.register({
+          displayObject: cjsDummy,
+          role: AccessibilityModule.ROLES.SPAN,
+        });
+
+        container.accessible.labelledBy = cjsDummy;
+        expect(container.accessible.labelledBy).toEqual(cjsDummy);
+        expect(container.accessible.labelledById).toMatch(/^acc_?/);
+
+        container.accessible.labelledBy = undefined;
+        expect(container.accessible.labelledBy).toEqual(undefined);
+      });
+
+      it('can read "ownsIds" property and read, set and clear "owns" property [for "aria-owns"]', () => {
+        expect(() => {
+          container.accessible.owns = [cjsDummy];
+        }).toThrowError(
+          /DisplayObjects owned by another DisplayObject must have accessibility information/
+        );
+
+        AccessibilityModule.register({
+          displayObject: cjsDummy,
+          role: AccessibilityModule.ROLES.SPAN,
+        });
+
+        container.accessible.owns = [cjsDummy];
+        expect(container.accessible.owns).toEqual([cjsDummy]);
+        expect(container.accessible.ownsIds).toMatch(/^ acc_?/);
+
+        container.accessible.owns = undefined;
+        expect(container.accessible.owns).toEqual(undefined);
+      });
     });
 
     describe('other options getters and setters', () => {
@@ -186,6 +294,43 @@ describe('AccessibilityObject', () => {
         const newVal = false;
         container.accessible.enableKeyEvents = newVal;
         expect(container.accessible.enableKeyEvents).toEqual(newVal);
+      });
+
+      it('can read "displayObject" property', () => {
+        expect(container.accessible.displayObject).toEqual(container);
+      });
+
+      it('can read "disabledWithInference" property', () => {
+        const pressUp = jest.fn();
+        container.accessible.enabled = true;
+        expect(container.accessible.disabledWithInference).toEqual(false);
+
+        container.accessible.enabled = undefined;
+        container.mouseEnabled = false; // easeljs/createjs specific property
+        container.on('pressup', pressUp);
+        expect(container.accessible.disabledWithInference).toEqual(true);
+      });
+
+      it('can reset "hidden" property and read "hiddenWithInference" property', () => {
+        container.accessible.hidden = undefined;
+        expect(container.accessible.hidden).toEqual(undefined);
+        container.visible = false;
+        expect(container.accessible.hiddenWithInference).toEqual(true);
+      });
+
+      it('can read "parent" property', () => {
+        expect(container.accessible.parent).toEqual(undefined);
+      });
+
+      it('can read "visibleWithInference" property', () => {
+        container.accessible.visible = undefined;
+        expect(container.accessible.visibleWithInference).toEqual(
+          accessibleOptions.visible
+        );
+        container.accessible.visible = true;
+        expect(container.accessible.visibleWithInference).toEqual(true);
+        container.accessible.visible = false;
+        expect(container.accessible.visibleWithInference).toEqual(false);
       });
     });
 
@@ -219,6 +364,10 @@ describe('AccessibilityObject', () => {
         mainEl.setAttribute('disabled', true);
         mainEl.removeAttribute('tabindex');
         container.accessible.enabled = true;
+        container.accessible.requestFocus();
+        expect(mainEl.focus).toHaveBeenCalled();
+
+        mainEl.style.display = 'none';
         container.accessible.requestFocus();
         expect(mainEl.focus).toHaveBeenCalled();
       });

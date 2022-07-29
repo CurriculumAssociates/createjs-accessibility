@@ -132,7 +132,7 @@ describe('ComboBoxData', () => {
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsComboBox.accessible.addChild(cjsDummy, 0);
+            cjsComboBox.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 
