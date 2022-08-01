@@ -121,21 +121,21 @@ describe('MenuData', () => {
             displayObject: cjsMenuItem1,
             role: AccessibilityModule.ROLES.MENUITEM,
           });
-          cjsMenu.accessible.addChildAt(cjsMenuItem1, 0);
+          cjsMenu.accessible.addChild(cjsMenuItem1);
 
           cjsSeparator = new createjs.Shape();
           AccessibilityModule.register({
             displayObject: cjsSeparator,
             role: AccessibilityModule.ROLES.SEPARATOR,
           });
-          cjsMenu.accessible.addChild(cjsSeparator, 1);
+          cjsMenu.accessible.addChild(cjsSeparator);
 
           cjsMenuItem2 = new createjs.Shape();
           AccessibilityModule.register({
             displayObject: cjsMenuItem2,
             role: AccessibilityModule.ROLES.MENUITEM,
           });
-          cjsMenu.accessible.addChild(cjsMenuItem2, 2);
+          cjsMenu.accessible.addChild(cjsMenuItem2);
 
           stage.accessibilityTranslator.update();
           // console.log(ulEl.outerHTML);
