@@ -1,4 +1,6 @@
 import * as createjs from 'createjs-module';
+import KeyCodes from 'keycodes-enum';
+import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
@@ -85,6 +87,70 @@ describe('MenuData', () => {
         const newVal = true;
         cjsMenu.accessible.enableKeyEvents = newVal;
         expect(cjsMenu.accessible.enableKeyEvents).toEqual(newVal);
+      });
+    });
+
+    describe.skip('"onKeyDown" event listener', () => {
+      let keyCode;
+      let onKeyDown;
+
+      beforeEach(() => {
+        onKeyDown = jest.fn();
+        cjsMenu.on('keydown', onKeyDown);
+      });
+
+      it('can prevent default events if "defaultPrevented" is true', () => {
+        keyCode = KeyCodes.down;
+        cjsMenu.accessible.enableKeyEvents = true;
+
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          defaultPrevented: true,
+        });
+        expect(onKeyDown).toBeCalledTimes(0);
+      });
+
+      describe('can change focused child when proper key is pressed', () => {
+        let cjsMenuItem1; // dummy child object
+        let cjsSeparator; // dummy child object
+        let cjsMenuItem2; // dummy child object
+
+        beforeEach(() => {
+          cjsMenuItem1 = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsMenuItem1,
+            role: AccessibilityModule.ROLES.MENUITEM,
+          });
+          cjsMenu.accessible.addChildAt(cjsMenuItem1, 0);
+
+          cjsSeparator = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsSeparator,
+            role: AccessibilityModule.ROLES.SEPARATOR,
+          });
+          cjsMenu.accessible.addChild(cjsSeparator, 1);
+
+          cjsMenuItem2 = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsMenuItem2,
+            role: AccessibilityModule.ROLES.MENUITEM,
+          });
+          cjsMenu.accessible.addChild(cjsMenuItem2, 2);
+
+          stage.accessibilityTranslator.update();
+          // console.log(ulEl.outerHTML);
+          cjsMenu.accessible.enableKeyEvents = true;
+        });
+
+        it('UP AND DOWN', () => {
+          keyCode = KeyCodes.down;
+          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          expect(onKeyDown).toBeCalledTimes(1);
+
+          keyCode = KeyCodes.up;
+          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          expect(onKeyDown).toBeCalledTimes(2);
+        });
       });
     });
   });
