@@ -378,14 +378,6 @@ describe('AccessibilityObject', () => {
         beforeEach(() => {
           onKeyUp = jest.fn();
           container.on('keyup', onKeyUp);
-          // createjs.Event = (arg1, arg2, arg3) => {
-          //   console.log('arg1', arg1, 'arg2', arg2, 'arg3', arg3);
-          //   function handleKeyUp(event) {
-          //     console.log('event happened', event)
-          //   }
-          //   return container.addEventListener("keyup", handleKeyUp);
-          //   // return 'blah';
-          // };
         });
 
         it('can dispatch "keyUp" event', () => {
