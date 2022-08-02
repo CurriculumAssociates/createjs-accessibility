@@ -16,7 +16,7 @@ describe('MenuData', () => {
       cjsMenu = new createjs.Shape(); // dummy object
       cjsMenuItem = new createjs.Shape(); // dummy child object
       cjsCell = new createjs.Shape(); // dummy child object
-      shouldEnableKeyEvents = false;
+      shouldEnableKeyEvents = true;
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -84,73 +84,44 @@ describe('MenuData', () => {
           shouldEnableKeyEvents
         );
 
-        const newVal = true;
+        const newVal = false;
         cjsMenu.accessible.enableKeyEvents = newVal;
         expect(cjsMenu.accessible.enableKeyEvents).toEqual(newVal);
       });
     });
 
-    describe.skip('"onKeyDown" event listener', () => {
+    describe('"onKeyDown" event listener', () => {
       let keyCode;
-      let onKeyDown;
+      let preventDefaultSpy;
 
       beforeEach(() => {
-        onKeyDown = jest.fn();
-        cjsMenu.on('keydown', onKeyDown);
+        preventDefaultSpy = jest.fn();
       });
 
       it('can prevent default events if "defaultPrevented" is true', () => {
         keyCode = KeyCodes.down;
-        cjsMenu.accessible.enableKeyEvents = true;
-
         ReactTestUtils.Simulate.keyDown(ulEl, {
           keyCode,
           defaultPrevented: true,
+          preventDefault: preventDefaultSpy,
         });
-        expect(onKeyDown).toBeCalledTimes(0);
+        expect(preventDefaultSpy).toBeCalledTimes(0);
       });
 
-      describe('can change focused child when proper key is pressed', () => {
-        let cjsMenuItem1; // dummy child object
-        let cjsSeparator; // dummy child object
-        let cjsMenuItem2; // dummy child object
-
-        beforeEach(() => {
-          cjsMenuItem1 = new createjs.Shape();
-          AccessibilityModule.register({
-            displayObject: cjsMenuItem1,
-            role: AccessibilityModule.ROLES.MENUITEM,
-          });
-          cjsMenu.accessible.addChild(cjsMenuItem1);
-
-          cjsSeparator = new createjs.Shape();
-          AccessibilityModule.register({
-            displayObject: cjsSeparator,
-            role: AccessibilityModule.ROLES.SEPARATOR,
-          });
-          cjsMenu.accessible.addChild(cjsSeparator);
-
-          cjsMenuItem2 = new createjs.Shape();
-          AccessibilityModule.register({
-            displayObject: cjsMenuItem2,
-            role: AccessibilityModule.ROLES.MENUITEM,
-          });
-          cjsMenu.accessible.addChild(cjsMenuItem2);
-
-          stage.accessibilityTranslator.update();
-
-          cjsMenu.accessible.enableKeyEvents = true;
+      it('calls preventDefault with UP or DOWN', () => {
+        keyCode = KeyCodes.down;
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          preventDefault: preventDefaultSpy,
         });
+        expect(preventDefaultSpy).toBeCalledTimes(1);
 
-        it('UP AND DOWN', () => {
-          keyCode = KeyCodes.down;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(1);
-
-          keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(2);
+        keyCode = KeyCodes.up;
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          preventDefault: preventDefaultSpy,
         });
+        expect(preventDefaultSpy).toBeCalledTimes(2);
       });
     });
   });
