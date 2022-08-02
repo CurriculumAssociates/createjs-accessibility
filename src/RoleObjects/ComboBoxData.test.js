@@ -5,6 +5,7 @@ import { parentEl, stage, container } from '../__jestSharedSetup';
 describe('ComboBoxData', () => {
   describe('register role', () => {
     let cjsComboBox;
+    let cjsSpan;
     let comboBoxEl;
     let isExpanded;
     let isReadOnly;
@@ -13,6 +14,7 @@ describe('ComboBoxData', () => {
 
     beforeEach(() => {
       cjsComboBox = new createjs.Shape(); // dummy object
+      cjsSpan = new createjs.Shape(); // dummy child object
       isExpanded = false;
       isReadOnly = false;
       isRequired = false;
@@ -28,6 +30,11 @@ describe('ComboBoxData', () => {
         displayObject: cjsComboBox,
         parent: container,
         role: AccessibilityModule.ROLES.COMBOBOX,
+      });
+
+      AccessibilityModule.register({
+        displayObject: cjsSpan,
+        role: AccessibilityModule.ROLES.SPAN,
       });
 
       stage.accessibilityTranslator.update();
@@ -85,6 +92,55 @@ describe('ComboBoxData', () => {
         const newVal = false;
         cjsComboBox.accessible.autoComplete = newVal;
         expect(cjsComboBox.accessible.autoComplete).toEqual(newVal);
+      });
+    });
+
+    describe('children checking', () => {
+      describe('prohibited children', () => {
+        let errorObj;
+
+        beforeEach(() => {
+          errorObj =
+            /Children of combobox must have a role of singlelinetextbox, search, button, singleselectlistbox, tree, grid, or dialog/;
+          stage.accessibilityTranslator.update();
+        });
+
+        it('throws error attempting to add prohibited child using addChild() ', () => {
+          expect(() => {
+            cjsComboBox.accessible.addChild(cjsSpan);
+          }).toThrowError(errorObj);
+        });
+
+        it('throws error attempting to add prohibited child using addChildAt()', () => {
+          expect(() => {
+            cjsComboBox.accessible.addChildAt(cjsSpan, 0);
+          }).toThrowError(errorObj);
+        });
+      });
+
+      describe('permitted children', () => {
+        let cjsDummy;
+
+        beforeEach(() => {
+          cjsDummy = new createjs.Shape();
+          AccessibilityModule.register({
+            displayObject: cjsDummy,
+            role: AccessibilityModule.ROLES.BUTTON,
+          });
+          stage.accessibilityTranslator.update();
+        });
+
+        it('throws NO error when adding permitted child using addChild', () => {
+          expect(() => {
+            cjsComboBox.accessible.addChild(cjsDummy);
+          }).not.toThrowError();
+        });
+
+        it('throws NO error when adding permitted child using addChildAt()', () => {
+          expect(() => {
+            cjsComboBox.accessible.addChildAt(cjsDummy, 0);
+          }).not.toThrowError();
+        });
       });
     });
   });

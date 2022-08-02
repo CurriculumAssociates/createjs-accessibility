@@ -104,7 +104,7 @@ describe('SingleLineTextBoxData', () => {
         );
       });
 
-      it(`can set and get "active" property`, () => {
+      it('can set and get "active" property', () => {
         const dummyObj = new createjs.Shape();
         AccessibilityModule.register({
           displayObject: dummyObj,
@@ -116,7 +116,7 @@ describe('SingleLineTextBoxData', () => {
         expect(cjsInput.accessible.activeId).toBe(dummyObj.accessible.domId);
       });
 
-      it(`can set and get "value" property`, () => {
+      it('can set and get "value" property', () => {
         document.getElementById = (query) => {
           return parentEl.querySelector(`#${query}`);
         };

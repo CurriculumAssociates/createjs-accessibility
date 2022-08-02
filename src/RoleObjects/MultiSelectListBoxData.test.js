@@ -1,14 +1,13 @@
 import * as createjs from 'createjs-module';
 import ReactTestUtils from 'react-dom/test-utils';
-import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
-describe('SingleSelectListBoxData', () => {
+describe('MultiSelectListBoxData', () => {
   describe('register role', () => {
     let cjsListBox;
     let cjsSpan;
-    let ulEl;
+    let selectEl;
     let shouldAutoFocus;
     let shouldEnableKeyEvents;
     let isEnabled;
@@ -36,7 +35,7 @@ describe('SingleSelectListBoxData', () => {
         },
         displayObject: cjsListBox,
         parent: container,
-        role: AccessibilityModule.ROLES.SINGLESELECTLISTBOX,
+        role: AccessibilityModule.ROLES.MULTISELECTLISTBOX,
       });
 
       AccessibilityModule.register({
@@ -45,23 +44,23 @@ describe('SingleSelectListBoxData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      ulEl = parentEl.querySelector('ul[role=listbox]');
+      selectEl = parentEl.querySelector('select');
     });
 
     describe('rendering', () => {
-      it('creates ul[role=listbox] element', () => {
-        expect(ulEl).not.toBeNull();
+      it('creates select element', () => {
+        expect(selectEl).not.toBeNull();
       });
 
       it('sets "aria-disabled" attribute', () => {
-        ulEl = parentEl.querySelector(
-          `ul[role=listbox][aria-disabled='${!isEnabled}']`
+        selectEl = parentEl.querySelector(
+          `select[aria-disabled='${!isEnabled}']`
         );
-        expect(ulEl).not.toBeNull();
+        expect(selectEl).not.toBeNull();
       });
 
       it('sets "name" attribute', () => {
-        expect(ulEl.getAttribute('name')).toEqual(nameVal);
+        expect(selectEl.getAttribute('name')).toEqual(nameVal);
       });
     });
 
@@ -71,7 +70,7 @@ describe('SingleSelectListBoxData', () => {
 
         beforeEach(() => {
           errorObj =
-            /Children of singleselectlistbox must have a role of singleselectoption/;
+            /Children of multiselectlistbox must have a role of multiselectoption/;
           stage.accessibilityTranslator.update();
         });
 
@@ -95,7 +94,7 @@ describe('SingleSelectListBoxData', () => {
           cjsDummy = new createjs.Shape();
           AccessibilityModule.register({
             displayObject: cjsDummy,
-            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
+            role: AccessibilityModule.ROLES.MULTISELECTOPTION,
           });
           stage.accessibilityTranslator.update();
         });
@@ -170,7 +169,7 @@ describe('SingleSelectListBoxData', () => {
       it('throws error when assigning invalid "form" property', () => {
         const cjsDummy = new createjs.Shape();
         const errorObj =
-          /The form property of a singleselectlistbox must be a DisplayObject with a role of form/;
+          /The form property of a multiselectlistbox must be a DisplayObject with a role of form/;
         AccessibilityModule.register({
           displayObject: cjsDummy,
           role: AccessibilityModule.ROLES.SPAN,
@@ -207,7 +206,7 @@ describe('SingleSelectListBoxData', () => {
 
           AccessibilityModule.register({
             displayObject: cjsListItem,
-            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
+            role: AccessibilityModule.ROLES.MULTISELECTOPTION,
           });
 
           AccessibilityModule.register({
@@ -219,24 +218,24 @@ describe('SingleSelectListBoxData', () => {
         it('with valid displayObject role and value', () => {
           const selectedVal = -1;
           cjsListItem.accessible.value = selectedVal;
-          cjsListBox.accessible.selected = cjsListItem;
+          cjsListBox.accessible.selected = [cjsListItem];
 
-          expect(cjsListBox.accessible.selected).toEqual(cjsListItem);
-          expect(cjsListBox.accessible.selectedValue).toEqual(selectedVal);
+          expect(cjsListBox.accessible.selected).toEqual([cjsListItem]);
+          expect(cjsListBox.accessible.selectedValue).toEqual([selectedVal]);
         });
 
         it('throws error with INVALID displayObject role', () => {
           expect(() => {
-            cjsListBox.accessible.selected = cjsDummy;
+            cjsListBox.accessible.selected = [cjsDummy];
           }).toThrowError(
-            /Selected value must have a role of singleselectoption/
+            /Selected value must have a role of multiselectoption/
           );
         });
 
         it('throws error with valid displayObject role and INVALID value', () => {
           cjsListItem.accessible.value = null;
           expect(() => {
-            cjsListBox.accessible.selected = cjsListItem;
+            cjsListBox.accessible.selected = [cjsListItem];
           }).toThrowError(
             /The selected option must have its value field populated/
           );
@@ -252,98 +251,37 @@ describe('SingleSelectListBoxData', () => {
       });
     });
 
-    describe('"onKeyDown" event listener', () => {
-      let keyCode;
-      let onKeyDown;
+    describe('"onChange" event listener', () => {
+      let keyDownHandler;
+      let cjsOption1;
 
       beforeEach(() => {
-        onKeyDown = jest.fn();
-        cjsListBox.on('keydown', onKeyDown);
+        keyDownHandler = jest.fn();
+        cjsListBox.on('valueChanged', keyDownHandler);
+        cjsOption1 = new createjs.Shape();
+        AccessibilityModule.register({
+          accessibleOptions: {
+            text: 'option1',
+            value: '999',
+          },
+          displayObject: cjsOption1,
+          role: AccessibilityModule.ROLES.MULTISELECTOPTION,
+        });
+        cjsListBox.accessible.addChild(cjsOption1);
+        stage.accessibilityTranslator.update();
+        cjsOption1.selected = true;
+        cjsOption1.value = '999';
       });
 
-      it('can dispatch "keyDown" event if "enableKeyEvents" is enabled', () => {
-        keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-        expect(onKeyDown).toBeCalledTimes(0);
-
-        cjsListBox.accessible.enableKeyEvents = true;
-
-        // needed for disabledWithInference() to return false (1 of many ways)
-        cjsListBox.accessible.enabled = true;
-
-        ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-        expect(onKeyDown).toBeCalledTimes(1);
-      });
-
-      it('can prevent default events if "defaultPrevented" is true', () => {
-        keyCode = KeyCodes.down;
-        cjsListBox.accessible.enableKeyEvents = true;
-
-        // needed for disabledWithInference() to return false (1 of many ways)
-        cjsListBox.accessible.enabled = true;
-
-        ReactTestUtils.Simulate.keyDown(ulEl, {
-          keyCode,
-          defaultPrevented: true,
-        });
-        expect(onKeyDown).toBeCalledTimes(1);
-      });
-
-      describe('can change active/selected child when proper key is pressed', () => {
-        let cjsListItem1; // dummy child object
-        let cjsListItem2; // dummy child object
-
-        beforeEach(() => {
-          cjsListItem1 = new createjs.Shape();
-          AccessibilityModule.register({
-            accessibleOptions: {
-              text: 'option1',
-              value: '0',
-            },
-            displayObject: cjsListItem1,
-            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
-          });
-          cjsListBox.accessible.addChild(cjsListItem1);
-
-          cjsListItem2 = new createjs.Shape();
-          AccessibilityModule.register({
-            accessibleOptions: {
-              text: 'option2',
-              value: '1',
-            },
-            displayObject: cjsListItem2,
-            role: AccessibilityModule.ROLES.SINGLESELECTOPTION,
-          });
-          cjsListBox.accessible.addChild(cjsListItem2);
-
-          stage.accessibilityTranslator.update();
-
-          cjsListBox.accessible.selected = cjsListItem2;
-          cjsListBox.accessible.enableKeyEvents = true;
-
-          // needed for disabledWithInference() to return false (1 of many ways)
-          cjsListBox.accessible.enabled = true;
+      it('can dispatch "valueChanged" event with the newValue', () => {
+        cjsListBox.selected = [cjsOption1];
+        ReactTestUtils.Simulate.change(selectEl, {
+          target: { options: [cjsOption1] },
         });
 
-        it('UP AND DOWN', () => {
-          keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(1);
-
-          keyCode = KeyCodes.down;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(2);
-        });
-
-        it('HOME AND END', () => {
-          keyCode = KeyCodes.home;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(1);
-
-          keyCode = KeyCodes.end;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
-          expect(onKeyDown).toBeCalledTimes(2);
-        });
+        expect(keyDownHandler).toBeCalledTimes(1);
+        const argument = keyDownHandler.mock.calls[0][0];
+        expect(argument.selectedValues).toStrictEqual([cjsOption1.value]);
       });
     });
   });

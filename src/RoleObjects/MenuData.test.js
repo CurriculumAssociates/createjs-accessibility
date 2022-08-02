@@ -1,4 +1,6 @@
 import * as createjs from 'createjs-module';
+import KeyCodes from 'keycodes-enum';
+import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
@@ -14,7 +16,7 @@ describe('MenuData', () => {
       cjsMenu = new createjs.Shape(); // dummy object
       cjsMenuItem = new createjs.Shape(); // dummy child object
       cjsCell = new createjs.Shape(); // dummy child object
-      shouldEnableKeyEvents = false;
+      shouldEnableKeyEvents = true;
 
       AccessibilityModule.register({
         accessibleOptions: {
@@ -82,9 +84,44 @@ describe('MenuData', () => {
           shouldEnableKeyEvents
         );
 
-        const newVal = true;
+        const newVal = false;
         cjsMenu.accessible.enableKeyEvents = newVal;
         expect(cjsMenu.accessible.enableKeyEvents).toEqual(newVal);
+      });
+    });
+
+    describe('"onKeyDown" event listener', () => {
+      let keyCode;
+      let preventDefaultSpy;
+
+      beforeEach(() => {
+        preventDefaultSpy = jest.fn();
+      });
+
+      it('can prevent default events if "defaultPrevented" is true', () => {
+        keyCode = KeyCodes.down;
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          defaultPrevented: true,
+          preventDefault: preventDefaultSpy,
+        });
+        expect(preventDefaultSpy).toBeCalledTimes(0);
+      });
+
+      it('calls preventDefault with UP or DOWN', () => {
+        keyCode = KeyCodes.down;
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          preventDefault: preventDefaultSpy,
+        });
+        expect(preventDefaultSpy).toBeCalledTimes(1);
+
+        keyCode = KeyCodes.up;
+        ReactTestUtils.Simulate.keyDown(ulEl, {
+          keyCode,
+          preventDefault: preventDefaultSpy,
+        });
+        expect(preventDefaultSpy).toBeCalledTimes(2);
       });
     });
   });
