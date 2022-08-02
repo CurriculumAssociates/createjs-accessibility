@@ -58,7 +58,6 @@ describe('AccessibilityObject', () => {
           `[tabindex=${accessibleOptions.tabIndex}]` +
           `[title=${accessibleOptions.title}]`
       );
-      // console.log(mainEl.outerHTML);
     });
 
     describe('rendering', () => {

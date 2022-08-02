@@ -138,7 +138,7 @@ describe('MenuData', () => {
           cjsMenu.accessible.addChild(cjsMenuItem2);
 
           stage.accessibilityTranslator.update();
-          // console.log(ulEl.outerHTML);
+
           cjsMenu.accessible.enableKeyEvents = true;
         });
 

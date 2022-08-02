@@ -17,7 +17,6 @@ describe('GroupData', () => {
 
       stage.accessibilityTranslator.update();
       divEl = parentEl.querySelector('div[role=group]');
-      console.log(divEl.outerHTML);
     });
 
     describe('rendering', () => {
