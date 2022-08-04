@@ -10,6 +10,7 @@ Reading and following these guidelines will help us make the contribution proces
 * [Getting Started](#getting-started)
     * [Issues](#issues)
     * [Pull Requests](#pull-requests)
+* [Getting Help](#getting-help)
 
 ## Code of Conduct
 
@@ -49,3 +50,7 @@ In general, we follow the ["fork-and-pull" Git workflow](https://github.com/susa
 5. Following any formatting and testing guidelines specific to this repo
 6. Push changes to your fork
 7. Open a PR in our repository and follow the PR template so that we can efficiently review the changes.
+
+## Getting Help
+
+For assitance please send an email to opensource@cainc.com.
