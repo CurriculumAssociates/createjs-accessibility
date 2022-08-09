@@ -1,5 +1,5 @@
 
-# CurriculumAssociates Contributor Covenant Code of Conduct
+# Curriculum Associates Contributor Covenant Code of Conduct
 
 ## Our Pledge
 
