@@ -4,19 +4,10 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 export default class Button extends createjs.Container {
   constructor(options, tabIndex, callBack = _.noop) {
     super();
-    _.bindAll(
-      this,
-      '_onFocus',
-      '_onBlur',
-      '_onMouseDown',
-      '_onMouseUp',
-      '_onClick'
-    );
+    _.bindAll(this, '_onFocus', '_onBlur', '_onClick');
     this.callBack = callBack;
     this.addEventListener('focus', this._onFocus);
     this.addEventListener('blur', this._onBlur);
-    this.addEventListener('mousedown', this._onMouseDown);
-    this.addEventListener('mouseup', this._onMouseUp);
     this.addEventListener('click', this._onClick);
     this.addEventListener('keyboardClick', this._onClick);
 
@@ -35,16 +26,8 @@ export default class Button extends createjs.Container {
           listener: this._onBlur,
         },
         {
-          eventName: 'mousedown',
-          listener: this._onMouseDown,
-        },
-        {
-          eventName: 'mouseup',
-          listener: this._onMouseUp,
-        },
-        {
           eventName: 'keyboardClick',
-          listener: this._onMouseDown,
+          listener: this._onClick,
         },
       ],
     });
@@ -91,14 +74,6 @@ export default class Button extends createjs.Container {
     this.focusIndicator.visible = false;
   }
 
-  _onMouseDown() {
-    this.background.visible = false;
-  }
-
-  _onMouseUp() {
-    this.background.visible = true;
-  }
-
   _onClick(evt) {
     this.accessible.requestFocus();
     this.callBack(evt);
@@ -109,7 +84,6 @@ export default class Button extends createjs.Container {
     this.background.name = 'background';
     this.background.graphics
       .beginStroke('black')
-      .beginFill('#fff')
       .drawRect(0, 0, this.width, this.height);
     this.addChild(this.background);
   }
@@ -118,10 +92,9 @@ export default class Button extends createjs.Container {
     this.focusIndicator = new createjs.Shape();
     this.focusIndicator.name = 'focusIndicator';
     this.focusIndicator.graphics
-      .beginStroke('black')
-      .setStrokeStyle(3)
-      .beginFill('#fff')
-      .drawRect(0, 0, this.width, this.height);
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, this.width + 5, this.height + 5);
     this.addChild(this.focusIndicator);
     this.focusIndicator.visible = false;
   }

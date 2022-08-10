@@ -2,27 +2,29 @@ import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
-describe('RowData', () => {
+describe('TableData', () => {
   describe('register role', () => {
     let cjsTable;
     let cjsTableBody;
     let cjsRow;
     let cjsSpan;
-    let trEl;
-    let colIndexVal;
-    let levelVal;
-    let rowIndexVal;
+    let tableEl;
+    let colCountVal;
+    let rowCountVal;
 
     beforeEach(() => {
       cjsTable = new createjs.Shape(); // dummy object
       cjsTableBody = new createjs.Shape(); // dummy object
       cjsRow = new createjs.Shape(); // dummy object
       cjsSpan = new createjs.Shape(); // dummy child object
-      colIndexVal = 10;
-      levelVal = 99;
-      rowIndexVal = 30;
+      colCountVal = 10;
+      rowCountVal = 30;
 
       AccessibilityModule.register({
+        accessibleOptions: {
+          colCount: colCountVal,
+          rowCount: rowCountVal,
+        },
         displayObject: cjsTable,
         parent: container,
         role: AccessibilityModule.ROLES.TABLE,
@@ -35,11 +37,6 @@ describe('RowData', () => {
       });
 
       AccessibilityModule.register({
-        accessibleOptions: {
-          colIndex: colIndexVal,
-          level: levelVal,
-          rowIndex: rowIndexVal,
-        },
         displayObject: cjsRow,
         parent: cjsTableBody,
         role: AccessibilityModule.ROLES.ROW,
@@ -51,27 +48,23 @@ describe('RowData', () => {
       });
 
       stage.accessibilityTranslator.update();
-      trEl = parentEl.querySelector('tr');
+      tableEl = parentEl.querySelector('table');
     });
 
     describe('rendering', () => {
       it('creates form element', () => {
-        expect(trEl).not.toBeNull();
+        expect(tableEl).not.toBeNull();
       });
 
-      it('sets "aria-level" attribute', () => {
-        expect(parseInt(trEl.getAttribute('aria-level'), 10)).toEqual(levelVal);
-      });
-
-      it('sets "aria-colindex" attribute', () => {
-        expect(parseInt(trEl.getAttribute('aria-colindex'), 10)).toEqual(
-          colIndexVal
+      it('sets "aria-colcount" attribute', () => {
+        expect(parseInt(tableEl.getAttribute('aria-colcount'), 10)).toEqual(
+          colCountVal
         );
       });
 
-      it('sets "aria-rowindex" attribute', () => {
-        expect(parseInt(trEl.getAttribute('aria-rowindex'), 10)).toEqual(
-          rowIndexVal
+      it('sets "aria-rowcount" attribute', () => {
+        expect(parseInt(tableEl.getAttribute('aria-rowcount'), 10)).toEqual(
+          rowCountVal
         );
       });
     });
@@ -82,19 +75,19 @@ describe('RowData', () => {
 
         beforeEach(() => {
           errorObj =
-            /Children of row must have a role of cell, gridcell, columnheader, or rowheader/;
+            /Children of table must have a role of tableBody, tableFoot, or tableHead/;
           stage.accessibilityTranslator.update();
         });
 
         it('throws error attempting to add prohibited child using addChild() ', () => {
           expect(() => {
-            cjsRow.accessible.addChild(cjsSpan);
+            cjsTable.accessible.addChild(cjsSpan);
           }).toThrowError(errorObj);
         });
 
         it('throws error attempting to add prohibited child using addChildAt()', () => {
           expect(() => {
-            cjsRow.accessible.addChildAt(cjsSpan, 0);
+            cjsTable.accessible.addChildAt(cjsSpan, 0);
           }).toThrowError(errorObj);
         });
       });
@@ -106,48 +99,40 @@ describe('RowData', () => {
           cjsDummy = new createjs.Shape();
           AccessibilityModule.register({
             displayObject: cjsDummy,
-            role: AccessibilityModule.ROLES.CELL,
+            role: AccessibilityModule.ROLES.TABLEBODY,
           });
           stage.accessibilityTranslator.update();
         });
 
         it('throws NO error when adding permitted child using addChild', () => {
           expect(() => {
-            cjsRow.accessible.addChild(cjsDummy);
+            cjsTable.accessible.addChild(cjsDummy);
           }).not.toThrowError();
         });
 
         it('throws NO error when adding permitted child using addChildAt()', () => {
           expect(() => {
-            cjsRow.accessible.addChildAt(cjsDummy, 0);
+            cjsTable.accessible.addChildAt(cjsDummy, 0);
           }).not.toThrowError();
         });
       });
     });
 
     describe('accessible options getters and setters', () => {
-      it('can read and set "level" property [for "aria-level"]', () => {
-        expect(cjsRow.accessible.level).toEqual(levelVal);
-
-        const newVal = -1;
-        cjsRow.accessible.level = newVal;
-        expect(cjsRow.accessible.level).toEqual(newVal);
-      });
-
-      it('can read and set "colIndex" property [for "aria-colindex"]', () => {
-        expect(cjsRow.accessible.colIndex).toEqual(colIndexVal);
+      it('can read and set "colCount" property [for "aria-colcount"]', () => {
+        expect(cjsTable.accessible.colCount).toEqual(colCountVal);
 
         const newVal = 111;
-        cjsRow.accessible.colIndex = newVal;
-        expect(cjsRow.accessible.colIndex).toEqual(newVal);
+        cjsTable.accessible.colCount = newVal;
+        expect(cjsTable.accessible.colCount).toEqual(newVal);
       });
 
-      it('can read and set "rowIndex" property [for "aria-rowindex"]', () => {
-        expect(cjsRow.accessible.rowIndex).toEqual(rowIndexVal);
+      it('can read and set "rowCount" property [for "aria-rowcount"]', () => {
+        expect(cjsTable.accessible.rowCount).toEqual(rowCountVal);
 
         const newVal = 222;
-        cjsRow.accessible.rowIndex = newVal;
-        expect(cjsRow.accessible.rowIndex).toEqual(newVal);
+        cjsTable.accessible.rowCount = newVal;
+        expect(cjsTable.accessible.rowCount).toEqual(newVal);
       });
     });
   });
