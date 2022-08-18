@@ -1,0 +1,33 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+    // "outDir": "./dist/",        // path to output directory
+    // "sourceMap": true,          // allow sourcemap support
+    // "strictNullChecks": true,   // enable strict null checks as a best practice
+    // "module": "es6",            // specify module code generation
+    // "jsx": "react",             // use typescript to transpile jsx to js
+    // "target": "es5",            // specify ECMAScript target version
+    // "allowJs": true             // allow a partial TypeScript and JavaScript codebase
+    //  "skipLibCheck": true,
+    //  "esModuleInterop": true,
+    //  "experimentalDecorators": true,
+    //  "strict": true,
+    //  "forceConsistentCasingInFileNames": true,
+    //  "module": "esnext",
+    //  "resolveJsonModule": true,
+    //  "isolatedModules": true,
+    //  "noUnusedLocals": false,
+    //  "noImplicitAny": false,
+      "outDir": "./dist/",
+      "noImplicitAny": false,
+      "module": "es6",
+      "target": "es5",
+      "jsx": "preserve",
+      "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["./src/**/*"],
+    "typeRoots": [ "./types", "./node_modules/@types"],
+    "exclude": ["node_modules", "typings"]
+  }

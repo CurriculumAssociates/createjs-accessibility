@@ -14,6 +14,11 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx|jsx)$/,
+        exclude: /node_modules/,
+        use: [{ loader: 'ts-loader' }],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
@@ -21,6 +26,9 @@ const config = {
         ],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   mode: 'production',
 };
