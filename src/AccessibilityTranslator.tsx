@@ -85,7 +85,9 @@ export default class AccessibilityTranslator extends React.Component<Props> {
    */
   set root(displayObject: AccessibleDisplayObject) {
     if (!displayObject.accessible) {
-      throw new Error('The root of the accessibility tree must have accessibility information when being added to the tree');
+      throw new Error(
+        'The root of the accessibility tree must have accessibility information when being added to the tree'
+      );
     }
     this._root = displayObject;
   }
@@ -103,8 +105,8 @@ export default class AccessibilityTranslator extends React.Component<Props> {
    * the accessibility information for all DisplayObjects has been completed(e.g. just after
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
-  update(): void {
-    this.forceUpdate();
+  update(callback = _.noop): void {
+    this.forceUpdate(callback);
   }
 
   _processDisplayObject(displayObject: AccessibleDisplayObject,
@@ -118,9 +120,14 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     const children = accessible.children || [];
 
     let { text } = accessible;
-    if (role === ROLES.MENUBAR || role === ROLES.MENU
-      || ((role === ROLES.MENUITEM || role === ROLES.MENUITEMCHECKBOX
-      || role === ROLES.MENUITEMRADIO) && children.length > 0)) {
+    if (
+      role === ROLES.MENUBAR ||
+      role === ROLES.MENU ||
+      ((role === ROLES.MENUITEM ||
+        role === ROLES.MENUITEMCHECKBOX ||
+        role === ROLES.MENUITEMRADIO) &&
+        children.length > 0)
+    ) {
       text = null;
     }
 
@@ -137,14 +144,20 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     try {
       const bounds: ElementBounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
-      const lowerRight = displayObject.localToGlobal(bounds.x + bounds.width,
-        bounds.y + bounds.height);
-      posParentSpace.x = (posGlobalSpace.x - parentBoundsInGlobalSpace.x)
-        * (1 / displayObject.stage.scaleX);
-      posParentSpace.y = (posGlobalSpace.y - parentBoundsInGlobalSpace.y)
-        * (1 / displayObject.stage.scaleY);
-      posParentSpace.width = (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
-      posParentSpace.height = (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
+      const lowerRight = displayObject.localToGlobal(
+        bounds.x + bounds.width,
+        bounds.y + bounds.height
+      );
+      posParentSpace.x =
+        (posGlobalSpace.x - parentBoundsInGlobalSpace.x) *
+        (1 / displayObject.stage.scaleX);
+      posParentSpace.y =
+        (posGlobalSpace.y - parentBoundsInGlobalSpace.y) *
+        (1 / displayObject.stage.scaleY);
+      posParentSpace.width =
+        (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
+      posParentSpace.height =
+        (lowerRight.y - posGlobalSpace.y) * (1 / displayObject.stage.scaleY);
       if (posParentSpace.width < 0) {
         posParentSpace.width = -posParentSpace.width;
         posParentSpace.x -= posParentSpace.width;
@@ -167,35 +180,54 @@ export default class AccessibilityTranslator extends React.Component<Props> {
       });
     }
 
-    const props: DisplayObjectReactProps = _.merge({
-      style: {
-        position: 'absolute',
-        left: `${posParentSpace.x}px`,
-        top: `${posParentSpace.y}px`,
-        width: `${posParentSpace.width}px`,
-        height: `${posParentSpace.height}px`,
-        margin: 0,
-        padding: 0,
+    const props = _.merge(
+      {
+        style: {
+          position: 'absolute',
+          left: `${posParentSpace.x}px`,
+          top: `${posParentSpace.y}px`,
+          width: `${posParentSpace.width}px`,
+          height: `${posParentSpace.height}px`,
+          margin: 0,
+          padding: 0,
+        },
       },
-    }, displayObject.accessible._reactProps);
-    if ((tagName === 'div' && role !== ROLES.NONE) || role === ROLES.MENUBAR
-      || role === ROLES.MENUITEMCHECKBOX || role === ROLES.MENUITEMRADIO
-      || role === ROLES.MENU || role === ROLES.MENUITEM || role === ROLES.SWITCH
-      || role === ROLES.SPINBUTTON || role === ROLES.GRID || role === ROLES.GRIDCELL
-      || role === ROLES.TREE || role === ROLES.TREEGRID || role === ROLES.TREEITEM
-      || role === ROLES.DEFINITION || role === ROLES.TERM) {
+      displayObject.accessible._reactProps
+    );
+    if (
+      (tagName === 'div' && role !== ROLES.NONE) ||
+      role === ROLES.MENUBAR ||
+      role === ROLES.MENUITEMCHECKBOX ||
+      role === ROLES.MENUITEMRADIO ||
+      role === ROLES.MENU ||
+      role === ROLES.MENUITEM ||
+      role === ROLES.SWITCH ||
+      role === ROLES.SPINBUTTON ||
+      role === ROLES.GRID ||
+      role === ROLES.GRIDCELL ||
+      role === ROLES.TREE ||
+      role === ROLES.TREEGRID ||
+      role === ROLES.TREEITEM ||
+      role === ROLES.DEFINITION ||
+      role === ROLES.TERM
+    ) {
+      // @ts-ignore
       props.role = role;
     } else if (role === ROLES.SINGLESELECTLISTBOX) {
+      // @ts-ignore
       props.role = 'listbox';
     } else if (role === ROLES.SINGLESELECTOPTION) {
+      // @ts-ignore
       props.role = 'option';
     }
     if (displayObject.accessible.disabledWithInference) {
+      // @ts-ignore
       props.disabled = 'disabled';
       props['aria-disabled'] = true;
     }
 
     if (!displayObject.accessible.visibleWithInference) {
+      // @ts-ignore
       props.style.display = 'none';
     }
 
@@ -211,8 +243,12 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     if (this._root) {
       const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
       back = (
-        <div ref={(elem): void => { this.rootElem = elem; }}>
-          { tree }
+        <div
+          ref={(elem): void => {
+            this.rootElem = elem;
+          }}
+        >
+          {tree}
         </div>
       );
     }

@@ -45,23 +45,27 @@ export default class ProgressBar extends createjs.Container {
     this.removeChild(this.focusIndicator);
   }
 
-
   setupProgressBar() {
-    const {
-      width, height, strokeWidth, focusIndicatorStrokeWidth, radius,
-    } = this;
+    const { width, height, strokeWidth, focusIndicatorStrokeWidth, radius } =
+      this;
 
     const padding = 8;
     const _width = width + (padding + focusIndicatorStrokeWidth);
     const _height = height + (padding + focusIndicatorStrokeWidth);
     this.focusIndicator = new createjs.Shape();
-    this.focusIndicator.graphics.ss(focusIndicatorStrokeWidth).s('#7ec0f8').rr(0, 0, _width, _height, radius);
+    this.focusIndicator.graphics
+      .ss(focusIndicatorStrokeWidth)
+      .s('#7ec0f8')
+      .rr(0, 0, _width, _height, radius);
     this.focusIndicator.x -= (padding + focusIndicatorStrokeWidth) / 2;
     this.focusIndicator.y = this.focusIndicator.x;
 
-
     const holder = new createjs.Shape();
-    holder.graphics.ss(strokeWidth).s('#cccccc').f('#ededed').rr(0, 0, width, height, radius);
+    holder.graphics
+      .ss(strokeWidth)
+      .s('#cccccc')
+      .f('#ededed')
+      .rr(0, 0, width, height, radius);
     this.addChild(holder);
 
     this.indicator = new createjs.Shape();

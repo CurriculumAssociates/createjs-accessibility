@@ -14,8 +14,13 @@ export default class MultiSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChild(displayObject) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`);
+    if (
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`
+      );
     }
     super.addChild(displayObject);
   }
@@ -24,8 +29,13 @@ export default class MultiSelectListBoxData extends SelectData {
    * @inheritdoc
    */
   addChildAt(displayObject, index) {
-    if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
-      throw new Error(`Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`);
+    if (
+      !displayObject.accessible ||
+      displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+    ) {
+      throw new Error(
+        `Children of ${this.role} must have a role of ${ROLES.MULTISELECTOPTION}`
+      );
     }
     super.addChildAt(displayObject, index);
   }
@@ -76,12 +86,19 @@ export default class MultiSelectListBoxData extends SelectData {
    * null or undefined to clear it
    */
   set form(displayObject) {
-    if (displayObject && (!displayObject.accessible
-      || displayObject.accessible.role !== ROLES.FORM)) {
-      throw new Error(`The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`);
+    if (
+      displayObject &&
+      (!displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.FORM)
+    ) {
+      throw new Error(
+        `The form property of a ${this.role} must be a DisplayObject with a role of ${ROLES.FORM}`
+      );
     }
     this._form = displayObject;
-    this._reactProps.form = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps.form = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -145,16 +162,26 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   set selected(displayObjects) {
     displayObjects.forEach((displayObject) => {
-      if (!displayObject.accessible || displayObject.accessible.role !== ROLES.MULTISELECTOPTION) {
-        throw new Error(`Selected value must have a role of ${ROLES.MULTISELECTOPTION}`);
+      if (
+        !displayObject.accessible ||
+        displayObject.accessible.role !== ROLES.MULTISELECTOPTION
+      ) {
+        throw new Error(
+          `Selected value must have a role of ${ROLES.MULTISELECTOPTION}`
+        );
       }
       if (!displayObject.accessible.value) {
-        throw new Error('The selected option must have its value field populated');
+        throw new Error(
+          'The selected option must have its value field populated'
+        );
       }
     });
 
     this._selected = displayObjects;
-    this._reactProps.value = _.map(this._selected, option => option.accessible.value);
+    this._reactProps.value = _.map(
+      this._selected,
+      (option) => option.accessible.value
+    );
   }
 
   /**
@@ -200,10 +227,13 @@ export default class MultiSelectListBoxData extends SelectData {
    */
   _onListBoxChanged(evt) {
     const event = new createjs.Event('valueChanged', false, false);
-    event.selectedValues = _.filter(evt.target.options,
-      option => option.selected).map(option => option.value);
-    event.selectedDisplayObjects = _.map(event.selectedValues,
-      val => _.find(this.children, child => child.accessible.value === val));
+    event.selectedValues = _.filter(
+      evt.target.options,
+      (option) => option.selected
+    ).map((option) => option.value);
+    event.selectedDisplayObjects = _.map(event.selectedValues, (val) =>
+      _.find(this.children, (child) => child.accessible.value === val)
+    );
     this.selected = event.selectedDisplayObjects;
     this._displayObject.dispatchEvent(event);
   }

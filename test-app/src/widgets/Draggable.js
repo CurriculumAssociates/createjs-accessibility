@@ -5,11 +5,22 @@ import MenuItem from './MenuItem';
 import Button from './Button';
 
 export default class Draggable extends createjs.Container {
-  constructor(options, dropArr, tabIndex, callBack) {
+  constructor(options, dropArr, tabIndex, callBack, startContainer) {
     super();
-    _.bindAll(this, 'onDragStart', 'onDrag', 'onDragEnd', 'moveToTarget', 'cancelMoving', 'showHideMenu', 'toggleMenuVisibility', 'navigateMenu');
+    _.bindAll(
+      this,
+      'onDragStart',
+      'onDrag',
+      'onDragEnd',
+      'moveToTarget',
+      'cancelMoving',
+      'showHideMenu',
+      'toggleMenuVisibility',
+      'navigateMenu'
+    );
     this.dropTargets = dropArr;
     this.tabIndex = tabIndex;
+    this.startContainer = startContainer;
     AccessibilityModule.register({
       displayObject: this,
       role: AccessibilityModule.ROLES.NONE,
@@ -26,7 +37,7 @@ export default class Draggable extends createjs.Container {
     this.accessible.addChild(this.button);
   }
 
-  // crateing drop zones menu
+  // creating drop zones menu
   _createDropTargetMenu() {
     const menuItemContainer = new createjs.Container();
     this.addChild(menuItemContainer);
@@ -41,7 +52,7 @@ export default class Draggable extends createjs.Container {
 
     // drop zone menu item
     for (let i = 0; i < this.dropTargets.length; i++) {
-      const menuItem = new MenuItem(this.dropTargets[i].label, this.tabIndex++);
+      const menuItem = new MenuItem(this.dropTargets[i].label, 0);
       menuItem.label = this.dropTargets[i].label;
       menuItem.y = menuItem.getBounds().height * i;
       menuItemContainer.addChild(menuItem);
@@ -53,7 +64,7 @@ export default class Draggable extends createjs.Container {
     }
 
     // cancel moving menu item
-    const cancelItem = new MenuItem('cancel', this.tabIndex++);
+    const cancelItem = new MenuItem('cancel', 0);
     cancelItem.y = cancelItem.getBounds().height * this.dropTargets.length;
     menuItemContainer.addChild(cancelItem);
     menuItemContainer.accessible.addChild(cancelItem);
@@ -72,9 +83,15 @@ export default class Draggable extends createjs.Container {
 
   moveToTarget(evt) {
     const { currentTarget } = evt;
-    const dropTarget = _.find(this.dropTargets, drop => drop.label === currentTarget.label);
+    const dropTarget = _.find(
+      this.dropTargets,
+      (drop) => drop.label === currentTarget.label
+    );
+
     if (!dropTarget.placed) {
       this.drop(dropTarget);
+    } else if (this.targetId === dropTarget.id) {
+      this.revert();
     } else {
       this.swap(dropTarget);
     }
@@ -92,12 +109,6 @@ export default class Draggable extends createjs.Container {
   onDragStart(evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    // if draggable is picked when its already in drop zone
-    if (!_.isUndefined(this.targetId)) {
-      const dropTarget = _.find(this.dropTargets, drop => drop.id === this.targetId);
-      dropTarget.placed = false;
-      this.targetId = undefined;
-    }
 
     this.accessible.grabbed = true;
     this.hGap = evt.stageX - this.x;
@@ -110,8 +121,8 @@ export default class Draggable extends createjs.Container {
     evt.stopPropagation();
     evt.preventDefault();
     this.set({
-      x: (evt.stageX - this.hGap),
-      y: (evt.stageY - this.vGap),
+      x: evt.stageX - this.hGap,
+      y: evt.stageY - this.vGap,
     });
   }
 
@@ -120,15 +131,19 @@ export default class Draggable extends createjs.Container {
     evt.stopPropagation();
     evt.preventDefault();
     this.accessible.grabbed = false;
+    let collided = false;
     _.forEach(this.dropTargets, (dropTarget) => {
-      if (this.checkCollision(this, dropTarget) && !dropTarget.placed) {
-        this.drop(dropTarget);
-      } else if (this.checkCollision(this, dropTarget)) {
-        this.swap(dropTarget);
+      if (this.checkCollision(this, dropTarget)) {
+        collided = true;
+        if (!dropTarget.placed) {
+          this.drop(dropTarget);
+        } else {
+          this.swap(dropTarget);
+        }
       }
     });
 
-    if (_.isUndefined(this.targetId)) {
+    if (!collided) {
       this.revert();
     }
   }
@@ -141,12 +156,33 @@ export default class Draggable extends createjs.Container {
     const rect2Bounds = rect2.getBounds();
     rect2.set({ width: rect2Bounds.width, height: rect2Bounds.height });
 
-    return !(rect1.x >= rect2.x + rect2.width || rect1.x + rect1.width <= rect2.x
-      || rect1.y >= rect2.y + rect2.height || rect1.y + rect1.height <= rect2.y);
+    return !(
+      rect1.x >= rect2.x + rect2.width ||
+      rect1.x + rect1.width <= rect2.x ||
+      rect1.y >= rect2.y + rect2.height ||
+      rect1.y + rect1.height <= rect2.y
+    );
+  }
+
+  removeFromPrevTarget() {
+    // remove from either start or previous container
+    if (!_.isUndefined(this.targetId)) {
+      const dropTarget = _.find(
+        this.dropTargets,
+        (drop) => drop.id === this.targetId
+      );
+      dropTarget.accessible.removeChild(this);
+      dropTarget.placed = false;
+      dropTarget.draggable = undefined;
+    } else {
+      this.startContainer.accessible.removeChild(this);
+    }
+    this.targetId = undefined;
   }
 
   // drop current draggable into respective drop zone
   drop(dropTarget) {
+    this.removeFromPrevTarget();
     this.set({
       x: dropTarget.x,
       y: dropTarget.y,
@@ -154,29 +190,24 @@ export default class Draggable extends createjs.Container {
     dropTarget.placed = true;
     dropTarget.draggable = this;
     this.targetId = dropTarget.id;
+    dropTarget.accessible.addChild(this);
   }
 
   // swap the draggable with previous one on drop zone
   swap(dropTarget) {
     const previousDrag = dropTarget.draggable;
+    previousDrag.revert();
     this.drop(dropTarget);
-    previousDrag.set({
-      x: previousDrag.origX,
-      y: previousDrag.origY,
-    });
-    previousDrag.targetId = undefined;
   }
 
   // revert back to original posiiton
   revert() {
+    this.removeFromPrevTarget();
     this.set({
       x: this.origX,
       y: this.origY,
     });
-
-    if (!_.isUndefined(this.targetId)) {
-      this.targetId = undefined;
-    }
+    this.startContainer.accessible.addChild(this);
   }
 
   // Hnadles visibility of menu items
@@ -200,11 +231,14 @@ export default class Draggable extends createjs.Container {
     if (evt.keyCode === KeyCodes.up || evt.keyCode === KeyCodes.down) {
       let nextIndex;
       if (evt.keyCode === KeyCodes.up) {
-        nextIndex = (this.currentIndex - 1 < 0) ? this.currentIndex : this.currentIndex - 1;
+        nextIndex =
+          this.currentIndex - 1 < 0 ? this.currentIndex : this.currentIndex - 1;
       } else {
         const menuItemChildLength = this.menuItemContainer.children.length;
-        nextIndex = (this.currentIndex + 1 > menuItemChildLength - 1)
-          ? this.currentIndex : this.currentIndex + 1;
+        nextIndex =
+          this.currentIndex + 1 > menuItemChildLength - 1
+            ? this.currentIndex
+            : this.currentIndex + 1;
       }
 
       if (nextIndex >= 0) {

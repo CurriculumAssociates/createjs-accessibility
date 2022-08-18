@@ -21,7 +21,11 @@ export default class AccessibilityObject {
       key: this._displayObject.id,
       id: this.domId,
       onFocus: (evt) => {
-        const cancelled = this._displayObject.dispatchEvent('focus', false, true);
+        const cancelled = this._displayObject.dispatchEvent(
+          'focus',
+          false,
+          true
+        );
 
         if (cancelled) {
           evt.stopPropagation();
@@ -29,7 +33,11 @@ export default class AccessibilityObject {
         }
       },
       onBlur: (evt) => {
-        const cancelled = this._displayObject.dispatchEvent('blur', false, true);
+        const cancelled = this._displayObject.dispatchEvent(
+          'blur',
+          false,
+          true
+        );
         if (cancelled) {
           evt.stopPropagation();
           evt.preventDefault();
@@ -55,7 +63,9 @@ export default class AccessibilityObject {
    */
   addChild(displayObject) {
     if (!displayObject.accessible) {
-      throw new Error('DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree');
+      throw new Error(
+        'DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree'
+      );
     }
 
     if (displayObject.accessible._parent) {
@@ -79,7 +89,9 @@ export default class AccessibilityObject {
    */
   addChildAt(displayObject, index) {
     if (!displayObject.accessible) {
-      throw new Error('DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree');
+      throw new Error(
+        'DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree'
+      );
     }
 
     if (displayObject.accessible._parent) {
@@ -106,7 +118,7 @@ export default class AccessibilityObject {
    * @param {createjs.DisplayObject} displayObject - child DisplayObject to remove
    */
   removeChild(displayObject) {
-    const index = _.findIndex(this._children, test => test === displayObject);
+    const index = _.findIndex(this._children, (test) => test === displayObject);
     this.removeChildAt(index);
   }
 
@@ -131,7 +143,10 @@ export default class AccessibilityObject {
     const elem = document.getElementById(this._domId);
     if (elem) {
       // handle elements that won't be visible until the next render pass
-      if (this.visibleWithInference && getComputedStyle(elem).display === 'none') {
+      if (
+        this.visibleWithInference &&
+        getComputedStyle(elem).display === 'none'
+      ) {
         this._forceShow();
       }
       // handle elements that won't be enabled until the next render pass
@@ -139,7 +154,10 @@ export default class AccessibilityObject {
         elem.removeAttribute('disabled');
       }
       // handle elements that won't get tabindex updated until the next render pass
-      if (!_.isUndefined(this.tabIndex) && elem.getAttribute('tabindex') === null) {
+      if (
+        !_.isUndefined(this.tabIndex) &&
+        elem.getAttribute('tabindex') === null
+      ) {
         elem.setAttribute('tabindex', this.tabIndex);
       }
 
@@ -214,7 +232,6 @@ export default class AccessibilityObject {
   get spellcheck() {
     return this._reactProps.spellCheck;
   }
-
 
   /**
    * Sets the title for the DisplayObject
@@ -334,10 +351,14 @@ export default class AccessibilityObject {
    */
   set controls(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject being controlled by another must have accessibility information');
+      throw new Error(
+        'DisplayObject being controlled by another must have accessibility information'
+      );
     }
     this._controls = displayObject;
-    this._reactProps['aria-controls'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-controls'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -366,10 +387,14 @@ export default class AccessibilityObject {
    */
   set describedBy(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject describing another must have accessibility information');
+      throw new Error(
+        'DisplayObject describing another must have accessibility information'
+      );
     }
     this._describedBy = displayObject;
-    this._reactProps['aria-describedby'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-describedby'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -436,7 +461,8 @@ export default class AccessibilityObject {
    * if the element should be disabled.  undefined to unset the field.
    */
   set enabled(enable) {
-    this._reactProps['aria-disabled'] = enable === undefined ? undefined : !enable;
+    this._reactProps['aria-disabled'] =
+      enable === undefined ? undefined : !enable;
   }
 
   /**
@@ -446,7 +472,9 @@ export default class AccessibilityObject {
    * is disabled.  undefined if the field is unset.
    */
   get enabled() {
-    return this._reactProps['aria-disabled'] === undefined ? undefined : !this._reactProps['aria-disabled'];
+    return this._reactProps['aria-disabled'] === undefined
+      ? undefined
+      : !this._reactProps['aria-disabled'];
   }
 
   /**
@@ -458,10 +486,10 @@ export default class AccessibilityObject {
   get disabledWithInference() {
     return this._reactProps['aria-disabled'] !== undefined
       ? this._reactProps['aria-disabled']
-      : (!this._displayObject.mouseEnabled
-        && (this._displayObject.hasEventListener('click')
-          || this._displayObject.hasEventListener('mousedown')
-          || this._displayObject.hasEventListener('pressup')));
+      : !this._displayObject.mouseEnabled &&
+          (this._displayObject.hasEventListener('click') ||
+            this._displayObject.hasEventListener('mousedown') ||
+            this._displayObject.hasEventListener('pressup'));
   }
 
   /**
@@ -472,10 +500,14 @@ export default class AccessibilityObject {
    */
   set flowTo(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject to flow to must have accessibility information');
+      throw new Error(
+        'DisplayObject to flow to must have accessibility information'
+      );
     }
     this._flowTo = displayObject;
-    this._reactProps['aria-flowto'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-flowto'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -566,7 +598,11 @@ export default class AccessibilityObject {
    * @returns {boolean} true if not perceivable, false for perceivable
    */
   get hiddenWithInference() {
-    return this._reactProps['aria-hidden'] || (!this._displayObject.visible && this._reactProps['aria-hidden'] === undefined);
+    return (
+      this._reactProps['aria-hidden'] ||
+      (!this._displayObject.visible &&
+        this._reactProps['aria-hidden'] === undefined)
+    );
   }
 
   /**
@@ -613,13 +649,17 @@ export default class AccessibilityObject {
    */
   set labelledBy(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObjects used to label another DisplayObject must have accessibility information when being provided as a label');
+      throw new Error(
+        'DisplayObjects used to label another DisplayObject must have accessibility information when being provided as a label'
+      );
     }
     if (displayObject === this._displayObject) {
       throw new Error('An object cannot be used as its own labelledBy');
     }
     this._labelledBy = displayObject;
-    this._reactProps['aria-labelledby'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-labelledby'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**
@@ -674,7 +714,9 @@ export default class AccessibilityObject {
       let ids = '';
       displayObjects.forEach((displayObject) => {
         if (!displayObject.accessible) {
-          throw new Error('DisplayObjects owned by another DisplayObject must have accessibility information');
+          throw new Error(
+            'DisplayObjects owned by another DisplayObject must have accessibility information'
+          );
         } else {
           ids = `${ids} ${displayObject.accessible.domId}`;
         }
@@ -794,7 +836,9 @@ export default class AccessibilityObject {
    * @returns {boolean} true if not visible, false if hidden
    */
   get visibleWithInference() {
-    return (this.visible === undefined) ? this._displayObject.visible : this.visible === true;
+    return this.visible === undefined
+      ? this._displayObject.visible
+      : this.visible === true;
   }
 
   /**
@@ -813,7 +857,10 @@ export default class AccessibilityObject {
    * @returns {Number} index into this.children.  -1 if no match is found
    */
   _domIdToChildIndex(id) {
-    return _.findIndex(this._children, displayObject => id === displayObject.accessible._domId);
+    return _.findIndex(
+      this._children,
+      (displayObject) => id === displayObject.accessible._domId
+    );
   }
 
   /**
@@ -823,7 +870,17 @@ export default class AccessibilityObject {
    */
   _onKeyDown(evt) {
     const event = new createjs.Event('keydown', false, evt.cancelable);
+    event.key = evt.key;
     event.keyCode = evt.keyCode;
+    Object.defineProperty(event, 'keyCode', {
+      get() {
+        // eslint-disable-next-line no-console
+        console.warn(
+          '"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.'
+        );
+        return evt.keyCode;
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();
@@ -840,7 +897,17 @@ export default class AccessibilityObject {
    */
   _onKeyUp(evt) {
     const event = new createjs.Event('keyup', false, evt.cancelable);
+    event.key = evt.key;
     event.keyCode = evt.keyCode;
+    Object.defineProperty(event, 'keyCode', {
+      get() {
+        // eslint-disable-next-line no-console
+        console.warn(
+          '"keyCode" Property is being deprecated, and will be removed in future major version of the createjs-accessibility module. Please use "key" property instead.'
+        );
+        return evt.keyCode;
+      },
+    });
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {
       evt.stopPropagation();

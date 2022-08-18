@@ -50,10 +50,12 @@ export default class Switch extends createjs.Container {
     this.focusRect = focusRect;
 
     const background = new createjs.Shape();
-    background.graphics.beginStroke('black').beginFill('#fff').drawRect(0, 0, this.width, this.height);
+    background.graphics
+      .beginStroke('black')
+      .beginFill('#fff')
+      .drawRect(0, 0, this.width, this.height);
     background.setBounds(0, 0, this.width, this.height);
     this.addChild(background);
-
 
     this.offCircle = new createjs.Shape();
     this.offCircle.graphics.beginFill('#FF830F').drawCircle(0, 0, 11);
@@ -64,7 +66,7 @@ export default class Switch extends createjs.Container {
 
     this.offText = new createjs.Text('0.5', 'bold 24px Arial', '#FF830F');
     this.offText.x = 30;
-    this.offText.y = this.height * 0.20;
+    this.offText.y = this.height * 0.2;
     this.offText.visible = true;
     this.addChild(this.offText);
     AccessibilityModule.register({
@@ -83,10 +85,9 @@ export default class Switch extends createjs.Container {
     this.onCircle.visible = false;
     this.addChild(this.onCircle);
 
-
     this.onText = new createjs.Text('1', 'bold 24px Arial', '#FF0400');
     this.onText.x = 10;
-    this.onText.y = this.height * 0.20;
+    this.onText.y = this.height * 0.2;
     this.onText.visible = false;
     this.addChild(this.onText);
     AccessibilityModule.register({

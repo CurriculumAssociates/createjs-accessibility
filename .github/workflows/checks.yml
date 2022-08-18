@@ -1,9 +1,9 @@
 # This workflow will run tests using node, triggered via push
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: Push
+name: Checks
 
-on: push
+on: [push, pull_request]
 
 jobs:
   build:
@@ -26,3 +26,14 @@ jobs:
           npm ci
           npm run lint
           npm run build
+  coverage:
+    needs: build
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test Coverage
+        uses: ArtiomTr/jest-coverage-report-action@v2

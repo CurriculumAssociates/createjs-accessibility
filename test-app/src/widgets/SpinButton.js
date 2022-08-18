@@ -2,12 +2,9 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import Button from './Button';
 
 export default class SpinButton extends createjs.Container {
-  constructor({
-    options, textContainer, callback, tabIndex,
-  }) {
+  constructor({ options, textContainer, callback }) {
     super();
     const { maxValue, minValue } = options;
-    this.tabIndex = tabIndex;
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.targetContainer = textContainer;
@@ -24,7 +21,7 @@ export default class SpinButton extends createjs.Container {
         min: minValue,
         readOnly: false,
         required: true,
-        tabIndex,
+        tabIndex: 0,
         value: this.currentValue,
       },
       displayObject: this,
@@ -42,10 +39,19 @@ export default class SpinButton extends createjs.Container {
           eventName: 'change',
           listener: this.onChange,
         },
+        {
+          eventName: 'focus',
+          listener: this.onFocus,
+        },
+        {
+          eventName: 'blur',
+          listener: this.onBlur,
+        },
       ],
     });
 
     this.setBounds(0, 0, this.width, this.height);
+    this.setupFocusIndicator(this.width, this.height);
     this.createButtons();
   }
 
@@ -55,32 +61,36 @@ export default class SpinButton extends createjs.Container {
       value: '+',
       name: 'Increment',
       enabled: true,
-      autoFocus: false,
+      autoFocus: true,
       width: this.width,
       height: this.height * 0.5,
     };
     // Increment button
-    this.incBtn = new Button(options, this.tabIndex++, this.onIncrement.bind(this));
+    this.incBtn = new Button(options, 0, this.onIncrement.bind(this));
     this.addChild(this.incBtn);
 
     // Decrement button
     options.value = '-';
     options.name = 'Decrement';
-    this.decBtn = new Button(options, this.tabIndex++, this.onDecrement.bind(this));
+    this.decBtn = new Button(options, 0, this.onDecrement.bind(this));
     this.addChild(this.decBtn);
 
     this.decBtn.y = this.height * 0.5;
   }
 
   onIncrement() {
-    this.currentValue = ((this.currentValue + 1) > this.maxValue)
-      ? this.maxValue : this.currentValue + 1;
+    this.currentValue =
+      this.currentValue + 1 > this.maxValue
+        ? this.maxValue
+        : this.currentValue + 1;
     this.updateTargetValue();
   }
 
   onDecrement() {
-    this.currentValue = ((this.currentValue - 1) < this.minValue)
-      ? this.minValue : this.currentValue - 1;
+    this.currentValue =
+      this.currentValue - 1 < this.minValue
+        ? this.minValue
+        : this.currentValue - 1;
     this.updateTargetValue();
   }
 
@@ -93,6 +103,24 @@ export default class SpinButton extends createjs.Container {
     this.targetContainer.text = this.currentValue;
     this.accessible.value = this.currentValue;
     this.callback();
+  }
+
+  setupFocusIndicator(width, height) {
+    this._focusIndicator = new createjs.Shape();
+    this._focusIndicator.visible = false;
+    this._focusIndicator.graphics
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, width + 5, height + 5);
+    this.addChild(this._focusIndicator);
+  }
+
+  onFocus() {
+    this._focusIndicator.visible = true;
+  }
+
+  onBlur() {
+    this._focusIndicator.visible = false;
   }
 
   get width() {

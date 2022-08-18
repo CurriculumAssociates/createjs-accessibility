@@ -1,6 +1,7 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import _ from 'lodash';
 import SingleLineTextInput from './SingleLineTextInput';
+import ClearInputButton from './ClearInputButton';
 
 export default class SearchBox extends SingleLineTextInput {
   constructor(width, height, tabIndex, listArr, placeholderText) {
@@ -13,14 +14,10 @@ export default class SearchBox extends SingleLineTextInput {
       },
       displayObject: this,
       role: AccessibilityModule.ROLES.SEARCHBOX,
-      events: [{
-        eventName: 'searchForText',
-        listener: this._processSearchData,
-      }],
     });
     this._searchText = '';
     this.listArr = listArr;
-    this.addRemoveButton();
+    this.addClearInputButton();
 
     // Label to show result status
     const label = new createjs.Text('', '20px Arial', 'black');
@@ -31,38 +28,30 @@ export default class SearchBox extends SingleLineTextInput {
     this.resultLabel = label;
   }
 
-  addRemoveButton() {
-    const container = new createjs.Container();
-    // Button background
-    const bg = new createjs.Shape();
-    const height = this.getBounds().height - 5;
-    bg.graphics.beginFill('grey').drawCircle(0, 0, height * 0.5);
-    container.addChild(bg);
+  addClearInputButton() {
+    const clearBtnData = {
+      type: 'button',
+      value: 'Clear',
+      name: 'Clear',
+      enabled: 'true',
+      height: 20,
+      width: 20,
+      label: 'Clear search input',
+    };
 
-    // Cross
-    const cross = new createjs.Text('x', `${height}px Arial`, 'white');
-    const textBounds = cross.getBounds();
-    cross.set({ x: -(textBounds.width * 0.5), y: -(textBounds.height * 0.65) });
-    container.addChild(cross);
+    const clearInputButton = new ClearInputButton(clearBtnData, 0, () => {
+      this._clearText();
+    });
 
     // Container position
-    const containerBounds = container.getBounds();
+    const containerBounds = clearInputButton.getBounds();
     const bounds = this.getBounds();
-    container.set({
+    clearInputButton.set({
       x: bounds.width - (containerBounds.width + 3),
-      y: 3 + (containerBounds.height) * 0.5,
+      y: 3 + containerBounds.height * 0.5,
     });
-    this.addChild(container);
-    container.visible = false;
-
-    this.crossButton = container;
-
-    // Mouseevent to clear current selection
-    container.on('click', () => {
-      super._updateDisplayString('');
-      this.searchText = '';
-      this.dispatchEvent('searchForText');
-    });
+    clearInputButton.visible = false;
+    this.clearInputButton = clearInputButton;
   }
 
   /**
@@ -73,7 +62,13 @@ export default class SearchBox extends SingleLineTextInput {
   _updateDisplayString(str) {
     super._updateDisplayString(str);
     this.searchText = str;
-    this.dispatchEvent('searchForText');
+  }
+
+  _clearText() {
+    this._updateDisplayString('');
+    this._processSearchData();
+    this._cursorToIndex();
+    this.accessible.requestFocus();
   }
 
   /**
@@ -84,7 +79,7 @@ export default class SearchBox extends SingleLineTextInput {
   _onValueChanged(evt) {
     super._onValueChanged(evt);
     this.searchText = evt.newValue;
-    this.dispatchEvent('searchForText');
+    this.clearInputButton.visible = !_.isEmpty(this.searchText);
   }
 
   /**
@@ -96,17 +91,18 @@ export default class SearchBox extends SingleLineTextInput {
 
     _.forEach(this.listArr, (sentence) => {
       const reg = new RegExp(this.searchText, 'gmi');
-      sentence.visible = (_.isArray(sentence.text.match(reg)));
+      sentence.visible = _.isArray(sentence.text.match(reg));
       sentence.bullet.visible = sentence.visible;
       if (sentence.visible) visibleCount++;
     });
 
     // Show result status
-    const text = (visibleCount > 0) ? 'Here are the results....' : 'No results found';
-    this.resultLabel.text = (_.isEmpty(this.searchText)) ? '' : text;
+    const text =
+      visibleCount > 0 ? 'Here are the results....' : 'No results found';
+    this.resultLabel.text = _.isEmpty(this.searchText) ? '' : text;
 
     // Toggle visibility of cross button
-    this.crossButton.visible = !_.isEmpty(this.searchText);
+    this.clearInputButton.visible = !_.isEmpty(this.searchText);
   }
 
   get searchText() {

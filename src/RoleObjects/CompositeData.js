@@ -1,4 +1,3 @@
-
 import AccessibilityObject from './AccessibilityObject';
 
 export default class CompositeData extends AccessibilityObject {
@@ -10,10 +9,14 @@ export default class CompositeData extends AccessibilityObject {
   */
   set active(displayObject) {
     if (displayObject && !displayObject.accessible) {
-      throw new Error('DisplayObject being set as the active descendant must have accessibility information');
+      throw new Error(
+        'DisplayObject being set as the active descendant must have accessibility information'
+      );
     }
     this._active = displayObject;
-    this._reactProps['aria-activedescendant'] = displayObject ? displayObject.accessible.domId : undefined;
+    this._reactProps['aria-activedescendant'] = displayObject
+      ? displayObject.accessible.domId
+      : undefined;
   }
 
   /**

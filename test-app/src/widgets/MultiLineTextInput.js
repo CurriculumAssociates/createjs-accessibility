@@ -10,7 +10,16 @@ const MODES = {
 export default class MultiLineTextInput extends createjs.Container {
   constructor(width, height, fontSize, tabIndex) {
     super();
-    _.bindAll(this, 'onFocus', 'onBlur', '_onValueChanged', '_onSelectionChanged', '_onMouseDown', '_onMouseMove', '_onMouseUp');
+    _.bindAll(
+      this,
+      'onFocus',
+      'onBlur',
+      '_onValueChanged',
+      '_onSelectionChanged',
+      '_onMouseDown',
+      '_onMouseMove',
+      '_onMouseUp'
+    );
     AccessibilityModule.register({
       accessibleOptions: { tabIndex },
       displayObject: this,
@@ -50,7 +59,11 @@ export default class MultiLineTextInput extends createjs.Container {
     this.setBounds(0, 0, width, height);
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('#000000').setStrokeStyle(1).beginFill('#ffffff').drawRect(0, 0, width, height);
+    bg.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .beginFill('#ffffff')
+      .drawRect(0, 0, width, height);
     this.addChild(bg);
 
     this._selectionDisplay = new createjs.Shape();
@@ -64,7 +77,11 @@ export default class MultiLineTextInput extends createjs.Container {
     this.addChild(this._text);
 
     this._cursor = new createjs.Shape();
-    this._cursor.graphics.beginStroke('#000000').setStrokeStyle(1).moveTo(0, PAD).lineTo(0, fontSize);
+    this._cursor.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .moveTo(0, PAD)
+      .lineTo(0, fontSize);
     this._cursor.x = PAD;
     this._cursor.visible = false;
     this.addChild(this._cursor);
@@ -109,7 +126,10 @@ export default class MultiLineTextInput extends createjs.Container {
   _onSelectionChanged(evt) {
     this._selection.start = evt.selectionStart;
     this._selection.end = evt.selectionEnd;
-    this._cursorIndex = evt.selectionDirection === 'backward' ? this._selection.start : this._selection.end;
+    this._cursorIndex =
+      evt.selectionDirection === 'backward'
+        ? this._selection.start
+        : this._selection.end;
     this._cursorToIndex();
     this._updateSelection();
   }
@@ -118,12 +138,22 @@ export default class MultiLineTextInput extends createjs.Container {
     if (!this._cursorTimeline) {
       this._cursor.visible = true;
       this._cursorTimeline = new TimelineMax({ repeat: -1 });
-      this._cursorTimeline.call(() => {
-        this._cursor.visible = false;
-      }, null, null, '+=1');
-      this._cursorTimeline.call(() => {
-        this._cursor.visible = true;
-      }, null, null, '+=1');
+      this._cursorTimeline.call(
+        () => {
+          this._cursor.visible = false;
+        },
+        null,
+        null,
+        '+=1'
+      );
+      this._cursorTimeline.call(
+        () => {
+          this._cursor.visible = true;
+        },
+        null,
+        null,
+        '+=1'
+      );
     }
 
     if (evt.type === 'click') {
@@ -162,10 +192,17 @@ export default class MultiLineTextInput extends createjs.Container {
       this._cursor.y = 0;
       return;
     }
-    const lineIndex = _.findLastIndex(lineData, line => this._cursorIndex >= line.startIndex);
-    this._cursor.x = this._text._getMeasuredWidth(
-      this._text.text.substring(lineData[lineIndex].startIndex, this._cursorIndex),
-    ) + this._text.x;
+    const lineIndex = _.findLastIndex(
+      lineData,
+      (line) => this._cursorIndex >= line.startIndex
+    );
+    this._cursor.x =
+      this._text._getMeasuredWidth(
+        this._text.text.substring(
+          lineData[lineIndex].startIndex,
+          this._cursorIndex
+        )
+      ) + this._text.x;
     this._cursor.y = lineData[lineIndex].top;
   }
 
@@ -183,26 +220,56 @@ export default class MultiLineTextInput extends createjs.Container {
     if (this._isSelectionActive()) {
       const lineData = this._getLineData();
       const { start, end } = this._selection;
-      const startLineIndex = _.findLastIndex(lineData, line => start >= line.startIndex);
-      const endLineIndex = _.findLastIndex(lineData, line => end >= line.startIndex);
-      const startText = this._text.text.substring(lineData[startLineIndex].startIndex, start);
+      const startLineIndex = _.findLastIndex(
+        lineData,
+        (line) => start >= line.startIndex
+      );
+      const endLineIndex = _.findLastIndex(
+        lineData,
+        (line) => end >= line.startIndex
+      );
+      const startText = this._text.text.substring(
+        lineData[startLineIndex].startIndex,
+        start
+      );
       const startX = this._text._getMeasuredWidth(startText) + this._text.x;
-      const endText = this._text.text.substring(lineData[endLineIndex].startIndex, end);
+      const endText = this._text.text.substring(
+        lineData[endLineIndex].startIndex,
+        end
+      );
       const endX = this._text._getMeasuredWidth(endText) + this._text.x;
       if (startLineIndex === endLineIndex) {
-        this._selectionDisplay.graphics.clear().beginFill('#31c7ec').drawRect(startX, lineData[startLineIndex].top, endX - startX, lineData[startLineIndex].bottom - lineData[startLineIndex].top);
+        this._selectionDisplay.graphics
+          .clear()
+          .beginFill('#31c7ec')
+          .drawRect(
+            startX,
+            lineData[startLineIndex].top,
+            endX - startX,
+            lineData[startLineIndex].bottom - lineData[startLineIndex].top
+          );
       } else {
         this._selectionDisplay.graphics.clear().beginFill('#31c7ec');
-        this._selectionDisplay.graphics.drawRect(startX, lineData[startLineIndex].top,
+        this._selectionDisplay.graphics.drawRect(
+          startX,
+          lineData[startLineIndex].top,
           this._text.lineWidth - startX + this._text.x,
-          lineData[startLineIndex].bottom - lineData[startLineIndex].top);
-        this._selectionDisplay.graphics.drawRect(this._text.x,
-          lineData[endLineIndex].top, endX - this._text.x,
-          lineData[endLineIndex].bottom - lineData[endLineIndex].top);
+          lineData[startLineIndex].bottom - lineData[startLineIndex].top
+        );
+        this._selectionDisplay.graphics.drawRect(
+          this._text.x,
+          lineData[endLineIndex].top,
+          endX - this._text.x,
+          lineData[endLineIndex].bottom - lineData[endLineIndex].top
+        );
         for (let i = startLineIndex + 1; i < endLineIndex; i++) {
           const height = lineData[i].bottom - lineData[i].top;
-          this._selectionDisplay.graphics.drawRect(this._text.x,
-            lineData[i].top, this._text.lineWidth, height);
+          this._selectionDisplay.graphics.drawRect(
+            this._text.x,
+            lineData[i].top,
+            this._text.lineWidth,
+            height
+          );
         }
       }
       this._selectionDisplay.visible = true;
@@ -253,18 +320,27 @@ export default class MultiLineTextInput extends createjs.Container {
       back.index = 0;
       return back;
     }
-    let lineIndex = _.findIndex(lineData, data => localPos.y <= data.bottom);
+    let lineIndex = _.findIndex(lineData, (data) => localPos.y <= data.bottom);
     if (lineIndex === -1) {
       lineIndex = lineData.length - 1;
     }
     back.y = lineData[lineIndex].top;
 
-    const endIndex = lineIndex === (lineData.length - 1)
-      ? this._text.text.length : lineData[lineIndex + 1].startIndex;
+    const endIndex =
+      lineIndex === lineData.length - 1
+        ? this._text.text.length
+        : lineData[lineIndex + 1].startIndex;
     let match = false;
     let prevWidth = PAD;
-    for (let i = lineData[lineIndex].startIndex + 1; i <= endIndex && !match; i++) {
-      const substr = this._text.text.substring(lineData[lineIndex].startIndex, i);
+    for (
+      let i = lineData[lineIndex].startIndex + 1;
+      i <= endIndex && !match;
+      i++
+    ) {
+      const substr = this._text.text.substring(
+        lineData[lineIndex].startIndex,
+        i
+      );
       const width = this._text._getMeasuredWidth(substr);
       if (width > localPos.x) {
         back.x = prevWidth + this._text.x;
@@ -282,7 +358,10 @@ export default class MultiLineTextInput extends createjs.Container {
   }
 
   _onMouseDown(evt) {
-    this._selection.start = this._mousePosToLetterIndexAndPos(evt.stageX, evt.stageY).index;
+    this._selection.start = this._mousePosToLetterIndexAndPos(
+      evt.stageX,
+      evt.stageY
+    ).index;
     this._selection.end = this._selection.start;
     this._cursorIndex = this._selection.start;
   }

@@ -1,7 +1,14 @@
 import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 
 export default class FormatText extends createjs.Container {
-  constructor(prefixText, value, role, fontType = '', fontSize, fontFamily = 'Arial') {
+  constructor(
+    prefixText,
+    value,
+    role,
+    fontType = '',
+    fontSize,
+    fontFamily = 'Arial'
+  ) {
     super();
 
     const { ROLES } = AccessibilityModule;
@@ -21,7 +28,10 @@ export default class FormatText extends createjs.Container {
       },
     });
 
-    const label = new createjs.Text(value, `${fontType} ${fontSize}px ${fontFamily}`);
+    const label = new createjs.Text(
+      value,
+      `${fontType} ${fontSize}px ${fontFamily}`
+    );
     this.addChild(label);
     AccessibilityModule.register({
       displayObject: label,
@@ -56,15 +66,16 @@ export default class FormatText extends createjs.Container {
     const { ROLES } = AccessibilityModule;
     const date = new Date();
     switch (role) {
-      case ROLES.FORMAT_TEXT_STRIKETHROUGH: {
-        const x1 = this.label.x;
-        const y1 = this.label.y + this.getTextHeight(this.label) * 0.5 + 2;
-        const x2 = this.label.x + this.label.getMeasuredWidth();
-        const y2 = this.label.y + this.getTextHeight(this.label) * 0.5 + 2;
+      case ROLES.FORMAT_TEXT_STRIKETHROUGH:
+        {
+          const x1 = this.label.x;
+          const y1 = this.label.y + this.getTextHeight(this.label) * 0.5 + 2;
+          const x2 = this.label.x + this.label.getMeasuredWidth();
+          const y2 = this.label.y + this.getTextHeight(this.label) * 0.5 + 2;
 
-        const strikethrough = drawLine(x1, y1, x2, y2);
-        this.addChild(strikethrough);
-      }
+          const strikethrough = drawLine(x1, y1, x2, y2);
+          this.addChild(strikethrough);
+        }
         break;
 
       case ROLES.FORMAT_TEXT_DELETE:
@@ -92,7 +103,7 @@ export default class FormatText extends createjs.Container {
 
       case ROLES.FORMAT_TEXT_SMALL:
         this.label.font = 'smaller';
-        this.label.y = this.label.y + this.getTextHeight(this.label) * 0.5;
+        this.label.y += this.getTextHeight(this.label) * 0.5;
         break;
 
       case ROLES.FORMAT_TEXT_SUBSCRIPT:

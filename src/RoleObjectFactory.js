@@ -98,7 +98,10 @@ function createAccessibilityObjectForRole(config) {
   if (displayObject.accessible) {
     const prevParent = displayObject.accessible.parent;
     if (prevParent) {
-      const prevContainerIndex = _.findIndex(prevParent.children, child => child === displayObject);
+      const prevContainerIndex = _.findIndex(
+        prevParent.children,
+        (child) => child === displayObject
+      );
       prevParent.removeChildAt(prevContainerIndex);
 
       if (!parent) {
@@ -136,10 +139,14 @@ function createAccessibilityObjectForRole(config) {
     case ROLES.PRESENTATION:
     case ROLES.SPAN:
     case ROLES.SEARCH:
-      accessibilityObject = new AccessibilityObject(displayObject, role, domIdPrefix);
+      accessibilityObject = new AccessibilityObject(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
-      // rest of the roles in alphabetical order by its class entry
+    // rest of the roles in alphabetical order by its class entry
 
     case ROLES.ARTICLE:
       accessibilityObject = new ArticleData(displayObject, role, domIdPrefix);
@@ -218,19 +225,35 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.MENUITEMCHECKBOX:
-      accessibilityObject = new MenuItemCheckBoxData(displayObject, role, domIdPrefix);
+      accessibilityObject = new MenuItemCheckBoxData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.MENUITEMRADIO:
-      accessibilityObject = new MenuItemRadioData(displayObject, role, domIdPrefix);
+      accessibilityObject = new MenuItemRadioData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.MULTILINETEXTBOX:
-      accessibilityObject = new MultiLineTextBoxData(displayObject, role, domIdPrefix);
+      accessibilityObject = new MultiLineTextBoxData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.MULTISELECTLISTBOX:
-      accessibilityObject = new MultiSelectListBoxData(displayObject, role, domIdPrefix);
+      accessibilityObject = new MultiSelectListBoxData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.SINGLESELECTOPTION:
@@ -239,7 +262,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.ORDEREDLIST:
-      accessibilityObject = new OrderedListData(displayObject, role, domIdPrefix);
+      accessibilityObject = new OrderedListData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.PROGRESSBAR:
@@ -251,7 +278,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.RADIOGROUP:
-      accessibilityObject = new RadioGroupData(displayObject, role, domIdPrefix);
+      accessibilityObject = new RadioGroupData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.ROW:
@@ -301,11 +332,19 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.SINGLELINETEXTBOX:
-      accessibilityObject = new SingleLineTextBoxData(displayObject, role, domIdPrefix);
+      accessibilityObject = new SingleLineTextBoxData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.SINGLESELECTLISTBOX:
-      accessibilityObject = new SingleSelectListBoxData(displayObject, role, domIdPrefix);
+      accessibilityObject = new SingleSelectListBoxData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.SLIDER:
@@ -313,7 +352,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.SPINBUTTON:
-      accessibilityObject = new SpinButtonData(displayObject, role, domIdPrefix);
+      accessibilityObject = new SpinButtonData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.SWITCH:
@@ -326,13 +369,21 @@ function createAccessibilityObjectForRole(config) {
 
     case ROLES.COLUMNHEADER:
     case ROLES.ROWHEADER:
-      accessibilityObject = new TableHeaderData(displayObject, role, domIdPrefix);
+      accessibilityObject = new TableHeaderData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.TABLEBODY:
     case ROLES.TABLEFOOT:
     case ROLES.TABLEHEAD:
-      accessibilityObject = new TableSectionData(displayObject, role, domIdPrefix);
+      accessibilityObject = new TableSectionData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     case ROLES.TAB:
@@ -365,7 +416,11 @@ function createAccessibilityObjectForRole(config) {
       break;
 
     case ROLES.UNORDEREDLIST:
-      accessibilityObject = new UnorderedListData(displayObject, role, domIdPrefix);
+      accessibilityObject = new UnorderedListData(
+        displayObject,
+        role,
+        domIdPrefix
+      );
       break;
 
     default:

@@ -3,10 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   entry: {
-    bundle: [
-      'babel-polyfill',
-      path.resolve(__dirname, 'src/index.js'),
-    ],
+    bundle: ['babel-polyfill', path.resolve(__dirname, 'src/index.js')],
   },
   output: {
     pathinfo: true,
@@ -18,9 +15,7 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-        ],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -61,9 +56,7 @@ const config = {
   },
   performance: { hints: false },
   resolve: {
-    modules: [
-      path.resolve(__dirname, 'node_modules'),
-    ],
+    modules: [path.resolve(__dirname, 'node_modules')],
   },
 };
 

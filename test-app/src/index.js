@@ -9,7 +9,10 @@ function init() {
 
   AccessibilityModule.setupStage(stage, 'cam-test');
   const canvas = $(stage.canvas);
-  const appWindow = new AppWindow(parseInt(canvas.attr('width'), 10), parseInt(canvas.attr('height'), 10));
+  const appWindow = new AppWindow(
+    parseInt(canvas.attr('width'), 10),
+    parseInt(canvas.attr('height'), 10)
+  );
   // note: AppWindow's constructor attaches and fills in its AccessibilityObject
   stage.accessibilityTranslator.root = appWindow;
   stage.addChild(appWindow);

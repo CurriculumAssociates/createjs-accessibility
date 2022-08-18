@@ -43,8 +43,10 @@ export default class TreeGrid extends createjs.Container {
 
     this._createTable();
 
-    const firstFocusableRow = _.find(this._table.accessible.children,
-      row => !_.isUndefined(row.accessible.tabIndex));
+    const firstFocusableRow = _.find(
+      this._table.accessible.children,
+      (row) => !_.isUndefined(row.accessible.tabIndex)
+    );
     firstFocusableRow.accessible.tabIndex = tabIndex;
   }
 
@@ -58,7 +60,13 @@ export default class TreeGrid extends createjs.Container {
     const rowHeight = this._cellHeight;
     const cellCount = this._numCols;
     for (let i = 0; i < this._data.length; i++) {
-      const row = new TreeGridRow(this._data[i], i, rowWidth, rowHeight, cellCount); // eslint-disable-line max-len
+      const row = new TreeGridRow(
+        this._data[i],
+        i,
+        rowWidth,
+        rowHeight,
+        cellCount
+      ); // eslint-disable-line max-len
       row.collapsedArrow.addEventListener('click', this._onExpandRow);
       row.expandedArrow.addEventListener('click', this._onCollapseRow);
       this._table.addChild(row);
@@ -75,9 +83,12 @@ export default class TreeGrid extends createjs.Container {
     row.expanded = true;
     const showRowsAtLevel = row.accessible.level + 1;
     const startUpdateIndex = _.findIndex(this._rows, row) + 1;
-    let finalUpdateIndex = _.findIndex(this._rows,
-      testRow => testRow.accessible.level <= row.accessible.level,
-      startUpdateIndex) - 1;
+    let finalUpdateIndex =
+      _.findIndex(
+        this._rows,
+        (testRow) => testRow.accessible.level <= row.accessible.level,
+        startUpdateIndex
+      ) - 1;
     if (finalUpdateIndex < 0) {
       finalUpdateIndex = this._rows.length - 1;
     }
@@ -103,9 +114,12 @@ export default class TreeGrid extends createjs.Container {
 
     row.expanded = false;
     const startUpdateIndex = _.findIndex(this._rows, row) + 1;
-    let finalUpdateIndex = _.findIndex(this._rows,
-      testRow => testRow.accessible.level <= row.accessible.level,
-      startUpdateIndex) - 1;
+    let finalUpdateIndex =
+      _.findIndex(
+        this._rows,
+        (testRow) => testRow.accessible.level <= row.accessible.level,
+        startUpdateIndex
+      ) - 1;
     if (finalUpdateIndex < 0) {
       finalUpdateIndex = this._rows.length - 1;
     }

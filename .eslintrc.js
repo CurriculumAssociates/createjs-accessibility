@@ -5,10 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: [
-    'airbnb',
-    'eslint:recommended',
-  ],
+  extends: ['airbnb', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -21,10 +18,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint'],
   root: true,
   rules: {
     'array-bracket-newline': 'warn',
@@ -33,11 +27,11 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        'js': 'never',
-        'jsx': 'never',
-        'ts': 'never',
-        'tsx': 'never'
-      }
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
     ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
@@ -60,11 +54,13 @@ module.exports = {
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
     'react/no-unused-prop-types': 'off',
-    'comma-dangle': ['error', 'always-multiline'],
-    'no-restricted-properties': ['off', {
-      object: 'Math',
-      property: 'pow',
-    }],
+    'no-restricted-properties': [
+      'off',
+      {
+        object: 'Math',
+        property: 'pow',
+      },
+    ],
     'no-continue': 'warn',
     'max-len': 'warn',
     'no-param-reassign': 'off',
@@ -75,19 +71,20 @@ module.exports = {
     'no-multi-spaces': 'warn',
     'arrow-spacing': ['error', { before: true, after: true }],
     'space-in-parens': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      1,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'prefer-destructuring': 'off',
+    'import/no-unresolved': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],
     'import/extensions': ['.js', '.ts', '.tsx'],
     'import/resolver': {
       node: {
-        'extensions': ['.js', '.ts', '.tsx'],
-        moduleDirectory: [
-          'node_modules',
-          'src',
-        ],
+        moduleDirectory: ['node_modules', 'src'],
+        extensions: ['.js', '.ts', '.tsx'],
       },
     },
   },

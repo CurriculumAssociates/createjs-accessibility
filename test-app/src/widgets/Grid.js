@@ -29,7 +29,9 @@ export default class Grid extends createjs.Container {
 
     const firstCellWidget = _.get(data, '[0][0]');
     if (!firstCellWidget || !firstCellWidget.value) {
-      throw new Error('Invalid data sent to grid widget: the first row\'s first cell does not have a widget');
+      throw new Error(
+        "Invalid data sent to grid widget: the first row's first cell does not have a widget"
+      );
     }
     firstCellWidget.value.accessible.tabIndex = tabIndex;
   }
@@ -52,7 +54,10 @@ export default class Grid extends createjs.Container {
         let cell;
         if (data.type === 'header') {
           cell = this._createCell({
-            value: data.value, index, bold: true, fontSize: 20,
+            value: data.value,
+            index,
+            bold: true,
+            fontSize: 20,
           });
           row.addChild(cell);
           AccessibilityModule.register({
@@ -61,7 +66,11 @@ export default class Grid extends createjs.Container {
             role: AccessibilityModule.ROLES.COLUMNHEADER,
           });
         } else {
-          cell = this._createCell({ value: data.value, index, align: 'center' });
+          cell = this._createCell({
+            value: data.value,
+            index,
+            align: 'center',
+          });
           row.addChild(cell);
           AccessibilityModule.register({
             displayObject: cell,
@@ -98,24 +107,39 @@ export default class Grid extends createjs.Container {
         left = 5;
         break;
       case 'right':
-        left = (this.cellWidths[index] - cellContentBounds.width);
+        left = this.cellWidths[index] - cellContentBounds.width;
         break;
       default:
         left = (this.cellWidths[index] - cellContentBounds.width) / 2;
         break;
     }
     cellContent.x = left;
-    cellContent.y = ((this.cellHeight - cellContentBounds.height) >= 0)
-      ? ((this.cellHeight - cellContentBounds.height) / 2)
-      : 0;
+    cellContent.y =
+      this.cellHeight - cellContentBounds.height >= 0
+        ? (this.cellHeight - cellContentBounds.height) / 2
+        : 0;
 
     cell.cellContent = cellContent;
     const shape = new createjs.Shape();
-    shape.graphics.beginStroke('black').drawRect(0, 0, this.cellWidths[index], _.max([this.cellHeight, cell.getBounds().height]));
+    shape.graphics
+      .beginStroke('black')
+      .drawRect(
+        0,
+        0,
+        this.cellWidths[index],
+        _.max([this.cellHeight, cell.getBounds().height])
+      );
     cell.addChild(shape);
 
     const focusRect = new createjs.Shape();
-    focusRect.graphics.beginFill('#5FC1FA').drawRect(0, 0, this.cellWidths[index], _.max([this.cellHeight, cell.getBounds().height]));
+    focusRect.graphics
+      .beginFill('#5FC1FA')
+      .drawRect(
+        0,
+        0,
+        this.cellWidths[index],
+        _.max([this.cellHeight, cell.getBounds().height])
+      );
     cell.addChildAt(focusRect, 0);
     focusRect.visible = false;
     cell.focusRect = focusRect;
@@ -131,9 +155,7 @@ export default class Grid extends createjs.Container {
     return container;
   }
 
-  _createText({
-    value, maxWidth, bold = false, fontSize = 18,
-  }) {
+  _createText({ value, maxWidth, bold = false, fontSize = 18 }) {
     const boldOption = bold ? 'bold' : '';
     const text = new createjs.Text().set({
       text: value,

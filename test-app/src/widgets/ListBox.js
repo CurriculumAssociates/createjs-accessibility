@@ -5,7 +5,16 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 export default class ListBox extends createjs.Container {
   constructor(options, width, height, tabIndex) {
     super();
-    _.bindAll(this, 'onFocus', 'onBlur', '_onCollapedViewClick', '_onCollapedViewKeyDown', '_onOptionClick', '_onDropDownKeyDown', '_onValueChanged');
+    _.bindAll(
+      this,
+      'onFocus',
+      'onBlur',
+      '_onCollapedViewClick',
+      '_onCollapedViewKeyDown',
+      '_onOptionClick',
+      '_onDropDownKeyDown',
+      '_onValueChanged'
+    );
     AccessibilityModule.register({
       displayObject: this,
       role: AccessibilityModule.ROLES.NONE,
@@ -17,13 +26,21 @@ export default class ListBox extends createjs.Container {
     this._createDropDownView(width, height);
     this._dropDownView.visible = false;
 
-    let selectedIndex = _.findIndex(this._options, option => option.selected);
+    let selectedIndex = _.findIndex(this._options, (option) => option.selected);
     if (selectedIndex === -1) {
       selectedIndex = 0;
       this._options[selectedIndex].selected = true;
     }
     const selectedOption = this._options[selectedIndex];
     this._updateSelectedOption(selectedOption);
+  }
+
+  setTabbable(tabbable) {
+    if (tabbable) {
+      this._collapsedView.accessible.tabIndex = 0;
+    } else {
+      this._collapsedView.accessible.tabIndex = -1;
+    }
   }
 
   onFocus() {
@@ -52,19 +69,21 @@ export default class ListBox extends createjs.Container {
 
   _onCollapedViewKeyDown(evt) {
     if (evt.keyCode === KeyCodes.down || evt.keyCode === KeyCodes.up) {
-    // make sure the listbox is on top of its sibling DisplayObjects to try to ensure
-    // that the dropdown is completely visible
+      // make sure the listbox is on top of its sibling DisplayObjects to try to ensure
+      // that the dropdown is completely visible
       this.parent.addChild(this);
 
       this._dropDownView.visible = true;
       this._collapsedView.accessible.expanded = this._dropDownView.visible;
       this._dropDownView.accessible.requestFocus();
-      this._updateSelectedOption(this._getAdjacentOption(evt.keyCode === KeyCodes.down));
+      this._updateSelectedOption(
+        this._getAdjacentOption(evt.keyCode === KeyCodes.down)
+      );
     }
   }
 
   _getAdjacentOption(next) {
-    let index = _.findIndex(this._options, child => child.selected);
+    let index = _.findIndex(this._options, (child) => child.selected);
     if (next) {
       index = Math.min(index + 1, this._options.length - 1);
     } else {
@@ -100,7 +119,10 @@ export default class ListBox extends createjs.Container {
 
     this._collapsedView.removeChild(this._selectedDisplay);
 
-    this._selectedDisplay = new createjs.Text(option._label.text, option._label.font);
+    this._selectedDisplay = new createjs.Text(
+      option._label.text,
+      option._label.font
+    );
     this._selectedDisplay.x = 2;
     this._selectedDisplay.y = 2;
     this._collapsedView.addChild(this._selectedDisplay);
@@ -121,8 +143,14 @@ export default class ListBox extends createjs.Container {
       parent: this,
     });
     this._collapsedView.accessible.enableKeyEvents = true;
-    this._collapsedView.addEventListener('keydown', this._onCollapedViewKeyDown);
-    this._collapsedView.addEventListener('keyboardClick', this._onCollapedViewClick);
+    this._collapsedView.addEventListener(
+      'keydown',
+      this._onCollapedViewKeyDown
+    );
+    this._collapsedView.addEventListener(
+      'keyboardClick',
+      this._onCollapedViewClick
+    );
     this._collapsedView.addEventListener('focus', this.onFocus);
     this._collapsedView.addEventListener('blur', this.onBlur);
     this._collapsedView.accessible.hasPopUp = 'listbox';
@@ -132,14 +160,26 @@ export default class ListBox extends createjs.Container {
     const bg = new createjs.Shape();
     bg.graphics.beginFill('#ffffff').drawRect(0, 0, width, height); // main background
     const dropBoxLeft = width - height;
-    bg.graphics.endStroke().beginFill('#aaaaaa').drawRect(dropBoxLeft, 0, height, height); // arrow background to indicate drop down
-    bg.graphics.endFill().beginStroke('#000000').moveTo(dropBoxLeft + height * 0.25, height * 0.25).lineTo(dropBoxLeft + height * 0.5, height * 0.75)
+    bg.graphics
+      .endStroke()
+      .beginFill('#aaaaaa')
+      .drawRect(dropBoxLeft, 0, height, height); // arrow background to indicate drop down
+    bg.graphics
+      .endFill()
+      .beginStroke('#000000')
+      .moveTo(dropBoxLeft + height * 0.25, height * 0.25)
+      .lineTo(dropBoxLeft + height * 0.5, height * 0.75)
       .lineTo(dropBoxLeft + height * 0.75, height * 0.25); // arrow
-    bg.graphics.beginStroke('#000000').setStrokeStyle(1).drawRect(0, 0, width, height); // border
+    bg.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .drawRect(0, 0, width, height); // border
     this._collapsedView.addChild(bg);
 
     this._focusIndicator = new createjs.Shape();
-    this._focusIndicator.graphics.beginFill('#31c7ec').drawRect(1, 1, width - height - 2, height - 2);
+    this._focusIndicator.graphics
+      .beginFill('#31c7ec')
+      .drawRect(1, 1, width - height - 2, height - 2);
     this._focusIndicator.visible = false;
     this._collapsedView.addChild(this._focusIndicator);
   }
@@ -166,7 +206,11 @@ export default class ListBox extends createjs.Container {
     this._dropDownView.addEventListener('valueChanged', this._onValueChanged);
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('#000000').setStrokeStyle(1).beginFill('#ffffff').drawRect(0, 0, width, optionHeight * this._options.length);
+    bg.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .beginFill('#ffffff')
+      .drawRect(0, 0, width, optionHeight * this._options.length);
     this._dropDownView.addChild(bg);
 
     this._options.forEach((option, i) => {

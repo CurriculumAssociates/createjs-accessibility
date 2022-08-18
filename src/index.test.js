@@ -40,7 +40,9 @@ describe('AccessibilityModule', () => {
     });
 
     it('find parentElement by id if passed a string', () => {
-      const getElementByIdSpy = jest.spyOn(document, 'getElementById').mockReturnValue(parentElement);
+      const getElementByIdSpy = jest
+        .spyOn(document, 'getElementById')
+        .mockReturnValue(parentElement);
 
       AccessibilityModule.register({
         displayObject: container,

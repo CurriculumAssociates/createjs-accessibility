@@ -2,15 +2,33 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 import _ from 'lodash';
 
 export default class Slider extends createjs.Container {
-  constructor(min, max, width, height, orientation, step, value, tabIndex, callBack = () => {}) {
+  constructor(
+    min,
+    max,
+    width,
+    height,
+    orientation,
+    step,
+    value,
+    tabIndex,
+    callBack = () => {}
+  ) {
     super();
-    _.bindAll(this, '_mousedown', '_mousemove', '_pressUp', '_onFocus', '_onBlur', 'moveSliderTo');
+    _.bindAll(
+      this,
+      '_mousedown',
+      '_mousemove',
+      '_pressUp',
+      '_onFocus',
+      '_onBlur',
+      'moveSliderTo'
+    );
     this.setBounds(0, 0, width, height);
     this.width = width || 100;
     this.height = height || 20;
     this.valueMax = max;
     this.valueMin = min || 0;
-    this.unitValue = (this.width / (this.valueMax - this.valueMin)); // 500/100=5
+    this.unitValue = this.width / (this.valueMax - this.valueMin); // 500/100=5
     this.orientation = orientation;
     this.step = step || 1;
     this.valueNow = value;
@@ -65,16 +83,27 @@ export default class Slider extends createjs.Container {
     this.thumb = new createjs.Shape();
     this.thumb.graphics.beginFill(this.trackColor).drawCircle(0, 0, 5);
     this.focusCircle = new createjs.Shape();
-    this.focusCircle.graphics.setStrokeStyle(3).beginStroke('#5FC1FA').drawCircle(this.thumb.x, this.thumb.y, 6);
-    this.focusCircle.setBounds(this.thumb.x, this.thumb.y, this.width + 5, this.height + 5);
+    this.focusCircle.graphics
+      .setStrokeStyle(3)
+      .beginStroke('#5FC1FA')
+      .drawCircle(this.thumb.x, this.thumb.y, 6);
+    this.focusCircle.setBounds(
+      this.thumb.x,
+      this.thumb.y,
+      this.width + 5,
+      this.height + 5
+    );
     this.addChild(this.focusCircle);
     this.focusCircle.visible = false;
 
     this.addChild(this.thumb);
     this.accessible.thumb = this.thumb;
 
-
-    this.sliderText = new createjs.Text(this.valueNow, 'bold 24px Arial', '#000');
+    this.sliderText = new createjs.Text(
+      this.valueNow,
+      'bold 24px Arial',
+      '#000'
+    );
     this.sliderText.textAlign = 'center';
     this.sliderText.textBaseline = 'middle';
     this.sliderText.x = 200 / 2;
@@ -118,18 +147,12 @@ export default class Slider extends createjs.Container {
     }
   }
 
-
   _mousedown(event) {
     event.preventDefault();
     event.stopPropagation();
-    const posX = _.min([
-      event.stageX - this.x,
-      this.width,
-    ]);
+    const posX = _.min([event.stageX - this.x, this.width]);
     this.thumb.set({
-      x: (posX < 0)
-        ? 0
-        : posX,
+      x: posX < 0 ? 0 : posX,
     });
     this.focusCircle.x = this.thumb.x;
   }
@@ -137,14 +160,9 @@ export default class Slider extends createjs.Container {
   _mousemove(event) {
     event.preventDefault();
     event.stopPropagation();
-    const posX = _.min([
-      event.stageX - this.x,
-      this.width,
-    ]);
+    const posX = _.min([event.stageX - this.x, this.width]);
     this.thumb.set({
-      x: (posX < 0)
-        ? 0
-        : posX,
+      x: posX < 0 ? 0 : posX,
     });
     this.valueNow = Math.round(this.thumb.x / this.unitValue);
     this.text = this.valueNow;

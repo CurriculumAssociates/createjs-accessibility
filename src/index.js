@@ -68,7 +68,12 @@ function setupStage(stage, parentElement, onReady = () => {}) {
   const moduleNode = (
     <div style={styles.transformStyle}>
       <div style={styles.moduleStyle}>
-        <AccessibilityTranslator stage={stage} ref={(c) => { component = c; }} />
+        <AccessibilityTranslator
+          stage={stage}
+          ref={(c) => {
+            component = c;
+          }}
+        />
       </div>
     </div>
   );
@@ -101,7 +106,8 @@ function releaseStage(stage) {
  */
 function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
-    const camWrapperElem = stage.accessibilityTranslator.rootElem.parentElement.parentElement;
+    const camWrapperElem =
+      stage.accessibilityTranslator.rootElem.parentElement.parentElement;
     const { transformStyle } = calcDomStylesFromStage(stage);
     _.keys(transformStyle).forEach((style) => {
       camWrapperElem.style[style] = transformStyle[style];
@@ -127,11 +133,13 @@ function register(configObjects) {
     objects = [configObjects];
   }
 
-  const accessiblityObjects = objects.map(
-    objectConfig => createAccessibilityObjectForRole(objectConfig),
+  const accessiblityObjects = objects.map((objectConfig) =>
+    createAccessibilityObjectForRole(objectConfig)
   );
 
-  return accessiblityObjects.length > 1 ? accessiblityObjects : accessiblityObjects[0];
+  return accessiblityObjects.length > 1
+    ? accessiblityObjects
+    : accessiblityObjects[0];
 }
 
 const AccessibilityModule = {

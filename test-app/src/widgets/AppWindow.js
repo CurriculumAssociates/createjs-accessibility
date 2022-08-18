@@ -58,12 +58,30 @@ const FOOTER_HEIGHT = 30;
 export default class AppWindow extends createjs.Container {
   constructor(width, height) {
     super();
-    _.bindAll(this, '_showDefaultScreen', '_showFormTestCase', '_showLinkTestCase',
-      '_showDragAndDropTestCase', '_showTableTestCase', '_showTabListWithPanelCase', '_showAboutDialog',
-      '_showListTestCase', '_showArticleTestCase', '_showCheckBoxTestCase', '_showSearchTestCase',
-      '_showSliderTestCase', '_showMenuItemCheckBoxTestCase', '_showMenuItemRadioTestCase',
-      '_showRadioGroupAndProgressBarTestCase', '_showGridTestCase', '_showTreeTestCase',
-      '_showFeedTestCase', '_showTreeGridTestCase', '_showTextFormatCase', '_mathTextCase');
+    _.bindAll(
+      this,
+      '_showDefaultScreen',
+      '_showFormTestCase',
+      '_showLinkTestCase',
+      '_showDragAndDropTestCase',
+      '_showTableTestCase',
+      '_showTabListWithPanelCase',
+      '_showAboutDialog',
+      '_showListTestCase',
+      '_showArticleTestCase',
+      '_showCheckBoxTestCase',
+      '_showSearchTestCase',
+      '_showSliderTestCase',
+      '_showMenuItemCheckBoxTestCase',
+      '_showMenuItemRadioTestCase',
+      '_showRadioGroupAndProgressBarTestCase',
+      '_showGridTestCase',
+      '_showTreeTestCase',
+      '_showFeedTestCase',
+      '_showTreeGridTestCase',
+      '_showTextFormatCase',
+      '_mathTextCase'
+    );
     AccessibilityModule.register({
       displayObject: this,
       role: AccessibilityModule.ROLES.NONE,
@@ -77,7 +95,11 @@ export default class AppWindow extends createjs.Container {
     });
     this.accessible.addChild(this._headerArea);
 
-    const headerText = new createjs.Text('Createjs Accessibility Test APP', 'bold 32px Arial', '#000');
+    const headerText = new createjs.Text(
+      'Createjs Accessibility Test APP',
+      'bold 32px Arial',
+      '#000'
+    );
     this._headerArea.addChild(headerText);
     AccessibilityModule.register({
       displayObject: headerText,
@@ -92,18 +114,26 @@ export default class AppWindow extends createjs.Container {
     this._headerArea.setBounds(0, 0, 800, HEADER_HEIGHT);
     headerText.lineWidth = 800;
     const bannerBounds = this._headerArea.getBounds();
-    headerText.x = bannerBounds.width * 0.5 - headerText.getBounds().width * 0.5;
-    headerText.y = bannerBounds.height * 0.5 - headerText.getBounds().height * 0.5;
+    headerText.x =
+      bannerBounds.width * 0.5 - headerText.getBounds().width * 0.5;
+    headerText.y =
+      bannerBounds.height * 0.5 - headerText.getBounds().height * 0.5;
 
     const headerBG = new createjs.Shape();
-    headerBG.graphics.beginFill('#808080').drawRect(0, 0, bannerBounds.width, bannerBounds.height);
+    headerBG.graphics
+      .beginFill('#808080')
+      .drawRect(0, 0, bannerBounds.width, bannerBounds.height);
     this._headerArea.addChildAt(headerBG, 0);
 
     this._createMenu(width, height);
     this._contentArea = new createjs.Container();
     this._contentArea.y = HEADER_HEIGHT + MENU_HEIGHT;
-    this._contentArea.setBounds(0, 0, width, height - (MENU_HEIGHT + HEADER_HEIGHT
-      + FOOTER_HEIGHT));
+    this._contentArea.setBounds(
+      0,
+      0,
+      width,
+      height - (MENU_HEIGHT + HEADER_HEIGHT + FOOTER_HEIGHT)
+    );
     this.addChild(this._contentArea);
 
     AccessibilityModule.register({
@@ -120,7 +150,11 @@ export default class AppWindow extends createjs.Container {
     this.accessible.addChild(this._footerArea);
     this._footerArea.setBounds(0, 0, width, FOOTER_HEIGHT);
 
-    const contentinfo = new createjs.Text('This webapp uses the ISC license', 'bold 18px Arial', '#000');
+    const contentinfo = new createjs.Text(
+      'This webapp uses the ISC license',
+      'bold 18px Arial',
+      '#000'
+    );
     this._footerArea.addChild(contentinfo);
     AccessibilityModule.register({
       displayObject: contentinfo,
@@ -133,13 +167,18 @@ export default class AppWindow extends createjs.Container {
 
     contentinfo.lineWidth = width;
     const footerBounds = this._footerArea.getBounds();
-    contentinfo.x = footerBounds.width * 0.5 - contentinfo.getBounds().width * 0.5;
-    contentinfo.y = footerBounds.height * 0.5 - contentinfo.getBounds().height * 0.5;
+    contentinfo.x =
+      footerBounds.width * 0.5 - contentinfo.getBounds().width * 0.5;
+    contentinfo.y =
+      footerBounds.height * 0.5 - contentinfo.getBounds().height * 0.5;
 
     const footerBG = new createjs.Shape();
-    footerBG.graphics.beginFill('#808080').drawRect(0, 0, footerBounds.width, footerBounds.height);
+    footerBG.graphics
+      .beginFill('#808080')
+      .drawRect(0, 0, footerBounds.width, footerBounds.height);
     this._footerArea.addChildAt(footerBG, 0);
-    this._footerArea.y = this._contentArea.y + this._contentArea.getBounds().height;
+    this._footerArea.y =
+      this._contentArea.y + this._contentArea.getBounds().height;
 
     const currentTime = new createjs.Container();
     this._footerArea.addChild(currentTime);
@@ -185,8 +224,6 @@ export default class AppWindow extends createjs.Container {
   }
 
   _createMenu(width) {
-    this._nextTab = 1;
-
     this.nav = new createjs.Container();
     this.addChild(this.nav);
     AccessibilityModule.register({
@@ -200,7 +237,7 @@ export default class AppWindow extends createjs.Container {
     this.nav.addChild(this._menuBar);
     this.nav.accessible.addChild(this._menuBar);
 
-    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, this._nextTab++, 'T');
+    const testCasesMenu = new Menu('Test Cases', MENU_HEIGHT, 0, 'T');
     this._menuBar.addMenu(testCasesMenu);
     const testCasesGroup = {
       group1: {
@@ -210,14 +247,23 @@ export default class AppWindow extends createjs.Container {
           { name: 'Form', listener: this._showFormTestCase },
           { name: 'Drag and drop', listener: this._showDragAndDropTestCase },
           { name: 'Table', listener: this._showTableTestCase },
-          { name: 'TabList With Panel', listener: this._showTabListWithPanelCase },
+          {
+            name: 'TabList With Panel',
+            listener: this._showTabListWithPanelCase,
+          },
           { name: 'Link', listener: this._showLinkTestCase },
           { name: 'List', listener: this._showListTestCase },
           { name: 'Article', listener: this._showArticleTestCase },
           { name: 'CheckBox', listener: this._showCheckBoxTestCase },
           { name: 'Search', listener: this._showSearchTestCase },
-          { name: 'Color Editor and Transforms', listener: this._showSliderTestCase },
-          { name: 'Order Pizza', listener: this._showRadioGroupAndProgressBarTestCase },
+          {
+            name: 'Color Editor and Transforms',
+            listener: this._showSliderTestCase,
+          },
+          {
+            name: 'Order Pizza',
+            listener: this._showRadioGroupAndProgressBarTestCase,
+          },
           { name: 'Grid', listener: this._showGridTestCase },
           { name: 'Tree', listener: this._showTreeTestCase },
           { name: 'Feed', listener: this._showFeedTestCase },
@@ -240,10 +286,11 @@ export default class AppWindow extends createjs.Container {
       _.forEach(testCases, (testCase) => {
         const item = new ClassRef(
           testCase.name,
-          this._nextTab++,
-          listenerAsCallback ? testCase.listener : _.noop(),
+          0,
+          listenerAsCallback ? testCase.listener : _.noop()
         );
-        !listenerAsCallback && item.addEventListener('click', testCase.listener);
+        !listenerAsCallback &&
+          item.addEventListener('click', testCase.listener);
         item.addEventListener('keyboardClick', testCase.listener);
         testCasesMenu.addMenuItem(item);
       });
@@ -254,8 +301,12 @@ export default class AppWindow extends createjs.Container {
       }
     });
 
-
-    const testCasesMenuItemRadio = new Menu('Contrast Radio', MENU_HEIGHT, this._nextTab++, 'c');
+    const testCasesMenuItemRadio = new Menu(
+      'Contrast Radio',
+      MENU_HEIGHT,
+      0,
+      'c'
+    );
     this._menuBar.addMenu(testCasesMenuItemRadio);
     const testCasesMenuRadio = [
       { name: ' Black-Yellow', bgColor: '#000000', textColor: '#ffff00' },
@@ -265,8 +316,11 @@ export default class AppWindow extends createjs.Container {
 
     const menuItemRadioArray = [];
     testCasesMenuRadio.forEach((testCase) => {
-      const item = new MenuItemRadio(testCase.name, this._nextTab++,
-        this._showMenuItemRadioTestCase);
+      const item = new MenuItemRadio(
+        testCase.name,
+        0,
+        this._showMenuItemRadioTestCase
+      );
       item.radio.bgColor = testCase.bgColor;
       item.radio.textColor = testCase.textColor;
       testCasesMenuItemRadio.addMenuItem(item);
@@ -274,8 +328,8 @@ export default class AppWindow extends createjs.Container {
     });
     this.menuItemRadioArray = menuItemRadioArray;
 
-    const help = new Menu('Help', MENU_HEIGHT, this._nextTab++, 'h');
-    const about = new MenuItem('About', this._nextTab++);
+    const help = new Menu('Help', MENU_HEIGHT, 0, 'h');
+    const about = new MenuItem('About', 0);
     about.addEventListener('click', this._showAboutDialog);
     about.addEventListener('keyboardClick', this._showAboutDialog);
     help.addMenuItem(about);
@@ -298,17 +352,23 @@ export default class AppWindow extends createjs.Container {
       alt: 'Curriculum Associates Logo',
       width: 500,
       height: 300,
-      cjsScaleX: (500 / 964),
-      cjsScaleY: (300 / 673),
+      cjsScaleX: 500 / 964,
+      cjsScaleY: 300 / 673,
     };
 
-    const figure = new Figure(options, 'Making Classrooms Better Place for Teachers and Students');
+    const figure = new Figure(
+      options,
+      'Making Classrooms Better Place for Teachers and Students'
+    );
     figure.x = 100;
     figure.y = 50;
     this._contentArea.addChild(figure);
     this._contentArea.accessible.addChild(figure);
 
-    const testDisplayObject1 = new createjs.Text('Welcome to the Createjs Accessibility Module test program.', '16px Arial');
+    const testDisplayObject1 = new createjs.Text(
+      'Welcome to the Createjs Accessibility Module test program.',
+      '16px Arial'
+    );
     testDisplayObject1.x = 144;
     testDisplayObject1.y = 400;
     AccessibilityModule.register({
@@ -321,7 +381,10 @@ export default class AppWindow extends createjs.Container {
     });
     this._contentArea.addChild(testDisplayObject1);
 
-    const testDisplayObject2 = new createjs.Text('Use the menu bar to move between the various test cases.', '14px Arial');
+    const testDisplayObject2 = new createjs.Text(
+      'Use the menu bar to move between the various test cases.',
+      '14px Arial'
+    );
     testDisplayObject2.x = 169;
     testDisplayObject2.y = 440;
     AccessibilityModule.register({
@@ -388,7 +451,10 @@ export default class AppWindow extends createjs.Container {
     });
     evt.currentTarget.checked = true;
 
-    this._menuBar._bg.graphics.clear().beginFill(`${evt.currentTarget.bgColor}`).drawRect(0, 0, 800, 20);
+    this._menuBar._bg.graphics
+      .clear()
+      .beginFill(`${evt.currentTarget.bgColor}`)
+      .drawRect(0, 0, 800, 20);
     this._menuBar._menus.forEach((menu) => {
       menu._label.color = `${evt.currentTarget.textColor}`;
     });
@@ -399,22 +465,37 @@ export default class AppWindow extends createjs.Container {
     let submit;
     const PizzaCrustData = [
       {
-        name: 'Pizza Crust', value: 'Regular Margherita', position: 1, size: 3,
+        name: 'Pizza Crust',
+        value: 'Regular Margherita',
+        position: 1,
+        size: 3,
       },
       {
-        name: 'Pizza Crust', value: 'Mexican Green Wave', position: 2, size: 3,
+        name: 'Pizza Crust',
+        value: 'Mexican Green Wave',
+        position: 2,
+        size: 3,
       },
       {
-        name: 'Pizza Crust', value: 'Veg Extravaganza', position: 3, size: 3,
+        name: 'Pizza Crust',
+        value: 'Veg Extravaganza',
+        position: 3,
+        size: 3,
       },
     ];
 
     const PizzaDeliveryData = [
       {
-        name: 'Pizza Delivery', value: 'Pickup', position: 1, size: 2,
+        name: 'Pizza Delivery',
+        value: 'Pickup',
+        position: 1,
+        size: 2,
       },
       {
-        name: 'Pizza Delivery', value: 'Home Delivery', position: 2, size: 2,
+        name: 'Pizza Delivery',
+        value: 'Home Delivery',
+        position: 2,
+        size: 2,
       },
     ];
 
@@ -429,9 +510,14 @@ export default class AppWindow extends createjs.Container {
       this._clearScreen();
       const { width, height } = this._contentArea.getBounds();
 
-      const label = new createjs.Text('Placing Order', 'bold 20px Arial', '#000');
+      const label = new createjs.Text(
+        'Placing Order',
+        'bold 20px Arial',
+        '#000'
+      );
       const percent = new createjs.Text('0%', 'bold 20px Arial', '#000');
-      const percentLabelLeft = () => this._contentArea.x + (width - percent.getBounds().width) / 2;
+      const percentLabelLeft = () =>
+        this._contentArea.x + (width - percent.getBounds().width) / 2;
       const onProgress = (now, state) => {
         percent.text = `${now}%`;
         percent.x = percentLabelLeft();
@@ -441,7 +527,6 @@ export default class AppWindow extends createjs.Container {
           label.accessible.text = label.text;
         }
       };
-
 
       const progressBar = new ProgressBar({ onProgress });
 
@@ -478,7 +563,11 @@ export default class AppWindow extends createjs.Container {
       progressBar.startProgress();
     };
 
-    const title = new createjs.Text('Select the pizza and delivery type', 'bold 24px Arial', '#000');
+    const title = new createjs.Text(
+      'Select the pizza and delivery type',
+      'bold 24px Arial',
+      '#000'
+    );
     title.x = 50;
     title.y = 50;
     this._contentArea.addChild(title);
@@ -491,7 +580,11 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    const labelGroup1 = new createjs.Text('Pizza Crust', 'bold 24px Arial', '#000');
+    const labelGroup1 = new createjs.Text(
+      'Pizza Crust',
+      'bold 24px Arial',
+      '#000'
+    );
     this._contentArea.addChild(labelGroup1);
     AccessibilityModule.register({
       displayObject: labelGroup1,
@@ -503,7 +596,9 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup1 = new RadioGroup({
-      radioData: PizzaCrustData, name: 'Pizza Crust', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect),
+      radioData: PizzaCrustData,
+      name: 'Pizza Crust',
+      callBack: _.once(onRadioSelect),
     });
     radioGroup1.x = 100;
     radioGroup1.y = 100;
@@ -513,9 +608,11 @@ export default class AppWindow extends createjs.Container {
     labelGroup1.y = radioGroup1.x;
     labelGroup1.x = radioGroup1.y;
 
-    this._nextTab += 3;
-
-    const labelGroup2 = new createjs.Text('Pizza Delivery', 'bold 24px Arial', '#000');
+    const labelGroup2 = new createjs.Text(
+      'Pizza Delivery',
+      'bold 24px Arial',
+      '#000'
+    );
     this._contentArea.addChild(labelGroup2);
     AccessibilityModule.register({
       displayObject: labelGroup2,
@@ -527,7 +624,9 @@ export default class AppWindow extends createjs.Container {
     });
 
     const radioGroup2 = new RadioGroup({
-      radioData: PizzaDeliveryData, name: 'Pizza Delivery', tabIndex: this._nextTab++, callBack: _.once(onRadioSelect),
+      radioData: PizzaDeliveryData,
+      name: 'Pizza Delivery',
+      callBack: _.once(onRadioSelect),
     });
     radioGroup2.x = radioGroup1.x;
     radioGroup2.y = 300;
@@ -536,7 +635,6 @@ export default class AppWindow extends createjs.Container {
     radioGroup2.accessible.labelledBy = labelGroup2;
     labelGroup2.x = radioGroup2.x;
     labelGroup2.y = radioGroup2.y;
-
 
     const submitBtnData = {
       type: 'button',
@@ -548,7 +646,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // Submit form button
-    submit = new Button(submitBtnData, this._nextTab++, appendProgressBar);
+    submit = new Button(submitBtnData, 0, appendProgressBar);
     const { width } = labelGroup2.getBounds();
     submit.x = labelGroup2.x + (width - submit.getBounds().width) / 2;
     submit.y = 420;
@@ -583,15 +681,22 @@ export default class AppWindow extends createjs.Container {
       },
     });
     form.addChild(label);
+    form.accessible.autoComplete = true;
 
-    const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const nameField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, 0);
     nameField.x = 160;
     nameField.y = 100;
     form.addChild(nameField);
     form.accessible.addChild(nameField);
+    nameField.accessible.autoComplete = 'name';
+    nameField.accessible.name = 'name';
 
     // Tooltip for field
-    const nameFieldToolTip = new Tooltip({ target: nameField, content: 'Enter username', position: 'top' });
+    const nameFieldToolTip = new Tooltip({
+      target: nameField,
+      content: 'Enter username',
+      position: 'top',
+    });
     form.addChild(nameFieldToolTip);
     form.accessible.addChild(nameFieldToolTip);
 
@@ -599,7 +704,11 @@ export default class AppWindow extends createjs.Container {
     const clearField = () => {
       nameField._updateDisplayString('');
     };
-    const clearNameFieldBtn = this._createClearButton('Clear name field', clearField);
+    const clearNameFieldBtn = this._createClearButton(
+      'Clear name field',
+      0,
+      clearField
+    );
     form.addChild(clearNameFieldBtn);
     form.accessible.addChild(clearNameFieldBtn);
 
@@ -608,7 +717,70 @@ export default class AppWindow extends createjs.Container {
       y: nameField.y,
     });
 
-    let clearBtnToolTip = new Tooltip({ target: clearNameFieldBtn, content: 'Clear name field' });
+    let clearBtnToolTip = new Tooltip({
+      target: clearNameFieldBtn,
+      content: 'Clear name field',
+      position: 'top',
+    });
+    form.addChild(clearBtnToolTip);
+    form.accessible.addChild(clearBtnToolTip);
+
+    // Label for Address Field
+    label = new createjs.Text('Address', '14px Arial');
+    label.x = 160 + OPTION_WIDTH + 150;
+    label.y = 100;
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+    form.addChild(label);
+
+    // Address Field
+    const addressField = new SingleLineTextInput(
+      OPTION_WIDTH,
+      OPTION_HEIGHT,
+      0
+    );
+    addressField.x = 160 + OPTION_WIDTH + 150 + 90;
+    addressField.y = 100;
+    addressField.accessible.name = 'address';
+    addressField.accessible.autoComplete = 'off';
+    form.addChild(addressField);
+    form.accessible.addChild(addressField);
+
+    // Tooltip for Address field
+    const addressFieldToolTip = new Tooltip({
+      target: addressField,
+      content: 'Enter address',
+      position: 'top',
+    });
+    form.addChild(addressFieldToolTip);
+    form.accessible.addChild(addressFieldToolTip);
+
+    const clearAddressField = () => {
+      addressField._updateDisplayString('');
+    };
+    const clearAddressFieldBtn = this._createClearButton(
+      'Clear address field',
+      clearAddressField
+    );
+    form.addChild(clearAddressFieldBtn);
+    form.accessible.addChild(clearAddressFieldBtn);
+
+    clearAddressFieldBtn.set({
+      x: addressField.x + OPTION_WIDTH + 10,
+      y: addressField.y,
+    });
+
+    clearBtnToolTip = new Tooltip({
+      target: clearAddressFieldBtn,
+      content: 'Clear address field',
+      position: 'top',
+    });
     form.addChild(clearBtnToolTip);
     form.accessible.addChild(clearBtnToolTip);
 
@@ -634,7 +806,7 @@ export default class AppWindow extends createjs.Container {
     });
 
     // List box
-    const membershipList = new ListBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const membershipList = new ListBox(options, OPTION_WIDTH, OPTION_HEIGHT, 0);
     const membershipOption = options;
     membershipList.x = 160;
     membershipList.y = 118;
@@ -643,9 +815,66 @@ export default class AppWindow extends createjs.Container {
     form.accessible.addChild(membershipList);
 
     // List box's tooltip
-    const membershipListToolTip = new Tooltip({ target: membershipList, content: 'Select membership level' });
+    const membershipListToolTip = new Tooltip({
+      target: membershipList,
+      content: 'Select membership level',
+    });
     form.addChild(membershipListToolTip);
     form.accessible.addChild(membershipListToolTip);
+
+    // Label for Email field
+    label = new createjs.Text('Email ID', '14px Arial');
+    label.x = 160 + OPTION_WIDTH + 150;
+    label.y = 118;
+    AccessibilityModule.register({
+      displayObject: label,
+      parent: form,
+      role: AccessibilityModule.ROLES.NONE,
+      accessibleOptions: {
+        text: label.text,
+      },
+    });
+    form.addChild(label);
+
+    // Email Field
+    const emailField = new SingleLineTextInput(OPTION_WIDTH, OPTION_HEIGHT, 0);
+    emailField.x = 160 + OPTION_WIDTH + 150 + 90;
+    emailField.y = 118;
+    emailField.accessible.name = 'email';
+    form.addChild(emailField);
+    form.accessible.addChild(emailField);
+
+    // Tooltip for Email field
+    const emailFieldToolTip = new Tooltip({
+      target: emailField,
+      content: 'Enter email',
+      position: 'bottom',
+    });
+    form.addChild(emailFieldToolTip);
+    form.accessible.addChild(emailFieldToolTip);
+
+    const clearEmailField = () => {
+      emailField._updateDisplayString('');
+    };
+    const clearEmailFieldBtn = this._createClearButton(
+      'Clear address field',
+      clearEmailField
+    );
+    form.addChild(clearEmailFieldBtn);
+    form.accessible.addChild(clearEmailFieldBtn);
+
+    clearEmailFieldBtn.set({
+      x: emailField.x + OPTION_WIDTH + 10,
+      y: emailField.y,
+    });
+
+    clearBtnToolTip = new Tooltip({
+      target: clearEmailFieldBtn,
+      content: 'Clear email field',
+      position: 'bottom',
+    });
+    form.addChild(clearBtnToolTip);
+    form.accessible.addChild(clearBtnToolTip);
 
     label = new createjs.Text('Comments', '14px Arial');
     label.x = 10;
@@ -661,8 +890,12 @@ export default class AppWindow extends createjs.Container {
     form.addChild(label);
 
     // Implementing MULTI LINE TEXT BOX
-    const commentArea = new MultiLineTextInput(OPTION_WIDTH,
-      OPTION_HEIGHT * 5, 14, this._nextTab++);
+    const commentArea = new MultiLineTextInput(
+      OPTION_WIDTH,
+      OPTION_HEIGHT * 5,
+      14,
+      0
+    );
     commentArea.x = 160;
     commentArea.y = 140;
     form.addChild(commentArea);
@@ -670,7 +903,10 @@ export default class AppWindow extends createjs.Container {
     commentArea.accessible.spellcheck = true;
 
     // Text box's tooltip
-    const commentAreaToolTip = new Tooltip({ target: commentArea, content: 'Comment regarding membership' });
+    const commentAreaToolTip = new Tooltip({
+      target: commentArea,
+      content: 'Comment regarding membership',
+    });
     form.addChild(commentAreaToolTip);
     form.accessible.addChild(commentAreaToolTip);
 
@@ -678,7 +914,11 @@ export default class AppWindow extends createjs.Container {
     const clearArea = () => {
       commentArea._updateDisplayString('');
     };
-    const clearCommentAreaBtn = this._createClearButton('Clear comment area', clearArea);
+    const clearCommentAreaBtn = this._createClearButton(
+      'Clear comment area',
+      0,
+      clearArea
+    );
     form.addChild(clearCommentAreaBtn);
     form.accessible.addChild(clearCommentAreaBtn);
 
@@ -687,7 +927,10 @@ export default class AppWindow extends createjs.Container {
       y: commentArea.y + 70,
     });
 
-    clearBtnToolTip = new Tooltip({ target: clearCommentAreaBtn, content: 'Clear comment area' });
+    clearBtnToolTip = new Tooltip({
+      target: clearCommentAreaBtn,
+      content: 'Clear comment area',
+    });
     form.addChild(clearBtnToolTip);
     form.accessible.addChild(clearBtnToolTip);
 
@@ -706,13 +949,25 @@ export default class AppWindow extends createjs.Container {
     form.addChild(label);
 
     // Options
-    optionLabels = ['OpenGL', 'Direct3D12', 'Vulkan', 'Mantle', 'Metal', 'WebGL'];
+    optionLabels = [
+      'OpenGL',
+      'Direct3D12',
+      'Vulkan',
+      'Mantle',
+      'Metal',
+      'WebGL',
+    ];
     options = [];
     optionLabels.forEach((optionLabel) => {
       options.push(new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, false));
     });
     // Multi select list box
-    const mailingList = new MultiListBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    const mailingList = new MultiListBox(
+      options,
+      OPTION_WIDTH,
+      OPTION_HEIGHT,
+      0
+    );
     mailingList.x = 160;
     mailingList.y = 233;
     mailingList.accessible.labelledBy = label;
@@ -720,7 +975,10 @@ export default class AppWindow extends createjs.Container {
     form.accessible.addChild(mailingList);
 
     // Box's tooltip
-    const mailingListToolTip = new Tooltip({ target: mailingList, content: 'Choose between mailing types' });
+    const mailingListToolTip = new Tooltip({
+      target: mailingList,
+      content: 'Choose between mailing types',
+    });
     form.addChild(mailingListToolTip);
     form.accessible.addChild(mailingListToolTip);
 
@@ -737,9 +995,19 @@ export default class AppWindow extends createjs.Container {
       },
     });
     form.addChild(label);
-    optionLabels = ['Graphics', 'Game Engines', 'AI', 'Pathfinding', 'Game Design'];
-    options = _.map(optionLabels, optionLabel => new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, true)); // eslint-disable-line max-len
-    const combobox = new ComboBox(options, OPTION_WIDTH, OPTION_HEIGHT, this._nextTab++);
+    optionLabels = [
+      'Graphics',
+      'Game Engines',
+      'AI',
+      'Pathfinding',
+      'Game Design',
+    ];
+    options = _.map(
+      optionLabels,
+      (optionLabel) =>
+        new Option(optionLabel, OPTION_WIDTH, OPTION_HEIGHT, true)
+    ); // eslint-disable-line max-len
+    const combobox = new ComboBox(options, OPTION_WIDTH, OPTION_HEIGHT, 0);
     combobox.x = 160;
     combobox.y = 350;
     form.addChild(combobox);
@@ -760,7 +1028,11 @@ export default class AppWindow extends createjs.Container {
     alertBg.graphics.beginFill('#000000').drawRoundRect(0, 0, 150, 30, 7);
     alert.addChild(alertBg);
     // Label
-    const alertLabel = new createjs.Text('Form submitted', 'Bold 18px Arial', 'white');
+    const alertLabel = new createjs.Text(
+      'Form submitted',
+      'Bold 18px Arial',
+      'white'
+    );
     alertLabel.set({ x: 10, y: 6 });
     AccessibilityModule.register({
       displayObject: alertLabel,
@@ -798,8 +1070,17 @@ export default class AppWindow extends createjs.Container {
         alert.visible = false;
         clearTimeout(timeId);
       }, 1000);
-    };
 
+      const frame = document.createElement('iframe');
+      frame.setAttribute('id', 'hiddenFrame');
+      frame.setAttribute('name', 'hiddenFrame');
+      frame.style.display = 'none';
+
+      const f = document.querySelector('form');
+      f.append(frame);
+      f.target = 'hiddenFrame';
+      f.submit();
+    };
 
     const resetAll = () => {
       label.text = '';
@@ -813,29 +1094,14 @@ export default class AppWindow extends createjs.Container {
       mailingList._unhighlightAll();
       mailingList.accessible.selected = [];
       combobox.text = '';
-    };
-
-    const alertDialog = new AlertDialog({
-      tabIndex: this._nextTab++,
-      cancelCallback: () => {
-        alertDialog.visible = false;
-      },
-      doneCallback: () => {
-        resetAll();
-        alertDialog.visible = false;
-      },
-    });
-    alertDialog.visible = false;
-    this._contentArea.addChild(alertDialog);
-    this._contentArea.accessible.addChild(alertDialog);
-    this._nextTab++;
-
-    const resetCallback = () => {
-      alertDialog.visible = true;
+      emailField._updateDisplayString('');
+      emailField.onBlur();
+      addressField._updateDisplayString('');
+      addressField.onBlur();
     };
 
     const submitBtnData = {
-      type: 'button',
+      type: 'submit',
       value: 'SUBMIT',
       name: 'SUBMIT',
       enabled: true,
@@ -848,16 +1114,22 @@ export default class AppWindow extends createjs.Container {
       height: 60,
       width: 250,
     };
+    form.accessible.action = '';
+    form.accessible.method = 'GET';
 
     // Submit form button
-    const submit = new Button(submitBtnData, this._nextTab++, submitCallBack);
+    const submit = new Button(submitBtnData, 0, submitCallBack);
     submit.x = 50;
     submit.y = 410;
     form.addChild(submit);
     form.accessible.addChild(submit);
 
     submit.setBounds(0, 0, 250, 60);
-    const submitBtnToolTip = new Tooltip({ target: submit, content: 'Submit given data to the server', position: 'bottom' });
+    const submitBtnToolTip = new Tooltip({
+      target: submit,
+      content: 'Submit given data to the server',
+      position: 'bottom',
+    });
     form.addChild(submitBtnToolTip);
     form.accessible.addChild(submitBtnToolTip);
 
@@ -875,21 +1147,71 @@ export default class AppWindow extends createjs.Container {
       height: 60,
       width: 250,
     };
+    let reset;
+
+    function makeFormTabbable() {
+      form.accessible.hidden = false;
+      nameField.accessible.tabIndex = 0;
+      clearNameFieldBtn.accessible.tabIndex = 0;
+      membershipList.setTabbable(true);
+      commentArea.accessible.tabIndex = 0;
+      clearCommentAreaBtn.accessible.tabIndex = 0;
+      mailingList.accessible.tabIndex = 0;
+      combobox.setTabbable(true);
+      submit.accessible.tabIndex = 0;
+      reset.accessible.tabIndex = 0;
+    }
+
+    const alertDialog = new AlertDialog({
+      buttonTabIndex: 0,
+      cancelCallback: () => {
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+      doneCallback: () => {
+        resetAll();
+        alertDialog.visible = false;
+        form.accessible.hidden = false;
+        makeFormTabbable();
+      },
+    });
+    alertDialog.visible = false;
+    this._contentArea.addChild(alertDialog);
+    this._contentArea.accessible.addChild(alertDialog);
+
+    const resetCallback = () => {
+      alertDialog.visible = true;
+      form.accessible.hidden = true;
+      nameField.accessible.tabIndex = -1;
+      clearNameFieldBtn.accessible.tabIndex = -1;
+      membershipList.setTabbable(false);
+      commentArea.accessible.tabIndex = -1;
+      clearCommentAreaBtn.accessible.tabIndex = -1;
+      mailingList.accessible.tabIndex = -1;
+      combobox.setTabbable(false);
+      submit.accessible.tabIndex = -1;
+      reset.accessible.tabIndex = -1;
+    };
 
     // Reset form button
-    const reset = new Button(resetBtnData, this._nextTab++, resetCallback);
+    reset = new Button(resetBtnData, 0, resetCallback);
     reset.x = 400;
     reset.y = 410;
     form.addChild(reset);
     form.accessible.addChild(reset);
 
     reset.setBounds(0, 0, 250, 60);
-    const resetBtnToolTip = new Tooltip({ target: reset, content: 'Reset all fields', position: 'bottom' });
+    const resetBtnToolTip = new Tooltip({
+      target: reset,
+      content: 'Reset all fields',
+      position: 'bottom',
+    });
     form.addChild(resetBtnToolTip);
     form.accessible.addChild(resetBtnToolTip);
   }
 
-  _createClearButton(name, callBack) {
+  _createClearButton(name, tabIndex, callBack) {
     const clearBtnData = {
       type: 'clear',
       value: '',
@@ -903,13 +1225,17 @@ export default class AppWindow extends createjs.Container {
       formnoValidate: '',
       height: 20,
       width: 20,
+      tabIndex,
     };
 
-    const button = new Button(clearBtnData, this._nextTab++, callBack);
+    const button = new Button(clearBtnData, 0, callBack);
     button.accessible.text = name;
 
     const shape = new createjs.Shape();
-    shape.graphics.beginStroke('black').setStrokeStyle(2).arc(0, 0, 5, 0, 300 * (Math.PI / 180));
+    shape.graphics
+      .beginStroke('black')
+      .setStrokeStyle(2)
+      .arc(0, 0, 5, 0, 300 * (Math.PI / 180));
     shape.set({ x: 10, y: 10 });
     button.addChild(shape);
 
@@ -928,7 +1254,10 @@ export default class AppWindow extends createjs.Container {
     });
     this._contentArea.addChild(document);
 
-    const openingLine = new createjs.Text('There are multiple resources to learn about aria roles, WCAG, and Section 508 standards.', '16px Arial');
+    const openingLine = new createjs.Text(
+      'There are multiple resources to learn about aria roles, WCAG, and Section 508 standards.',
+      '16px Arial'
+    );
     openingLine.x = 50;
     openingLine.y = 50;
     AccessibilityModule.register({
@@ -943,6 +1272,7 @@ export default class AppWindow extends createjs.Container {
 
     let options = {
       href: 'https://www.w3.org/WAI/WCAG20/quickref/?currentsidebar=#col_customize&levels=aaa',
+      tabIndex: 0,
       text: "W3C's guide to meeting WCAG requirements",
     };
     const wcag = new Link(options);
@@ -953,6 +1283,7 @@ export default class AppWindow extends createjs.Container {
 
     options = {
       href: 'https://www.w3.org/TR/wai-aria-1.1/',
+      tabIndex: 0,
       text: "W3C's general guide to Accessible Rich Internet Applications",
     };
     const aria = new Link(options);
@@ -962,6 +1293,7 @@ export default class AppWindow extends createjs.Container {
     document.accessible.addChild(aria);
     options = {
       href: 'https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties',
+      tabIndex: 0,
       text: "W3C's guide to allowed ARIA roles, states, and properties",
     };
     const allowedAria = new Link(options);
@@ -983,23 +1315,23 @@ export default class AppWindow extends createjs.Container {
     const FONT = '20px Arial';
 
     const checkBoxArray = [];
-    const labelArray = [
-      'Golf',
-      'Baseball',
-      'Tennis',
-      'Cricket',
-      'Soccer',
-    ];
+    const labelArray = ['Golf', 'Baseball', 'Tennis', 'Cricket', 'Soccer'];
 
     // Callback function to get current state of each checkbox in group
     const callBack = () => {
-      selectedCheckBoxes = _.map(_.filter(checkBoxArray, box => box.checked === true), 'label');
+      selectedCheckBoxes = _.map(
+        _.filter(checkBoxArray, (box) => box.checked === true),
+        'label'
+      );
       selected.text = selectedCheckBoxes.toString();
       selected.accessible.text = selected.text;
     };
 
     // Title
-    const title = new createjs.Text('Select below sports to get an updates on respective one', FONT);
+    const title = new createjs.Text(
+      'Select below sports to get an updates on respective one',
+      FONT
+    );
     title.set({ x: X, y: 50 });
     AccessibilityModule.register({
       displayObject: title,
@@ -1011,8 +1343,8 @@ export default class AppWindow extends createjs.Container {
     // Checkboxes with labels
     for (let i = 0; i < labelArray.length; i++) {
       // checkbox
-      const checkBox = new CheckBox(25, 25, this._nextTab++, callBack);
-      checkBox.set({ x: X, y: (title.y + V_GAP) + (i * V_GAP) });
+      const checkBox = new CheckBox(25, 25, 0, callBack);
+      checkBox.set({ x: X, y: title.y + V_GAP + i * V_GAP });
       const boxBounds = checkBox.getBounds();
       this._contentArea.addChild(checkBox);
       this._contentArea.accessible.addChild(checkBox);
@@ -1077,7 +1409,10 @@ export default class AppWindow extends createjs.Container {
     const dragArr = [];
 
     // Label
-    const dragText = new createjs.Text('Put the draggables into their correct drop zones', FONT);
+    const dragText = new createjs.Text(
+      'Put the draggables into their correct drop zones',
+      FONT
+    );
     dragText.set({ x: 50, y: 50 });
     this._contentArea.addChild(dragText);
 
@@ -1090,13 +1425,13 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    // Createing drop zones
+    // Creating drop zones
     for (let i = 0; i < dragDataArr.length; i++) {
       const drop = new createjs.Shape();
       drop.graphics.beginFill(dragDataArr[i]).drawRect(0, 0, WIDTH, HEIGHT);
 
       drop.set({
-        x: 50 + (i * (WIDTH + 20)),
+        x: 50 + i * (WIDTH + 20),
         y: 400,
         alpha: 0.5,
         placed: false,
@@ -1107,12 +1442,10 @@ export default class AppWindow extends createjs.Container {
       drop.backgroundColor = dragDataArr[i];
       drop.opacity = 0.5;
 
-      this._contentArea.addChild(drop);
       dropArr.push(drop);
     }
 
-    // creating draggables
-
+    // Creating draggables
     for (let i = 0; i < dragDataArr.length; i++) {
       const options = {
         type: 'button',
@@ -1123,17 +1456,42 @@ export default class AppWindow extends createjs.Container {
         width: WIDTH,
         height: HEIGHT,
       };
-      const drag = new Draggable(options, dropArr, this._nextTab++);
-      drag.set({ x: 50 + (i * (WIDTH + 20)), y: 100 });
+
+      // Container where draggable starts, for returning draggables to their start positions
+      const dragStart = new createjs.Shape();
+      dragStart.graphics.beginFill('grey').drawRect(0, 0, WIDTH, HEIGHT);
+
+      dragStart.set({
+        x: 50 + i * (WIDTH + 20),
+        y: 100,
+        alpha: 0,
+      });
+      dragStart.setBounds(0, 0, WIDTH, 50);
+
+      AccessibilityModule.register({
+        displayObject: dragStart,
+        role: AccessibilityModule.ROLES.NONE,
+      });
+      this._contentArea.addChild(dragStart);
+      this._contentArea.accessible.addChild(dragStart);
+
+      // Interactive draggable
+      const drag = new Draggable(options, dropArr, 0, _.noop, dragStart);
+      drag.set({
+        x: 50 + i * (WIDTH + 20),
+        y: 100,
+      });
       drag.origX = drag.x;
       drag.origY = drag.y;
-      this._contentArea.addChild(drag);
-      this._contentArea.accessible.addChild(drag);
 
-      this._nextTab += drag.menuItemContainer.children.length;
+      this._contentArea.addChild(drag);
+      dragStart.accessible.addChild(drag);
+
       dragArr.push(drag);
       drag.button.addEventListener('focus', (evt) => {
-        _.forEach(dragArr, draggable => draggable.toggleMenuVisibility(false));
+        _.forEach(dragArr, (draggable) =>
+          draggable.toggleMenuVisibility(false)
+        );
         const { target } = evt;
         target._onFocus();
       });
@@ -1147,6 +1505,7 @@ export default class AppWindow extends createjs.Container {
       });
       drop.accessible.dropEffects = 'move';
       drop.accessible.label = `${dragDataArr[i]} drop target`;
+      this._contentArea.addChild(drop);
       this._contentArea.accessible.addChild(drop);
     });
   }
@@ -1163,7 +1522,11 @@ export default class AppWindow extends createjs.Container {
 
     const parentContainer = new createjs.Container();
     const rect = new createjs.Shape();
-    rect.graphics.beginStroke('#ccc').setStrokeStyle(1).beginFill('#000').drawRect(0, 0, 800, 600);
+    rect.graphics
+      .beginStroke('#ccc')
+      .setStrokeStyle(1)
+      .beginFill('#000')
+      .drawRect(0, 0, 800, 600);
     parentContainer.addChild(rect);
     this._contentArea.addChild(parentContainer);
     AccessibilityModule.register({
@@ -1172,7 +1535,7 @@ export default class AppWindow extends createjs.Container {
       role: AccessibilityModule.ROLES.NONE,
     });
 
-    const dialog = new Dialog(clearBtnData, 600, 400, this._nextTab++);
+    const dialog = new Dialog(clearBtnData, 600, 400, -1);
     parentContainer.addChild(dialog);
     parentContainer.accessible.addChild(dialog);
     dialog.visible = true;
@@ -1185,7 +1548,10 @@ export default class AppWindow extends createjs.Container {
     this._clearScreen();
     const directory = new createjs.Container();
 
-    const testDisplayObject = new createjs.Text('We have developed a basic workflow for creating these different role objects', '16px Arial');
+    const testDisplayObject = new createjs.Text(
+      'We have developed a basic workflow for creating these different role objects',
+      '16px Arial'
+    );
     testDisplayObject.x = 50;
     testDisplayObject.y = 50;
     AccessibilityModule.register({
@@ -1199,34 +1565,50 @@ export default class AppWindow extends createjs.Container {
     this._contentArea.addChild(testDisplayObject);
 
     const listItems = [];
-    const options = { text: 'src/Roles.js - look at the roles enum, may have to break apart the aria roles as needed' };
+    const options = {
+      text: 'src/Roles.js - look at the roles enum, may have to break apart the aria roles as needed',
+    };
     listItems.push(new ListItem(options));
-    options.text = 'src/Roles.js - go to ROLE_TAG_MAPPING so that the Roles enum value gets converted to an html tag';
+    options.text =
+      'src/Roles.js - go to ROLE_TAG_MAPPING so that the Roles enum value gets converted to an html tag';
     listItems.push(new ListItem(options));
-    options.text = 'https://www.w3.org/TR/wai-aria/roles && https://www.w3.org/TR/wai-aria/rdf_model.png - go and check\n'
-      + "if there are new aria attributes that are going to be added to your new object (that aren't covered in a\n"
-      + 'parent object) from the aria attribute page (link 1) and the flowchart (link 2), and look at the html tag\n'
-      + 'page and pick and choose the necessary properties that pertain to how the object will be used and add\nthem in';
+    options.text =
+      'https://www.w3.org/TR/wai-aria/roles && https://www.w3.org/TR/wai-aria/rdf_model.png - go and check\n' +
+      "if there are new aria attributes that are going to be added to your new object (that aren't covered in a\n" +
+      'parent object) from the aria attribute page (link 1) and the flowchart (link 2), and look at the html tag\n' +
+      'page and pick and choose the necessary properties that pertain to how the object will be used and add\nthem in';
     listItems.push(new ListItem(options));
-    options.text = 'src/RolesObjects - create the new object, usually have to extend the accessibility object but that\n'
-      + "may be sufficient in the rare case. if the accessibility object is sufficient, you're done.";
+    options.text =
+      'src/RolesObjects - create the new object, usually have to extend the accessibility object but that\n' +
+      "may be sufficient in the rare case. if the accessibility object is sufficient, you're done.";
     listItems.push(new ListItem(options));
-    options.text = 'src/RoleObjectFactory.js - actually instantiate your new object in the switch statement';
+    options.text =
+      'src/RoleObjectFactory.js - actually instantiate your new object in the switch statement';
     listItems.push(new ListItem(options));
-    options.text = 'src/test/widgets - add a test case .js file for your new object';
+    options.text =
+      'src/test/widgets - add a test case .js file for your new object';
     listItems.push(new ListItem(options));
-    options.text = 'src/test/widgets/AppWindow.js - add your new object to the actual app window code';
+    options.text =
+      'src/test/widgets/AppWindow.js - add your new object to the actual app window code';
     listItems.push(new ListItem(options));
 
-    const orderedList = new OrderedList({ type: '1', start: '1', reversed: false });
+    const orderedList = new OrderedList({
+      type: '1',
+      start: '1',
+      reversed: false,
+    });
     orderedList.x = 50;
     orderedList.y = 80;
     let y = 0;
     for (let i = 0; i < listItems.length; i++) {
       orderedList.addListItem(listItems[i], y, i);
 
-      if (i === 2) { y += 60; }
-      if (i === 3) { y += 15; }
+      if (i === 2) {
+        y += 60;
+      }
+      if (i === 3) {
+        y += 15;
+      }
       y += 20;
     }
 
@@ -1244,26 +1626,31 @@ export default class AppWindow extends createjs.Container {
     this._clearScreen();
 
     const openingParagraph = new createjs.Text(
-      'Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and\n'
-      + 'nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the\n'
-      + 'world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing\n'
-      + 'grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily\n'
-      + 'pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever\n'
-      + 'my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from\n'
-      + "deliberately stepping into the street, and methodically knocking people's hats off—then, I account it high time\n"
-      + 'to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato\n'
-      + 'throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it,\n'
-      + 'almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean\nwith me.', '16px Arial',
+      'Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and\n' +
+        'nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the\n' +
+        'world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing\n' +
+        'grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily\n' +
+        'pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever\n' +
+        'my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from\n' +
+        "deliberately stepping into the street, and methodically knocking people's hats off—then, I account it high time\n" +
+        'to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato\n' +
+        'throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it,\n' +
+        'almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean\nwith me.',
+      '16px Arial'
     );
 
     const secondParagraph = new createjs.Text(
-      'There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral\n'
-      + 'reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme\n'
-      + 'downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours\n'
-      + 'previous were out of sight of land. Look at the crowds of water-gazers there.', '16px Arial',
+      'There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral\n' +
+        'reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme\n' +
+        'downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours\n' +
+        'previous were out of sight of land. Look at the crowds of water-gazers there.',
+      '16px Arial'
     );
 
-    const quoteInfo = new createjs.Text('The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".', 'bold 16px Arial');
+    const quoteInfo = new createjs.Text(
+      'The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".',
+      'bold 16px Arial'
+    );
 
     AccessibilityModule.register([
       {
@@ -1307,10 +1694,11 @@ export default class AppWindow extends createjs.Container {
     });
     this._contentArea.accessible.addChild(complementary);
 
-    const sumaryText = 'SUMMARY: \n'
-                        + 'Ishmael explains that, whenever he feels depressed and suicidal, he always goes to sea.\n'
-                        + 'Ishmael claims that most people and most cultures around the world have a special attraction \n'
-                        + 'to water in general and the sea in particular.';
+    const sumaryText =
+      'SUMMARY: \n' +
+      'Ishmael explains that, whenever he feels depressed and suicidal, he always goes to sea.\n' +
+      'Ishmael claims that most people and most cultures around the world have a special attraction \n' +
+      'to water in general and the sea in particular.';
     const summary = new createjs.Text(sumaryText, '16px Arial');
     AccessibilityModule.register({
       displayObject: summary,
@@ -1331,9 +1719,13 @@ export default class AppWindow extends createjs.Container {
     // the marquee will scroll continuously.
     const direction = 'right'; // left, right, up and down
     const behaviour = 'scroll'; // scroll, slide and alternate
-    const text = 'Moby Dick (1956 film) Release date June 27, 1956 in the United States';
+    const text =
+      'Moby Dick (1956 film) Release date June 27, 1956 in the United States';
     const marquee = new Marquee({
-      text, behaviour, direction, loop,
+      text,
+      behaviour,
+      direction,
+      loop,
     });
     this._contentArea.addChild(marquee);
     this._contentArea.accessible.addChild(marquee);
@@ -1350,7 +1742,11 @@ export default class AppWindow extends createjs.Container {
     });
     this._contentArea.accessible.addChild(region);
 
-    const heading = new createjs.Text('Descriptions of planets using tab widgets', 'bold 18px Arial', '#000');
+    const heading = new createjs.Text(
+      'Descriptions of planets using tab widgets',
+      'bold 18px Arial',
+      '#000'
+    );
     region.addChild(heading);
     AccessibilityModule.register({
       displayObject: heading,
@@ -1389,10 +1785,11 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Earth',
               text: 'Earth wikipedia reference',
             },
-            description: 'Earth is the third planet from the Sun and the only astronomical object known to harbor life. According to radiometric dating and other\n'
-                           + "sources of evidence, Earth formed over 4.5 billion years ago.[24][25][26] Earth's gravity interacts with other objects in space,  \n"
-                           + "especially the Sun and the Moon, Earth's only natural satellite. Earth revolves around the Sun in 365.26 days, a period known as  \n"
-                           + 'an Earth year. During this time, Earth rotates about its axis about 366.26 times',
+            description:
+              'Earth is the third planet from the Sun and the only astronomical object known to harbor life. According to radiometric dating and other\n' +
+              "sources of evidence, Earth formed over 4.5 billion years ago.[24][25][26] Earth's gravity interacts with other objects in space,  \n" +
+              "especially the Sun and the Moon, Earth's only natural satellite. Earth revolves around the Sun in 365.26 days, a period known as  \n" +
+              'an Earth year. During this time, Earth rotates about its axis about 366.26 times',
           },
         },
         {
@@ -1407,9 +1804,10 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Earth#Orbit_and_rotation',
               text: 'Earth Orbit',
             },
-            description: "Earth's rotation period relative to the Sun—its mean solar day—is 86,400 seconds of mean solar time (86,400.0025 SI seconds). \n"
-                            + "[182] Because Earth's solar day is now slightly longer than it was during the 19th century due to tidal deceleration,  \n"
-                            + 'each day varies between 0 and 2 SI ms longe',
+            description:
+              "Earth's rotation period relative to the Sun—its mean solar day—is 86,400 seconds of mean solar time (86,400.0025 SI seconds). \n" +
+              "[182] Because Earth's solar day is now slightly longer than it was during the 19th century due to tidal deceleration,  \n" +
+              'each day varies between 0 and 2 SI ms longe',
           },
         },
         {
@@ -1424,12 +1822,13 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Earth#Orbit_and_rotation',
               text: 'Earth Rotation',
             },
-            description: 'Earth orbits the Sun at an average distance of about 150 million km (93 million mi) every 365.2564 mean solar days, or one sidereal \n'
-                           + 'year. This gives an apparent movement of the Sun eastward with respect to the stars at a rate of about 1°/day, which is one \n'
-                           + 'apparent Sun or Moon diameter every 12 hours. Due to this motion, on average it takes 24 hours—a solar day—for Earth to complete \n'
-                           + 'a full rotation about its axis so that the Sun returns to the meridian. The orbital speed of Earth averages about 29.78 km/s \n'
-                           + "(107,200 km/h; 66,600 mph), which is fast enough to travel a distance equal to Earth's diameter, about 12,742 km (7,918 mi),\n"
-                           + 'in seven minutes, and the distance to the Moon, 384,000 km (239,000 mi), in about 3.5 hours.[3]',
+            description:
+              'Earth orbits the Sun at an average distance of about 150 million km (93 million mi) every 365.2564 mean solar days, or one sidereal \n' +
+              'year. This gives an apparent movement of the Sun eastward with respect to the stars at a rate of about 1°/day, which is one \n' +
+              'apparent Sun or Moon diameter every 12 hours. Due to this motion, on average it takes 24 hours—a solar day—for Earth to complete \n' +
+              'a full rotation about its axis so that the Sun returns to the meridian. The orbital speed of Earth averages about 29.78 km/s \n' +
+              "(107,200 km/h; 66,600 mph), which is fast enough to travel a distance equal to Earth's diameter, about 12,742 km (7,918 mi),\n" +
+              'in seven minutes, and the distance to the Moon, 384,000 km (239,000 mi), in about 3.5 hours.[3]',
           },
         },
       ],
@@ -1457,10 +1856,10 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Moon',
               text: 'Moon Wikipedia reference',
             },
-            description: "The Moon is an astronomical body that orbits planet Earth and is Earth's only permanent natural satellite. It is the fifth-largest natural \n"
-                            + 'satellite in the Solar System, and the largest among planetary satellites relative to the size of the planet that it orbits (its primary).  \n'
-                            + "The Moon is after Jupiter's satellite Io the second-densest satellite in the Solar System among those whose densities are known.",
-
+            description:
+              "The Moon is an astronomical body that orbits planet Earth and is Earth's only permanent natural satellite. It is the fifth-largest natural \n" +
+              'satellite in the Solar System, and the largest among planetary satellites relative to the size of the planet that it orbits (its primary).  \n' +
+              "The Moon is after Jupiter's satellite Io the second-densest satellite in the Solar System among those whose densities are known.",
           },
         },
         {
@@ -1475,12 +1874,13 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Moon#Orbit',
               text: 'Moon Orbit',
             },
-            description: 'The Moon makes a complete orbit around Earth with respect to the fixed stars about once every 27.3 days[g] (its sidereal period). \n'
-                           + 'However, because Earth is moving in its orbit around the Sun at the same time, it takes slightly longer for the Moon to show the \n'
-                           + 'same phase to Earth, which is about 29.5 days[h] (its synodic period).[66] Unlike most satellites of other planets, the Moon orbits \n'
-                           + "closer to the ecliptic plane than to the planet's equatorial plane. The Moon's orbit is subtly perturbed by the Sun and Earth in many \n"
-                           + "small, complex and interacting ways. For example, the plane of the Moon's orbit gradually rotates once every 18.61[131] years, which \n"
-                           + 'affects other aspects of lunar motion. ',
+            description:
+              'The Moon makes a complete orbit around Earth with respect to the fixed stars about once every 27.3 days[g] (its sidereal period). \n' +
+              'However, because Earth is moving in its orbit around the Sun at the same time, it takes slightly longer for the Moon to show the \n' +
+              'same phase to Earth, which is about 29.5 days[h] (its synodic period).[66] Unlike most satellites of other planets, the Moon orbits \n' +
+              "closer to the ecliptic plane than to the planet's equatorial plane. The Moon's orbit is subtly perturbed by the Sun and Earth in many \n" +
+              "small, complex and interacting ways. For example, the plane of the Moon's orbit gradually rotates once every 18.61[131] years, which \n" +
+              'affects other aspects of lunar motion. ',
           },
         },
         {
@@ -1495,11 +1895,12 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Moon',
               text: 'Moon Rotation',
             },
-            description: 'The Moon is in synchronous rotation with Earth, and thus always shows the same side to Earth, the near side. The near side is \n'
-                            + 'marked by dark volcanic maria that fill the spaces between the bright ancient crustal highlands and the prominent impact craters. After the\n'
-                            + "Sun, the Moon is the second-brightest regularly visible celestial object in Earth's sky. Its surface is actually dark, although compared\n"
-                            + 'to the night sky it appears very bright, with a reflectance just slightly higher than that of worn asphalt. Its gravitational influence \n'
-                            + 'produces the ocean tides, body tides, and the slight lengthening of the day.',
+            description:
+              'The Moon is in synchronous rotation with Earth, and thus always shows the same side to Earth, the near side. The near side is \n' +
+              'marked by dark volcanic maria that fill the spaces between the bright ancient crustal highlands and the prominent impact craters. After the\n' +
+              "Sun, the Moon is the second-brightest regularly visible celestial object in Earth's sky. Its surface is actually dark, although compared\n" +
+              'to the night sky it appears very bright, with a reflectance just slightly higher than that of worn asphalt. Its gravitational influence \n' +
+              'produces the ocean tides, body tides, and the slight lengthening of the day.',
           },
         },
       ],
@@ -1527,11 +1928,12 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Mars',
               text: 'Mars Wikipedia reference',
             },
-            description: 'Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System after Mercury. In English, Mars carries\n'
-                            + "a name of  the Roman god of war, and is often referred to as the 'Red Planet' because the reddish iron oxide prevalent on its surface \n"
-                            + 'gives it a reddish appearance that is distinctive among the astronomical bodies visible to the naked eye.[17] Mars is a terrestrial\n'
-                            + 'planet with a thin atmosphere, having surface features reminiscent both of the impact craters of the Moon and the valleys, deserts,\n'
-                            + 'and polar ice caps of Earth.',
+            description:
+              'Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System after Mercury. In English, Mars carries\n' +
+              "a name of  the Roman god of war, and is often referred to as the 'Red Planet' because the reddish iron oxide prevalent on its surface \n" +
+              'gives it a reddish appearance that is distinctive among the astronomical bodies visible to the naked eye.[17] Mars is a terrestrial\n' +
+              'planet with a thin atmosphere, having surface features reminiscent both of the impact craters of the Moon and the valleys, deserts,\n' +
+              'and polar ice caps of Earth.',
           },
         },
         {
@@ -1546,11 +1948,12 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Mars#Orbit_and_rotation',
               text: 'Mars Orbit',
             },
-            description: "Mars is about 230 million km (143 million mi) from the Sun; its orbital period is 687 (Earth) days, depicted in red. Earth's orbit is in blue.\n"
-                           + "Mars's average distance from the Sun is roughly 230 million km (143 million mi), and its orbital period is 687 (Earth) days. The solar day \n"
-                           + '(or sol) on Mars is only slightly longer than an Earth day: 24 hours, 39 minutes, and 35.244 seconds.[179] A Martian year is equal to\n'
-                           + '1.8809 Earth years, or 1 year, 320 days, and 18.2 hours The axial tilt of Mars is 25.19 degrees relative to its orbital plane, which \n'
-                           + 'is similar to the axial tilt of Earth.',
+            description:
+              "Mars is about 230 million km (143 million mi) from the Sun; its orbital period is 687 (Earth) days, depicted in red. Earth's orbit is in blue.\n" +
+              "Mars's average distance from the Sun is roughly 230 million km (143 million mi), and its orbital period is 687 (Earth) days. The solar day \n" +
+              '(or sol) on Mars is only slightly longer than an Earth day: 24 hours, 39 minutes, and 35.244 seconds.[179] A Martian year is equal to\n' +
+              '1.8809 Earth years, or 1 year, 320 days, and 18.2 hours The axial tilt of Mars is 25.19 degrees relative to its orbital plane, which \n' +
+              'is similar to the axial tilt of Earth.',
           },
         },
         {
@@ -1565,13 +1968,14 @@ export default class AppWindow extends createjs.Container {
               href: 'https://en.wikipedia.org/wiki/Mars#Orbit_and_rotation',
               text: 'Mars Rotation',
             },
-            description: 'Mars has a relatively pronounced orbital eccentricity of about 0.09; of the seven other planets in the Solar System, only Mercury has a \n'
-                            + 'larger orbital eccentricity. It is known that in the past, Mars has had a much more circular orbit. At one point, 1.35 million Earth years ago,\n'
-                            + "Mars had an eccentricity of roughly 0.002, much less than that of Earth today.[180] Mars's cycle of eccentricity is 96,000 Earth years\n"
-                            + "compared to Earth's cycle of 100,000 years.[181] Mars has a much longer cycle of eccentricity, with a period of 2.2 million Earth years, \n"
-                            + 'and this overshadows the 96,000-year cycle in the eccentricity graphs. For the last 35,000 years, the orbit of Mars has been getting\n'
-                            + 'slightly more eccentric because of the gravitational effects of the other planets. The closest distance between Earth and Mars will \n'
-                            + 'continue to mildly decrease for the next 25,000 years',
+            description:
+              'Mars has a relatively pronounced orbital eccentricity of about 0.09; of the seven other planets in the Solar System, only Mercury has a \n' +
+              'larger orbital eccentricity. It is known that in the past, Mars has had a much more circular orbit. At one point, 1.35 million Earth years ago,\n' +
+              "Mars had an eccentricity of roughly 0.002, much less than that of Earth today.[180] Mars's cycle of eccentricity is 96,000 Earth years\n" +
+              "compared to Earth's cycle of 100,000 years.[181] Mars has a much longer cycle of eccentricity, with a period of 2.2 million Earth years, \n" +
+              'and this overshadows the 96,000-year cycle in the eccentricity graphs. For the last 35,000 years, the orbit of Mars has been getting\n' +
+              'slightly more eccentric because of the gravitational effects of the other planets. The closest distance between Earth and Mars will \n' +
+              'continue to mildly decrease for the next 25,000 years',
           },
         },
       ],
@@ -1597,7 +2001,8 @@ export default class AppWindow extends createjs.Container {
         });
         this.planetBtnArry[index].accessible.pressed = true;
         this.selectedPlanetIndex = index;
-        const currentData = this.planetBtnArry[this.selectedPlanetIndex].tabListArr[0].data;
+        const currentData =
+          this.planetBtnArry[this.selectedPlanetIndex].tabListArr[0].data;
         tabPanel.description.text = currentData.description;
         tabPanel.description.accessible.text = currentData.description;
         tabPanel.dataLink._text.text = currentData.link.text;
@@ -1606,7 +2011,7 @@ export default class AppWindow extends createjs.Container {
         tabPanel.dataLink.accessible.href = currentData.link.href;
       };
 
-      const planetBtn = new Button(planet.buttonData, this._nextTab++, planetClick);
+      const planetBtn = new Button(planet.buttonData, 0, planetClick);
       directory.addChild(planetBtn);
       directory.accessible.addChild(planetBtn);
       this.planetBtnArry.push(planetBtn);
@@ -1624,7 +2029,8 @@ export default class AppWindow extends createjs.Container {
 
     _.forEach(tabArr, (tabData, index) => {
       const _showTabPanel = () => {
-        const currentData = this.planetBtnArry[this.selectedPlanetIndex].tabListArr[index].data;
+        const currentData =
+          this.planetBtnArry[this.selectedPlanetIndex].tabListArr[index].data;
         tabPanel.description.text = currentData.description;
         tabPanel.description.accessible.text = currentData.description;
         tabPanel.dataLink._text.text = currentData.link.text;
@@ -1639,7 +2045,7 @@ export default class AppWindow extends createjs.Container {
         height: 50,
         position: index,
         size: tabArr.length,
-        tabIndex: this._nextTab++,
+        tabIndex: 0,
         callback: _showTabPanel,
       });
       tabList.addTab(tab);
@@ -1663,7 +2069,10 @@ export default class AppWindow extends createjs.Container {
     dataLink.x = 10;
     dataLink.y = 100;
 
-    const description = new createjs.Text(`${firstData.description}`, '18px Arial');
+    const description = new createjs.Text(
+      `${firstData.description}`,
+      '18px Arial'
+    );
     tabPanel.addChild(description);
     AccessibilityModule.register({
       displayObject: description,
@@ -1688,15 +2097,16 @@ export default class AppWindow extends createjs.Container {
     this._contentArea.accessible.addChild(feed);
 
     const openingParagraph = new createjs.Text(
-      'Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and\n'
-         + 'nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the\n'
-         + 'world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing\n'
-         + 'grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily\n'
-         + 'pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever\n'
-         + 'my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from\n'
-         + "deliberately stepping into the street, and methodically knocking people's hats off—then, I account it high time\n"
-         + 'to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato\n'
-         + 'throws himself upon his sword; I quietly take to the ship.', '16px Arial',
+      'Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and\n' +
+        'nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the\n' +
+        'world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing\n' +
+        'grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily\n' +
+        'pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever\n' +
+        'my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from\n' +
+        "deliberately stepping into the street, and methodically knocking people's hats off—then, I account it high time\n" +
+        'to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato\n' +
+        'throws himself upon his sword; I quietly take to the ship.',
+      '16px Arial'
     );
     AccessibilityModule.register({
       displayObject: openingParagraph,
@@ -1706,7 +2116,10 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    const reference1 = new createjs.Text('The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".', 'bold 16px Arial');
+    const reference1 = new createjs.Text(
+      'The above quotes are from "Moby Dick (Chap. 1: Loomings) by Herman Melville".',
+      'bold 16px Arial'
+    );
     AccessibilityModule.register({
       displayObject: reference1,
       role: AccessibilityModule.ROLES.NONE,
@@ -1716,11 +2129,12 @@ export default class AppWindow extends createjs.Container {
     });
 
     const secondParagraph = new createjs.Text(
-      'All day long we seemed to dawdle through a country which was full of beauty of every kind. Sometimes we \n'
-         + 'saw little towns or castles on the top of steep hills such as we see in old missals; sometimes we ran by rivers \n'
-         + 'and streams which seemed from the wide stony margin on each side of them to be subject to great floods.\n'
-         + 'It takes  a lot of water, and running strong, to sweep the outside edge of a river clear. At every station \n'
-         + 'there were groups of people, sometimes crowds, and in all sorts of attire.', '16px Arial',
+      'All day long we seemed to dawdle through a country which was full of beauty of every kind. Sometimes we \n' +
+        'saw little towns or castles on the top of steep hills such as we see in old missals; sometimes we ran by rivers \n' +
+        'and streams which seemed from the wide stony margin on each side of them to be subject to great floods.\n' +
+        'It takes  a lot of water, and running strong, to sweep the outside edge of a river clear. At every station \n' +
+        'there were groups of people, sometimes crowds, and in all sorts of attire.',
+      '16px Arial'
     );
     AccessibilityModule.register({
       displayObject: secondParagraph,
@@ -1730,7 +2144,10 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    const reference2 = new createjs.Text('The above quotes are from "DRACULA (Chap. I: JONATHAN HARKER’S JOURNAL) by Bram Stoker".', 'bold 16px Arial');
+    const reference2 = new createjs.Text(
+      'The above quotes are from "DRACULA (Chap. I: JONATHAN HARKER’S JOURNAL) by Bram Stoker".',
+      'bold 16px Arial'
+    );
     AccessibilityModule.register({
       displayObject: reference2,
       role: AccessibilityModule.ROLES.NONE,
@@ -1740,9 +2157,10 @@ export default class AppWindow extends createjs.Container {
     });
 
     const thirdParagraph = new createjs.Text(
-      'On Greenhaven, everything had evidently been done the hard way. She had heard about that facet of the\n'
-         + 'Greenie character before leaving the ship, and she now wished that she had listened more carefully. It \n'
-         + 'was difficult to picture in her mind just how far away that spaceship was by this time.', '16px Arial',
+      'On Greenhaven, everything had evidently been done the hard way. She had heard about that facet of the\n' +
+        'Greenie character before leaving the ship, and she now wished that she had listened more carefully. It \n' +
+        'was difficult to picture in her mind just how far away that spaceship was by this time.',
+      '16px Arial'
     );
     AccessibilityModule.register({
       displayObject: thirdParagraph,
@@ -1752,7 +2170,10 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    const reference3 = new createjs.Text(' The above quotes are from "D-99 a science-fiction novel (CHAPTER SIX) by H. B. FYFE".', 'bold 16px Arial');
+    const reference3 = new createjs.Text(
+      ' The above quotes are from "D-99 a science-fiction novel (CHAPTER SIX) by H. B. FYFE".',
+      'bold 16px Arial'
+    );
     AccessibilityModule.register({
       displayObject: reference3,
       role: AccessibilityModule.ROLES.NONE,
@@ -1808,7 +2229,7 @@ export default class AppWindow extends createjs.Container {
       y: (contentAreaBounds.height - holderHeight) * 0.3,
     });
 
-    const scrollBar = new ScrollBar(feedHolder, this._nextTab++);
+    const scrollBar = new ScrollBar(feedHolder, 0);
     scrollBar.x = feedHolder.x + holderWidth - scrollBar.getBounds().width;
     scrollBar.y = feedHolder.y;
 
@@ -1817,7 +2238,6 @@ export default class AppWindow extends createjs.Container {
     this._contentArea.addChild(scrollBar);
     this._contentArea.accessible.addChild(scrollBar);
   }
-
 
   _showSliderTestCase() {
     this._clearScreen();
@@ -1850,7 +2270,7 @@ export default class AppWindow extends createjs.Container {
     };
 
     // colorEditor button
-    const colorEditor = new Button(ColorEditorBtnData, this._nextTab++, _showColorEditor);
+    const colorEditor = new Button(ColorEditorBtnData, 0, _showColorEditor);
     colorEditor.text.font = 'bold 14px Arial';
     toolBar.addTool(colorEditor);
 
@@ -1879,8 +2299,11 @@ export default class AppWindow extends createjs.Container {
       this.alphaControlContainer.visible = false;
       this.colorSliderContainer.visible = false;
     };
-    const transformControl = new Button(transformControlBtnData,
-      this._nextTab++, _showTransformTool);
+    const transformControl = new Button(
+      transformControlBtnData,
+      0,
+      _showTransformTool
+    );
     transformControl.text.font = 'bold 14px Arial';
     toolBar.addTool(transformControl);
     const alphaControlBtnData = {
@@ -1905,7 +2328,7 @@ export default class AppWindow extends createjs.Container {
       this.transformControlContainer.visible = false;
       this.colorSliderContainer.visible = false;
     };
-    const alphaControl = new Button(alphaControlBtnData, this._nextTab++, _showAlphaTool);
+    const alphaControl = new Button(alphaControlBtnData, 0, _showAlphaTool);
     alphaControl.text.font = 'bold 16px Arial';
     toolBar.addTool(alphaControl);
     alphaControl.addEventListener('click', _showAlphaTool);
@@ -1967,13 +2390,17 @@ export default class AppWindow extends createjs.Container {
       const greenVal = sliderArray[1].valueNow;
       const blueVal = sliderArray[2].valueNow;
       color = `rgba(${redVal}, ${greenVal}, ${blueVal}, ${this.alphaVal})`;
-      shapeObject.graphics.clear().beginFill(color).drawRect(0, 0, 200, 200).endFill();
+      shapeObject.graphics
+        .clear()
+        .beginFill(color)
+        .drawRect(0, 0, 200, 200)
+        .endFill();
     };
     const switchCallBack = (val) => {
       this.alphaVal = val ? 1 : 0.5;
       callBack();
     };
-    const switchBtn = new Switch(90, 45, this._nextTab++, switchCallBack);
+    const switchBtn = new Switch(90, 45, 0, switchCallBack);
     switchBtn.set({ x: 475, y: 90 });
     this.alphaControlContainer.addChild(switchBtn);
 
@@ -1982,10 +2409,12 @@ export default class AppWindow extends createjs.Container {
 
     for (let i = 0; i < sliderData.length; i++) {
       const name = sliderData[i].label;
-      const {
-        min, max, step, value,
-      } = sliderData[i];
-      const labelValue = new createjs.Text(`${name}`, '14px Arial', `${sliderData[i].rgb}`);
+      const { min, max, step, value } = sliderData[i];
+      const labelValue = new createjs.Text(
+        `${name}`,
+        '14px Arial',
+        `${sliderData[i].rgb}`
+      );
       this.colorSliderContainer.addChild(labelValue);
       AccessibilityModule.register({
         displayObject: labelValue,
@@ -1996,8 +2425,18 @@ export default class AppWindow extends createjs.Container {
       });
       this.colorSliderContainer.accessible.addChild(labelValue);
 
-      const slider = new Slider(min, max, 200, 50, 'horizontal', step, value, this._nextTab++, callBack);
-      slider.set({ x: 100, y: i === 0 ? 200 : 200 + (i * 50) });
+      const slider = new Slider(
+        min,
+        max,
+        200,
+        50,
+        'horizontal',
+        step,
+        value,
+        0,
+        callBack
+      );
+      slider.set({ x: 100, y: i === 0 ? 200 : 200 + i * 50 });
       const sliderBounds = slider.getBounds();
       this.colorSliderContainer.addChild(slider);
       this.colorSliderContainer.accessible.addChild(slider);
@@ -2062,15 +2501,24 @@ export default class AppWindow extends createjs.Container {
     });
 
     listObjectArr[0].set({ x: 62, y: 50 });
-    listObjectArr[0].bullet.set({ x: listObjectArr[0].x - 12, y: listObjectArr[0].y + 12 });
+    listObjectArr[0].bullet.set({
+      x: listObjectArr[0].x - 12,
+      y: listObjectArr[0].y + 12,
+    });
 
     for (let i = 1; i < listObjectArr.length; i++) {
       const preText = listObjectArr[i - 1];
       const preTextHeight = preText.getBounds().height;
 
-      listObjectArr[i].set({ x: listObjectArr[0].x, y: preText.y + preTextHeight + 20 });
+      listObjectArr[i].set({
+        x: listObjectArr[0].x,
+        y: preText.y + preTextHeight + 20,
+      });
 
-      listObjectArr[i].bullet.set({ x: listObjectArr[i].x - 12, y: listObjectArr[i].y + 12 });
+      listObjectArr[i].bullet.set({
+        x: listObjectArr[i].x - 12,
+        y: listObjectArr[i].y + 12,
+      });
     }
 
     // Search
@@ -2083,17 +2531,15 @@ export default class AppWindow extends createjs.Container {
         value: 'Search',
         name: 'Search',
         enabled: 'true',
-        autoFocus: 'false',
         width: 85,
         height: OPTION_HEIGHT + 10,
       },
     };
 
-    const search = new Search(options, this._nextTab++);
+    const search = new Search(options, 0);
     search.set({ x: 50, y: 10 });
     this._contentArea.addChild(search);
     this._contentArea.accessible.addChildAt(search, 1);
-    this._nextTab++;
   }
 
   _showGridTestCase() {
@@ -2136,7 +2582,7 @@ export default class AppWindow extends createjs.Container {
       gridData.push(row);
     }
 
-    const grid = new Grid(gridData, this._nextTab++);
+    const grid = new Grid(gridData, 0);
     this._contentArea.addChild(grid);
     this._contentArea.accessible.addChild(grid);
 
@@ -2144,7 +2590,6 @@ export default class AppWindow extends createjs.Container {
     grid.x = 50;
     grid.y = 50;
   }
-
 
   _showTableTestCase() {
     this._clearScreen();
@@ -2156,10 +2601,30 @@ export default class AppWindow extends createjs.Container {
         { value: 'Description', width: 300 },
       ],
       data: [
-        ['Button', 'button', 'input', 'An input that allows for user-triggered actions when clicked or pressed.'],
-        ['Menubar', 'ul', 'static', 'A presentation of menu that usually remains visible and is usually presented horizontally.'],
-        ['Form', 'form', 'input', 'A landmark region that contains a collection of items and objects that, as a whole, combine to create a form.'],
-        ['Table', 'table', 'static', 'A section containing data arranged in rows and columns.'],
+        [
+          'Button',
+          'button',
+          'input',
+          'An input that allows for user-triggered actions when clicked or pressed.',
+        ],
+        [
+          'Menubar',
+          'ul',
+          'static',
+          'A presentation of menu that usually remains visible and is usually presented horizontally.',
+        ],
+        [
+          'Form',
+          'form',
+          'input',
+          'A landmark region that contains a collection of items and objects that, as a whole, combine to create a form.',
+        ],
+        [
+          'Table',
+          'table',
+          'static',
+          'A section containing data arranged in rows and columns.',
+        ],
       ],
       showBorders: true,
     };
@@ -2201,7 +2666,7 @@ export default class AppWindow extends createjs.Container {
       y: (contentAreaBounds.height - holderHeight) / 2,
     });
 
-    const scrollBar = new ScrollBar(tableHolder, this._nextTab++);
+    const scrollBar = new ScrollBar(tableHolder, 0);
     scrollBar.x = tableHolder.x + holderWidth - scrollBar.getBounds().width;
     scrollBar.y = tableHolder.y;
 
@@ -2247,9 +2712,15 @@ export default class AppWindow extends createjs.Container {
     horizontalScale = this.createText('1', x, y, false);
     x += horizontalScale.getBounds().width + padding;
 
-    const scaleXButton = this.createSpinButton({
-      options, textContainer: horizontalScale, callback: transformShape, tabIndex: this._nextTab++,
-    }, x, y);
+    const scaleXButton = this.createSpinButton(
+      {
+        options,
+        textContainer: horizontalScale,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
     x += scaleXButton.getBounds().width + padding;
 
     label = this.createText('scaleY', x, y);
@@ -2258,9 +2729,15 @@ export default class AppWindow extends createjs.Container {
     verticalScale = this.createText('1', x, y, false);
     x += verticalScale.getBounds().width + padding;
 
-    const scaleYButton = this.createSpinButton({
-      options, textContainer: verticalScale, callback: transformShape, tabIndex: this._nextTab++,
-    }, x, y);
+    const scaleYButton = this.createSpinButton(
+      {
+        options,
+        textContainer: verticalScale,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
     x += scaleYButton.getBounds().width + padding + 20;
 
     options.maxValue = 50;
@@ -2272,9 +2749,15 @@ export default class AppWindow extends createjs.Container {
     horizontalSkew = this.createText('1', x, y, false);
     x += horizontalSkew.getBounds().width + padding;
 
-    const skewXButton = this.createSpinButton({
-      options, textContainer: horizontalSkew, callback: transformShape, tabIndex: this._nextTab++,
-    }, x, y);
+    const skewXButton = this.createSpinButton(
+      {
+        options,
+        textContainer: horizontalSkew,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
     x += skewXButton.getBounds().width + padding;
 
     label = this.createText('skewY', x, y);
@@ -2283,9 +2766,15 @@ export default class AppWindow extends createjs.Container {
     verticalSkew = this.createText('1', x, y, false);
     x += verticalSkew.getBounds().width + padding;
 
-    const skewYButton = this.createSpinButton({
-      options, textContainer: verticalSkew, callback: transformShape, tabIndex: this._nextTab++,
-    }, x, y);
+    const skewYButton = this.createSpinButton(
+      {
+        options,
+        textContainer: verticalSkew,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
     x += skewYButton.getBounds().width + padding + 20;
 
     options.minValue = 0;
@@ -2299,16 +2788,32 @@ export default class AppWindow extends createjs.Container {
     transformX = this.createText('0', x, y, false);
     x += transformX.getBounds().width + padding + 15;
 
-    const transformXButton = this.createSpinButton({
-      options, textContainer: transformX, callback: transformShape, tabIndex: this._nextTab++,
-    }, x, y);
+    const transformXButton = this.createSpinButton(
+      {
+        options,
+        textContainer: transformX,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
     x += transformXButton.getBounds().width + padding;
 
     label = this.createText('regY', x, y);
     x += label.getBounds().width + padding;
 
     transformY = this.createText('0', x, y, false);
-    x += transformY.getBounds().width + padding;
+    x += transformY.getBounds().width + padding + 15;
+
+    this.createSpinButton(
+      {
+        options,
+        textContainer: transformY,
+        callback: transformShape,
+      },
+      x,
+      y
+    );
   }
 
   createText(value, x, y, shouldAccesible = true) {
@@ -2433,34 +2938,22 @@ export default class AppWindow extends createjs.Container {
 
     const threeWheelers = [{ label: 'Motor tricycle' }];
 
-    const fourWheelers = [{
-      label: 'Cars',
-      childArr: [
-        {
-          label: 'Hatchback',
-        },
-        {
-          label: 'Sedan',
-        }, {
-          label: 'MPV',
-        },
-        {
-          label: 'SUV',
-          childArr: [{
-            label: 'Compact',
+    const fourWheelers = [
+      {
+        label: 'Cars',
+        childArr: [
+          {
+            label: 'Hatchback',
           },
           {
-            label: 'Mid-size',
+            label: 'Sedan',
           },
           {
-            label: 'Full-size',
+            label: 'MPV',
           },
           {
-            label: 'Crossovers',
+            label: 'SUV',
             childArr: [
-              {
-                label: 'Subcompact',
-              },
               {
                 label: 'Compact',
               },
@@ -2470,31 +2963,50 @@ export default class AppWindow extends createjs.Container {
               {
                 label: 'Full-size',
               },
+              {
+                label: 'Crossovers',
+                childArr: [
+                  {
+                    label: 'Subcompact',
+                  },
+                  {
+                    label: 'Compact',
+                  },
+                  {
+                    label: 'Mid-size',
+                  },
+                  {
+                    label: 'Full-size',
+                  },
+                ],
+              },
             ],
-          }],
-        },
-      ],
-    }];
+          },
+        ],
+      },
+    ];
 
-    const vehicleArr = [{
-      label: '2 Wheeler',
-      childArr: twoWheelers,
-    },
-    {
-      label: '3 Wheeler',
-      childArr: threeWheelers,
-    },
-    {
-      label: '4 Wheeler',
-      childArr: fourWheelers,
-    }];
+    const vehicleArr = [
+      {
+        label: '2 Wheeler',
+        childArr: twoWheelers,
+      },
+      {
+        label: '3 Wheeler',
+        childArr: threeWheelers,
+      },
+      {
+        label: '4 Wheeler',
+        childArr: fourWheelers,
+      },
+    ];
 
     const vehicles = {
       label: 'Vehicles',
       childArr: vehicleArr,
     };
 
-    const addAsTreeItem = obj => new TreeItem(obj.label, this._nextTab++);
+    const addAsTreeItem = (obj) => new TreeItem(obj.label, 0);
 
     const makeTree = (obj, parentContainer, parentItem) => {
       const element = addAsTreeItem(obj);
@@ -2544,7 +3056,8 @@ export default class AppWindow extends createjs.Container {
       cjsScaleX: 1,
       cjsScaleY: 1,
     };
-    const mathml = '<math xmlns ="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo> = </mo><msup><mi>c</mi><mn>2</mn></msup> </mrow></math>';
+    const mathml =
+      '<math xmlns ="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo> = </mo><msup><mi>c</mi><mn>2</mn></msup> </mrow></math>';
     const text = new PlainTextMath(option1);
     text.x = 200;
     text.y = 250;
@@ -2569,110 +3082,238 @@ export default class AppWindow extends createjs.Container {
     this._contentArea.accessible.addChild(this.textFormat);
     let prefixText = 'Example of ';
     const PADDING = 7;
-    const boldText = new FormatText(prefixText, 'Bold Text', AccessibilityModule.ROLES.FORMAT_TEXT_BOLD, 'bold', '22', 'Arial');
+    const boldText = new FormatText(
+      prefixText,
+      'Bold Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_BOLD,
+      'bold',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(boldText);
     this.textFormat.accessible.addChild(boldText);
     boldText.y = PADDING;
 
-    const codeText = new FormatText(prefixText, 'Computer Code', AccessibilityModule.ROLES.FORMAT_TEXT_CODE, '', '22', 'monospace');
+    const codeText = new FormatText(
+      prefixText,
+      'Computer Code',
+      AccessibilityModule.ROLES.FORMAT_TEXT_CODE,
+      '',
+      '22',
+      'monospace'
+    );
     this.textFormat.addChild(codeText);
     this.textFormat.accessible.addChild(codeText);
     codeText.y = boldText.y + boldText.getBounds().height + PADDING;
 
-    const deletedText = new FormatText(prefixText, 'Deleted Text', AccessibilityModule.ROLES.FORMAT_TEXT_DELETE, '', '22', 'Arial');
+    const deletedText = new FormatText(
+      prefixText,
+      'Deleted Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_DELETE,
+      '',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(deletedText);
     this.textFormat.accessible.addChild(deletedText);
     deletedText.y = codeText.y + codeText.getBounds().height + PADDING;
 
-    const emphasizeText = new FormatText(prefixText, 'Emphasize Text', AccessibilityModule.ROLES.FORMAT_TEXT_EMPHASIZE, 'italic', '22', 'Arial');
+    const emphasizeText = new FormatText(
+      prefixText,
+      'Emphasize Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_EMPHASIZE,
+      'italic',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(emphasizeText);
     this.textFormat.accessible.addChild(emphasizeText);
     emphasizeText.y = deletedText.y + deletedText.getBounds().height + PADDING;
 
-    const italicText = new FormatText(prefixText, 'Italic Text', AccessibilityModule.ROLES.FORMAT_TEXT_ITALIC, 'italic', '22', 'Arial');
+    const italicText = new FormatText(
+      prefixText,
+      'Italic Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_ITALIC,
+      'italic',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(italicText);
     this.textFormat.accessible.addChild(italicText);
     italicText.y = emphasizeText.y + emphasizeText.getBounds().height + PADDING;
 
-    const insertedText = new FormatText(prefixText, 'Inserted Text', AccessibilityModule.ROLES.FORMAT_TEXT_INSERT, '', '22', 'Arial');
+    const insertedText = new FormatText(
+      prefixText,
+      'Inserted Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_INSERT,
+      '',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(insertedText);
     this.textFormat.accessible.addChild(insertedText);
 
     insertedText.y = italicText.y + italicText.getBounds().height + PADDING;
 
-    const keybordtext = new FormatText(prefixText, 'Keybord Text', AccessibilityModule.ROLES.FORMAT_TEXT_KBD, '', '22', 'monospace');
+    const keybordtext = new FormatText(
+      prefixText,
+      'Keybord Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_KBD,
+      '',
+      '22',
+      'monospace'
+    );
     this.textFormat.addChild(keybordtext);
     this.textFormat.accessible.addChild(keybordtext);
     keybordtext.y = insertedText.y + insertedText.getBounds().height + PADDING;
 
-    const preformatedTxt = 'Text in a pre element \n'
-                          + 'is displayed in a fixed-width\n'
-                          + 'font, and it preserves\n'
-                          + 'both      spaces and\n'
-                          + 'line breaks';
-    const preformatedText = new FormatText(prefixText, preformatedTxt, AccessibilityModule.ROLES.FORMAT_TEXT_PREFORMAT, '', '22', 'monospace');
+    const preformatedTxt =
+      'Text in a pre element \n' +
+      'is displayed in a fixed-width\n' +
+      'font, and it preserves\n' +
+      'both      spaces and\n' +
+      'line breaks';
+    const preformatedText = new FormatText(
+      prefixText,
+      preformatedTxt,
+      AccessibilityModule.ROLES.FORMAT_TEXT_PREFORMAT,
+      '',
+      '22',
+      'monospace'
+    );
     this.textFormat.addChild(preformatedText);
     this.textFormat.accessible.addChild(preformatedText);
-    preformatedText.y = keybordtext.y + keybordtext.getBounds().height + PADDING;
+    preformatedText.y =
+      keybordtext.y + keybordtext.getBounds().height + PADDING;
 
-    const strikeText = new FormatText(prefixText, 'Strike Text', AccessibilityModule.ROLES.FORMAT_TEXT_STRIKETHROUGH, '', '22', 'Arial');
+    const strikeText = new FormatText(
+      prefixText,
+      'Strike Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_STRIKETHROUGH,
+      '',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(strikeText);
     this.textFormat.accessible.addChild(strikeText);
-    strikeText.y = preformatedText.y + preformatedText.getBounds().height + PADDING;
+    strikeText.y =
+      preformatedText.y + preformatedText.getBounds().height + PADDING;
 
-    const sampleText = new FormatText(prefixText, 'Sample Text', AccessibilityModule.ROLES.FORMAT_TEXT_SAMPLE, '', '22', 'monospace');
+    const sampleText = new FormatText(
+      prefixText,
+      'Sample Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_SAMPLE,
+      '',
+      '22',
+      'monospace'
+    );
     this.textFormat.addChild(sampleText);
     this.textFormat.accessible.addChild(sampleText);
     sampleText.y = strikeText.y + strikeText.getBounds().height + PADDING;
 
-    const smallText = new FormatText(prefixText, 'SmallText', AccessibilityModule.ROLES.FORMAT_TEXT_SMALL, '', '12px', 'Arial');
+    const smallText = new FormatText(
+      prefixText,
+      'SmallText',
+      AccessibilityModule.ROLES.FORMAT_TEXT_SMALL,
+      '',
+      '12px',
+      'Arial'
+    );
     this.textFormat.addChild(smallText);
     this.textFormat.accessible.addChild(smallText);
     smallText.y = sampleText.y + sampleText.getBounds().height + PADDING;
 
-    const strongText = new FormatText(prefixText, 'Strong Text', AccessibilityModule.ROLES.FORMAT_TEXT_STRONG, 'bold', '22', 'Arial');
+    const strongText = new FormatText(
+      prefixText,
+      'Strong Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_STRONG,
+      'bold',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(strongText);
     this.textFormat.accessible.addChild(strongText);
     strongText.y = smallText.y + smallText.getBounds().height + PADDING;
 
     prefixText = 'Example of SubscriptText Log';
-    const subscriptText = new FormatText(prefixText, '2', AccessibilityModule.ROLES.FORMAT_TEXT_SUBSCRIPT, '', '22', 'Arial');
+    const subscriptText = new FormatText(
+      prefixText,
+      '2',
+      AccessibilityModule.ROLES.FORMAT_TEXT_SUBSCRIPT,
+      '',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(subscriptText);
     this.textFormat.accessible.addChild(subscriptText);
     subscriptText.y = strongText.y + strongText.getBounds().height + PADDING;
 
     prefixText = 'Example of SupscriptText 2';
-    const supscriptText = new FormatText(prefixText, '4', AccessibilityModule.ROLES.FORMAT_TEXT_SUPERSCRIPT, '', '22', 'Arial');
+    const supscriptText = new FormatText(
+      prefixText,
+      '4',
+      AccessibilityModule.ROLES.FORMAT_TEXT_SUPERSCRIPT,
+      '',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(supscriptText);
     this.textFormat.accessible.addChild(supscriptText);
-    supscriptText.y = subscriptText.y + subscriptText.getBounds().height + PADDING;
+    supscriptText.y =
+      subscriptText.y + subscriptText.getBounds().height + PADDING;
 
     const date = new Date();
     prefixText = 'Example of Time ';
-    const timeText = new FormatText(prefixText, `${date}`, AccessibilityModule.ROLES.FORMAT_TEXT_TIME, '', '16', 'Arial');
+    const timeText = new FormatText(
+      prefixText,
+      `${date}`,
+      AccessibilityModule.ROLES.FORMAT_TEXT_TIME,
+      '',
+      '16',
+      'Arial'
+    );
     this.textFormat.addChild(timeText);
     this.textFormat.accessible.addChild(timeText);
     timeText.y = supscriptText.y + supscriptText.getBounds().height + PADDING;
 
     prefixText = 'Example of ';
-    const underLineText = new FormatText(prefixText, 'UnderLine Text', AccessibilityModule.ROLES.FORMAT_TEXT_UNDERLINE, '', '16', 'Arial');
+    const underLineText = new FormatText(
+      prefixText,
+      'UnderLine Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_UNDERLINE,
+      '',
+      '16',
+      'Arial'
+    );
     this.textFormat.addChild(underLineText);
     this.textFormat.accessible.addChild(underLineText);
     underLineText.y = timeText.y + timeText.getBounds().height + PADDING;
 
     prefixText = 'and';
-    const variableText = new FormatText(prefixText, 'Variable Text', AccessibilityModule.ROLES.FORMAT_TEXT_ITALIC, 'italic', '22', 'Arial');
+    const variableText = new FormatText(
+      prefixText,
+      'Variable Text',
+      AccessibilityModule.ROLES.FORMAT_TEXT_ITALIC,
+      'italic',
+      '22',
+      'Arial'
+    );
     this.textFormat.addChild(variableText);
     this.textFormat.accessible.addChild(variableText);
-    variableText.x = underLineText.x + underLineText.getBounds().width + PADDING;
+    variableText.x =
+      underLineText.x + underLineText.getBounds().width + PADDING;
     variableText.y = underLineText.y;
 
     const bounds = this._contentArea.getBounds();
-    this.textFormat.x = bounds.width * 0.5 - this.textFormat.getBounds().width * 0.5;
-    this.textFormat.y = bounds.height * 0.5 - this.textFormat.getBounds().height * 0.5;
+    this.textFormat.x =
+      bounds.width * 0.5 - this.textFormat.getBounds().width * 0.5;
+    this.textFormat.y =
+      bounds.height * 0.5 - this.textFormat.getBounds().height * 0.5;
 
     const shape = new createjs.Shape();
-    shape.graphics.beginFill('#FFD64B').drawRect(0, 0, bounds.width, bounds.height);
+    shape.graphics
+      .beginFill('#FFD64B')
+      .drawRect(0, 0, bounds.width, bounds.height);
     this._contentArea.addChildAt(shape, 0);
   }
 }

@@ -11,7 +11,14 @@ export default class Tab extends createjs.Container {
    */
 
   constructor({
-    name, value, width = 300, height = 50, position = 1, size = 1, tabIndex, callback = _.noop,
+    name,
+    value,
+    width = 300,
+    height = 50,
+    position = 1,
+    size = 1,
+    tabIndex,
+    callback = _.noop,
   }) {
     super();
     this.data = { name, value };
@@ -65,7 +72,11 @@ export default class Tab extends createjs.Container {
     this.addChild(this.focusRect);
     this.focusRect.visible = false;
 
-    const tabText = new createjs.Text(this.data.value, 'bold 24px Arial', '#000');
+    const tabText = new createjs.Text(
+      this.data.value,
+      'bold 24px Arial',
+      '#000'
+    );
     const tabTextBounds = tabText.getBounds();
     tabText.x = this.width * 0.5 - tabTextBounds.width * 0.5;
     tabText.y = this.height * 0.5 - tabTextBounds.height * 0.5;

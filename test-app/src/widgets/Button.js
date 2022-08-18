@@ -4,12 +4,10 @@ import AccessibilityModule from '@curriculumassociates/createjs-accessibility';
 export default class Button extends createjs.Container {
   constructor(options, tabIndex, callBack = _.noop) {
     super();
-    _.bindAll(this, '_onFocus', '_onBlur', '_onMouseDown', '_onMouseUp', '_onClick');
+    _.bindAll(this, '_onFocus', '_onBlur', '_onClick');
     this.callBack = callBack;
     this.addEventListener('focus', this._onFocus);
     this.addEventListener('blur', this._onBlur);
-    this.addEventListener('mousedown', this._onMouseDown);
-    this.addEventListener('mouseup', this._onMouseUp);
     this.addEventListener('click', this._onClick);
     this.addEventListener('keyboardClick', this._onClick);
 
@@ -28,16 +26,8 @@ export default class Button extends createjs.Container {
           listener: this._onBlur,
         },
         {
-          eventName: 'mousedown',
-          listener: this._onMouseDown,
-        },
-        {
-          eventName: 'mouseup',
-          listener: this._onMouseUp,
-        },
-        {
           eventName: 'keyboardClick',
-          listener: this._onMouseDown,
+          listener: this._onClick,
         },
       ],
     });
@@ -50,23 +40,9 @@ export default class Button extends createjs.Container {
     this.width = options.width || 300;
     this.height = options.height || 60;
 
-    this.background = new createjs.Shape();
-    this.background.name = 'background';
-    this.background.graphics.beginStroke('black').beginFill('#fff').drawRect(0, 0, this.width, this.height);
-    this.addChild(this.background);
-
-    this.focusRect = new createjs.Shape();
-    this.focusRect.name = 'focusRect';
-    this.focusRect.graphics.beginStroke('black').setStrokeStyle(3).beginFill('#fff').drawRect(0, 0, this.width, this.height);
-    this.addChild(this.focusRect);
-    this.focusRect.visible = false;
-
-    this.text = new createjs.Text(this.value, 'bold 24px Arial', '#000');
-    this.text.textAlign = 'center';
-    this.text.textBaseline = 'middle';
-    this.text.x = this.width / 2;
-    this.text.y = this.height / 2;
-    this.addChild(this.text);
+    this._addBackground();
+    this._addFocusIndicator();
+    this._addText();
     this.accessible.text = this.text.text;
     this.accessible.pressed = options.pressed;
   }
@@ -91,23 +67,44 @@ export default class Button extends createjs.Container {
   }
 
   _onFocus() {
-    this.focusRect.visible = true;
+    this.focusIndicator.visible = true;
   }
 
   _onBlur() {
-    this.focusRect.visible = false;
-  }
-
-  _onMouseDown() {
-    this.background.visible = false;
-  }
-
-  _onMouseUp() {
-    this.background.visible = true;
+    this.focusIndicator.visible = false;
   }
 
   _onClick(evt) {
     this.accessible.requestFocus();
     this.callBack(evt);
+  }
+
+  _addBackground() {
+    this.background = new createjs.Shape();
+    this.background.name = 'background';
+    this.background.graphics
+      .beginStroke('black')
+      .drawRect(0, 0, this.width, this.height);
+    this.addChild(this.background);
+  }
+
+  _addFocusIndicator() {
+    this.focusIndicator = new createjs.Shape();
+    this.focusIndicator.name = 'focusIndicator';
+    this.focusIndicator.graphics
+      .setStrokeStyle(5)
+      .beginStroke('#5FC1FA')
+      .drawRect(-2.5, -2.5, this.width + 5, this.height + 5);
+    this.addChild(this.focusIndicator);
+    this.focusIndicator.visible = false;
+  }
+
+  _addText() {
+    this.text = new createjs.Text(this.value, 'bold 24px Arial', '#000');
+    this.text.textAlign = 'center';
+    this.text.textBaseline = 'middle';
+    this.text.x = this.width / 2;
+    this.text.y = this.height / 2;
+    this.addChild(this.text);
   }
 }

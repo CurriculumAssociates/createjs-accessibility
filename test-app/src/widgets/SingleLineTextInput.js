@@ -10,7 +10,16 @@ const MODES = {
 export default class SingleLineTextInput extends createjs.Container {
   constructor(width, height, tabIndex, placeholderText = '') {
     super();
-    _.bindAll(this, 'onFocus', 'onBlur', '_onValueChanged', '_onSelectionChanged', '_onMouseDown', '_onMouseMove', '_onMouseUp');
+    _.bindAll(
+      this,
+      'onFocus',
+      'onBlur',
+      '_onValueChanged',
+      '_onSelectionChanged',
+      '_onMouseDown',
+      '_onMouseMove',
+      '_onMouseUp'
+    );
 
     AccessibilityModule.register({
       accessibleOptions: { tabIndex },
@@ -51,7 +60,11 @@ export default class SingleLineTextInput extends createjs.Container {
     this.setBounds(0, 0, width, height);
 
     const bg = new createjs.Shape();
-    bg.graphics.beginStroke('#000000').setStrokeStyle(1).beginFill('#ffffff').drawRect(0, 0, width, height);
+    bg.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .beginFill('#ffffff')
+      .drawRect(0, 0, width, height);
     this.addChild(bg);
 
     this._selectionDisplay = new createjs.Shape();
@@ -65,7 +78,11 @@ export default class SingleLineTextInput extends createjs.Container {
     this.addChild(this._text);
 
     this._cursor = new createjs.Shape();
-    this._cursor.graphics.beginStroke('#000000').setStrokeStyle(1).moveTo(0, PAD).lineTo(0, fontSize);
+    this._cursor.graphics
+      .beginStroke('#000000')
+      .setStrokeStyle(1)
+      .moveTo(0, PAD)
+      .lineTo(0, fontSize);
     this._cursor.x = PAD;
     this._cursor.visible = false;
     this.addChild(this._cursor);
@@ -125,7 +142,10 @@ export default class SingleLineTextInput extends createjs.Container {
   _onSelectionChanged(evt) {
     this._selection.start = evt.selectionStart;
     this._selection.end = evt.selectionEnd;
-    this._cursorIndex = evt.selectionDirection === 'backward' ? this._selection.start : this._selection.end;
+    this._cursorIndex =
+      evt.selectionDirection === 'backward'
+        ? this._selection.start
+        : this._selection.end;
     this._cursorToIndex();
     this._updateSelection();
   }
@@ -134,12 +154,22 @@ export default class SingleLineTextInput extends createjs.Container {
     if (!this._cursorTimeline) {
       this._cursor.visible = true;
       this._cursorTimeline = new TimelineMax({ repeat: -1 });
-      this._cursorTimeline.call(() => {
-        this._cursor.visible = false;
-      }, null, null, '+=1');
-      this._cursorTimeline.call(() => {
-        this._cursor.visible = true;
-      }, null, null, '+=1');
+      this._cursorTimeline.call(
+        () => {
+          this._cursor.visible = false;
+        },
+        null,
+        null,
+        '+=1'
+      );
+      this._cursorTimeline.call(
+        () => {
+          this._cursor.visible = true;
+        },
+        null,
+        null,
+        '+=1'
+      );
     }
 
     if (evt.type === 'click') {
@@ -170,8 +200,10 @@ export default class SingleLineTextInput extends createjs.Container {
   }
 
   _cursorToIndex() {
-    this._cursor.x = this._text._getMeasuredWidth(this._text.text.substring(0,
-      this._cursorIndex)) + this._text.x;
+    this._cursor.x =
+      this._text._getMeasuredWidth(
+        this._text.text.substring(0, this._cursorIndex)
+      ) + this._text.x;
   }
 
   _isSelectionActive() {
@@ -184,16 +216,23 @@ export default class SingleLineTextInput extends createjs.Container {
     this._updateSelection();
   }
 
-
   _updateSelection() {
     if (this._isSelectionActive()) {
-      const selectedStartText = this._text.text.substring(0, this._selection.start);
+      const selectedStartText = this._text.text.substring(
+        0,
+        this._selection.start
+      );
       const startMeasureWidth = this._text._getMeasuredWidth(selectedStartText);
-      const startX = (this._selection.start <= 0 ? 0 : startMeasureWidth) + this._text.x;
+      const startX =
+        (this._selection.start <= 0 ? 0 : startMeasureWidth) + this._text.x;
       const selectedEndText = this._text.text.substring(0, this._selection.end);
-      const width = this._text._getMeasuredWidth(selectedEndText) - startX + PAD;
+      const width =
+        this._text._getMeasuredWidth(selectedEndText) - startX + PAD;
       this._selectionDisplay.visible = true;
-      this._selectionDisplay.graphics.clear().beginFill('#31c7ec').drawRect(startX, 1, width, this._height - 2);
+      this._selectionDisplay.graphics
+        .clear()
+        .beginFill('#31c7ec')
+        .drawRect(startX, 1, width, this._height - 2);
     } else {
       this._selectionDisplay.visible = false;
     }
