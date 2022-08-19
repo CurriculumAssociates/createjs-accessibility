@@ -32,10 +32,10 @@ const config = {
       },
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
   mode: 'production',
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 };
 
 if (process.env.NODE_ENV !== 'production') {
