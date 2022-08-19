@@ -6,7 +6,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'createjs-accessibility.js',
-    library: '',
+    library: 'cjs_a11y',
     libraryTarget: 'umd',
   },
   externals: [nodeExternals()],
@@ -19,10 +19,15 @@ const config = {
         use: [{ loader: 'ts-loader' }],
       },
       {
-        test: /\.js$/,
+        test: /\.(js)$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader', options: { presets: ['es2015', 'react'] } },
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/env', { modules: false }], '@babel/react'],
+            },
+          },
         ],
       },
     ],
