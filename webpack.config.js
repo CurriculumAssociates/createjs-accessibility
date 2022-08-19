@@ -14,12 +14,19 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: [{ loader: 'ts-loader' }],
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'ts-loader',
+          },
+        ],
       },
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
