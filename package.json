@@ -9,8 +9,8 @@
     "lint": "eslint --color src",
     "lint:fix": "eslint --color src --fix",
     "pre-commit": "lint-staged",
-    "prettier": "prettier './{src,test-app}/**/*.{js,test.js}' --check",
-    "prettier:fix": "prettier './{src,test-app}/**/*.{js,test.js}' --write",
+    "prettier": "prettier './{src,test-app}/**/*.{js,test.js,ts,tsx}' --check",
+    "prettier:fix": "prettier './{src,test-app}/**/*.{js,test.js,ts,tsx}' --write",
     "start": "rm -rf dist && NODE_ENV=development webpack",
     "start:test-app": "cd test-app && npm i && npm start",
     "test": "jest"

@@ -4,7 +4,7 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   extends: ['airbnb', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
@@ -14,12 +14,14 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      modules: true,
+      experimentalObjectRestSpread: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
   },
   root: true,
-  plugins: ['react'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
@@ -70,7 +72,10 @@ module.exports = {
     'no-multi-spaces': 'warn',
     'arrow-spacing': ['error', { before: true, after: true }],
     'space-in-parens': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'prefer-destructuring': 'off',
     'import/no-unresolved': 'off',
   },

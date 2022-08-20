@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { ROLES, getTagNameForDisplayObject } from './Roles';
 
@@ -12,7 +12,7 @@ type ElementBounds = {
   width?: number;
   x: number;
   y: number;
-}
+};
 
 type AccessibleDisplayObject = createjs.DisplayObject & {
   accessible?: {
@@ -22,13 +22,13 @@ type AccessibleDisplayObject = createjs.DisplayObject & {
       onFocus: Function;
       onBlur: Function;
     };
-    children: NodeListOf<Element>;
+    children: AccessibleDisplayObject[];
     disabledWithInference: boolean;
     role: string;
     text: string;
     visibleWithInference: boolean;
   };
-}
+};
 
 type DisplayObjectReactProps = {
   disabled?: string;
@@ -43,7 +43,7 @@ type DisplayObjectReactProps = {
     top: string;
     width: string;
   };
-}
+};
 
 /**
  * Update process for translating accessibility information for a stage to a DOM approach
@@ -57,9 +57,6 @@ type DisplayObjectReactProps = {
  * its output to the DOM.
  */
 export default class AccessibilityTranslator extends React.Component<Props> {
-  private _root: AccessibleDisplayObject;
-  private rootElem: HTMLDivElement;
-
   /**
    * @return {Object} properties accepted by this component.
    * @property @property {object} stage
@@ -99,6 +96,10 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     return this._root;
   }
 
+  private _root: AccessibleDisplayObject;
+
+  private rootElem: HTMLDivElement;
+
   /**
    * Starts the update of the accessibility DOM.  This should be called each time
    * the accessibility information for all DisplayObjects has been completed(e.g. just after
@@ -108,7 +109,10 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     this.forceUpdate(callback);
   }
 
-  _processDisplayObject(displayObject: AccessibleDisplayObject, parentBoundsInGlobalSpace: ElementBounds): React.ReactElement {
+  _processDisplayObject(
+    displayObject: AccessibleDisplayObject,
+    parentBoundsInGlobalSpace: ElementBounds
+  ): React.ReactElement {
     if (!displayObject.accessible) {
       return;
     }
@@ -231,7 +235,7 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     return React.createElement(tagName, props, ...childElements);
   }
 
-  render(): JSX.Element {
+  render(): ReactElement {
     let back = null;
     if (this._root) {
       const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
