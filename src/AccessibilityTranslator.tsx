@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-class-component-methods, react/static-property-placement */
 import _ from 'lodash';
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
@@ -57,6 +58,10 @@ type DisplayObjectReactProps = {
  * its output to the DOM.
  */
 export default class AccessibilityTranslator extends React.Component<Props> {
+  private _root: AccessibleDisplayObject;
+
+  private rootElem: HTMLDivElement;
+
   /**
    * @return {Object} properties accepted by this component.
    * @property @property {object} stage
@@ -95,10 +100,6 @@ export default class AccessibilityTranslator extends React.Component<Props> {
   get root(): AccessibleDisplayObject {
     return this._root;
   }
-
-  private _root: AccessibleDisplayObject;
-
-  private rootElem: HTMLDivElement;
 
   /**
    * Starts the update of the accessibility DOM.  This should be called each time
