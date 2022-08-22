@@ -5,7 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'prettier', 'prettier/prettier'],
+  extends: ['airbnb', 'airbnb-typescript', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -19,9 +19,10 @@ module.exports = {
     },
     ecmaVersion: 2018,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   root: true,
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['import', 'react', '@typescript-eslint'],
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',

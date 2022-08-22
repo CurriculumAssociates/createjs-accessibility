@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies,import/no-mutable-exports */
 import * as createjs from 'createjs-module';
-import AccessibilityModule from './index.tsx';
+import AccessibilityModule from './index';
 
 let canvasEl;
 let parentEl;

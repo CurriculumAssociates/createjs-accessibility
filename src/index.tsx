@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 // @ts-ignore
-import AccessibilityTranslator from './AccessibilityTranslator.tsx';
+import AccessibilityTranslator from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
 
@@ -152,4 +152,4 @@ const AccessibilityModule = {
   releaseStage,
 };
 
-export { AccessibilityModule as default };
+export default AccessibilityModule;

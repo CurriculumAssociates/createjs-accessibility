@@ -1,6 +1,6 @@
 import * as createjs from 'createjs-module';
 import React from 'react';
-import AccessibilityModule from '../index.tsx';
+import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('MathData', () => {

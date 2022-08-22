@@ -1,5 +1,5 @@
 import * as createjs from 'createjs-module';
-import AccessibilityModule from '../index.tsx';
+import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('ProgressBarData', () => {

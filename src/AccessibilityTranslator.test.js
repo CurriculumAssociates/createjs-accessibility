@@ -2,7 +2,7 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import * as createjs from 'createjs-module';
 import { configure, mount } from 'enzyme';
-import AccessibilityTranslator from './AccessibilityTranslator.tsx';
+import AccessibilityTranslator from './AccessibilityTranslator';
 
 configure({ adapter: new Adapter() });
 

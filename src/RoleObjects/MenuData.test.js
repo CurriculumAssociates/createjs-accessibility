@@ -1,7 +1,7 @@
 import * as createjs from 'createjs-module';
 import KeyCodes from 'keycodes-enum';
 import ReactTestUtils from 'react-dom/test-utils';
-import AccessibilityModule from '../index.tsx';
+import AccessibilityModule from '../index';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('MenuData', () => {
