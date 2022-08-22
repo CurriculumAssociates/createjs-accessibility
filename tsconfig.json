@@ -3,23 +3,10 @@
     "compilerOptions": {
       "target": "es5",            // specify ECMAScript target version
       "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
-    // "sourceMap": true,          // allow sourcemap support
       "outDir": "./dist/",        // path to output directory
-    // "strictNullChecks": true,   // enable strict null checks as a best practice
-    // "module": "es6",            // specify module code generation
-    // "jsx": "react",             // use typescript to transpile jsx to js
-    //  "skipLibCheck": true,
-    //  "esModuleInterop": true,
-    //  "experimentalDecorators": true,
-    //  "strict": true,
-    //  "forceConsistentCasingInFileNames": true,
       "module": "es6",
       "moduleResolution": "node",
-    //  "resolveJsonModule": true,
-    //  "isolatedModules": true,
-    //  "noUnusedLocals": false,
       "jsx": "preserve",
-      "noImplicitAny": false,
       "allowSyntheticDefaultImports": true
     },
     "include": ["./src/**/*"],

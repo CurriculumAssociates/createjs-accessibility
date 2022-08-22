@@ -1,6 +1,6 @@
 import * as createjs from 'createjs-module';
 import ReactTestUtils from 'react-dom/test-utils';
-import AccessibilityModule from '../index';
+import AccessibilityModule from '../index.tsx';
 import { parentEl, stage, container } from '../__jestSharedSetup';
 
 describe('MultiLineTextBoxData', () => {

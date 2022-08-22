@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
+// @ts-ignore
 import AccessibilityTranslator from './AccessibilityTranslator.tsx';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
@@ -10,8 +11,9 @@ import { ROLES } from './Roles';
  * @param {createjs.Stage} stage - createjs stage that has been registered for accessibility
  * @returns {Object} style object for positioning associated DOM elements
  */
-function calcDomStylesFromStage(stage) {
-  // true to return style object for putting the DOM element adjacent to the canvas (useful for debugging),
+function calcDomStylesFromStage(stage): { [key: string]: React.CSSProperties } {
+  // true to return style object for putting the DOM element adjacent to the
+  // canvas (useful for debugging),
   // false to return style object to put the DOM beneath the canvas
   const debugPos = false;
 
@@ -63,7 +65,7 @@ function calcDomStylesFromStage(stage) {
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const styles = calcDomStylesFromStage(stage);
+  const styles: { [key: string]: React.CSSProperties } = calcDomStylesFromStage(stage);
   const moduleNode = (
     <div style={styles.transformStyle}>
       <div style={styles.moduleStyle}>
