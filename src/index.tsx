@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-// @ts-ignore
 import AccessibilityTranslator from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
