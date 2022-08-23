@@ -80,6 +80,8 @@ module.exports = {
     ],
     'prefer-destructuring': 'off',
     'import/no-unresolved': 'off',
+    'react/static-property-placement': 'off',
+    'react/no-unused-class-component-methods': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],

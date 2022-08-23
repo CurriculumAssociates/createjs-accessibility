@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-class-component-methods, react/static-property-placement */
 import _ from 'lodash';
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
