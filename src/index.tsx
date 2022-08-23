@@ -65,7 +65,8 @@ function calcDomStylesFromStage(stage): { [key: string]: React.CSSProperties } {
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const styles: { [key: string]: React.CSSProperties } = calcDomStylesFromStage(stage);
+  const styles: { [key: string]: React.CSSProperties } =
+    calcDomStylesFromStage(stage);
   const moduleNode = (
     <div style={styles.transformStyle}>
       <div style={styles.moduleStyle}>

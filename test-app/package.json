@@ -2,7 +2,7 @@
   "name": "createjs-accessibility-tester",
   "version": "1.0.0",
   "description": "Test and sample webapp for the Createjs Accessibility Module",
-  "main": "src/index.tsx",
+  "main": "src/index",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint --color src",
