@@ -63,7 +63,7 @@ export default class AccessibilityTranslator extends React.Component<Props> {
 
   /**
    * @return {Object} properties accepted by this component.
-   * @property @property {object} stage
+   * @property {object} stage
    * @see https://facebook.github.io/react/docs/component-specs.html#proptypes
    */
   static get propTypes(): Props {
