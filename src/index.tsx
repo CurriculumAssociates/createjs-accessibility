@@ -5,12 +5,16 @@ import AccessibilityTranslator from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
 
+interface CSSPropType {
+  [key: string]: React.CSSProperties;
+}
+
 /**
  * Calculates style metrics for DOM representation of canvas stage.
  * @param {createjs.Stage} stage - createjs stage that has been registered for accessibility
  * @returns {Object} style object for positioning associated DOM elements
  */
-function calcDomStylesFromStage(stage): { [key: string]: React.CSSProperties } {
+function calcDomStylesFromStage(stage): CSSPropType {
   // true to return style object for putting the DOM element adjacent to the
   // canvas (useful for debugging),
   // false to return style object to put the DOM beneath the canvas
@@ -64,8 +68,7 @@ function calcDomStylesFromStage(stage): { [key: string]: React.CSSProperties } {
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
   let component;
-  const styles: { [key: string]: React.CSSProperties } =
-    calcDomStylesFromStage(stage);
+  const styles: CSSPropType = calcDomStylesFromStage(stage);
   const moduleNode = (
     <div style={styles.transformStyle}>
       <div style={styles.moduleStyle}>
@@ -109,7 +112,7 @@ function resize(stage) {
   if (stage.accessibilityTranslator.rootElem) {
     const camWrapperElem =
       stage.accessibilityTranslator.rootElem.parentElement.parentElement;
-    const { transformStyle } = calcDomStylesFromStage(stage);
+    const { transformStyle }: CSSPropType = calcDomStylesFromStage(stage);
     _.keys(transformStyle).forEach((style) => {
       camWrapperElem.style[style] = transformStyle[style];
     });

@@ -7,7 +7,8 @@
       "module": "es6",
       "moduleResolution": "node",
       "jsx": "react",
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
     },
     "include": ["./src/**/*"],
     "typeRoots": [ "./types", "./node_modules/@types"],
