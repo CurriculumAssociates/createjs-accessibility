@@ -36,6 +36,12 @@ module.exports = {
     ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowTernary: true,
+      }
+    ],
     'object-shorthand': 'error',
     'consistent-return': 'off',
     'no-mixed-operators': 'warn',

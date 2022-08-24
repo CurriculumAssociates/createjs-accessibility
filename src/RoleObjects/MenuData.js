@@ -89,7 +89,6 @@ export default class MenuData extends SelectData {
 
       // this doesn't handle menus starting/ending with a separator
       if (this._children[nextIndex].accessible.role === ROLES.SEPARATOR) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         evt.keyCode === KeyCodes.up ? nextIndex-- : nextIndex++;
       }
       this._children[nextIndex].accessible.requestFocus();
