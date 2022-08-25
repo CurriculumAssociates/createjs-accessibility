@@ -1,0 +1,16 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+      "target": "es5",            // specify ECMAScript target version
+      "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
+      "outDir": "./dist/",        // path to output directory
+      "module": "es6",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
+    },
+    "include": ["./src/**/*"],
+    "typeRoots": [ "./types", "./node_modules/@types"],
+    "exclude": ["node_modules", "typings"]
+  }

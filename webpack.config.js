@@ -2,11 +2,11 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 const config = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'createjs-accessibility.js',
-    library: '',
+    library: 'createjs-accessibility',
     libraryTarget: 'umd',
   },
   externals: [nodeExternals()],
@@ -14,15 +14,32 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader', options: { presets: ['es2015', 'react'] } },
+          {
+            loader: 'ts-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/env', { modules: false }], '@babel/react'],
+            },
+          },
         ],
       },
     ],
   },
   mode: 'production',
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 };
 
 if (process.env.NODE_ENV !== 'production') {

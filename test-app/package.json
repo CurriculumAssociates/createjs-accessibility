@@ -2,10 +2,10 @@
   "name": "createjs-accessibility-tester",
   "version": "1.0.0",
   "description": "Test and sample webapp for the Createjs Accessibility Module",
-  "main": "src/index.js",
+  "main": "src/index",
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
-    "lint": "eslint --color src",
+    "lint": "eslint --color src --no-eslintrc -c ./.eslintrc.js",
     "start": "webpack-dev-server --no-inline --port 8007 --host 0.0.0.0",
     "start_reload": "webpack-dev-server --port 8007 --host 0.0.0.0",
     "clobber": "rm -rf node_modules/ && npm cache clean --force"

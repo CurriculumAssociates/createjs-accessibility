@@ -4,8 +4,8 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  parser: 'babel-eslint',
-  extends: ['airbnb', 'prettier', 'prettier/prettier'],
+  parser: '@typescript-eslint/parser',
+  extends: ['airbnb', 'airbnb-typescript', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -14,12 +14,14 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      modules: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   root: true,
-  plugins: ['react'],
+  plugins: ['import', 'react', '@typescript-eslint'],
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
@@ -34,6 +36,12 @@ module.exports = {
     ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowTernary: true,
+      }
+    ],
     'object-shorthand': 'error',
     'consistent-return': 'off',
     'no-mixed-operators': 'warn',
@@ -70,9 +78,14 @@ module.exports = {
     'no-multi-spaces': 'warn',
     'arrow-spacing': ['error', { before: true, after: true }],
     'space-in-parens': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'prefer-destructuring': 'off',
     'import/no-unresolved': 'off',
+    'react/static-property-placement': 'off',
+    'react/no-unused-class-component-methods': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],

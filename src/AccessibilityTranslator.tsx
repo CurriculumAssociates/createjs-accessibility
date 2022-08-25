@@ -1,7 +1,49 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { ROLES, getTagNameForDisplayObject } from './Roles';
+
+interface Props {
+  stage: object;
+}
+
+type ElementBounds = {
+  height?: number;
+  width?: number;
+  x: number;
+  y: number;
+};
+
+type AccessibleDisplayObject = createjs.DisplayObject & {
+  accessible?: {
+    _reactProps: {
+      key: string;
+      id: string;
+      onFocus: Function;
+      onBlur: Function;
+    };
+    children: AccessibleDisplayObject[];
+    disabledWithInference: boolean;
+    role: string;
+    text: string;
+    visibleWithInference: boolean;
+  };
+};
+
+type DisplayObjectReactProps = {
+  disabled?: string;
+  role?: string;
+  style: {
+    display?: string;
+    height: string;
+    left: string;
+    margin: number;
+    padding: number;
+    position: string;
+    top: string;
+    width: string;
+  };
+};
 
 /**
  * Update process for translating accessibility information for a stage to a DOM approach
@@ -14,19 +56,23 @@ import { ROLES, getTagNameForDisplayObject } from './Roles';
  * This also helps minimize the processing done by this class along with reduce
  * its output to the DOM.
  */
-export default class AccessibilityTranslator extends React.Component {
+export default class AccessibilityTranslator extends React.Component<Props> {
+  private _root: AccessibleDisplayObject;
+
+  private rootElem: HTMLDivElement;
+
   /**
    * @return {Object} properties accepted by this component.
-   * @property {string} className
+   * @property {object} stage
    * @see https://facebook.github.io/react/docs/component-specs.html#proptypes
    */
-  static get propTypes() {
+  static get propTypes(): Props {
     return {
       stage: PropTypes.object.isRequired,
     };
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     _.bindAll(this, 'update');
@@ -37,7 +83,7 @@ export default class AccessibilityTranslator extends React.Component {
    * @param {!createjs.DisplayObject} displayObject - DisplayObject to use as the root of
     the accessibility tree
    */
-  set root(displayObject) {
+  set root(displayObject: AccessibleDisplayObject) {
     if (!displayObject.accessible) {
       throw new Error(
         'The root of the accessibility tree must have accessibility information when being added to the tree'
@@ -50,7 +96,7 @@ export default class AccessibilityTranslator extends React.Component {
    * Retrieves the root of the accessibility tree
    * @return {createjs.DisplayObject} DisplayObject that is the root of the accessibility tree
    */
-  get root() {
+  get root(): AccessibleDisplayObject {
     return this._root;
   }
 
@@ -59,11 +105,14 @@ export default class AccessibilityTranslator extends React.Component {
    * the accessibility information for all DisplayObjects has been completed(e.g. just after
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
-  update(callback = _.noop) {
+  update(callback = _.noop): void {
     this.forceUpdate(callback);
   }
 
-  _processDisplayObject(displayObject, parentBoundsInGlobalSpace) {
+  _processDisplayObject(
+    displayObject: AccessibleDisplayObject,
+    parentBoundsInGlobalSpace: ElementBounds
+  ): React.ReactElement {
     if (!displayObject.accessible) {
       return;
     }
@@ -84,18 +133,18 @@ export default class AccessibilityTranslator extends React.Component {
       text = null;
     }
 
-    let posGlobalSpace = {
+    let posGlobalSpace: ElementBounds = {
       x: parentBoundsInGlobalSpace.x,
       y: parentBoundsInGlobalSpace.y,
     };
-    const posParentSpace = {
+    const posParentSpace: ElementBounds = {
       x: 0,
       y: 0,
       width: 1,
       height: 1,
     };
     try {
-      const bounds = displayObject.getBounds();
+      const bounds: ElementBounds = displayObject.getBounds();
       posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
       const lowerRight = displayObject.localToGlobal(
         bounds.x + bounds.width,
@@ -133,7 +182,7 @@ export default class AccessibilityTranslator extends React.Component {
       });
     }
 
-    const props = _.merge(
+    const props: DisplayObjectReactProps = _.merge(
       {
         style: {
           position: 'absolute',
@@ -186,13 +235,13 @@ export default class AccessibilityTranslator extends React.Component {
     return React.createElement(tagName, props, ...childElements);
   }
 
-  render() {
+  render(): ReactElement {
     let back = null;
     if (this._root) {
       const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
       back = (
         <div
-          ref={(elem) => {
+          ref={(elem): void => {
             this.rootElem = elem;
           }}
         >
