@@ -22,7 +22,7 @@
 - [License](#license)
 
 ## Description
-HTML5 provides the canvas tag which is an area that can be drawn to via Javascript.  Createjs (https://www.createjs.com/) is a library that help manage the low level canvas draw calls with higher level DisplayObjects.  This module allows for annotating those DisplayObjects with additional information needed for accessibility support, which the module uses to create and update HTML elements that are placed under the canvas.  In order to help with keyboard support and other Assistive Technologies (ATs) that cause input events, this module also sends up events to the corresponding DisplayObject that the consuming app can respond to accordingly.
+HTML5 provides the canvas tag which is an area that can be drawn to via Javascript. Createjs (https://www.createjs.com/) is a library that help manage the low level canvas draw calls with higher level DisplayObjects.  This module allows for annotating those DisplayObjects with additional information needed for accessibility support, which the module uses to create and update HTML elements that are placed under the canvas.  In order to help with keyboard support and other Assistive Technologies (ATs) that cause input events, this module also sends up events to the corresponding DisplayObject that the consuming app can respond to accordingly.
 
 The translation of DisplayObjects to HTML is necessary for accessibility support since Javascript draw calls don't provide information to ATs for understanding the content in the canvas or interacting with it.  However, other HTML tags do work with ATs through a combination of the tag choice, various attributes, and text values.
 
