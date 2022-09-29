@@ -8,6 +8,7 @@ on: [push, pull_request_target]
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'Safe')
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
