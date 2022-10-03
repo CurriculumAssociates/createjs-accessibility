@@ -3,7 +3,7 @@
 
 name: Checks
 
-on: [push, pull_request_target, workflow_dispatch]
+on: [push, pull_request, pull_request_target, workflow_dispatch]
 
 jobs:
   build:
