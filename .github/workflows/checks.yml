@@ -14,10 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log the labeled
-        id: run
-        run:  |
-          echo Logging labels
-          echo $(github.event.pull_request_target.labels)
+        run:  echo '${{ toJSON(github.event.pull_request.labels) }}'
 
       - name: Checkout main
         uses: actions/checkout@v2
