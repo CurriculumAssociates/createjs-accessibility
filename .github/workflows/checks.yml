@@ -5,7 +5,7 @@ name: Checks
 
 on:
   push:
-  workflow_dispatch:
+  workflow_run:
   pull_request_target:
     types: [labeled, synchronize]
 
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log the labeled
-        run:  echo '${{ contains(github.event.*.labels.*.name, 'Safe') }}'
+        run:  echo '${{ toJSON(github.actions) }}'
 
       - name: Checkout main
         uses: actions/checkout@v2
