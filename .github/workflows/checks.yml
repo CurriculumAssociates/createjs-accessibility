@@ -7,14 +7,18 @@ on:
   push:
   workflow_dispatch:
   pull_request_target:
-    types: [labeled]
-  pull_request:
+    types: [labeled, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request_target.labels.*.name, 'Safe')
     steps:
+      - name: Log the labeled
+        id: run
+        run:  |
+          echo Logging labels
+          echo $(github.event.pull_request_target.labels)
+
       - name: Checkout main
         uses: actions/checkout@v2
         with:
