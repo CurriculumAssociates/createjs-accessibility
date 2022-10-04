@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log the labeled
-        run:  echo '${{ toJSON(github) }}'
+        run:  echo '${{ contains(github.event.*.labels.*.name, 'Safe') }}'
 
       - name: Checkout main
         uses: actions/checkout@v2
