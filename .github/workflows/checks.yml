@@ -6,6 +6,7 @@ name: Checks
 on:
   push:
   workflow_run:
+    workflows: [coverage]
   pull_request_target:
     types: [labeled, synchronize]
 
