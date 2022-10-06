@@ -3,20 +3,12 @@
 
 name: Checks
 
-on:
-  push:
-  workflow_run:
-    workflows: [coverage]
-  pull_request_target:
-    types: [labeled, synchronize]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Log the labeled
-        run:  echo '${{ toJSON(github.actions) }}'
-
       - name: Checkout main
         uses: actions/checkout@v2
         with:
@@ -49,3 +41,11 @@ jobs:
           persist-credentials: false
       - name: Test Coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+            # tell to the action to not attach comment.
+            output: report-markdown
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+            # pass output from the previous step by id.
+            message: ${{ steps.coverage.outputs.report }}
