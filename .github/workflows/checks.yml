@@ -44,9 +44,9 @@ jobs:
         id: coverage
         with:
             # tell to the action to not attach comment.
-            output: report-markdown
+            output: comment
             annotations: none
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-            # pass output from the previous step by id.
-            message: ${{ steps.coverage.outputs.report }}
+      # - uses: marocchino/sticky-pull-request-comment@v2
+      #   with:
+      #       # pass output from the previous step by id.
+      #       message: ${{ steps.coverage.outputs.report }}
