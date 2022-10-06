@@ -44,7 +44,7 @@ jobs:
         id: coverage
         with:
             # tell to the action to not attach comment.
-            output: comment
+            output: report-markdown
             annotations: none
       # - uses: marocchino/sticky-pull-request-comment@v2
       #   with:
