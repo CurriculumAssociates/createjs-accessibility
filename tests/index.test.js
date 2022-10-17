@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Adapter from 'enzyme-adapter-react-16';
 import * as createjs from 'createjs-module';
 import { configure } from 'enzyme';
-import AccessibilityModule from './index';
+import AccessibilityModule from '../src';
 
 configure({ adapter: new Adapter() });
 

@@ -1,12 +1,15 @@
 module.exports = {
-  // Define what files are included as tests
-  testRegex: '.*\\/.+\\.test.(js|ts|tsx)$',
-
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
+
+  // An array of glob patterns indicating a set of files for which coverage information should be collected.
+  // In this repo, were are using it to EXCLUDE the helper file __jestSharedSetup.js
+  collectCoverageFrom: [
+    'src/**/{!(__jestSharedSetup),}.(js|ts|tsx)',
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -27,4 +30,7 @@ module.exports = {
 
   // The test environment that will be used for testing
   testEnvironment: 'jsdom',
+
+  // Define what files are included as tests
+  testRegex: '.*\\/.+\\.test.(js|ts|tsx)$',
 };

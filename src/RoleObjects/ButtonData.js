@@ -138,7 +138,7 @@ export default class ButtonData extends AccessibilityObject {
    * @param {String} str - form submission URL
    */
   set formaction(str) {
-    this._reactProps.formaction = str;
+    this._reactProps.formAction = str;
   }
 
   /**
@@ -147,7 +147,7 @@ export default class ButtonData extends AccessibilityObject {
    * @returns {String} form submission URL
    */
   get formaction() {
-    return this._reactProps.formaction;
+    return this._reactProps.formAction;
   }
 
   /**
@@ -156,7 +156,7 @@ export default class ButtonData extends AccessibilityObject {
    * @param {String} str - encoding type
    */
   set formenctype(str) {
-    this._reactProps.enctype = str;
+    this._reactProps.encType = str;
   }
 
   /**
@@ -165,7 +165,7 @@ export default class ButtonData extends AccessibilityObject {
    * @returns {String} encoding type
    */
   get formenctype() {
-    return this._reactProps.enctype;
+    return this._reactProps.encType;
   }
 
   /**
@@ -174,7 +174,7 @@ export default class ButtonData extends AccessibilityObject {
    * @param {String} str - HTTP method
    */
   set formmethod(str) {
-    this._reactProps.formmethod = str;
+    this._reactProps.formMethod = str;
   }
 
   /**
@@ -183,7 +183,7 @@ export default class ButtonData extends AccessibilityObject {
    * @returns {String} HTTP method
    */
   get formmethod() {
-    return this._reactProps.formmethod;
+    return this._reactProps.formMethod;
   }
 
   /**
@@ -192,7 +192,7 @@ export default class ButtonData extends AccessibilityObject {
    * @param {boolean} enable - true for validation, false otherwise
    */
   set formnovalidate(enable) {
-    this._reactProps.formnovalidate = !enable;
+    this._reactProps.formNoValidate = !enable;
   }
 
   /**
@@ -201,7 +201,7 @@ export default class ButtonData extends AccessibilityObject {
    * @returns {boolean} true if it should be validated, false otherwise
    */
   get formnovalidate() {
-    return !this._reactProps.formnovalidate;
+    return !this._reactProps.formNoValidate;
   }
 
   /**
@@ -210,7 +210,7 @@ export default class ButtonData extends AccessibilityObject {
    * @param {String} str - where to display the response
    */
   set formtarget(str) {
-    this._reactProps.formtarget = str;
+    this._reactProps.formTarget = str;
   }
 
   /**
@@ -219,7 +219,7 @@ export default class ButtonData extends AccessibilityObject {
    * @returns {String} where to display the response
    */
   get formtarget() {
-    return this._reactProps.formtarget;
+    return this._reactProps.formTarget;
   }
 
   /**
