@@ -83,21 +83,21 @@ describe('ButtonData', () => {
       beforeEach(() => {
         childObj = new createjs.Shape();
       });
-      describe('child is not Accessible and not a TreeItem', () => {
-        it('"addChild" throws error if the child is not accessible object or not a treeItem', () => {
+      describe('child is not an Accessible object', () => {
+        it('"addChild" throws error if child is not an Accessible object', () => {
           expect(() => {
             cjsButton.accessible.addChild(childObj);
           }).toThrowError(errorMsg);
         });
 
-        it('"addChildAt" throws error if the child is not accessible object or not a treeItem', () => {
+        it('"addChildAt" throws error if child is not an Accessible object', () => {
           expect(() => {
             cjsButton.accessible.addChildAt(childObj, 0);
           }).toThrowError(errorMsg);
         });
       });
 
-      describe('child is Accessible and has role TREEITEM', () => {
+      describe('child has the SPAN role', () => {
         beforeEach(() => {
           AccessibilityModule.register({
             displayObject: childObj,
@@ -105,13 +105,13 @@ describe('ButtonData', () => {
           });
         });
 
-        it('"addChild" does not throw an error if the child is a span', () => {
+        it('"addChild" does not throw an error if child has the SPAN role', () => {
           expect(() => {
             cjsButton.accessible.addChild(childObj);
           }).not.toThrowError(errorMsg);
         });
 
-        it('"addChildAt" does not throw an error if the child is a span', () => {
+        it('"addChildAt" does not throw an error if child has the SPAN role', () => {
           expect(() => {
             cjsButton.accessible.addChildAt(childObj, 0);
           }).not.toThrowError(errorMsg);
