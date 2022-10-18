@@ -1,6 +1,5 @@
 coverage/
 dist/
-jspm_packages/
 node_modules/
 .idea/
 .DS_Store

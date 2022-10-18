@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Set up node
         uses: actions/setup-node@v1
         with:
@@ -35,5 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with: 
+          persist-credentials: false
       - name: Test Coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+            # tell to the action to not attach comment.
+            output: ${{ github.event.pull_request.head.repo.full_name == github.event.repository.name && 'comment' || 'report-markdown' }}
+            annotations: ${{ github.event.pull_request.head.repo.full_name == github.event.repository.name && 'coverage' || 'none' }}

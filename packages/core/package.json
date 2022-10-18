@@ -1,0 +1,38 @@
+{
+  "name": "@curriculumassociates/accessibility-core",
+  "version": "2.0.0",
+  "description": "A module to allow for easy addition of accessibility",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "508",
+    "wcag",
+    "aria"
+  ],
+  "author": {
+    "name": "Curriculum Associates",
+    "email": "opensource@cainc.com"
+  },
+  "homepage": "https://github.com/CurriculumAssociates/createjs-accessibility#readme",
+  "license": "ISC",
+  "main": "dist/main.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typedocMain": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CurriculumAssociates/createjs-accessibility.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/CurriculumAssociates/createjs-accessibility/issues"
+  }
+}
