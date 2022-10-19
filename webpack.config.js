@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const config = {
   entry: './src/index.tsx',
@@ -40,6 +41,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  plugins: [new ESLintPlugin()],
 };
 
 if (process.env.NODE_ENV !== 'production') {
