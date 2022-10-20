@@ -7,7 +7,7 @@ export default class FormData extends SectionData {
    * @param {String} str - character encoding to use
    */
   set charSet(str) {
-    this._reactProps['accept-charset'] = str;
+    this._reactProps.acceptCharset = str;
   }
 
   /**
@@ -16,7 +16,7 @@ export default class FormData extends SectionData {
    * @returns {String} character encoding used
    */
   get charSet() {
-    return this._reactProps['accept-charset'];
+    return this._reactProps.acceptCharset;
   }
 
   /**
@@ -64,7 +64,7 @@ export default class FormData extends SectionData {
    * @param {String} str - encoding type
    */
   set enctype(str) {
-    this._reactProps.enctype = str;
+    this._reactProps.encType = str;
   }
 
   /**
@@ -73,7 +73,7 @@ export default class FormData extends SectionData {
    * @returns {String} encoding type
    */
   get enctype() {
-    return this._reactProps.enctype;
+    return this._reactProps.encType;
   }
 
   /**

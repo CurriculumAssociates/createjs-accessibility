@@ -1,7 +1,19 @@
 const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
+  devServer: {
+    host: '0.0.0.0',
+    port: '8007',
+    allowedHosts: 'all',
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true,
+      },
+    },
+  },
   entry: {
     bundle: ['babel-polyfill', path.resolve(__dirname, 'src/index.js')],
   },
@@ -44,6 +56,7 @@ const config = {
     ],
   },
   plugins: [
+    new ESLintPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',

@@ -16,4 +16,5 @@ module.exports = {
     createjs: false,
     TimelineMax: false,
   },
+  root: true,
 };
