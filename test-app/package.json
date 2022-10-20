@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint --color src --no-eslintrc -c ./.eslintrc.js",
-    "start": "webpack-dev-server --no-inline --port 8007 --host 0.0.0.0",
+    "start": "BABEL_ENV=app WEBPACK_ENV=dev webpack-dev-server --config webpack.config.js --hot --bail",
     "start_reload": "webpack-dev-server --port 8007 --host 0.0.0.0",
     "clobber": "rm -rf node_modules/ && npm cache clean --force"
   },
@@ -27,27 +27,27 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "6.24.0",
-    "babel-loader": "7.1.4",
+    "@babel/core": "^7.18.10",
     "babel-eslint": "^10.0.2",
-    "babel-preset-es2015": "6.24.0",
-    "babel-preset-react": "6.24.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.1",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-formatter-pretty": "^2.1.1",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-import-resolver-node": "^0.3.2",
-    "eslint-loader": "^2.2.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "file-loader": "1.1.11",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-webpack-plugin": "^3.2.0",
+    "file-loader": "^6.2.0",
     "html-loader": "0.5.5",
-    "html-webpack-plugin": "3.0.7",
+    "html-webpack-plugin": "^5.5.0",
     "image-webpack-loader": "4.6.0",
-    "webpack": "4.7.0",
-    "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.2.1"
+    "source-map-loader": "^4.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "@curriculumassociates/createjs-accessibility": "file:..",
@@ -55,7 +55,7 @@
     "jquery": "^3.4.1",
     "keycodes-enum": "0.0.2",
     "lodash": "^4.17.21",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
   }
 }
