@@ -1,5 +1,5 @@
 {
-  "name": "@curriculumassociates/accessibility-createjs-adapter",
+  "name": "@curriculumassociates/accessibility-test-app",
   "version": "2.0.0",
   "description": "A module to allow for easy addition of accessibility when using createjs",
   "keywords": [
@@ -40,11 +40,12 @@
   "bugs": {
     "url": "https://github.com/CurriculumAssociates/createjs-accessibility/issues"
   },
-  "devDependencies": {
-    "@types/createjs": "^0.0.29"
-  },
   "dependencies": {
-    "@curriculumassociates/accessibility-core": "^2.0.0"
+    "@curriculumassociates/accessibility-createjs-adapter": "^2.0.0",
+    "easeljs": "^1.0.2",
+    "gsap": "^3.11.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-html": "^1.0.0"
   }
 }
-

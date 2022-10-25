@@ -1,6 +1,6 @@
 {
   "name": "@curriculumassociates/accessibility-module",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Module to add accessibility support to adding an accessible overlay",
   "main": "dist/createjs-accessibility.js",
   "scripts": {
@@ -50,6 +50,14 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.19.1",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-commonjs": "^23.0.0",
+    "@rollup/plugin-json": "^5.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
@@ -63,7 +71,7 @@
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",
     "rollup": "^3.0.0",
-    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.4.0",
     "typedoc": "^0.23.16",
     "typescript": "^4.8.4"
   },
