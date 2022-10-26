@@ -35,17 +35,19 @@
     "clobber": "npm run clean && rm -rf ./node_modules",
     "compile": "rollup -c --configPlugin typescript",
     "test": "jest",
-    "test:coverage": "jest --collect-coverage"
+    "test:coverage": "jest --collect-coverage",
+    "start": "http-server -o ./dist/index.html"
   },
   "bugs": {
     "url": "https://github.com/CurriculumAssociates/createjs-accessibility/issues"
   },
   "dependencies": {
     "@curriculumassociates/accessibility-createjs-adapter": "^2.0.0",
-    "easeljs": "^1.0.2",
+    "createjs": "git+ssh://git@github.com:CreateJS/EaselJS.git",
     "gsap": "^3.11.3"
   },
   "devDependencies": {
-    "@rollup/plugin-html": "^1.0.0"
+    "@rollup/plugin-html": "^1.0.0",
+    "http-server": "^14.1.1"
   }
 }

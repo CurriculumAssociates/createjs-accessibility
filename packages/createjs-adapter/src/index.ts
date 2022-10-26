@@ -1,53 +1,125 @@
 import {
+  Node,
+  PublicAPI,
   ViewReleaseOptions,
   ViewSetupOptions,
   ViewUpdateOptions,
-  NodeRegisterOptions,
 } from "@curriculumassociates/accessibility-core";
 
-import { CreateJsAdapter, DisplayObjectNode } from "./accessibility";
-
-type Stage = createjs.Stage;
-type DisplayObject = createjs.DisplayObject;
+import {
+  CreateJsAdapter,
+  DisplayObject,
+  DisplayObjectNode,
+  DisplayObjectOptions,
+  Stage,
+  StageUpdateOptions,
+  StageSetupOptions,
+  StageReleaseOptions,
+} from "./accessibility";
 
 let adapter: CreateJsAdapter;
 
-export type StageSetupOptions = ViewSetupOptions<Stage> & {};
+const publicApi: PublicAPI<Stage, DisplayObject> = {
+  setup: async function<DisplayObjectNode>(
+    opts: StageSetupOptions
+  ): Promise<DisplayObjectNode> {
+    if (!adapter) {
+      adapter = new CreateJsAdapter();
+    }
 
-export async function setup(
-  opts: StageSetupOptions
-): Promise<DisplayObjectNode> {
-  if (!adapter) {
-    adapter = new CreateJsAdapter();
-  }
+    const rootNode = adapter.setupView<
+      Node<DisplayObject>,
+      ViewSetupOptions<Stage>
+    >(opts as ViewSetupOptions<Stage>);
 
-  const rootNode = adapter.setupView(opts);
-  opts?.done(rootNode);
-  return rootNode;
-}
+    return rootNode as DisplayObjectNode;
+  },
 
-export function legacySetup(view: Stage, root: HTMLElement, onReady: Function) {
-  setup({
-    view,
-    root,
-    done: onReady,
-  });
-}
+  release: async function<DisplayObjectNode>(
+    opts: StageReleaseOptions
+  ): Promise<DisplayObjectNode> {
+    const rootNode = adapter.releaseView(opts as ViewReleaseOptions<Stage>);
+    return rootNode as DisplayObjectNode;
+  },
 
-export async function release(opts: ViewReleaseOptions<Stage>) {
-  return adapter.releaseView<Stage>(opts);
-}
+  register: async function<DisplayObjectNode>(
+    opts: DisplayObjectOptions
+  ): Promise<DisplayObjectNode> {
+    return adapter.registerNode(opts, DisplayObjectNode) as DisplayObjectNode;
+  },
 
-export type DisplayObjectRegisterOptions =
-  NodeRegisterOptions<DisplayObject> & {};
+  update: async function<DisplayObjectNode>(
+    opts: StageUpdateOptions
+  ): Promise<DisplayObjectNode> {
+    return adapter.updateAccessibilityNodes(opts) as DisplayObjectNode;
+  },
+};
 
-export async function register(opts: DisplayObjectRegisterOptions) {
-  
-}
+export const setup = publicApi.setup;
+export const release = publicApi.release;
+export const register = publicApi.register;
+export const update = publicApi.update;
 
-export type StageUpdateOptions =
-  ViewUpdateOptions<Stage> & {};
+// const overlay: AccessibilityOverlay = {
+//   setup: async function <Stage, DisplayObject>(
+//     opts: StageSetupOptions
+//   ): Promise<DisplayObjectNode> {
+//     if (!adapter) {
+//       adapter = new CreateJsAdapter();
+//     }
+//     const rootNode = adapter.setupView(opts);
+//     opts?.done(rootNode);
 
-export async function update(opts: StageUpdateOptions) {
-  adapter.updateAccessibilityNodes<Stage, DisplayObject>(opts);
-}
+//     return rootNode;
+//   },
+
+//   release: async function <Stage, DisplayObject>(
+//     opts: StageReleaseOptions
+//   ): Promise<DisplayObjectNode> {
+//     return adapter.releaseView(opts);
+//   },
+
+//   register: async function <DisplayObject>(
+//     opts: DisplayObjectRegisterOptions
+//   ): Promise<DisplayObjectNode> {
+//     throw new Error("Function not implemented.");
+//   },
+
+//   update: async function <Stage, DisplayObject>(
+//     opts: StageUpdateOptions
+//   ): Promise<DisplayObjectNode> {
+//     throw new Error("Function not implemented.");
+//   },
+// };
+
+// export default { ...overlay };
+
+// setup(
+//   opts: StageSetupOptions
+// ): Promise<DisplayObjectNode> {
+//   if (!adapter) {
+//     adapter = new CreateJsAdapter();
+//   }
+//   const rootNode = adapter.setupView(opts);
+//   opts?.done(rootNode);
+//   return rootNode;
+// }
+
+// legacySetup(view: Stage, root: HTMLElement, onReady: Function) {
+//   setup({
+//     view,
+//     root,
+//     done: onReady,
+//   });
+// }
+
+// release<Stage, DisplayObject>(opts: ViewReleaseOptions<Stage>) {
+//   return adapter.releaseView<Stage>(opts);
+// }
+
+// register(opts: DisplayObjectRegisterOptions) {
+// }
+
+// update(opts: StageUpdateOptions) {
+//   adapter.updateAccessibilityNodes<Stage, DisplayObject>(opts);
+// }

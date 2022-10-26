@@ -1,88 +1,129 @@
 import { getElement } from "../utils/domUtils";
-import { AriaAttributes, Role } from "./aria";
-import { Node } from "./node";
-import { View } from "./view";
+import { Node, NodeOptions } from "./node";
 
-export type ViewSetupOptions<ViewType> = {
-  done?: Function;
+export interface ViewSetupOptions<ViewType> {
   root: HTMLElement | string;
   view: ViewType;
-};
+}
 
-export type ViewReleaseOptions<ViewType> = {
-  done?: Function;
+export interface ViewReleaseOptions<ViewType> {
   view: ViewType;
-};
+}
 
-export type ViewUpdateOptions<ViewType> = {
-  done?: Function;
+export interface ViewUpdateOptions<ViewType> {
   view: ViewType;
-};
+  boundOptions?: ViewBoundOptions;
+}
 
-export type NodeRegisterOptions<NodeType> = {
-  aria?: AriaAttributes;
-  node: NodeType;
-  parentNode?: NodeType;
-  role: Role;
-};
-
-export type BoundingRect = {
+export interface BoundingRect {
   height: number;
   width: number;
   x: number;
   y: number;
-};
+}
 
-export type NodeBoundOptions = {};
+export interface NodeUpdateOptions<ViewType, NodeType, N extends Node<NodeType>> {
+  view: ViewType;
+  node: N;
+  prentBounds?: BoundingRect;
+}
 
-export type ViewBoundOptions = {
+export interface ViewBoundOptions {
   /**
    * Allows for additional styles to be applied to the root HTMLElement that's
    * registered with the View determining the View's bounds (e.g., transforms)
    */
   additionalStyles?: Partial<CSSStyleDeclaration>;
-};
+}
 
-export abstract class Adapter<NodeType, ViewType> {
-  #registeredRoots: Map<View<ViewType>, Node<NodeType>> = new Map();
+export abstract class Adapter<ViewType, NodeType> {
+  #registeredRoots: Map<ViewType, Node<NodeType>> = new Map();
 
-  abstract getBoundingRect<NodeType, ViewType>(
-    node: Node<NodeType>,
-    view: ViewType,
-    opts: NodeBoundOptions
+  abstract getBoundingRect<N extends Node<NodeType>>(
+    opts: NodeUpdateOptions<ViewType, NodeType, N>
   ): BoundingRect;
 
-  abstract getViewBoundingRect<ViewType>(
-    view: ViewType,
-    opts: ViewBoundOptions
+  abstract getViewBoundingRect(
+    opts: ViewUpdateOptions<ViewType>
   ): BoundingRect;
 
-  setupView<ViewType, T extends NodeType>(
-    opts: ViewSetupOptions<ViewType>
-  ): Node<T> {
-    const { done, root, view } = opts;
+  setupView<
+    RootNode extends Node<NodeType>,
+    Options extends ViewSetupOptions<ViewType>
+  >(opts: Options): RootNode {
+    const { root, view } = opts;
 
-    const rootNode = new Node<T>({
+    const rootNode = new Node<NodeType>({
       element: getElement(root),
     });
 
     this.#registeredRoots.set(view, rootNode);
-    done(rootNode);
+
+    return rootNode as RootNode;
+  }
+
+  releaseView<
+    RootNode extends Node<NodeType>,
+    Options extends ViewReleaseOptions<ViewType>
+  >(opts: Options): RootNode {
+    const { view } = opts;
+
+    const rootNode: Node<NodeType> = this.#registeredRoots.get(view);
+    this.#registeredRoots.delete(view);
+
+    return rootNode as RootNode;
+  }
+
+  registerNode<
+    N extends Node<NodeType>,
+    Options extends NodeOptions<NodeType>
+  >(
+    opts: Options,
+    c: new (Options) => N
+  ): N {
+    const node = new c(opts);
+    return node as N;
+  }
+
+  updateAccessibilityNodes<
+    RootNode extends Node<NodeType>,
+    Options extends ViewUpdateOptions<ViewType>
+  >(opts: ViewUpdateOptions<ViewType>) {
+    const { view } = opts;
+    const rootNode: Node<NodeType> = this.#registeredRoots.get(view);
+
+    
 
     return rootNode;
   }
+}
 
-  releaseView<T extends ViewType>(opts: ViewReleaseOptions<T>) {
-    const { done, view } = opts;
-    this.#registeredRoots.delete(view);
-    done();
-  }
+export interface PublicAPI<ViewType, NodeType> {
+  setup<
+    RootNode extends Node<NodeType>,
+    Options extends ViewSetupOptions<ViewType>
+  >(
+    opts: Options
+  ): Promise<RootNode>;
 
-  registerNode<NodeType>() {}
+  release<
+    RootNode extends Node<NodeType>,
+    Options extends ViewReleaseOptions<ViewType>
+  >(
+    opts: Options
+  ): Promise<RootNode>;
 
-  updateAccessibilityNodes<ViewType, NodeType>(
-    opts: ViewUpdateOptions<ViewType>
-  ) {
-    // ...
-  }
+  register<
+    T extends Node<NodeType>,
+    Options extends NodeOptions<NodeType>
+  >(
+    opts: Options
+  ): Promise<T>;
+
+  update<
+    RootNode extends Node<NodeType>,
+    Options extends ViewUpdateOptions<ViewType>
+  >(
+    opts: Options
+  ): Promise<RootNode>;
 }

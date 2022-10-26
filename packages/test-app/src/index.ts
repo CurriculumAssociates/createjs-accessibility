@@ -1,5 +1,4 @@
-
-import createjs from "easeljs";
+import "createjs";
 import { setup, release, register, update } from '@curriculumassociates/accessibility-createjs-adapter';
 
 console.log(setup, release, register, update);

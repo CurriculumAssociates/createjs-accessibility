@@ -16,7 +16,8 @@
     "clean": "lerna run clean",
     "clobber": "lerna run clean && lerna run clobber",
     "build": "lerna run build",
-    "release": "lerna publish --no-git-reset --yes"
+    "release": "lerna publish --no-git-reset --yes",
+    "test-app:start": "cd packages/test-app/ && npm start"
   },
   "pre-commit": [
     "pre-commit"
