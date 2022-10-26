@@ -20,6 +20,8 @@ export class Node<NodeType> {
     const { aria = {}, element, node, parent, role = Role.NONE } = opts;
 
     this.aria = aria;
+    this.role = role;
+
     this.element =
       element || document.createElement(RoleTagMapping[this.#role]);
 
@@ -28,8 +30,6 @@ export class Node<NodeType> {
     if (parent) {
       this.parent = parent;
     }
-
-    this.role = role;
   }
 
   get aria() {

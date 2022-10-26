@@ -9,6 +9,7 @@ import {
   ViewUpdateOptions,
   Node,
   NodeUpdateOptions,
+  EventPropogationOptions,
 } from "@curriculumassociates/accessibility-core";
 
 import { DisplayObjectNode } from "./displayObjectNode";
@@ -57,12 +58,10 @@ export class CreateJsAdapter extends Adapter<
     };
 
     posParentSpace.x =
-      (posGlobalSpace.x - prentBounds.x) *
-      (1 / displayObject.stage.scaleX);
+      (posGlobalSpace.x - prentBounds.x) * (1 / displayObject.stage.scaleX);
 
     posParentSpace.y =
-      (posGlobalSpace.y - prentBounds.y) *
-      (1 / displayObject.stage.scaleY);
+      (posGlobalSpace.y - prentBounds.y) * (1 / displayObject.stage.scaleY);
 
     posParentSpace.width =
       (lowerRight.x - posGlobalSpace.x) * (1 / displayObject.stage.scaleX);
@@ -84,9 +83,7 @@ export class CreateJsAdapter extends Adapter<
   }
 
   getViewBoundingRect(opts: ViewUpdateOptions<createjs.Stage>): BoundingRect {
-    const {
-      view,
-    } = opts;
+    const { view } = opts;
 
     const canvas = view.canvas as HTMLElement;
 
@@ -107,56 +104,10 @@ export class CreateJsAdapter extends Adapter<
     };
     return bounds;
   }
-  // getBoundingRect<DisplayObjectNode, Stage>(
-  //   opts: NodeBoundOptions
-  // ): BoundingRect {
-  //   throw new Error("Method not implemented.");
-  // }
 
-  // getViewBoundingRect<Stage>(
-  //   opts: ViewBoundOptions
-  // ): BoundingRect {
-  //   const { view: { canvas } } = opts;
-
-  //   const computedStyle = getComputedStyle(canvas);
-  //   const width = parseInt(computedStyle.width, 10);
-  //   const height = parseInt(computedStyle.height, 10);
-
-  //   const attrWidth = parseInt(canvas.getAttribute('width'), 10) || width;
-  //   // const attrHeight = parseInt(canvas.getAttribute('height'), 10) || height;
-
-  //   const scale = width / attrWidth;
-
-  //   const bounds = {
-  //     height,
-  //     width,
-  //     x: canvas.offsetLeft + attrWidth * scale,
-  //     y: canvas.offsetTop,
-  //   };
-
-  //   // {
-  //   //   transformStyle: {
-  //   //     overflow: 'hidden',
-  //   //     position: 'absolute',
-  //   //     left: debugPos ? canvas.offsetLeft + attrWidth * scaleX : 'auto',
-  //   //     top: `${canvas.offsetTop}px`,
-  //   //     zIndex: debugPos ? 'auto' : -1,
-  //   //     height: `${attrHeight}px`,
-  //   //     width: `${attrWidth}px`,
-  //   //     marginLeft: computedStyle['margin-left'],
-  //   //     transform: computedStyle.transform,
-  //   //     transformOrigin: computedStyle.transformOrigin,
-  //   //   },
-  //   //   moduleStyle: {
-  //   //     width: '100%',
-  //   //     height: '100%',
-  //   //     border: computedStyle.border,
-  //   //     boxSizing: computedStyle['box-sizing'],
-  //   //     padding: computedStyle.padding,
-  //   //     transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
-  //   //     transformOrigin: 'top left',
-  //   //   },
-  //     return bounds;
-  //   };
-  // }
+  propogateEvent<E extends Event>(opts: EventPropogationOptions<E, Stage, DisplayObject, DisplayObjectNode>) {
+    const { event } = opts;
+    const createjsEvent = new createjs.Event(event.type, true, true);
+    opts.node.node.dispatchEvent(createjsEvent);
+  }
 }

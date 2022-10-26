@@ -23,9 +23,15 @@ export interface BoundingRect {
 }
 
 export interface NodeUpdateOptions<ViewType, NodeType, N extends Node<NodeType>> {
-  view: ViewType;
   node: N;
   prentBounds?: BoundingRect;
+  view: ViewType;
+}
+
+export interface EventPropogationOptions<E extends Event, ViewType, NodeType, N extends Node<NodeType> {
+  event: E;
+  node: N;
+  view: ViewType;
 }
 
 export interface ViewBoundOptions {
@@ -46,6 +52,8 @@ export abstract class Adapter<ViewType, NodeType> {
   abstract getViewBoundingRect(
     opts: ViewUpdateOptions<ViewType>
   ): BoundingRect;
+
+  abstract propogateEvent<E extends Event>(opts: EventPropogationOptions<E, ViewType, NodeType, Node<NodeType>);
 
   setupView<
     RootNode extends Node<NodeType>,
@@ -92,7 +100,7 @@ export abstract class Adapter<ViewType, NodeType> {
     const { view } = opts;
     const rootNode: Node<NodeType> = this.#registeredRoots.get(view);
 
-    
+    // TODO: iterate and update the tree
 
     return rootNode;
   }
