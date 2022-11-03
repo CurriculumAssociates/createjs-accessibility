@@ -74,10 +74,10 @@ export default class AccessibilityObject {
       key: this._displayObject.id,
       id: this.domId,
       onFocus: (evt: Event) => {
-        // @ts-ignore
         const cancelled = this._displayObject.dispatchEvent(
           'focus',
           false,
+          // @ts-ignore
           true
         );
 
@@ -87,10 +87,10 @@ export default class AccessibilityObject {
         }
       },
       onBlur: (evt: Event) => {
-        // @ts-ignore
         const cancelled = this._displayObject.dispatchEvent(
           'blur',
           false,
+          // @ts-ignore
           true
         );
         if (cancelled) {
