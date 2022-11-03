@@ -1570,7 +1570,7 @@ export default class AppWindow extends createjs.Container {
     };
     listItems.push(new ListItem(options));
     options.text =
-      'src/Roles.js - go to ROLE_TAG_MAPPING so that the Roles enum value gets converted to an html tag';
+      'src/Roles.js - go to RoleTagMapping so that the Roles enum value gets converted to an html tag';
     listItems.push(new ListItem(options));
     options.text =
       'https://www.w3.org/TR/wai-aria/roles && https://www.w3.org/TR/wai-aria/rdf_model.png - go and check\n' +

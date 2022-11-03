@@ -1,4 +1,4 @@
-import { doesRoleUseSemanticallyInteractiveTag } from '../Roles';
+import { doesRoleUseSemanticallyInteractiveTag } from '../utils/roleUtils';
 
 describe('Roles', () => {
   describe('doesRoleUseSemanticallyInteractiveTag', () => {

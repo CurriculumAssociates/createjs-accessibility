@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { ROLES, getTagNameForDisplayObject } from './Roles';
+import { ROLES } from './Roles';
+import { getTagNameForDisplayObject } from './utils/roleUtils';
+import { AccessibleDisplayObject } from './RoleObjects/AccessibilityObject';
 
 interface Props {
   stage: object;
@@ -12,22 +14,6 @@ type ElementBounds = {
   width?: number;
   x: number;
   y: number;
-};
-
-type AccessibleDisplayObject = createjs.DisplayObject & {
-  accessible?: {
-    _reactProps: {
-      key: string;
-      id: string;
-      onFocus: Function;
-      onBlur: Function;
-    };
-    children: AccessibleDisplayObject[];
-    disabledWithInference: boolean;
-    role: string;
-    text: string;
-    visibleWithInference: boolean;
-  };
 };
 
 type DisplayObjectReactProps = {
@@ -194,7 +180,7 @@ export default class AccessibilityTranslator extends React.Component<Props> {
           padding: 0,
         },
       },
-      displayObject.accessible._reactProps
+      displayObject.accessible.reactProps
     );
     if (
       (tagName === 'div' && role !== ROLES.NONE) ||
