@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import AccessibilityObject from './AccessibilityObject';
-import { doesRoleUseSemanticallyInteractiveTag } from '../Roles';
+import { doesRoleUseSemanticallyInteractiveTag } from '../utils/roleUtils';
 
 export default class ButtonData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
