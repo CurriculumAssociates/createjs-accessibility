@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { depth } from 'treeverse';
 import _ from 'lodash';
 
@@ -47,6 +46,7 @@ export const createElement = (tagName, props, children = []) => {
 
   if (children && children.length > 0) {
     children.forEach((child, index) => {
+      /* eslint-disable-next-line */
       insertChildAtIndex(element, child, index);
     });
   }
@@ -71,12 +71,25 @@ const insertChildAtIndex = (parent, child, index) => {
   }
 };
 
+export const addMissingElem = (displayObj, { tagName, props }) => {
+  let parentElem;
+  if (displayObj.accessible.parent) {
+    const parentId = displayObj.accessible.parent._domId;
+    parentElem = document.querySelector(`#${parentId}`);
+  } else {
+    parentElem = document.querySelector('#root');
+  }
+  const domElem = createElement(tagName, props);
+  parentElem.insertAdjacentElement('afterbegin', domElem);
+  return domElem;
+};
+
 export const updateElement = (displayObj, domDataObj, domId) => {
   const { tagName, props, childElements } = findDomDataObjFromDomId(
     domDataObj,
     domId
   );
-  const element = document.querySelector(`#${domId}`);
+  let element = document.querySelector(`#${domId}`);
   if (element) {
     updateAttributesFromProps(element, props);
     const elementsToRemove = [];
@@ -92,13 +105,12 @@ export const updateElement = (displayObj, domDataObj, domId) => {
       }
     });
     elementsToRemove.forEach((el) => element.removeChild(el));
-
-    childElements.forEach((childElData, index) => {
-      insertChildAtIndex(element, childElData, index);
-    });
   } else {
-    addMissingElem(displayObj, { tagName, props });
+    element = addMissingElem(displayObj, { tagName, props });
   }
+  childElements.forEach((childElData, index) => {
+    insertChildAtIndex(element, childElData, index);
+  });
 };
 
 export const getUpdatedDisplayObjects = (displayObject) => {
@@ -115,17 +127,4 @@ export const getUpdatedDisplayObjects = (displayObject) => {
     },
   });
   return updatedElements;
-};
-
-export const addMissingElem = (displayObj, { tagName, props }) => {
-  let parentElem;
-  if (displayObj.accessible.parent) {
-    const parentId = displayObj.accessible.parent._domId;
-    parentElem = document.querySelector(`#${parentId}`);
-  } else {
-    parentElem = document.querySelector('#root');
-  }
-  const domElem = createElement(tagName, props);
-  parentElem.insertAdjacentElement('afterbegin', domElem);
-  return domElem;
 };

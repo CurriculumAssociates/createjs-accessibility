@@ -5,7 +5,7 @@ import {
   createElement,
   updateElement,
   getUpdatedDisplayObjects,
-} from './utils/utils';
+} from './utils/domUtils';
 import { AccessibleDisplayObject } from './RoleObjects/AccessibilityObject';
 
 type ElementBounds = {

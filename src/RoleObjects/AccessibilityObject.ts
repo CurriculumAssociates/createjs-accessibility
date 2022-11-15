@@ -51,6 +51,8 @@ export default class AccessibilityObject {
 
   private _visible: boolean;
 
+  private _markedForUpdate: boolean;
+
   text: string;
 
   constructor(displayObject: DisplayObject, role: string, domIdPrefix: string) {
@@ -940,9 +942,9 @@ export default class AccessibilityObject {
   /**
    * Event listener for keydown events
    * @access protected
-   * @param {React.KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - React kayboard event
    */
-  _onKeyDown(evt: React.KeyboardEvent): void {
+  _onKeyDown(evt: KeyboardEvent): void {
     const event = new createjs.Event('keydown', false, evt.cancelable);
 
     // @ts-ignore
@@ -971,9 +973,9 @@ export default class AccessibilityObject {
   /**
    * Event listener for keyup events
    * @access protected
-   * @param {React.KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - React kayboard event
    */
-  _onKeyUp(evt: React.KeyboardEvent): void {
+  _onKeyUp(evt: KeyboardEvent): void {
     const event = new createjs.Event('keyup', false, evt.cancelable);
 
     // @ts-ignore

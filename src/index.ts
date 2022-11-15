@@ -2,7 +2,7 @@ import _ from 'lodash';
 import AccessibilityTranslator from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
-import { createElement } from './utils/utils';
+import { createElement } from './utils/domUtils';
 
 interface CSSPropType {
   [key: string]: {
