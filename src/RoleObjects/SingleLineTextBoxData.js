@@ -267,9 +267,9 @@ export default class SingleLineTextBoxData extends InputTagData {
   }
 
   /**
-   * React event handler for when the value of the input tag changes
+   * event handler for when the value of the input tag changes
    * @access private
-   * @param {SyntheticEvent} evt - React event
+   * @param {SyntheticEvent} evt - event
    */
   _onChange(evt) {
     const event = new createjs.Event('valueChanged', false, false);
@@ -278,9 +278,9 @@ export default class SingleLineTextBoxData extends InputTagData {
   }
 
   /**
-   * React event handler for when the selection changes
+   * event handler for when the selection changes
    * @access private
-   * @param {SyntheticEvent} evt - React event
+   * @param {SyntheticEvent} evt - event
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);

@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import React from 'react';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -29,7 +28,7 @@ describe('MathData', () => {
 
     describe('options getters and setters', () => {
       it('can read and set "mathML" property', () => {
-        const mathML = (
+        const mathML = `
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <mi>&#x03C0;</mi>
             <mo>&#x2062;</mo>
@@ -38,7 +37,7 @@ describe('MathData', () => {
               <mn>2</mn>
             </msup>
           </math>
-        );
+        `;
 
         cjsButton.accessible.mathML = mathML;
         expect(cjsButton.accessible.mathML).toEqual(mathML);

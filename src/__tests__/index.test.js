@@ -1,11 +1,5 @@
-// import React from 'react';
-import ReactDOM from 'react-dom';
-import Adapter from 'enzyme-adapter-react-16';
 import * as createjs from 'createjs-module';
-import { configure } from 'enzyme';
 import AccessibilityModule from '../index';
-
-configure({ adapter: new Adapter() });
 
 describe('AccessibilityModule', () => {
   describe('setupStage', () => {
@@ -13,7 +7,6 @@ describe('AccessibilityModule', () => {
     let stage;
     let container;
     let parentElement;
-    let renderSpy;
 
     beforeEach(() => {
       canvasEl = document.createElement('canvas');
@@ -21,10 +14,9 @@ describe('AccessibilityModule', () => {
       container = new createjs.Container();
       parentElement = document.createElement('div');
       parentElement.id = 'parent-element';
-      renderSpy = jest.spyOn(ReactDOM, 'render');
     });
 
-    it('calls ReactDOM.render and renders inside parentElement', () => {
+    it('renders main element inside parentElement when setupStage is called', () => {
       expect(parentElement.childElementCount).toEqual(0);
 
       AccessibilityModule.register({
@@ -35,7 +27,6 @@ describe('AccessibilityModule', () => {
         stage.accessibilityTranslator.root = container;
       });
 
-      expect(renderSpy).toHaveBeenCalledTimes(1);
       expect(parentElement.childElementCount).toEqual(1);
     });
 

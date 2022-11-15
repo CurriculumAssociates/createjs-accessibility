@@ -1,6 +1,5 @@
 import * as createjs from 'createjs-module';
 import KeyCodes from 'keycodes-enum';
-import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -100,27 +99,26 @@ describe('MenuData', () => {
 
       it('can prevent default events if "defaultPrevented" is true', () => {
         keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(ulEl, {
-          keyCode,
-          defaultPrevented: true,
-          preventDefault: preventDefaultSpy,
+        const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.assign(keydownEvent, { preventDefault: preventDefaultSpy });
+        Object.defineProperty(keydownEvent, 'defaultPrevented', {
+          value: true,
         });
+        ulEl.dispatchEvent(keydownEvent);
         expect(preventDefaultSpy).toBeCalledTimes(0);
       });
 
       it('calls preventDefault with UP or DOWN', () => {
         keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(ulEl, {
-          keyCode,
-          preventDefault: preventDefaultSpy,
-        });
-        expect(preventDefaultSpy).toBeCalledTimes(1);
+        let newEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.assign(newEvent, { preventDefault: preventDefaultSpy });
+        ulEl.dispatchEvent(newEvent);
+        expect(preventDefaultSpy.mock.calls.length).toBe(1);
 
         keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(ulEl, {
-          keyCode,
-          preventDefault: preventDefaultSpy,
-        });
+        newEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.assign(newEvent, { preventDefault: preventDefaultSpy });
+        ulEl.dispatchEvent(newEvent);
         expect(preventDefaultSpy).toBeCalledTimes(2);
       });
     });

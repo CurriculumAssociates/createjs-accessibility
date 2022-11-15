@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -344,7 +343,7 @@ describe('AccessibilityObject', () => {
           ['t', 84],
           ['Tab', 9],
         ].forEach(([key, keyCode], i) => {
-          ReactTestUtils.Simulate.keyDown(mainEl, { key, keyCode });
+          mainEl.dispatchEvent(new KeyboardEvent('keydown', { key, keyCode }));
           const keyDownReturn = keyDownListener.mock.calls[i][0];
           const keyReturned = keyDownReturn.key;
           const keyCodeReturned = keyDownReturn.keyCode;
@@ -381,7 +380,9 @@ describe('AccessibilityObject', () => {
 
         it('can dispatch "keyUp" event', () => {
           const keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyUp(mainEl, { keyCode, cancelable: true });
+          mainEl.dispatchEvent(
+            new KeyboardEvent('keyup', { keyCode, cancelable: true })
+          );
           expect(onKeyUp).toBeCalledTimes(1);
 
           const keyCodeReturned = onKeyUp.mock.calls[0][0].keyCode;

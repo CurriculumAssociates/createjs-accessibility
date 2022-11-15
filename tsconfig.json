@@ -6,7 +6,6 @@
       "outDir": "./dist/",        // path to output directory
       "module": "es6",
       "moduleResolution": "node",
-      "jsx": "react",
       "allowSyntheticDefaultImports": true,
       "declaration": true,
     },

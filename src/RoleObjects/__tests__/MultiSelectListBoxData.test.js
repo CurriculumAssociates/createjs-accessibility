@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -275,9 +274,11 @@ describe('MultiSelectListBoxData', () => {
 
       it('can dispatch "valueChanged" event with the newValue', () => {
         cjsListBox.selected = [cjsOption1];
-        ReactTestUtils.Simulate.change(selectEl, {
-          target: { options: [cjsOption1] },
+        const changeEvent = new Event('change');
+        Object.defineProperty(changeEvent, 'target', {
+          value: { options: [cjsOption1] },
         });
+        selectEl.dispatchEvent(changeEvent);
 
         expect(keyDownHandler).toBeCalledTimes(1);
         const argument = keyDownHandler.mock.calls[0][0];

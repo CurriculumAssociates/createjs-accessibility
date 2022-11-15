@@ -232,9 +232,9 @@ export default class SingleSelectListBoxData extends SelectData {
   }
 
   /**
-   * React event handler for key presses
+   * event handler for key presses
    * @access private
-   * @param {SyntheticEvent} evt - React event
+   * @param {SyntheticEvent} evt - event
    */
   _onKeyDown(evt) {
     if (this.disabledWithInference) {

@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -64,13 +63,13 @@ describe('SingleLineTextBoxData', () => {
       });
 
       it('boolean value for "autoComplete" property is converted into "on" or "off"', () => {
-        let newVal = true;
-        cjsInput.accessible.autoComplete = newVal;
-        expect(cjsInput.accessible.autoComplete).toBe('on');
-
-        newVal = false;
+        let newVal = false;
         cjsInput.accessible.autoComplete = newVal;
         expect(cjsInput.accessible.autoComplete).toBe('off');
+
+        newVal = true;
+        cjsInput.accessible.autoComplete = newVal;
+        expect(cjsInput.accessible.autoComplete).toBe('on');
       });
 
       it('throws error if invalid value is passed to "autoComplete" property', () => {
@@ -132,9 +131,11 @@ describe('SingleLineTextBoxData', () => {
         cjsInput.on('valueChanged', eventHandler);
 
         const updatedValue = 'updated value';
-        ReactTestUtils.Simulate.change(inputEl, {
-          target: { value: updatedValue },
+        const changeEvent = new Event('change');
+        Object.defineProperty(changeEvent, 'target', {
+          value: { value: updatedValue },
         });
+        inputEl.dispatchEvent(changeEvent);
 
         expect(eventHandler).toBeCalledTimes(1);
         const argument = eventHandler.mock.calls[0][0];
@@ -144,7 +145,7 @@ describe('SingleLineTextBoxData', () => {
       it('can dispatch "selectionChanged" event when selected', () => {
         const selectEventHandler = jest.fn();
         cjsInput.on('selectionChanged', selectEventHandler);
-        ReactTestUtils.Simulate.select(inputEl);
+        inputEl.dispatchEvent(new Event('select'));
         expect(selectEventHandler).toBeCalledTimes(1);
       });
     });

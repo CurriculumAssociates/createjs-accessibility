@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -106,7 +105,7 @@ describe('SpinButtonData', () => {
         const onIncrement = jest.fn();
         cjsSpin.on('increment', onIncrement);
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onIncrement).toBeCalledTimes(1);
       });
 
@@ -114,7 +113,7 @@ describe('SpinButtonData', () => {
         const onDecrement = jest.fn();
         cjsSpin.on('decrement', onDecrement);
         const keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onDecrement).toBeCalledTimes(1);
       });
 
@@ -123,11 +122,11 @@ describe('SpinButtonData', () => {
         cjsSpin.on('keydown', onKeyDown);
 
         const keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(0);
 
         cjsSpin.accessible.enableKeyEvents = true;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
@@ -139,10 +138,11 @@ describe('SpinButtonData', () => {
 
         const keyCode = KeyCodes.down;
         cjsSpin.accessible.enableKeyEvents = true;
-        ReactTestUtils.Simulate.keyDown(inputEl, {
-          keyCode,
-          defaultPrevented: true,
+        const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.defineProperty(keydownEvent, 'defaultPrevented', {
+          value: true,
         });
+        inputEl.dispatchEvent(keydownEvent);
         expect(onKeyDown).toBeCalledTimes(1);
         expect(onDecrement).toBeCalledTimes(0);
       });
@@ -151,7 +151,7 @@ describe('SpinButtonData', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
         const keyCode = KeyCodes.home;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         const eventData = onChange.mock.calls[0][0];
         expect(onChange).toBeCalledTimes(1);
         expect(eventData.value).toBe(accessibleOptions.min);
@@ -161,7 +161,7 @@ describe('SpinButtonData', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
         const keyCode = KeyCodes.end;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         const eventData = onChange.mock.calls[0][0];
         expect(onChange).toBeCalledTimes(1);
         expect(eventData.value).toBe(accessibleOptions.max);
@@ -170,9 +170,9 @@ describe('SpinButtonData', () => {
       it('can dispatch "change" event when the value is changed', () => {
         const onChange = jest.fn();
         cjsSpin.on('change', onChange);
-        ReactTestUtils.Simulate.change(inputEl, {
-          target: { value: 25 },
-        });
+        const changeEvent = new Event('change');
+        Object.defineProperty(changeEvent, 'target', { value: { value: 25 } });
+        inputEl.dispatchEvent(changeEvent);
         const eventData = onChange.mock.calls[0][0];
         expect(onChange).toBeCalledTimes(1);
         expect(eventData.value).toBe(25);
@@ -183,7 +183,7 @@ describe('SpinButtonData', () => {
         cjsSpin.on('change', onChange);
         cjsSpin.accessible.min = undefined;
         const keyCode = KeyCodes.home;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onChange).toBeCalledTimes(0);
       });
 
@@ -192,7 +192,7 @@ describe('SpinButtonData', () => {
         cjsSpin.on('change', onChange);
         cjsSpin.accessible.max = undefined;
         const keyCode = KeyCodes.end;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onChange).toBeCalledTimes(0);
       });
     });

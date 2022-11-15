@@ -1,21 +1,14 @@
-import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
 import * as createjs from 'createjs-module';
-import { configure, mount } from 'enzyme';
 import AccessibilityTranslator from '../AccessibilityTranslator';
-
-configure({ adapter: new Adapter() });
 
 describe('AccessibilityTranslator', () => {
   let stage;
-  let wrapper;
   let instance;
   let rootObj;
 
   beforeEach(() => {
     stage = new createjs.Stage('stage');
-    wrapper = mount(<AccessibilityTranslator stage={stage} />);
-    instance = wrapper.instance();
+    instance = new AccessibilityTranslator(stage);
     rootObj = { accessible: {} };
   });
 

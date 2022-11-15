@@ -112,7 +112,7 @@ export default class MultiLineTextInput extends createjs.Container {
   /**
    * Event handler for when the text is changed in the DOM translation
    * @access private
-   * @param {SyntheticEvent} evt - React event
+   * @param {SyntheticEvent} evt - event
    */
   _onValueChanged(evt) {
     this._text.text = evt.newValue;
@@ -121,7 +121,7 @@ export default class MultiLineTextInput extends createjs.Container {
   /**
    * Event handler for when the selection of text in the DOM translation is changed
    * @access private
-   * @param {SyntheticEvent} evt - React event
+   * @param {SyntheticEvent} evt - event
    */
   _onSelectionChanged(evt) {
     this._selection.start = evt.selectionStart;

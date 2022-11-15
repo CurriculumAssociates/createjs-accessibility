@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -263,7 +262,7 @@ describe('SingleSelectListBoxData', () => {
 
       it('can dispatch "keyDown" event if "enableKeyEvents" is enabled', () => {
         keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+        ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(0);
 
         cjsListBox.accessible.enableKeyEvents = true;
@@ -271,7 +270,7 @@ describe('SingleSelectListBoxData', () => {
         // needed for disabledWithInference() to return false (1 of many ways)
         cjsListBox.accessible.enabled = true;
 
-        ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+        ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
@@ -281,11 +280,11 @@ describe('SingleSelectListBoxData', () => {
 
         // needed for disabledWithInference() to return false (1 of many ways)
         cjsListBox.accessible.enabled = true;
-
-        ReactTestUtils.Simulate.keyDown(ulEl, {
-          keyCode,
-          defaultPrevented: true,
+        const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.defineProperty(keydownEvent, 'defaultPrevented', {
+          value: true,
         });
+        ulEl.dispatchEvent(keydownEvent);
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
@@ -327,21 +326,21 @@ describe('SingleSelectListBoxData', () => {
 
         it('UP AND DOWN', () => {
           keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(1);
 
           keyCode = KeyCodes.down;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(2);
         });
 
         it('HOME AND END', () => {
           keyCode = KeyCodes.home;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(1);
 
           keyCode = KeyCodes.end;
-          ReactTestUtils.Simulate.keyDown(ulEl, { keyCode });
+          ulEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(2);
         });
       });

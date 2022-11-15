@@ -11,6 +11,7 @@ export default class AccessibilityObject {
     this._role = role;
     this._domId = domIdPrefix + displayObject.id;
     this._areKeyEventsEnabled = false;
+    this._markedForUpdate = false;
     /**
      * Fields with relatively fixed values that should go into the React props for the
      * element translation of this object.  This is done as an object for easy merging
@@ -50,6 +51,16 @@ export default class AccessibilityObject {
      * @access public
      */
     this.text = undefined;
+  }
+
+  // Called to mark the object for updating
+  markForUpdate() {
+    this._markedForUpdate = true;
+  }
+
+  // Called to clear the flag when the DOM node has been updated
+  markAsUpdated() {
+    this._markedForUpdate = false;
   }
 
   /**

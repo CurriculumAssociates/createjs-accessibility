@@ -53,6 +53,31 @@ import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
 import UnorderedListData from './RoleObjects/UnorderedListData';
 
+const proxyHandler = {
+  get(target, property) {
+    switch (property) {
+      case 'addChild':
+      case 'addChildAt':
+      case 'removeChild':
+      case 'removeChildAt':
+      case 'removeAllChildren':
+        target.markForUpdate();
+        break;
+      default:
+        break;
+    }
+    return Reflect.get(...arguments);
+  },
+
+  set(target, property, value) {
+    if (target[property] !== value) {
+      if (property !== '_markedForUpdate') target.markForUpdate();
+      target[property] = value;
+    }
+    return true;
+  },
+};
+
 /**
  * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to
  * the provided DisplayObject for annotating the DisplayObject with accessibility information.
@@ -426,8 +451,8 @@ function createAccessibilityObjectForRole(config) {
     default:
       throw new Error(`Invalid role of "${role}"`);
   }
-
-  displayObject.accessible = accessibilityObject;
+  const proxyObj = new Proxy(accessibilityObject, proxyHandler);
+  displayObject.accessible = proxyObj;
 
   if (events) {
     _.forEach(events, (event) => {
