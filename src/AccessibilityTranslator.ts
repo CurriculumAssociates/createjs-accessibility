@@ -1,34 +1,18 @@
 import _ from 'lodash';
-import { ROLES, getTagNameForDisplayObject } from './Roles';
+import { ROLES } from './Roles';
+import { getTagNameForDisplayObject } from './utils/roleUtils';
 import {
   createElement,
   updateElement,
   getUpdatedDisplayObjects,
 } from './utils/utils';
+import { AccessibleDisplayObject } from './RoleObjects/AccessibilityObject';
 
 type ElementBounds = {
   height?: number;
   width?: number;
   x: number;
   y: number;
-};
-
-type AccessibleDisplayObject = createjs.DisplayObject & {
-  accessible?: {
-    _reactProps: {
-      key: string;
-      id: string;
-      onFocus: Function;
-      onBlur: Function;
-    };
-    children: AccessibleDisplayObject[];
-    disabledWithInference: boolean;
-    role: string;
-    text: string;
-    visibleWithInference: boolean;
-    _markedForUpdate: boolean;
-    markAsUpdated: Function;
-  };
 };
 
 type DisplayObjectReactProps = {
@@ -197,7 +181,7 @@ export default class AccessibilityTranslator {
           padding: 0,
         },
       },
-      displayObject.accessible._reactProps
+      displayObject.accessible.reactProps
     );
     if (
       (tagName === 'div' && role !== ROLES.NONE) ||
