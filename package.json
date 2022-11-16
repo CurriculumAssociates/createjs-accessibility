@@ -99,6 +99,6 @@
     "@types/lodash": "^4.14.183",
     "keycodes-enum": "^0.0.2",
     "lodash": "^4.17.19",
-    "treeverse": "3.0.0"
+    "treeverse": "^3.0.0"
   }
 }
