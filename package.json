@@ -50,7 +50,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@types/createjs": "0.0.29",

@@ -2,7 +2,9 @@ import _ from 'lodash';
 import { ROLES } from './Roles';
 
 // role objects in alphabetical order by class name
-import AccessibilityObject from './RoleObjects/AccessibilityObject';
+import AccessibilityObject, {
+  AccessibleDisplayObject,
+} from './RoleObjects/AccessibilityObject';
 import ArticleData from './RoleObjects/ArticleData';
 import ButtonData from './RoleObjects/ButtonData';
 import CellData from './RoleObjects/CellData';
@@ -53,30 +55,42 @@ import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
 import UnorderedListData from './RoleObjects/UnorderedListData';
 
+type EventHandler = (evt) => void;
+
+type RoleObjectConfig = {
+  accessibleOptions: { [key: string]: boolean | number | string }[];
+  containerIndex: number;
+  displayObject: AccessibleDisplayObject;
+  domIdPrefix: string;
+  events: { eventName: string; listener: EventHandler }[];
+  parent?: AccessibleDisplayObject;
+  role: ROLES;
+};
+
 /**
  * Adds the appropriate AccessibilityObject or one of its subclasses for the given role to
  * the provided DisplayObject for annotating the DisplayObject with accessibility information.
- * @param { Object} config - config oject for accessibility information
- * @param {createjs.DisplayObject} config.displayObject
- *  DisplayObject to add accessibility annotations to
- * @param {String} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
+ *
+ * @param {Object} config - config object for accessibility information
+ * @param {AccessibleDisplayObject} config.displayObject
+ *   DisplayObject to add accessibility annotations to
+ * @param {string} config.role - Entry from ROLES for which WAI-ARIA role the DisplayObject performs
  * @param {number} [config.containerIndex] - An optional value for the layer index to
- * add the DisplayObject.  If re-registering a DisplayObject that had a parent in the a11y tree
- * when this and the parent param are unset, then the index in the previous parent will be used
- * (effectively making the new AccessibilityObject replace the old one in the same position of the
- * a11y tree).
- * then the previous parent will be used.
- * @param {String} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM
- * id in the translated display object.  Defaults to 'acc_'
+ *   add the DisplayObject.  If re-registering a DisplayObject that had a parent in the a11y tree
+ *   when this and the parent param are unset, then the index in the previous parent will be used
+ *   (effectively making the new AccessibilityObject replace the old one in the same position of the
+ *   a11y tree).
+ * @param {string} [config.domIdPrefix] - Optional parameter for the prefix to use for the DOM
+ *   id in the translated display object.  Defaults to 'acc_'
  * @param {Object} [config.events] - event object with field eventName and listener to
- * bind event while registering displayObject
+ *   bind event while registering displayObject
  * @param {createjs.DisplayObject} [config.parent] - Optional parameter for the DisplayObject
- * to add the current DisplayObject to as a child. Note the order of registration is important,
- * the parent object will need to be registered with the module before the child.
- * If re-registering a DisplayObject that had a parent in the a11y tree and this param is unset,
- * then the previous parent will be used.
+ *   to add the current DisplayObject to as a child. Note the order of registration is important,
+ *   the parent object will need to be registered with the module before the child.
+ *   If re-registering a DisplayObject that had a parent in the a11y tree and this param is unset,
+ *   then the previous parent will be used.
  */
-function createAccessibilityObjectForRole(config) {
+function createAccessibilityObjectForRole(config: RoleObjectConfig) {
   const {
     accessibleOptions,
     displayObject,
