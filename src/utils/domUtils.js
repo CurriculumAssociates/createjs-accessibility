@@ -1,4 +1,4 @@
-import { depth } from 'treeverse';
+import { breadth } from 'treeverse';
 import _ from 'lodash';
 
 const updateAttributesFromProps = (element, props) => {
@@ -24,16 +24,18 @@ const updateAttributesFromProps = (element, props) => {
 
 export const findDomDataObjFromDomId = (domData, domId) => {
   let returnObj = null;
-  depth({
+  breadth({
     tree: domData,
     visit(node) {
       if (node.props && node.props.id === domId) {
         returnObj = node;
-        return node;
       }
     },
     getChildren(node) {
       return node.childElements;
+    },
+    filter() {
+      return returnObj === null;
     },
   });
   return returnObj;
@@ -60,7 +62,8 @@ const insertChildAtIndex = (parent, child, index) => {
     : document.createTextNode(child);
   if (
     index < parent.childNodes.length &&
-    parent.childNodes[index].isEqualNode(childElem)
+    (parent.childNodes[index].isEqualNode(childElem) ||
+      (childElem.id && childElem.id === parent.childNodes[index].id))
   ) {
     return;
   }
@@ -92,39 +95,14 @@ export const updateElement = (displayObj, domDataObj, domId) => {
   let element = document.querySelector(`#${domId}`);
   if (element) {
     updateAttributesFromProps(element, props);
-    const elementsToRemove = [];
-    element.childNodes.forEach((childNode) => {
-      if (
-        !childElements.some((obj) => {
-          return _.isString(obj)
-            ? obj === childNode
-            : obj.props.id === childNode.getAttribute('id');
-        })
-      ) {
-        elementsToRemove.push(childNode);
-      }
-    });
-    elementsToRemove.forEach((el) => element.removeChild(el));
   } else {
     element = addMissingElem(displayObj, { tagName, props });
   }
   childElements.forEach((childElData, index) => {
     insertChildAtIndex(element, childElData, index);
   });
-};
 
-export const getUpdatedDisplayObjects = (displayObject) => {
-  const updatedElements = [];
-  depth({
-    tree: displayObject,
-    visit(node) {
-      if (node.accessible._markedForUpdate) {
-        updatedElements.push(node);
-      }
-    },
-    getChildren(node) {
-      return node.accessible.children;
-    },
-  });
-  return updatedElements;
+  while (element.childNodes.length !== childElements.length) {
+    element.removeChild(element.lastChild);
+  }
 };

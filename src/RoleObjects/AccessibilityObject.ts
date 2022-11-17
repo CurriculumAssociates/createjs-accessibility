@@ -112,6 +112,7 @@ export default class AccessibilityObject {
   // Called to mark the object for updating
   markForUpdate() {
     this._markedForUpdate = true;
+    this.parent?.markForUpdate();
   }
 
   // Called to clear the flag when the DOM node has been updated

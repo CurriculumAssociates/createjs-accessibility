@@ -1,11 +1,8 @@
 import _ from 'lodash';
+import { breadth } from 'treeverse';
 import { ROLES } from './Roles';
 import { getTagNameForDisplayObject } from './utils/roleUtils';
-import {
-  createElement,
-  updateElement,
-  getUpdatedDisplayObjects,
-} from './utils/domUtils';
+import { createElement, updateElement } from './utils/domUtils';
 import { AccessibleDisplayObject } from './RoleObjects/AccessibilityObject';
 
 type ElementBounds = {
@@ -78,18 +75,24 @@ export default class AccessibilityTranslator {
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
   update(callback = _.noop): void {
-    const updatedObjs = getUpdatedDisplayObjects(this.root);
-    if (updatedObjs && updatedObjs.length > 0) {
-      const domData = this._processDisplayObject(this.root, {
-        x: 0,
-        y: 0,
-      });
-      updatedObjs.forEach((updatedElemObj) => {
-        updateElement(updatedElemObj, domData, updatedElemObj.accessible.domId);
-        updatedElemObj.accessible.markAsUpdated();
-      });
-      callback();
-    }
+    const domData = this._processDisplayObject(this.root, {
+      x: 0,
+      y: 0,
+    });
+    breadth({
+      tree: this.root,
+      visit(node) {
+        updateElement(node, domData, node.accessible.domId);
+        node.accessible.markAsUpdated();
+      },
+      getChildren(node) {
+        return node.accessible.children;
+      },
+      filter(node) {
+        return node.accessible._markedForUpdate;
+      },
+    });
+    callback();
   }
 
   _processDisplayObject = (
