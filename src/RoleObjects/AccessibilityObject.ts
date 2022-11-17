@@ -51,7 +51,7 @@ export default class AccessibilityObject {
 
   private _visible: boolean;
 
-  private _markedForUpdate: boolean;
+  private _markedForUpdate: boolean = false;
 
   text: string;
 
@@ -62,7 +62,7 @@ export default class AccessibilityObject {
     this._role = role;
     this._domId = domIdPrefix + displayObject.id;
     this._areKeyEventsEnabled = false;
-    this._markedForUpdate = false;
+
     /**
      * Fields with relatively fixed values that should go into the React props for the
      * element translation of this object.  This is done as an object for easy merging
