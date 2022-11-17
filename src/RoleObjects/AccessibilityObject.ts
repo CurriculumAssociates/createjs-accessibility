@@ -109,6 +109,10 @@ export default class AccessibilityObject {
     this.text = undefined;
   }
 
+  get isMarkedForUpdate() {
+    return this._markedForUpdate;
+  }
+
   // Called to mark the object for updating
   markForUpdate() {
     this._markedForUpdate = true;

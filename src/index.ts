@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import AccessibilityTranslator from './AccessibilityTranslator';
+import AccessibilityTranslator, {
+  DisplayObjectReactProps,
+} from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
 import { createElement } from './utils/domUtils';
 
 interface CSSPropType {
-  [key: string]: {
-    [key: string]: string | number | boolean;
-  };
+  [key: string]: DisplayObjectReactProps['style'];
 }
 
 /**
@@ -74,7 +74,9 @@ function setupStage(stage, parentElement, onReady = () => {}) {
     {
       tagName: 'div',
       props: { style: styles.moduleStyle },
-      childElements: [{ tagName: 'div', props: { id: 'root' } }],
+      childElements: [
+        { tagName: 'div', props: { id: 'root' }, childElements: [] },
+      ],
     },
   ]);
 

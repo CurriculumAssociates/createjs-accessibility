@@ -1,9 +1,18 @@
 import { breadth } from 'treeverse';
 import _ from 'lodash';
+import { AccessibleDisplayObject } from '../RoleObjects/AccessibilityObject';
+import type {
+  DisplayObjectReactProps,
+  DomDataObjectType,
+} from '../AccessibilityTranslator';
 
-const updateAttributesFromProps = (element, props) => {
-  Object.entries(props || {}).forEach(([name, value]) => {
+const updateAttributesFromProps = (
+  element: Element,
+  props: DisplayObjectReactProps
+) => {
+  Object.entries(props).forEach(([name, value]) => {
     if (name.startsWith('on')) {
+      // @ts-ignore
       element.addEventListener(name.toLowerCase().substring(2), value);
     } else if (name === 'style' && _.isObject(value)) {
       const valueString = Object.entries(value)
@@ -22,16 +31,19 @@ const updateAttributesFromProps = (element, props) => {
   });
 };
 
-export const findDomDataObjFromDomId = (domData, domId) => {
-  let returnObj = null;
+export const findDomDataObjFromDomId = (
+  domData: DomDataObjectType,
+  domId: string
+) => {
+  let returnObj: DomDataObjectType = null;
   breadth({
     tree: domData,
-    visit(node) {
+    visit(node: DomDataObjectType) {
       if (node.props && node.props.id === domId) {
         returnObj = node;
       }
     },
-    getChildren(node) {
+    getChildren(node: DomDataObjectType) {
       return node.childElements;
     },
     filter() {
@@ -41,7 +53,11 @@ export const findDomDataObjFromDomId = (domData, domId) => {
   return returnObj;
 };
 
-export const createElement = (tagName, props, children = []) => {
+export const createElement = (
+  tagName: DomDataObjectType['tagName'],
+  props: DisplayObjectReactProps,
+  children: DomDataObjectType['childElements']
+) => {
   const element = document.createElement(tagName);
 
   updateAttributesFromProps(element, props);
@@ -56,13 +72,17 @@ export const createElement = (tagName, props, children = []) => {
   return element;
 };
 
-const insertChildAtIndex = (parent, child, index) => {
-  const childElem = child.tagName
-    ? createElement(child.tagName, child.props, child.childElements)
-    : document.createTextNode(child);
+const insertChildAtIndex = (
+  parent: Element,
+  child: DomDataObjectType | string,
+  index: number
+) => {
+  const childElem = _.isString(child)
+    ? document.createTextNode(child)
+    : createElement(child.tagName, child.props, child.childElements);
   if (
     index < parent.childNodes.length &&
-    (parent.childNodes[index].isEqualNode(childElem) ||
+    (parent.childNodes[index].isEqualNode(childElem) || // @ts-ignore
       (childElem.id && childElem.id === parent.childNodes[index].id))
   ) {
     return;
@@ -74,20 +94,27 @@ const insertChildAtIndex = (parent, child, index) => {
   }
 };
 
-export const addMissingElem = (displayObj, { tagName, props }) => {
-  let parentElem;
+export const addMissingElem = (
+  displayObj: AccessibleDisplayObject,
+  { tagName, props }: { tagName: string; props: DisplayObjectReactProps }
+) => {
+  let parentElem: Element;
   if (displayObj.accessible.parent) {
-    const parentId = displayObj.accessible.parent._domId;
+    const parentId = displayObj.accessible.parent.domId;
     parentElem = document.querySelector(`#${parentId}`);
   } else {
     parentElem = document.querySelector('#root');
   }
-  const domElem = createElement(tagName, props);
+  const domElem = createElement(tagName, props, []);
   parentElem.insertAdjacentElement('afterbegin', domElem);
   return domElem;
 };
 
-export const updateElement = (displayObj, domDataObj, domId) => {
+export const updateElement = (
+  displayObj: AccessibleDisplayObject,
+  domDataObj: DomDataObjectType,
+  domId: string
+) => {
   const { tagName, props, childElements } = findDomDataObjFromDomId(
     domDataObj,
     domId

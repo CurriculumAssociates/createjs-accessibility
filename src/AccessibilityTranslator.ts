@@ -12,19 +12,28 @@ type ElementBounds = {
   y: number;
 };
 
-type DisplayObjectReactProps = {
+export type DisplayObjectReactProps = {
   disabled?: string;
   role?: string;
-  style: {
+  style?: {
+    [key: string]: string | number;
     display?: string;
-    height: string;
-    left: string;
-    margin: number;
-    padding: number;
-    position: string;
-    top: string;
-    width: string;
+    height?: string;
+    left?: string;
+    margin?: number;
+    padding?: number | string;
+    position?: string;
+    top?: string;
+    width?: string;
   };
+  [eventname: `on${string}`]: Function;
+  [k: string]: string | number | boolean | object | Function;
+};
+
+export type DomDataObjectType = {
+  tagName: string;
+  props: DisplayObjectReactProps;
+  childElements: (DomDataObjectType | string)[];
 };
 
 /**
@@ -81,15 +90,15 @@ export default class AccessibilityTranslator {
     });
     breadth({
       tree: this.root,
-      visit(node) {
+      visit(node: AccessibleDisplayObject) {
         updateElement(node, domData, node.accessible.domId);
         node.accessible.markAsUpdated();
       },
-      getChildren(node) {
+      getChildren(node: AccessibleDisplayObject) {
         return node.accessible.children;
       },
-      filter(node) {
-        return node.accessible._markedForUpdate;
+      filter(node: AccessibleDisplayObject) {
+        return node.accessible.isMarkedForUpdate;
       },
     });
     callback();
@@ -98,11 +107,7 @@ export default class AccessibilityTranslator {
   _processDisplayObject = (
     displayObject: AccessibleDisplayObject,
     parentBoundsInGlobalSpace: ElementBounds
-  ): {
-    tagName: string;
-    props: DisplayObjectReactProps;
-    childElements: object[];
-  } => {
+  ): DomDataObjectType => {
     if (!displayObject.accessible) {
       return;
     }
