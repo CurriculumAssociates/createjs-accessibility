@@ -55,7 +55,7 @@ import TreeItemData from './RoleObjects/TreeItemData';
 import ToolBarData from './RoleObjects/ToolBarData';
 import UnorderedListData from './RoleObjects/UnorderedListData';
 
-type EventHandler = (evt) => void;
+type EventHandler = (evt: Event) => void;
 
 type RoleObjectConfig = {
   accessibleOptions: { [key: string]: boolean | number | string }[];

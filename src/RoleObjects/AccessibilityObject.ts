@@ -7,7 +7,8 @@ export type AccessibleDisplayObject = DisplayObject & {
   accessible?: AccessibilityObject;
 };
 
-type EventHandler = (evt) => void;
+type EventHandler = (evt: Event) => void;
+type KeyboardEventHandler = (evt: React.KeyboardEvent) => void;
 
 interface ReactProps {
   accessKey?: string;
@@ -17,12 +18,17 @@ interface ReactProps {
   lang?: string;
   onBlur: EventHandler;
   onFocus: EventHandler;
-  onKeyDown?: EventHandler;
-  onKeyUp?: EventHandler;
+  onKeyDown?: KeyboardEventHandler;
+  onKeyUp?: KeyboardEventHandler;
   spellCheck?: boolean;
   tabIndex?: number;
   title?: string;
-  [key: string]: string | number | EventHandler | boolean;
+  [key: string]:
+    | string
+    | number
+    | EventHandler
+    | KeyboardEventHandler
+    | boolean;
 }
 
 /**
