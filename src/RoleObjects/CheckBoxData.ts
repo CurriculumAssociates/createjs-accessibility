@@ -1,6 +1,9 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
+import React from 'react';
 import InputTagData from './InputTagData';
+import { AccessibleDisplayObject } from './AccessibilityObject';
+import { ROLES } from '../Roles';
 
 /**
  * Base class for role objects that use the img HTML tag.
@@ -8,7 +11,11 @@ import InputTagData from './InputTagData';
  * regardless of the type attribute.
  */
 export default class CheckBoxData extends InputTagData {
-  constructor(displayObject, role, domIdPrefix) {
+  constructor(
+    displayObject: AccessibleDisplayObject,
+    role: ROLES,
+    domIdPrefix: string
+  ) {
     super(displayObject, role, domIdPrefix);
     _.bindAll(this, '_onKeyDown', '_onChange');
     this._reactProps.onChange = this._onChange;
@@ -20,7 +27,7 @@ export default class CheckBoxData extends InputTagData {
   /**
    * @inheritdoc
    */
-  set enableKeyEvents(enable) {
+  set enableKeyEvents(enable: boolean) {
     super.enableKeyEvents = enable;
     this._reactProps.onKeyDown = this._onKeyDown;
   }
@@ -28,7 +35,7 @@ export default class CheckBoxData extends InputTagData {
   /**
    * @inheritdoc
    */
-  get enableKeyEvents() {
+  get enableKeyEvents(): boolean {
     return super.enableKeyEvents;
   }
 
@@ -37,7 +44,7 @@ export default class CheckBoxData extends InputTagData {
    * @access public
    * @param {boolean} check - true if the element is checked, false otherwise
    */
-  set checked(check) {
+  set checked(check: boolean) {
     this._reactProps.checked = check;
   }
 
@@ -46,14 +53,14 @@ export default class CheckBoxData extends InputTagData {
    * @access public
    * @returns {boolean} true if the element is checked, false otherwise
    */
-  get checked() {
-    return this._reactProps.checked;
+  get checked(): boolean {
+    return <boolean>this._reactProps.checked;
   }
 
   /**
    * @inheritdoc
    */
-  _onKeyDown(evt) {
+  _onKeyDown(evt: React.KeyboardEvent): void {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
       if (evt.defaultPrevented) {
@@ -69,9 +76,8 @@ export default class CheckBoxData extends InputTagData {
   /**
    * Event listener for change events
    * @access protected
-   * @param {SyntheticEvent} evt - React event
    */
-  _onChange() {
+  _onChange(): void {
     this._displayObject.dispatchEvent('keyboardClick');
   }
 }

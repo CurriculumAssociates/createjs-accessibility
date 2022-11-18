@@ -6,16 +6,17 @@ export default class ArticleData extends DocumentData {
    * @access public
    * @param {number} value - size of the article
    */
-  set size(value) {
+  set size(value: number) {
     this._reactProps['aria-setsize'] = value;
   }
 
   /**
    * Retrieves the size of the article list
    * @access public
+   * @returns {number} the number of items in the current set of items
    */
-  get size() {
-    return this._reactProps['aria-setsize'];
+  get size(): number {
+    return <number>this._reactProps['aria-setsize'];
   }
 
   /**
@@ -23,15 +24,16 @@ export default class ArticleData extends DocumentData {
    * @access public
    * @param {number} value - position of the article in the list
    */
-  set position(value) {
+  set position(value: number) {
     this._reactProps['aria-posinset'] = value;
   }
 
   /**
    * Retrieves the position of the article
    * @access public
+   * @returns {number} One-based index for the position in the current set of items
    */
-  get position() {
-    return this._reactProps['aria-posinset'];
+  get position(): number {
+    return <number>this._reactProps['aria-posinset'];
   }
 }

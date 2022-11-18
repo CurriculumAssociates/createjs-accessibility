@@ -1,9 +1,16 @@
 import _ from 'lodash';
-import AccessibilityObject from './AccessibilityObject';
+import AccessibilityObject, {
+  AccessibleDisplayObject,
+} from './AccessibilityObject';
 import { doesRoleUseSemanticallyInteractiveTag } from '../utils/roleUtils';
+import { ROLES } from '../Roles';
 
 export default class ButtonData extends AccessibilityObject {
-  constructor(displayObject, role, domIdPrefix) {
+  constructor(
+    displayObject: AccessibleDisplayObject,
+    role: ROLES,
+    domIdPrefix: string
+  ) {
     super(displayObject, role, domIdPrefix);
     _.bindAll(this, '_onClick');
     this._reactProps.onClick = this._onClick;
@@ -12,7 +19,7 @@ export default class ButtonData extends AccessibilityObject {
   /**
    * @inheritdoc
    */
-  addChild(displayObject) {
+  addChild(displayObject: AccessibleDisplayObject): void {
     if (
       !displayObject.accessible ||
       doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role) ||
@@ -26,7 +33,7 @@ export default class ButtonData extends AccessibilityObject {
   /**
    * @inheritdoc
    */
-  addChildAt(displayObject, index) {
+  addChildAt(displayObject: AccessibleDisplayObject, index: number): void {
     if (
       !displayObject.accessible ||
       doesRoleUseSemanticallyInteractiveTag(displayObject.accessible.role) ||
@@ -42,7 +49,7 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @param {boolean} val - true if button pressed
    */
-  set pressed(val) {
+  set pressed(val: boolean) {
     this._reactProps['aria-pressed'] = val;
   }
 
@@ -51,17 +58,17 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @returns {boolean} true if button pressed
    */
-  get pressed() {
-    return this._reactProps['aria-pressed'];
+  get pressed(): boolean {
+    return <boolean>this._reactProps['aria-pressed'];
   }
 
   /**
    * Sets whether the element should get expanded
    * @access public
    * @param {boolean} val - true if button expanded, false if button not expanded,
-   *  undefined if the field is unset
+   *   undefined if the field is unset
    */
-  set expanded(val) {
+  set expanded(val: boolean) {
     this._reactProps['aria-expanded'] = val;
   }
 
@@ -69,10 +76,10 @@ export default class ButtonData extends AccessibilityObject {
    * Retrieves whether button expanded
    * @access public
    * @returns {boolean} true if button expanded, false if button not expanded,
-   *  undefined if the field is unset
+   *   undefined if the field is unset
    */
-  get expanded() {
-    return this._reactProps['aria-expanded'];
+  get expanded(): boolean {
+    return <boolean>this._reactProps['aria-expanded'];
   }
 
   /**
@@ -80,7 +87,7 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @param {boolean} enable - true if autofocus should be enabled, false otherwise
    */
-  set autoFocus(enable) {
+  set autoFocus(enable: boolean) {
     this._reactProps.autoFocus = enable ? 'autofocus' : undefined;
   }
 
@@ -89,7 +96,7 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @returns {boolean} true if autofocus is enabled, false otherwise
    */
-  get autoFocus() {
+  get autoFocus(): boolean {
     return this._reactProps.autoFocus === 'autofocus';
   }
 
@@ -97,9 +104,9 @@ export default class ButtonData extends AccessibilityObject {
    * Sets whether the element is enabled
    * @access public
    * @param {boolean} enable - true if the element should be enabled,
-   *  false if the element should be disabled.  undefined to unset the field.
+   *   false if the element should be disabled.  undefined to unset the field.
    */
-  set enabled(enable) {
+  set enabled(enable: boolean) {
     this._reactProps.disabled = enable !== false ? undefined : 'disabled';
     super.enabled = enable;
   }
@@ -108,82 +115,82 @@ export default class ButtonData extends AccessibilityObject {
    * Retrieves whether the element is enabled
    * @access public
    * @returns {boolean} true if the element is enabled, false if the element is disabled.
-   * undefined if the field is unset.
+   *   undefined if the field is unset.
    */
-  get enabled() {
+  get enabled(): boolean {
     return super.enabled;
   }
 
   /**
    * Set the form_id to on submission
    * @access public
-   * @param {String} str - form_id submission URL
+   * @param {string} str - form_id submission URL
    */
-  set form(str) {
+  set form(str: string) {
     this._reactProps.form = str;
   }
 
   /**
    * Retrieves the form_id from button
    * @access public
-   * @returns {String} form submission URL
+   * @returns {string} form submission URL
    */
-  get form() {
-    return this._reactProps.form;
+  get form(): string {
+    return <string>this._reactProps.form;
   }
 
   /**
    * Set the URL to send form data to on submission
    * @access public
-   * @param {String} str - form submission URL
+   * @param {string} str - form submission URL
    */
-  set formaction(str) {
+  set formaction(str: string) {
     this._reactProps.formAction = str;
   }
 
   /**
    * Retrieves the URL to send form data to on submission
    * @access public
-   * @returns {String} form submission URL
+   * @returns {string} form submission URL
    */
-  get formaction() {
-    return this._reactProps.formAction;
+  get formaction(): string {
+    return <string>this._reactProps.formAction;
   }
 
   /**
    * When method=post, sets how form data should be encoded when sending to the server
    * @access public
-   * @param {String} str - encoding type
+   * @param {string} str - encoding type
    */
-  set formenctype(str) {
+  set formenctype(str: string) {
     this._reactProps.encType = str;
   }
 
   /**
    * Retrieves how form data should be encoded when sending to the server when method=post
    * @access public
-   * @returns {String} encoding type
+   * @returns {string} encoding type
    */
-  get formenctype() {
-    return this._reactProps.encType;
+  get formenctype(): string {
+    return <string>this._reactProps.encType;
   }
 
   /**
    * Sets the HTTP method to use for sending form data
    * @access public
-   * @param {String} str - HTTP method
+   * @param {string} str - HTTP method
    */
-  set formmethod(str) {
+  set formmethod(str: string) {
     this._reactProps.formMethod = str;
   }
 
   /**
    * Retrieves the HTTP method for sending form data
    * @access public
-   * @returns {String} HTTP method
+   * @returns {string} HTTP method
    */
-  get formmethod() {
-    return this._reactProps.formMethod;
+  get formmethod(): string {
+    return <string>this._reactProps.formMethod;
   }
 
   /**
@@ -191,7 +198,7 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @param {boolean} enable - true for validation, false otherwise
    */
-  set formnovalidate(enable) {
+  set formnovalidate(enable: boolean) {
     this._reactProps.formNoValidate = !enable;
   }
 
@@ -200,62 +207,62 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @returns {boolean} true if it should be validated, false otherwise
    */
-  get formnovalidate() {
+  get formnovalidate(): boolean {
     return !this._reactProps.formNoValidate;
   }
 
   /**
    * Sets where to display the response from submitting the form
    * @access public
-   * @param {String} str - where to display the response
+   * @param {string} str - where to display the response
    */
-  set formtarget(str) {
+  set formtarget(str: string) {
     this._reactProps.formTarget = str;
   }
 
   /**
    * Retrieves where to display the response from submitting the form
    * @access public
-   * @returns {String} where to display the response
+   * @returns {string} where to display the response
    */
-  get formtarget() {
-    return this._reactProps.formTarget;
+  get formtarget(): string {
+    return <string>this._reactProps.formTarget;
   }
 
   /**
    * Sets the name of the form
    * @access public
-   * @param {String} str - name of the form
+   * @param {string} str - name of the form
    */
-  set name(str) {
+  set name(str: string) {
     this._reactProps.name = str;
   }
 
   /**
    * Retrieves the name of the form
    * @access public
-   * @returns {String} name of the form
+   * @returns {string} name of the form
    */
-  get name() {
-    return this._reactProps.name;
+  get name(): string {
+    return <string>this._reactProps.name;
   }
 
   /**
    * Sets the type of button
    * @access public
-   * @param {String} str - type of button (submit, reset, button)
+   * @param {string} str - type of button (submit, reset, button)
    */
-  set type(str) {
+  set type(str: string) {
     this._reactProps.type = str;
   }
 
   /**
    * Retrieves the type of button
    * @access public
-   * @returns {String} type of button (submit, reset, button)
+   * @returns {string} type of button (submit, reset, button)
    */
-  get type() {
-    return this._reactProps.type;
+  get type(): string {
+    return <string>this._reactProps.type;
   }
 
   /**
@@ -263,20 +270,20 @@ export default class ButtonData extends AccessibilityObject {
    * @access public
    * @param {string} str - button value
    */
-  set value(str) {
+  set value(str: string) {
     this._reactProps.value = str;
   }
 
   /**
    * get button value
    * @access public
-   * @returns {string} -button value
+   * @returns {string} button value
    */
-  get value() {
-    return this._reactProps.value;
+  get value(): string {
+    return <string>this._reactProps.value;
   }
 
-  _onClick(evt) {
+  _onClick(evt: Event): void {
     const event = new createjs.Event('keyboardClick', false, evt.cancelable);
     this._displayObject.dispatchEvent(event);
     if (event.propagationStopped) {

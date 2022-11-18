@@ -1,8 +1,8 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-      "target": "es5",            // specify ECMAScript target version
-      "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
+      "target": "es6",            // specify ECMAScript target version
+      "allowJs": true,            // allow a partial TypeScript and JavaScript codebase
       "outDir": "./dist/",        // path to output directory
       "module": "es6",
       "moduleResolution": "node",
