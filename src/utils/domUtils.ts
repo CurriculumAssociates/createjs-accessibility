@@ -1,4 +1,3 @@
-import { breadth } from 'treeverse';
 import _ from 'lodash';
 import { AccessibleDisplayObject } from '../RoleObjects/AccessibilityObject';
 import type {
@@ -29,28 +28,6 @@ const updateAttributesFromProps = (
       element.setAttribute(name, value !== undefined ? value.toString() : '');
     }
   });
-};
-
-export const findDomDataObjFromDomId = (
-  domData: DomDataObjectType,
-  domId: string
-) => {
-  let returnObj: DomDataObjectType = null;
-  breadth({
-    tree: domData,
-    visit(node: DomDataObjectType) {
-      if (node.props && node.props.id === domId) {
-        returnObj = node;
-      }
-    },
-    getChildren(node: DomDataObjectType) {
-      return node.childElements;
-    },
-    filter() {
-      return returnObj === null;
-    },
-  });
-  return returnObj;
 };
 
 export const createElement = (
@@ -112,13 +89,10 @@ export const addMissingElem = (
 
 export const updateElement = (
   displayObj: AccessibleDisplayObject,
-  domDataObj: DomDataObjectType,
+  domData: DomDataObjectType,
   domId: string
 ) => {
-  const { tagName, props, childElements } = findDomDataObjFromDomId(
-    domDataObj,
-    domId
-  );
+  const { tagName, props, childElements } = domData;
   let element = document.querySelector(`#${domId}`);
   if (element) {
     updateAttributesFromProps(element, props);

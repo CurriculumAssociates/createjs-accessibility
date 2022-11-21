@@ -85,14 +85,20 @@ export default class AccessibilityTranslator {
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
   update(callback = _.noop): void {
-    const domData = this._processDisplayObject(this.root, {
-      x: 0,
-      y: 0,
-    });
+    const processDisplayObject = this._processDisplayObject;
     breadth({
       tree: this.root,
       visit(node: AccessibleDisplayObject) {
-        updateElement(node, domData, node.accessible.domId);
+        let bounds = { x: 0, y: 0 };
+        if (node.accessible.parent && node.parent) {
+          const { x, y } = node.parent.getBounds();
+          bounds = node.parent.localToGlobal(x, y);
+        }
+        updateElement(
+          node,
+          processDisplayObject(node, bounds),
+          node.accessible.domId
+        );
         node.accessible.markAsUpdated();
       },
       getChildren(node: AccessibleDisplayObject) {
