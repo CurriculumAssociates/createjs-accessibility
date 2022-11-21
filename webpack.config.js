@@ -30,7 +30,20 @@ const config = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/env', { modules: false }]],
+              presets: [
+                ['@babel/preset-env',
+                  {
+                    modules: false,
+                    targets: {
+                      chrome: '88',
+                      ie: '11',
+                      edge: '88',
+                      firefox: '79',
+                      safari: '13.1.3',
+                    },
+                  }
+                ],
+              ],
             },
           },
         ],

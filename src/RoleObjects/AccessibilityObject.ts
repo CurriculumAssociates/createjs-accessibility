@@ -6,20 +6,29 @@ export type AccessibleDisplayObject = DisplayObject & {
   accessible?: AccessibilityObject;
 };
 
-type ReactProps = {
+type EventHandler = (evt: Event) => void;
+type KeyboardEventHandler = (evt: KeyboardEvent) => void;
+
+interface ReactProps {
   accessKey?: string;
   dir?: string;
   id: string;
   key: number;
   lang?: string;
-  onBlur: Function;
-  onFocus: Function;
-  onKeyDown?: Function;
-  onKeyUp?: Function;
+  onBlur: EventHandler;
+  onFocus: EventHandler;
+  onKeyDown?: KeyboardEventHandler;
+  onKeyUp?: KeyboardEventHandler;
   spellCheck?: boolean;
   tabIndex?: number;
   title?: string;
-};
+  [key: string]:
+    | string
+    | number
+    | EventHandler
+    | KeyboardEventHandler
+    | boolean;
+}
 
 /**
  * Container for the accessibility information for a DisplayObject.
@@ -33,7 +42,7 @@ export default class AccessibilityObject {
 
   private _describedBy: AccessibleDisplayObject;
 
-  private readonly _displayObject: DisplayObject;
+  protected readonly _displayObject: DisplayObject;
 
   private readonly _domId: string;
 
@@ -73,8 +82,20 @@ export default class AccessibilityObject {
      * @access package
      */
     this._reactProps = {
-      key: this._displayObject.id,
       id: this.domId,
+      key: this._displayObject.id,
+      onBlur: (evt: Event) => {
+        const cancelled = this._displayObject.dispatchEvent(
+          'blur',
+          false,
+          // @ts-ignore
+          true
+        );
+        if (cancelled) {
+          evt.stopPropagation();
+          evt.preventDefault();
+        }
+      },
       onFocus: (evt: Event) => {
         const cancelled = this._displayObject.dispatchEvent(
           'focus',
@@ -83,18 +104,6 @@ export default class AccessibilityObject {
           true
         );
 
-        if (cancelled) {
-          evt.stopPropagation();
-          evt.preventDefault();
-        }
-      },
-      onBlur: (evt: Event) => {
-        const cancelled = this._displayObject.dispatchEvent(
-          'blur',
-          false,
-          // @ts-ignore
-          true
-        );
         if (cancelled) {
           evt.stopPropagation();
           evt.preventDefault();
@@ -133,7 +142,7 @@ export default class AccessibilityObject {
    * @param {AccessibleDisplayObject} displayObject - accessibility annotated DisplayObject to
    * add as a child in the accessibility tree
    */
-  addChild(displayObject: AccessibleDisplayObject) {
+  addChild(displayObject: AccessibleDisplayObject): void {
     if (!displayObject.accessible) {
       throw new Error(
         'DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree'
@@ -159,7 +168,7 @@ export default class AccessibilityObject {
    * @param {Number} index - 0 based index that the DisplayObject should have in the array of
    * children once added
    */
-  addChildAt(displayObject: AccessibleDisplayObject, index: number) {
+  addChildAt(displayObject: AccessibleDisplayObject, index: number): void {
     if (!displayObject.accessible) {
       throw new Error(
         'DisplayObjects added to the accessibility tree must have accessibility information when being added to the tree'
@@ -391,7 +400,7 @@ export default class AccessibilityObject {
    * for parts, undefined if the field is unset.
    */
   get atomic(): boolean {
-    return this._reactProps['aria-atomic'];
+    return <boolean>this._reactProps['aria-atomic'];
   }
 
   /**
@@ -412,7 +421,7 @@ export default class AccessibilityObject {
    * expected updates, undefined if the field is unset.
    */
   get busy(): boolean {
-    return this._reactProps['aria-busy'];
+    return <boolean>this._reactProps['aria-busy'];
   }
 
   /**
@@ -457,7 +466,7 @@ export default class AccessibilityObject {
    * @returns {string} id for the translated controlled DisplayObject
    */
   get controlsId(): string {
-    return this._reactProps['aria-controls'];
+    return <string>this._reactProps['aria-controls'];
   }
 
   /**
@@ -494,7 +503,7 @@ export default class AccessibilityObject {
    * @returns {string} id of the translated describing DisplayObject
    */
   get describedById(): string {
-    return this._reactProps['aria-describedby'];
+    return <string>this._reactProps['aria-describedby'];
   }
 
   /**
@@ -532,7 +541,7 @@ export default class AccessibilityObject {
    * @returns {string} Space separate list of drop effects.  undefined if this field is unset.
    */
   get dropEffects(): string {
-    return this._reactProps['aria-dropeffect'];
+    return <string>this._reactProps['aria-dropeffect'];
   }
 
   /**
@@ -566,7 +575,7 @@ export default class AccessibilityObject {
    */
   get disabledWithInference(): boolean {
     return this._reactProps['aria-disabled'] !== undefined
-      ? this._reactProps['aria-disabled']
+      ? <boolean>this._reactProps['aria-disabled']
       : !this._displayObject.mouseEnabled &&
           (this._displayObject.hasEventListener('click') ||
             this._displayObject.hasEventListener('mousedown') ||
@@ -607,7 +616,7 @@ export default class AccessibilityObject {
    * @returns {string} id to flow to
    */
   get flowToId(): string {
-    return this._reactProps['aria-flowto'];
+    return <string>this._reactProps['aria-flowto'];
   }
 
   /**
@@ -627,7 +636,7 @@ export default class AccessibilityObject {
    * undefined for not being dragged and doesn't support it
    */
   get grabbed(): boolean {
-    return this._reactProps['aria-grabbed'];
+    return <boolean>this._reactProps['aria-grabbed'];
   }
 
   /**
@@ -645,7 +654,7 @@ export default class AccessibilityObject {
    * @returns {string | boolean} see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup for valid values.  undefined if this field is unset.
    */
   get hasPopUp(): string | boolean {
-    return this._reactProps['aria-haspopup'];
+    return <string | boolean>this._reactProps['aria-haspopup'];
   }
 
   /**
@@ -669,7 +678,7 @@ export default class AccessibilityObject {
    * undefined if this field is unset.
    */
   get hidden(): boolean {
-    return this._reactProps['aria-hidden'];
+    return <boolean>this._reactProps['aria-hidden'];
   }
 
   /**
@@ -680,7 +689,7 @@ export default class AccessibilityObject {
    */
   get hiddenWithInference(): boolean {
     return (
-      this._reactProps['aria-hidden'] ||
+      <boolean>this._reactProps['aria-hidden'] ||
       (!this._displayObject.visible &&
         this._reactProps['aria-hidden'] === undefined)
     );
@@ -701,7 +710,7 @@ export default class AccessibilityObject {
    * @returns {string} A string from https://www.w3.org/TR/wai-aria/states_and_properties#aria-invalid for why the entered value is considered invalid.  undefined if this field is unset.
    */
   get invalid(): string {
-    return this._reactProps['aria-invalid'];
+    return <string>this._reactProps['aria-invalid'];
   }
 
   /**
@@ -719,7 +728,7 @@ export default class AccessibilityObject {
    * @returns {string} the string label.  undefined if this field is unset.
    */
   get label(): string {
-    return this._reactProps['aria-label'];
+    return <string>this._reactProps['aria-label'];
   }
 
   /**
@@ -759,7 +768,7 @@ export default class AccessibilityObject {
    * @returns {string} id of the label.  undefined if this field is unset.
    */
   get labelledById(): string {
-    return this._reactProps['aria-labelledby'];
+    return <string>this._reactProps['aria-labelledby'];
   }
 
   /**
@@ -779,7 +788,7 @@ export default class AccessibilityObject {
    * @returns {string} priority level.  undefined if this field is unset.
    */
   get live(): string {
-    return this._reactProps['aria-live'];
+    return <string>this._reactProps['aria-live'];
   }
 
   /**
@@ -829,7 +838,7 @@ export default class AccessibilityObject {
    * @returns {string} space separate list of DOM ids.  undefined if this field is unset.
    */
   get ownsIds(): string {
-    return this._reactProps['aria-owns'];
+    return <string>this._reactProps['aria-owns'];
   }
 
   /**
@@ -854,10 +863,10 @@ export default class AccessibilityObject {
   /**
    * Retrieves a space separated list of notifications for live regions.
    * @access public
-   * @returns {String} space separated list of values.  undefined if this field is unset.
+   * @returns {string} space separated list of values.  undefined if this field is unset.
    */
-  get relevant() {
-    return this._reactProps['aria-relevant'];
+  get relevant(): string {
+    return <string>this._reactProps['aria-relevant'];
   }
 
   /**

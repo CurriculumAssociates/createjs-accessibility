@@ -12,6 +12,8 @@ type ElementBounds = {
   y: number;
 };
 
+type EventHandler = (evt: Event) => void;
+
 export type DisplayObjectReactProps = {
   disabled?: string;
   role?: string;
@@ -26,8 +28,7 @@ export type DisplayObjectReactProps = {
     top?: string;
     width?: string;
   };
-  [eventname: `on${string}`]: Function;
-  [k: string]: string | number | boolean | object | Function;
+  [k: string]: string | number | boolean | object | EventHandler;
 };
 
 export type DomDataObjectType = {
