@@ -234,7 +234,7 @@ export default class SingleSelectListBoxData extends SelectData {
   /**
    * event handler for key presses
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _onKeyDown(evt) {
     if (this.disabledWithInference) {

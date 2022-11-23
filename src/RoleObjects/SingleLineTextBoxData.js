@@ -269,7 +269,7 @@ export default class SingleLineTextBoxData extends InputTagData {
   /**
    * event handler for when the value of the input tag changes
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _onChange(evt) {
     const event = new createjs.Event('valueChanged', false, false);
@@ -280,7 +280,7 @@ export default class SingleLineTextBoxData extends InputTagData {
   /**
    * event handler for when the selection changes
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);

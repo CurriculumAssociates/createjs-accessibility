@@ -148,7 +148,7 @@ export default class SliderData extends InputTagData {
   /**
    * Event listener for change events
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _onChange(evt) {
     this.value = evt.target.value;

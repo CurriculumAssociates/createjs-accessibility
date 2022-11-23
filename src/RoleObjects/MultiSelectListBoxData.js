@@ -223,7 +223,7 @@ export default class MultiSelectListBoxData extends SelectData {
   /**
    * event handler for when the value of the tag changes
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _onListBoxChanged(evt) {
     const event = new createjs.Event('valueChanged', false, false);

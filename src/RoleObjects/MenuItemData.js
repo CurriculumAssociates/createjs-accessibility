@@ -148,7 +148,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for when the item manages opening a menu
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _subMenuOpenerKeyDown(evt) {
     const toggleMenu =
@@ -181,7 +181,7 @@ export default class MenuItemData extends AccessibilityObject {
   /**
    * Keydown listener for an entry in a popup menu
    * @access private
-   * @param {SyntheticEvent} evt - event
+   * @param {Event} evt - event
    */
   _menuItemKeyDown(evt) {
     if (evt.keyCode === KeyCodes.enter) {
