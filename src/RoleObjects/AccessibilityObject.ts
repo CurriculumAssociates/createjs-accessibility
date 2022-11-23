@@ -9,7 +9,7 @@ export type AccessibleDisplayObject = DisplayObject & {
 type EventHandler = (evt: Event) => void;
 type KeyboardEventHandler = (evt: KeyboardEvent) => void;
 
-interface ReactProps {
+interface Props {
   accessKey?: string;
   dir?: string;
   id: string;
@@ -54,7 +54,7 @@ export default class AccessibilityObject {
 
   private _parent: AccessibilityObject | undefined;
 
-  protected _reactProps: ReactProps;
+  protected _reactProps: Props;
 
   private readonly _role: string;
 
@@ -251,7 +251,7 @@ export default class AccessibilityObject {
    * @access public
    * @returns {ReactProps}
    */
-  get reactProps(): ReactProps {
+  get reactProps(): Props {
     return this._reactProps;
   }
 

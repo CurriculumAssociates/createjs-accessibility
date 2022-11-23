@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import AccessibilityTranslator, {
-  DisplayObjectReactProps,
+  DisplayObjectProps,
 } from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
 import { createElement } from './utils/domUtils';
 
 interface CSSPropType {
-  [key: string]: DisplayObjectReactProps['style'];
+  [key: string]: DisplayObjectProps['style'];
 }
 
 /**

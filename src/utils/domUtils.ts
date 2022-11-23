@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import { AccessibleDisplayObject } from '../RoleObjects/AccessibilityObject';
 import type {
-  DisplayObjectReactProps,
+  DisplayObjectProps,
   DomDataObjectType,
 } from '../AccessibilityTranslator';
 
 const updateAttributesFromProps = (
   element: Element,
-  props: DisplayObjectReactProps
+  props: DisplayObjectProps
 ) => {
   Object.entries(props).forEach(([name, value]) => {
     if (name.startsWith('on')) {
@@ -32,7 +32,7 @@ const updateAttributesFromProps = (
 
 export const createElement = (
   tagName: DomDataObjectType['tagName'],
-  props: DisplayObjectReactProps,
+  props: DisplayObjectProps,
   children: DomDataObjectType['childElements']
 ) => {
   const element = document.createElement(tagName);
@@ -79,7 +79,7 @@ const insertChildAtIndex = (
 
 export const addMissingElem = (
   displayObj: AccessibleDisplayObject,
-  { tagName, props }: { tagName: string; props: DisplayObjectReactProps }
+  { tagName, props }: { tagName: string; props: DisplayObjectProps }
 ) => {
   let parentElem: Element;
   if (displayObj.accessible.parent) {

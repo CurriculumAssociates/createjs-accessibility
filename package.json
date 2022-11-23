@@ -51,7 +51,6 @@
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@types/createjs": "0.0.29",
     "@types/eslint": "^8.4.5",
@@ -66,7 +65,6 @@
     "babel-preset-es2015": "6.24.0",
     "createjs-module": "^0.8.3",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^8.22.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -77,7 +75,6 @@
     "eslint-import-resolver-typescript": "^3.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.30.1",
     "eslint-webpack-plugin": "^3.2.0",
     "file-loader": "^6.2.0",
     "jest": "^28.1.3",

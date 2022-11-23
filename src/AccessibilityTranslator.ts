@@ -14,7 +14,7 @@ type ElementBounds = {
 
 type EventHandler = (evt: Event) => void;
 
-export type DisplayObjectReactProps = {
+export type DisplayObjectProps = {
   disabled?: string;
   role?: string;
   style?: {
@@ -33,7 +33,7 @@ export type DisplayObjectReactProps = {
 
 export type DomDataObjectType = {
   tagName: string;
-  props: DisplayObjectReactProps;
+  props: DisplayObjectProps;
   childElements: (DomDataObjectType | string)[];
 };
 
@@ -184,7 +184,7 @@ export default class AccessibilityTranslator {
       });
     }
 
-    const props: DisplayObjectReactProps = _.merge(
+    const props: DisplayObjectProps = _.merge(
       {
         style: {
           position: 'absolute',

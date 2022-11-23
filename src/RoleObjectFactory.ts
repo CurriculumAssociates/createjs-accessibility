@@ -68,7 +68,7 @@ type RoleObjectConfig = {
 };
 
 const proxyHandler = {
-  get(target, property) {
+  get(target: AccessibilityObject, property: string) {
     switch (property) {
       case 'addChild':
       case 'addChildAt':
@@ -77,13 +77,21 @@ const proxyHandler = {
       case 'removeAllChildren':
         target.markForUpdate();
         break;
+      case 'reactProps':
+      case '_reactProps':
+        console.warn('"reactProps" is to be deprecated in a future version');
+        break;
       default:
         break;
     }
     return Reflect.get(target, property);
   },
 
-  set(target, property, value) {
+  set(
+    target: AccessibilityObject,
+    property: string,
+    value: string | boolean | number | object | Function
+  ) {
     if (target[property] !== value) {
       if (property !== '_markedForUpdate') target.markForUpdate();
       target[property] = value;
