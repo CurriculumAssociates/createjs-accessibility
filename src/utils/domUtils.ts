@@ -49,13 +49,19 @@ export const createElement = (
   return element;
 };
 
+const createTextNode = (text: string) => {
+  const dummyNode = document.createElement('template');
+  dummyNode.innerHTML = text.trim();
+  return dummyNode.content.firstChild;
+};
+
 const insertChildAtIndex = (
   parent: Element,
   child: DomDataObjectType | string,
   index: number
 ) => {
   const childElem = _.isString(child)
-    ? document.createTextNode(child)
+    ? createTextNode(child)
     : createElement(child.tagName, child.props, child.childElements);
   if (
     index < parent.childNodes.length &&
