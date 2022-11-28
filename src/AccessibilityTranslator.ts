@@ -119,7 +119,7 @@ export default class AccessibilityTranslator {
       return;
     }
     const { accessible } = displayObject;
-    const { role } = accessible;
+    const { role, htmlString } = accessible;
     const tagName = getTagNameForDisplayObject(displayObject);
     const children = accessible.children || [];
 
@@ -177,6 +177,9 @@ export default class AccessibilityTranslator {
     const childElements = [];
     if (text) {
       childElements.push(text);
+    }
+    if (htmlString) {
+      childElements.push(htmlString);
     }
     if (children.length > 0) {
       children.forEach((child) => {

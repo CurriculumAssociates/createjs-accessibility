@@ -62,6 +62,8 @@ export default class AccessibilityObject {
 
   private _markedForUpdate: boolean = false;
 
+  private _htmlString: string = undefined;
+
   text: string;
 
   constructor(displayObject: DisplayObject, role: string, domIdPrefix: string) {
@@ -253,6 +255,10 @@ export default class AccessibilityObject {
    */
   get reactProps(): Props {
     return this._reactProps;
+  }
+
+  get htmlString(): string {
+    return this._htmlString;
   }
 
   /**

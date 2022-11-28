@@ -77,10 +77,6 @@ const proxyHandler = {
       case 'removeAllChildren':
         target.markForUpdate();
         break;
-      case 'reactProps':
-      case '_reactProps':
-        console.warn('"reactProps" is to be deprecated in a future version');
-        break;
       default:
         break;
     }
