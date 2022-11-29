@@ -5,7 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'airbnb-typescript', 'prettier', 'prettier/prettier'],
+  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',

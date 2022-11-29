@@ -115,7 +115,7 @@ function resize(stage) {
       camWrapperElem.style[style] = transformStyle[style];
     });
   } else {
-    // handle this function being called before React sets the ref for rootElem
+    // handle this function being called before ref for rootElem is set
     _.defer(() => {
       resize(stage);
     });

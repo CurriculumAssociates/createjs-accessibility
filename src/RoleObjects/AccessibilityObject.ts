@@ -75,8 +75,7 @@ export default class AccessibilityObject {
     this._areKeyEventsEnabled = false;
 
     /**
-     * Fields with relatively fixed values that should go into the React props for the
-     * element translation of this object.  This is done as an object for easy merging
+     * Fields with relatively fixed values that should be added to the Elements Attribute field.  This is done as an object for easy merging
      * with the rest of the props
      *
      * ts-ignore for dispatchEvent with 3 args
@@ -962,7 +961,7 @@ export default class AccessibilityObject {
   /**
    * Event listener for keydown events
    * @access protected
-   * @param {KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - keyboard event
    */
   _onKeyDown(evt: KeyboardEvent): void {
     const event = new createjs.Event('keydown', false, evt.cancelable);
@@ -993,7 +992,7 @@ export default class AccessibilityObject {
   /**
    * Event listener for keyup events
    * @access protected
-   * @param {KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - keyboard event
    */
   _onKeyUp(evt: KeyboardEvent): void {
     const event = new createjs.Event('keyup', false, evt.cancelable);
