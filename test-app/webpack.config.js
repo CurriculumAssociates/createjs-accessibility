@@ -68,9 +68,6 @@ const config = {
     jquery: 'jQuery',
   },
   performance: { hints: false },
-  resolve: {
-    modules: [path.resolve(__dirname, 'node_modules')],
-  },
 };
 
 if (process.env.NODE_ENV === 'production') {
