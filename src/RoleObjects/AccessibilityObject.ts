@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 
 export type DisplayObject = createjs.DisplayObject;
 
@@ -8,9 +7,9 @@ export type AccessibleDisplayObject = DisplayObject & {
 };
 
 type EventHandler = (evt: Event) => void;
-type KeyboardEventHandler = (evt: React.KeyboardEvent) => void;
+type KeyboardEventHandler = (evt: KeyboardEvent) => void;
 
-interface ReactProps {
+interface Props {
   accessKey?: string;
   dir?: string;
   id: string;
@@ -55,11 +54,15 @@ export default class AccessibilityObject {
 
   private _parent: AccessibilityObject | undefined;
 
-  protected _reactProps: ReactProps;
+  protected _reactProps: Props;
 
   private readonly _role: string;
 
   private _visible: boolean;
+
+  private _markedForUpdate: boolean = false;
+
+  private _htmlString: string = undefined;
 
   text: string;
 
@@ -70,9 +73,9 @@ export default class AccessibilityObject {
     this._role = role;
     this._domId = domIdPrefix + displayObject.id;
     this._areKeyEventsEnabled = false;
+
     /**
-     * Fields with relatively fixed values that should go into the React props for the
-     * element translation of this object.  This is done as an object for easy merging
+     * Fields with relatively fixed values that should be added to the Elements Attribute field.  This is done as an object for easy merging
      * with the rest of the props
      *
      * ts-ignore for dispatchEvent with 3 args
@@ -114,6 +117,21 @@ export default class AccessibilityObject {
      * @access public
      */
     this.text = undefined;
+  }
+
+  get isMarkedForUpdate() {
+    return this._markedForUpdate;
+  }
+
+  // Called to mark the object for updating
+  markForUpdate() {
+    this._markedForUpdate = true;
+    this.parent?.markForUpdate();
+  }
+
+  // Called to clear the flag when the DOM node has been updated
+  markAsUpdated() {
+    this._markedForUpdate = false;
   }
 
   /**
@@ -234,8 +252,12 @@ export default class AccessibilityObject {
    * @access public
    * @returns {ReactProps}
    */
-  get reactProps(): ReactProps {
+  get reactProps(): Props {
     return this._reactProps;
+  }
+
+  get htmlString(): string {
+    return this._htmlString;
   }
 
   /**
@@ -939,9 +961,9 @@ export default class AccessibilityObject {
   /**
    * Event listener for keydown events
    * @access protected
-   * @param {React.KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - keyboard event
    */
-  _onKeyDown(evt: React.KeyboardEvent): void {
+  _onKeyDown(evt: KeyboardEvent): void {
     const event = new createjs.Event('keydown', false, evt.cancelable);
 
     // @ts-ignore
@@ -970,9 +992,9 @@ export default class AccessibilityObject {
   /**
    * Event listener for keyup events
    * @access protected
-   * @param {React.KeyboardEvent} evt - React kayboard event
+   * @param {KeyboardEvent} evt - keyboard event
    */
-  _onKeyUp(evt: React.KeyboardEvent): void {
+  _onKeyUp(evt: KeyboardEvent): void {
     const event = new createjs.Event('keyup', false, evt.cancelable);
 
     // @ts-ignore

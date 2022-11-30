@@ -9,7 +9,7 @@ module.exports = {
     'no-param-reassign': 'warn',
     'no-plusplus': 'warn'
   },
-  extends: ['airbnb', 'prettier', 'prettier/prettier'],
+  extends: ['airbnb-base', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',

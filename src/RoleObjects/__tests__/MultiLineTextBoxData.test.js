@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -252,9 +251,11 @@ describe('MultiLineTextBoxData', () => {
         cjsTextarea.on('valueChanged', eventHandler);
 
         const updatedValue = 'updated value';
-        ReactTestUtils.Simulate.change(textareaEl, {
-          target: { value: updatedValue },
+        const changeEvent = new Event('change');
+        Object.defineProperty(changeEvent, 'target', {
+          value: { value: updatedValue },
         });
+        textareaEl.dispatchEvent(changeEvent);
 
         expect(eventHandler).toBeCalledTimes(1);
         const argument = eventHandler.mock.calls[0][0];
@@ -264,7 +265,7 @@ describe('MultiLineTextBoxData', () => {
       it('can dispatch "selectionChanged" event when selected', () => {
         const selectEventHandler = jest.fn();
         cjsTextarea.on('selectionChanged', selectEventHandler);
-        ReactTestUtils.Simulate.select(textareaEl);
+        textareaEl.dispatchEvent(new Event('select'));
         expect(selectEventHandler).toBeCalledTimes(1);
       });
     });

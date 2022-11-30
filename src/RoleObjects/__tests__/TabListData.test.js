@@ -1,6 +1,5 @@
 import * as createjs from 'createjs-module';
 import KeyCodes from 'keycodes-enum';
-import ReactTestUtils from 'react-dom/test-utils';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -109,23 +108,23 @@ describe('TabListData', () => {
 
       it('can dispatch "keyDown" event if "enableKeyEvents" is enabled', () => {
         keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(0);
 
         cjsTabList.accessible.enableKeyEvents = true;
 
-        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
       it('can prevent default events if "defaultPrevented" is true', () => {
         keyCode = KeyCodes.down;
         cjsTabList.accessible.enableKeyEvents = true;
-
-        ReactTestUtils.Simulate.keyDown(divEl, {
-          keyCode,
-          defaultPrevented: true,
+        const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.defineProperty(keydownEvent, 'defaultPrevented', {
+          value: true,
         });
+        divEl.dispatchEvent(keydownEvent);
         expect(onKeyDown).toBeCalledTimes(1);
       });
 
@@ -158,21 +157,21 @@ describe('TabListData', () => {
           cjsTabList.accessible.orientation = 'vertical';
 
           keyCode = KeyCodes.up;
-          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(1);
 
           keyCode = KeyCodes.down;
-          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(2);
         });
 
         it('LEFT AND RIGHT', () => {
           keyCode = KeyCodes.left;
-          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(1);
 
           keyCode = KeyCodes.right;
-          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeyDown).toBeCalledTimes(2);
         });
       });

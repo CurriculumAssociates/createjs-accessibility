@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -83,13 +82,13 @@ describe('TreeItemData', () => {
 
       it('can dispatch "keyboardClick" event if Enter key is pressed', () => {
         const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(liEl, { keyCode });
+        liEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('does not dispatch "keyboardClick" event if enter key is not pressed', () => {
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(liEl, { keyCode });
+        liEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyboardClick).toBeCalledTimes(0);
       });
 
@@ -100,19 +99,21 @@ describe('TreeItemData', () => {
 
         it('does not dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is called', () => {
           const keyCode = KeyCodes.enter;
-          ReactTestUtils.Simulate.keyDown(liEl, {
-            keyCode,
-            defaultPrevented: true,
+          const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+          Object.defineProperty(keydownEvent, 'defaultPrevented', {
+            value: true,
           });
+          liEl.dispatchEvent(keydownEvent);
           expect(onKeyboardClick).toBeCalledTimes(0);
         });
 
         it('can dispatch "keyboardClick" event if enableKeyEvents is true and preventDefault is not called', () => {
           const keyCode = KeyCodes.enter;
-          ReactTestUtils.Simulate.keyDown(liEl, {
-            keyCode,
-            defaultPrevented: false,
+          const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+          Object.defineProperty(keydownEvent, 'defaultPrevented', {
+            value: false,
           });
+          liEl.dispatchEvent(keydownEvent);
           expect(onKeyboardClick).toBeCalledTimes(1);
         });
       });

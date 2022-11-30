@@ -1,6 +1,5 @@
 import KeyCodes from 'keycodes-enum';
 import _ from 'lodash';
-import React from 'react';
 import InputTagData from './InputTagData';
 import { AccessibleDisplayObject } from './AccessibilityObject';
 import { ROLES } from '../Roles';
@@ -60,7 +59,7 @@ export default class CheckBoxData extends InputTagData {
   /**
    * @inheritdoc
    */
-  _onKeyDown(evt: React.KeyboardEvent): void {
+  _onKeyDown(evt: KeyboardEvent): void {
     if (this.enableKeyEvents) {
       super._onKeyDown(evt);
       if (evt.defaultPrevented) {

@@ -1,13 +1,9 @@
 import _ from 'lodash';
-import React, { ReactElement } from 'react';
-import PropTypes from 'prop-types';
+import { breadth } from 'treeverse';
 import { ROLES } from './Roles';
 import { getTagNameForDisplayObject } from './utils/roleUtils';
+import { createElement, updateElement } from './utils/domUtils';
 import { AccessibleDisplayObject } from './RoleObjects/AccessibilityObject';
-
-interface Props {
-  stage: object;
-}
 
 type ElementBounds = {
   height?: number;
@@ -16,19 +12,29 @@ type ElementBounds = {
   y: number;
 };
 
-type DisplayObjectReactProps = {
+type EventHandler = (evt: Event) => void;
+
+export type DisplayObjectProps = {
   disabled?: string;
   role?: string;
-  style: {
+  style?: {
+    [key: string]: string | number;
     display?: string;
-    height: string;
-    left: string;
-    margin: number;
-    padding: number;
-    position: string;
-    top: string;
-    width: string;
+    height?: string;
+    left?: string;
+    margin?: number;
+    padding?: number | string;
+    position?: string;
+    top?: string;
+    width?: string;
   };
+  [k: string]: string | number | boolean | object | EventHandler;
+};
+
+export type DomDataObjectType = {
+  tagName: string;
+  props: DisplayObjectProps;
+  childElements: (DomDataObjectType | string)[];
 };
 
 /**
@@ -42,25 +48,12 @@ type DisplayObjectReactProps = {
  * This also helps minimize the processing done by this class along with reduce
  * its output to the DOM.
  */
-export default class AccessibilityTranslator extends React.Component<Props> {
+export default class AccessibilityTranslator {
   private _root: AccessibleDisplayObject;
 
-  private rootElem: HTMLDivElement;
+  private rootElem: HTMLElement;
 
-  /**
-   * @return {Object} properties accepted by this component.
-   * @property {object} stage
-   * @see https://facebook.github.io/react/docs/component-specs.html#proptypes
-   */
-  static get propTypes(): Props {
-    return {
-      stage: PropTypes.object.isRequired,
-    };
-  }
-
-  constructor(props: Props) {
-    super(props);
-
+  constructor() {
     _.bindAll(this, 'update');
   }
 
@@ -92,18 +85,41 @@ export default class AccessibilityTranslator extends React.Component<Props> {
    * drawing a frame) to make sure that the canvas and accessibility DOM are in sync.
    */
   update(callback = _.noop): void {
-    this.forceUpdate(callback);
+    const visit = (node: AccessibleDisplayObject) => {
+      let bounds = { x: 0, y: 0 };
+      if (node.accessible.parent && node.parent) {
+        const { x, y } = node.parent.getBounds();
+        bounds = node.parent.localToGlobal(x, y);
+      }
+      updateElement(
+        node,
+        this._processDisplayObject(node, bounds),
+        node.accessible.domId
+      );
+      node.accessible.markAsUpdated();
+    };
+    breadth({
+      tree: this.root,
+      visit,
+      getChildren(node: AccessibleDisplayObject) {
+        return node.accessible.children;
+      },
+      filter(node: AccessibleDisplayObject) {
+        return node.accessible.isMarkedForUpdate;
+      },
+    });
+    callback();
   }
 
-  _processDisplayObject(
+  _processDisplayObject = (
     displayObject: AccessibleDisplayObject,
     parentBoundsInGlobalSpace: ElementBounds
-  ): React.ReactElement {
+  ): DomDataObjectType => {
     if (!displayObject.accessible) {
       return;
     }
     const { accessible } = displayObject;
-    const { role } = accessible;
+    const { role, htmlString } = accessible;
     const tagName = getTagNameForDisplayObject(displayObject);
     const children = accessible.children || [];
 
@@ -162,13 +178,16 @@ export default class AccessibilityTranslator extends React.Component<Props> {
     if (text) {
       childElements.push(text);
     }
+    if (htmlString) {
+      childElements.push(htmlString);
+    }
     if (children.length > 0) {
       children.forEach((child) => {
         childElements.push(this._processDisplayObject(child, posGlobalSpace));
       });
     }
 
-    const props: DisplayObjectReactProps = _.merge(
+    const props: DisplayObjectProps = _.merge(
       {
         style: {
           position: 'absolute',
@@ -218,23 +237,18 @@ export default class AccessibilityTranslator extends React.Component<Props> {
       props['aria-hidden'] = true;
     }
 
-    return React.createElement(tagName, props, ...childElements);
-  }
+    return { tagName, props, childElements };
+  };
 
-  render(): ReactElement {
-    let back = null;
+  createDomTree() {
     if (this._root) {
-      const tree = this._processDisplayObject(this._root, { x: 0, y: 0 });
-      back = (
-        <div
-          ref={(elem): void => {
-            this.rootElem = elem;
-          }}
-        >
-          {tree}
-        </div>
+      const { tagName, props, childElements } = this._processDisplayObject(
+        this._root,
+        { x: 0, y: 0 }
       );
+      const rootElem = document.getElementById('root');
+      this.rootElem = rootElem;
+      rootElem.replaceChildren(createElement(tagName, props, childElements));
     }
-    return back;
   }
 }

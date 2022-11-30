@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const config = {
-  entry: './src/index.tsx',
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'createjs-accessibility.js',
@@ -43,7 +43,6 @@ const config = {
                     },
                   }
                 ],
-                '@babel/react'
               ],
             },
           },

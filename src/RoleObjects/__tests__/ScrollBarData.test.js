@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -89,7 +88,7 @@ describe('ScrollBarData', () => {
       });
       it('can emit "scroll" event when orientation is "horizontal" and "left" key is pressed', () => {
         const keyCode = KeyCodes.left;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         const eventData = scrollListener.mock.calls[0][0];
         expect(eventData.scrollLeft).toBeLessThan(prevValue);
@@ -97,7 +96,7 @@ describe('ScrollBarData', () => {
 
       it('can emit "scroll" event when orientation is "horizontal" and "right" key is pressed', () => {
         const keyCode = KeyCodes.right;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         const eventData = scrollListener.mock.calls[0][0];
         expect(eventData.scrollLeft).toBeGreaterThan(prevValue);
@@ -106,7 +105,7 @@ describe('ScrollBarData', () => {
       it('can emit "scroll" event when orientation is "vertical" and "up" key is pressed', () => {
         cjsScrollBar.accessible.orientation = 'vertical';
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         const eventData = scrollListener.mock.calls[0][0];
         expect(eventData.scrollTop).toBeLessThan(prevValue);
@@ -115,7 +114,7 @@ describe('ScrollBarData', () => {
       it('can emit "scroll" event when orientation is "vertical" and "down" key is pressed', () => {
         cjsScrollBar.accessible.orientation = 'vertical';
         const keyCode = KeyCodes.down;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         const eventData = scrollListener.mock.calls[0][0];
         expect(eventData.scrollTop).toBeGreaterThan(prevValue);
@@ -125,7 +124,7 @@ describe('ScrollBarData', () => {
         const keydownListener = jest.fn();
         cjsScrollBar.on('keydown', keydownListener);
         const keyCode = KeyCodes.left;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         expect(keydownListener).not.toBeCalled();
       });
@@ -135,7 +134,7 @@ describe('ScrollBarData', () => {
         cjsScrollBar.accessible.enableKeyEvents = true;
         cjsScrollBar.on('keydown', keydownListener);
         const keyCode = KeyCodes.left;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).toBeCalledTimes(1);
         expect(keydownListener).toBeCalledTimes(1);
       });
@@ -145,10 +144,11 @@ describe('ScrollBarData', () => {
         cjsScrollBar.accessible.enableKeyEvents = true;
         cjsScrollBar.on('keydown', keydownListener);
         const keyCode = KeyCodes.left;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, {
-          keyCode,
-          defaultPrevented: true,
+        const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.defineProperty(keydownEvent, 'defaultPrevented', {
+          value: true,
         });
+        scrollBarEl.dispatchEvent(keydownEvent);
         expect(scrollListener).not.toBeCalled();
         expect(keydownListener).toBeCalledTimes(1);
       });
@@ -156,14 +156,14 @@ describe('ScrollBarData', () => {
       it('"scroll" event is not emitted if "up"/"down" keys are not pressed when orientation is "vertical"', () => {
         cjsScrollBar.accessible.orientation = 'vertical';
         const keyCode = KeyCodes.left;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).not.toBeCalled();
       });
 
       it('"scroll" event is not emitted if "left"/"right" keys are not pressed when orientation is "horizontal"', () => {
         cjsScrollBar.accessible.orientation = 'horizontal';
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(scrollBarEl, { keyCode });
+        scrollBarEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(scrollListener).not.toBeCalled();
       });
     });

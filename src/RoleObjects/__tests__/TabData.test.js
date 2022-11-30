@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -86,19 +85,19 @@ describe('TabData', () => {
       });
       it('can dispatch "keyboardClick" event when Enter key is clicked', () => {
         const keyCode = KeyCodes.enter;
-        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('can dispatch "keyboardClick" event when Space key is clicked', () => {
         const keyCode = KeyCodes.space;
-        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyboardClick).toBeCalledTimes(1);
       });
 
       it('does not dispatch "keyboardClick" event Enter or Space key is not pressed', () => {
         const keyCode = KeyCodes.up;
-        ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+        divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(onKeyboardClick).not.toBeCalled();
       });
 
@@ -112,17 +111,18 @@ describe('TabData', () => {
 
         it('does not dispatch "keyboardClick" event when default is prevented', () => {
           const keyCode = KeyCodes.space;
-          ReactTestUtils.Simulate.keyDown(divEl, {
-            keyCode,
-            defaultPrevented: true,
+          const keydownEvent = new KeyboardEvent('keydown', { keyCode });
+          Object.defineProperty(keydownEvent, 'defaultPrevented', {
+            value: true,
           });
+          divEl.dispatchEvent(keydownEvent);
           expect(onKeydown).toBeCalledTimes(1);
           expect(onKeyboardClick).not.toBeCalled();
         });
 
         it('can also dispatch "keydown" event enableKeyEvents is true and default is not prevented', () => {
           const keyCode = KeyCodes.space;
-          ReactTestUtils.Simulate.keyDown(divEl, { keyCode });
+          divEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
           expect(onKeydown).toBeCalledTimes(1);
           expect(onKeyboardClick).toBeCalledTimes(1);
         });

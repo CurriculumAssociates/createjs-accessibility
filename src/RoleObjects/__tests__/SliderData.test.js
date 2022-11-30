@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import ReactTestUtils from 'react-dom/test-utils';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
@@ -65,18 +64,17 @@ describe('SliderData', () => {
 
       it('can dispatch "valueChanged" event with the newValue', () => {
         const updatedValue = 75;
-        ReactTestUtils.Simulate.change(inputEl, {
-          target: { value: updatedValue },
-        });
+        inputEl.value = updatedValue;
+        inputEl.dispatchEvent(new Event('change'));
 
         expect(keyDownHandler).toBeCalledTimes(1);
         const argument = keyDownHandler.mock.calls[0][0];
-        expect(argument.newValue).toBe(updatedValue);
+        expect(+argument.newValue).toBe(updatedValue);
       });
 
       it('can dispatch "valueChanged" event with reduced newValue on "pagedown" click', () => {
         const keyCode = KeyCodes.pagedown;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(keyDownHandler).toBeCalledTimes(1);
         const argument = keyDownHandler.mock.calls[0][0];
         expect(argument.newValue).toBeLessThan(accessibleOptions.value);
@@ -84,7 +82,7 @@ describe('SliderData', () => {
 
       it('can dispatch "valueChanged" event with increased newValue on "pageup" click', () => {
         const keyCode = KeyCodes.pageup;
-        ReactTestUtils.Simulate.keyDown(inputEl, { keyCode });
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
         expect(keyDownHandler).toBeCalledTimes(1);
         const eventData = keyDownHandler.mock.calls[0][0];
         expect(eventData.newValue).toBeGreaterThan(accessibleOptions.value);
@@ -93,30 +91,29 @@ describe('SliderData', () => {
       it('does not emits "valueChanged" event when defaultPrevented is "true"', () => {
         cjsSlider.accessible.enableKeyEvents = true;
         const keyCode = KeyCodes.pagedown;
-        ReactTestUtils.Simulate.keyDown(inputEl, {
-          keyCode,
-          defaultPrevented: true,
+        const keyDownEvent = new KeyboardEvent('keydown', { keyCode });
+        Object.defineProperty(keyDownEvent, 'defaultPrevented', {
+          value: true,
         });
+        inputEl.dispatchEvent(keyDownEvent);
         expect(keyDownHandler).not.toBeCalled();
       });
 
       it('can dispatch "valueChanged" event when defaultPrevented is "false"', () => {
         cjsSlider.accessible.enableKeyEvents = true;
         const keyCode = KeyCodes.pagedown;
-        ReactTestUtils.Simulate.keyDown(inputEl, {
-          keyCode,
-          defaultPrevented: false,
-        });
+        inputEl.dispatchEvent(
+          new KeyboardEvent('keydown', { keyCode, defaultPrevented: false })
+        );
         expect(keyDownHandler).toBeCalled();
       });
 
       it('does not emits "valueChanged" event when pageStep is not set', () => {
         cjsSlider.accessible.pageStep = undefined;
         const keyCode = KeyCodes.pagedown;
-        ReactTestUtils.Simulate.keyDown(inputEl, {
-          keyCode,
-          defaultPrevented: true,
-        });
+        inputEl.dispatchEvent(
+          new KeyboardEvent('keydown', { keyCode, defaultPrevented: true })
+        );
         expect(keyDownHandler).not.toBeCalled();
       });
     });

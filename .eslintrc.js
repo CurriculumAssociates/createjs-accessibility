@@ -5,7 +5,7 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'airbnb-typescript', 'prettier', 'prettier/prettier'],
+  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier', 'prettier/prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -21,7 +21,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   root: true,
-  plugins: ['import', 'react', '@typescript-eslint'],
+  plugins: ['import', '@typescript-eslint'],
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
@@ -55,12 +55,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'import/prefer-default-export': 'off',
     'prefer-rest-params': 'warn',
-    'react/no-string-refs': 'off',
-    'react/require-default-props': 'off',
-    'react/no-deprecated': 'off',
-    'react/prefer-stateless-function': 'warn',
-    'react/forbid-prop-types': 'off',
-    'react/no-unused-prop-types': 'off',
     'no-restricted-properties': [
       'off',
       {
@@ -78,14 +72,8 @@ module.exports = {
     'no-multi-spaces': 'warn',
     'arrow-spacing': ['error', { before: true, after: true }],
     'space-in-parens': 'warn',
-    'react/jsx-filename-extension': [
-      2,
-      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-    ],
     'prefer-destructuring': 'off',
     'import/no-unresolved': 'off',
-    'react/static-property-placement': 'off',
-    'react/no-unused-class-component-methods': 'off',
   },
   settings: {
     'import/core-modules': ['createjs', 'TimelineMax'],

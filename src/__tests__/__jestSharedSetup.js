@@ -12,6 +12,8 @@ beforeEach(() => {
 
   canvasEl = document.createElement('canvas');
   parentEl = document.createElement('div');
+  document.body.appendChild(parentEl);
+  document.body.appendChild(canvasEl);
   stage = new createjs.Stage(canvasEl);
   container = new createjs.Container();
 

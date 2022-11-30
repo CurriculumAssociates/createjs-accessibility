@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import AccessibilityTranslator from './AccessibilityTranslator';
+import AccessibilityTranslator, {
+  DisplayObjectProps,
+} from './AccessibilityTranslator';
 import { createAccessibilityObjectForRole } from './RoleObjectFactory';
 import { ROLES } from './Roles';
+import { createElement } from './utils/domUtils';
 
 interface CSSPropType {
-  [key: string]: React.CSSProperties;
+  [key: string]: DisplayObjectProps['style'];
 }
 
 /**
@@ -67,39 +68,36 @@ function calcDomStylesFromStage(stage): CSSPropType {
  * parentElement
  */
 function setupStage(stage, parentElement, onReady = () => {}) {
-  let component;
+  const component = new AccessibilityTranslator();
   const styles: CSSPropType = calcDomStylesFromStage(stage);
-  const moduleNode = (
-    <div style={styles.transformStyle}>
-      <div style={styles.moduleStyle}>
-        <AccessibilityTranslator
-          stage={stage}
-          ref={(c) => {
-            component = c;
-          }}
-        />
-      </div>
-    </div>
-  );
+  const moduleNode = createElement('div', { style: styles.transformStyle }, [
+    {
+      tagName: 'div',
+      props: { style: styles.moduleStyle },
+      childElements: [
+        { tagName: 'div', props: { id: 'root' }, childElements: [] },
+      ],
+    },
+  ]);
 
   if (_.isString(parentElement)) {
     parentElement = document.getElementById(parentElement);
   }
 
-  ReactDOM.render(moduleNode, parentElement, () => {
-    stage.accessibilityTranslator = component;
-    stage.accessibilityRootElement = parentElement;
-    onReady();
-  });
+  parentElement.replaceChildren(moduleNode);
+  stage.accessibilityTranslator = component;
+  stage.accessibilityRootElement = parentElement;
+  component.createDomTree();
+  onReady();
 }
 
 /**
- * Cleanup and unmount React node that tracks accessibility support for a Stage.
+ * Cleanup and unmount node that tracks accessibility support for a Stage.
  * @param {!createjs.Stage} stage - CreateJS Stage to cleanup
  */
 function releaseStage(stage) {
   const accessibilityRoot = stage.accessibilityRootElement;
-  ReactDOM.unmountComponentAtNode(accessibilityRoot);
+  accessibilityRoot.replaceChildren();
 }
 
 /**
@@ -117,7 +115,7 @@ function resize(stage) {
       camWrapperElem.style[style] = transformStyle[style];
     });
   } else {
-    // handle this function being called before React sets the ref for rootElem
+    // handle this function being called before ref for rootElem is set
     _.defer(() => {
       resize(stage);
     });
