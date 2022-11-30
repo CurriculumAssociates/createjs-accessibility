@@ -5,9 +5,13 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
-          "build",
-          "lint",
-          "clobber"
+          "-build",
+          "-lint",
+          "-clobber",
+          "-clean",
+          "-compile",
+          "-test",
+          "-test:coverage"
         ]
       }
     }

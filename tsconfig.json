@@ -4,10 +4,6 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
-    "preserveSymlinks": true,
-    "paths": {
-      "@curriculumassociates/accessibility-core": ["packages/core/src"],
-      "@curriculumassociates/accessibility-createjs-adapter": ["packages/createjs-adapter/src"],
-    }
+    "preserveSymlinks": true
   }
 }

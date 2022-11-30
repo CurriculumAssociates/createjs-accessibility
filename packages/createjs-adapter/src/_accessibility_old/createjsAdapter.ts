@@ -31,8 +31,8 @@ export class CreateJsAdapter extends Adapter<
   createjs.Stage,
   createjs.DisplayObject
 > {
-  getBoundingRect<N extends Node<createjs.DisplayObject>, ViewType>(
-    opts: NodeUpdateOptions<ViewType, createjs.DisplayObject, N>
+  getBoundingRect<N extends Node<createjs.DisplayObject>, ContainerType>(
+    opts: NodeUpdateOptions<ContainerType, createjs.DisplayObject, N>
   ): BoundingRect {
     const {
       view,

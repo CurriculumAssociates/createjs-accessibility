@@ -1,2 +1,3 @@
+// export * from "./_accessibility";
 export * from "./accessibility";
-export * from "./utils";
+export * from "./dom";

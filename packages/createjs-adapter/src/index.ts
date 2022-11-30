@@ -1,125 +1,57 @@
 import {
-  Node,
-  PublicAPI,
-  ViewReleaseOptions,
-  ViewSetupOptions,
-  ViewUpdateOptions,
-} from "@curriculumassociates/accessibility-core";
+  AccessibleTreeNodeOptions,
+  ReleaseOptions,
+  releaseTree as coreReleaseTree,
+  registerTreeNode as coreRegisterTreeNode,
+  SetupOptions,
+  setupTree as coreSetupTree,
+  updateTreeNodes as coreUpdateTreeNodes,
+  UpdateOptions,
+  AccessibleTreeNode,
+} from '@curriculumassociates/accessibility-core';
+
+export { Role } from '@curriculumassociates/accessibility-core';
 
 import {
-  CreateJsAdapter,
-  DisplayObject,
-  DisplayObjectNode,
-  DisplayObjectOptions,
   Stage,
-  StageUpdateOptions,
-  StageSetupOptions,
-  StageReleaseOptions,
-} from "./accessibility";
+  DisplayObject,
+  CreateJsAccessibilitAdapter,
+} from './createjs/adapter';
 
-let adapter: CreateJsAdapter;
+// Only exporting for unit testing at the moment
+export const createjsAdapter = new CreateJsAccessibilitAdapter();
 
-const publicApi: PublicAPI<Stage, DisplayObject> = {
-  setup: async function<DisplayObjectNode>(
-    opts: StageSetupOptions
-  ): Promise<DisplayObjectNode> {
-    if (!adapter) {
-      adapter = new CreateJsAdapter();
-    }
+export type DisplayObjectTreeNode = AccessibleTreeNode<DisplayObject>;
 
-    const rootNode = adapter.setupView<
-      Node<DisplayObject>,
-      ViewSetupOptions<Stage>
-    >(opts as ViewSetupOptions<Stage>);
+// alias
+export type StageSetupOptions = SetupOptions<Stage>;
 
-    return rootNode as DisplayObjectNode;
-  },
+export function setupTree(
+  options: StageSetupOptions
+): DisplayObjectTreeNode {
+  return coreSetupTree(createjsAdapter, options);
+}
 
-  release: async function<DisplayObjectNode>(
-    opts: StageReleaseOptions
-  ): Promise<DisplayObjectNode> {
-    const rootNode = adapter.releaseView(opts as ViewReleaseOptions<Stage>);
-    return rootNode as DisplayObjectNode;
-  },
+// alias
+export type StageReleaseOptions = ReleaseOptions<Stage>;
 
-  register: async function<DisplayObjectNode>(
-    opts: DisplayObjectOptions
-  ): Promise<DisplayObjectNode> {
-    return adapter.registerNode(opts, DisplayObjectNode) as DisplayObjectNode;
-  },
+export function releaseTree(options: StageReleaseOptions) {
+  coreReleaseTree(createjsAdapter, options);
+}
 
-  update: async function<DisplayObjectNode>(
-    opts: StageUpdateOptions
-  ): Promise<DisplayObjectNode> {
-    return adapter.updateAccessibilityNodes(opts) as DisplayObjectNode;
-  },
-};
+// alias
+export type DisplayObjectTreeNodeOptions =
+  AccessibleTreeNodeOptions<DisplayObject>;
 
-export const setup = publicApi.setup;
-export const release = publicApi.release;
-export const register = publicApi.register;
-export const update = publicApi.update;
+export function registerTreeNode(
+  ...options: DisplayObjectTreeNodeOptions[]
+): DisplayObjectTreeNode {
+  return coreRegisterTreeNode(createjsAdapter, ...options);
+}
 
-// const overlay: AccessibilityOverlay = {
-//   setup: async function <Stage, DisplayObject>(
-//     opts: StageSetupOptions
-//   ): Promise<DisplayObjectNode> {
-//     if (!adapter) {
-//       adapter = new CreateJsAdapter();
-//     }
-//     const rootNode = adapter.setupView(opts);
-//     opts?.done(rootNode);
+// alias
+export type StageUpdateOptions = UpdateOptions<Stage>;
 
-//     return rootNode;
-//   },
-
-//   release: async function <Stage, DisplayObject>(
-//     opts: StageReleaseOptions
-//   ): Promise<DisplayObjectNode> {
-//     return adapter.releaseView(opts);
-//   },
-
-//   register: async function <DisplayObject>(
-//     opts: DisplayObjectRegisterOptions
-//   ): Promise<DisplayObjectNode> {
-//     throw new Error("Function not implemented.");
-//   },
-
-//   update: async function <Stage, DisplayObject>(
-//     opts: StageUpdateOptions
-//   ): Promise<DisplayObjectNode> {
-//     throw new Error("Function not implemented.");
-//   },
-// };
-
-// export default { ...overlay };
-
-// setup(
-//   opts: StageSetupOptions
-// ): Promise<DisplayObjectNode> {
-//   if (!adapter) {
-//     adapter = new CreateJsAdapter();
-//   }
-//   const rootNode = adapter.setupView(opts);
-//   opts?.done(rootNode);
-//   return rootNode;
-// }
-
-// legacySetup(view: Stage, root: HTMLElement, onReady: Function) {
-//   setup({
-//     view,
-//     root,
-//     done: onReady,
-//   });
-// }
-
-// release<Stage, DisplayObject>(opts: ViewReleaseOptions<Stage>) {
-//   return adapter.releaseView<Stage>(opts);
-// }
-
-// register(opts: DisplayObjectRegisterOptions) {
-// }
-
-// update(opts: StageUpdateOptions) {
-//   adapter.updateAccessibilityNodes<Stage, DisplayObject>(opts);
-// }
+export function updateTreeNodes(options?: StageUpdateOptions) {
+  coreUpdateTreeNodes(createjsAdapter, options);
+}

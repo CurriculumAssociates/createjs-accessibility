@@ -4,10 +4,10 @@
     "target": "es6",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "declaration": true,
     "outDir": "./dist"
   },
 
-  "exclude": ["node_modules", "dist", "public", "**/*.test.ts", "**/*.d.ts"]
+  "exclude": ["node_modules", "dist", "public", "**/__tests__/**", "**/*.test.ts", "**/*.d.ts", "**/*_old**"]
 }
