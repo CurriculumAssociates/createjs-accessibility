@@ -1,5 +1,5 @@
 module.exports = function babelConfig(api) {
-  return {
+  const config = {
     babelrcRoots: [
       '.',
       './test-app',
@@ -8,4 +8,10 @@ module.exports = function babelConfig(api) {
       ['@babel/preset-env', { modules: api.env(['test']) ? 'auto' : false }],
     ],
   };
+
+  if (api.env(['test'])) {
+    config.presets.push(['@babel/preset-typescript']);
+  }
+
+  return config;
 };
