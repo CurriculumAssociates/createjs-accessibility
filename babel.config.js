@@ -6,7 +6,6 @@ module.exports = function babelConfig(api) {
     ],
     presets: [
       ['@babel/preset-env', { modules: api.env(['test']) ? 'auto' : false }],
-      '@babel/preset-typescript',
     ],
   };
 };
