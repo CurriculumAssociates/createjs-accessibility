@@ -1,5 +1,5 @@
 {
-  "name": "createjs-accessibility-tester",
+  "name": "@curriculumassociates/createjs-accessibility-tester",
   "version": "1.0.0",
   "description": "Test and sample webapp for the Createjs Accessibility Module",
   "main": "src/index",
