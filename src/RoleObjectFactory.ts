@@ -147,6 +147,8 @@ function createAccessibilityObjectForRole(config: RoleObjectConfig) {
       );
       prevParent.removeChildAt(prevContainerIndex);
 
+      displayObject.accessible.removeAllChildren();
+
       if (!parent) {
         parent = prevParent.displayObject;
         if (_.isUndefined(containerIndex)) {
