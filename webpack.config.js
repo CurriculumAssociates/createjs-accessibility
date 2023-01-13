@@ -7,8 +7,11 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'createjs-accessibility.js',
-    library: 'createjs-accessibility',
-    libraryTarget: 'umd',
+    library: {
+      name: 'createjs-accessibility',
+      type: 'umd',
+      umdNamedDefine: true,
+    },
   },
   externals: [nodeExternals()],
   performance: { hints: false },
@@ -33,7 +36,6 @@ const config = {
               presets: [
                 ['@babel/preset-env',
                   {
-                    modules: false,
                     targets: {
                       chrome: '88',
                       ie: '11',
