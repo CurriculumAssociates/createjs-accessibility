@@ -139,6 +139,8 @@ function createAccessibilityObjectForRole(config: RoleObjectConfig) {
   }
 
   if (displayObject.accessible) {
+    displayObject.accessible.removeAllChildren();
+
     const prevParent = displayObject.accessible.parent;
     if (prevParent) {
       const prevContainerIndex = _.findIndex(
