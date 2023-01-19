@@ -5,9 +5,10 @@ import AccessibilityObject from './AccessibilityObject';
 export default class MultiLineTextBoxData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onChange', '_onSelect');
+    _.bindAll(this, '_onChange', '_onInput', '_onSelect');
     this._reactProps['aria-multiline'] = true;
     this._reactProps.onChange = this._onChange;
+    this._reactProps.onInput = this._onInput;
     this._reactProps.onSelect = this._onSelect;
   }
 
@@ -312,9 +313,25 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    * @param {Event} evt - event
    */
   _onChange(evt) {
+    console.error('_onChange');
+    console.error('_onChange evt.target.value', evt.target.value);
     const event = new createjs.Event('valueChanged', false, false);
     event.newValue = evt.target.value;
     this._displayObject.dispatchEvent(event);
+  }
+
+  /**
+   * event handler for when a key is pressed in the textarea
+   * @access private
+   * @param {Event} evt - event
+   */
+  _onInput(evt) {
+    console.error('_onInput', evt);
+    console.error('_onInput evt.target.value', evt.target.value);
+    this._onChange(evt);
+    if (evt.inputType?.startsWith('input')) {
+      this._onSelect(evt);
+    }
   }
 
   /**
