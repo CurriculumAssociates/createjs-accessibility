@@ -24,8 +24,8 @@ createjs.Touch.enable(stage, true, false);
 createjs.Ticker.framerate = 24;
 
 const rootAccessibleNode = setupTree({
-  view: stage,
-  domRoot: '#test-a11y-overlay',
+  viewObject: stage,
+  element: '#test-a11y-overlay',
 });
 
 const appWindow = new AppWindow(canvas.height, canvas.width);

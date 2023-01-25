@@ -17,12 +17,12 @@ export type SetupOptions<ViewObjectType> = Required<
 
 export function setupTree<ViewObjectType>(
   adapter: AccessibilityAdapter<ViewObjectType>,
-  options: SetupOptions<ViewType>
+  options: SetupOptions<ViewObjectType>
 ): AccessibleTreeNode<ViewObjectType> {
   const { element, viewObject } = options;
 
   // use adapter to set height & width of rootNode
-  const viewBounds = adapter.getViewBounds(viewObject);
+  const domRootView = adapter.calcDOMViewForTreeRoot(viewObject);
 
   // calcDomStylesFromStage
 
@@ -46,9 +46,10 @@ export function releaseTree<ViewObjectType>(
   adapter: AccessibilityAdapter<ViewObjectType>,
   options: ReleaseOptions<ViewObjectType>
 ) {
-  const { root } = options;
-  const deleted = accessibilityTrees.delete();
-  if (!deleted) throw `Unable to relesae view ${root} as it was not setup`;
+  // const { root } = options;
+  // const rootIdx = accessibilityTrees.indexOf(root);
+  // const deleted = accessibilityTrees.splice(rootIdx, 1);
+  // if (!deleted) throw `Unable to relesae view ${root} as it was not setup`;
 }
 
 export function registerTreeNode<ViewObjectType>(
@@ -79,7 +80,7 @@ export function updateTreeNodes<ViewObjectType>(
     if (rootNode && rootNode !== treeRootNode) return;
 
     rootNode.syncrhonizeElementWithAccessibleTreeNode(
-      adapter.calcDOMViewForTreeRoot(rootNode)
+      adapter.calcDOMViewForTreeRoot(rootNode.viewObject)
     );
 
     breadth({
@@ -88,7 +89,7 @@ export function updateTreeNodes<ViewObjectType>(
       filter: (node: AccessibleTreeNode) => node.markedForUpdate,
       visit: (node: AccessibleTreeNode) => {
         node.syncrhonizeElementWithAccessibleTreeNode(
-          adapter.calcDOMViewForTreeNode(node)
+          adapter.calcDOMViewForTreeNode(node.viewObject)
         );
       },
     });

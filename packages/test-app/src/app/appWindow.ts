@@ -1,5 +1,9 @@
-import { DisplayObjectTreeNode, registerTreeNode, Role } from "@curriculumassociates/accessibility-createjs-adapter";
-import Button from "./widgets/button";
+import {
+  DisplayObjectTreeNode,
+  registerTreeNode,
+  Role,
+} from '@curriculumassociates/accessibility-createjs-adapter';
+import Button from './widgets/button';
 
 export default class AppWindow extends createjs.Container {
   accessible: DisplayObjectTreeNode;
@@ -15,10 +19,13 @@ export default class AppWindow extends createjs.Container {
       },
     });
 
-    const button = new Button({
-      value: 'Test Button',
-      disabled: false,
-    }, 1);
+    const button = new Button(
+      {
+        value: 'Test Button',
+        disabled: false,
+      },
+      1
+    );
 
     this.accessible.addChild(button.accessible);
     this.addChild(button);

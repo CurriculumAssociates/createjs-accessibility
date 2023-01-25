@@ -1,17 +1,17 @@
-import { AccessibleTreeNode, AccessibleTreeNodeDOMView, Infer } from './node';
+import {
+  AccessibleTreeNode,
+  AccessibleTreeNodeDOMView,
+  InferredState,
+} from './node';
 
 export interface AccessibilityAdapter<ViewObjectType> {
   dispatchEvent(event: Event, eventTarget: AccessibleTreeNode<ViewObjectType>);
 
   calcDOMViewForTreeRoot(
-    rootTreeNode: AccessibleTreeNode<ViewObjectType>
+    rootTreeNode: ViewObjectType
   ): AccessibleTreeNodeDOMView;
 
-  calcDOMViewForTreeNode(
-    treeNode: AccessibleTreeNode<ViewObjectType>
-  ): AccessibleTreeNodeDOMView;
+  calcDOMViewForTreeNode(treeNode: ViewObjectType): AccessibleTreeNodeDOMView;
 
-  inferAccessibleState(
-    treeNode: AccessibleTreeNode<ViewObjectType>
-  ): Record<keyof typeof Infer, boolean | string>;
+  inferAccessibleState(treeNode: ViewObjectType): InferredState;
 }

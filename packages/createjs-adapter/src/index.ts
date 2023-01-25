@@ -6,7 +6,7 @@ import {
   SetupOptions,
   setupTree as coreSetupTree,
   updateTreeNodes as coreUpdateTreeNodes,
-  UpdateOptions,
+  TreeUpdateOptions,
   AccessibleTreeNode,
 } from '@curriculumassociates/accessibility-core';
 
@@ -23,35 +23,22 @@ export const createjsAdapter = new CreateJsAccessibilitAdapter();
 
 export type DisplayObjectTreeNode = AccessibleTreeNode<DisplayObject>;
 
-// alias
-export type StageSetupOptions = SetupOptions<Stage>;
-
 export function setupTree(
-  options: StageSetupOptions
+  options: SetupOptions<Stage>
 ): DisplayObjectTreeNode {
   return coreSetupTree(createjsAdapter, options);
 }
 
-// alias
-export type StageReleaseOptions = ReleaseOptions<Stage>;
-
-export function releaseTree(options: StageReleaseOptions) {
+export function releaseTree(options: ReleaseOptions<Stage>) {
   coreReleaseTree(createjsAdapter, options);
 }
 
-// alias
-export type DisplayObjectTreeNodeOptions =
-  AccessibleTreeNodeOptions<DisplayObject>;
-
 export function registerTreeNode(
-  ...options: DisplayObjectTreeNodeOptions[]
+  ...options: AccessibleTreeNodeOptions<DisplayObject>[]
 ): DisplayObjectTreeNode {
   return coreRegisterTreeNode(createjsAdapter, ...options);
 }
 
-// alias
-export type StageUpdateOptions = UpdateOptions<Stage>;
-
-export function updateTreeNodes(options?: StageUpdateOptions) {
+export function updateTreeNodes(options?: TreeUpdateOptions<Stage>) {
   coreUpdateTreeNodes(createjsAdapter, options);
 }

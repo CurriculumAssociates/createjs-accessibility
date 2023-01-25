@@ -9,14 +9,13 @@ import {
   updateElementTree,
 } from '../dom';
 
-import { createElementFromRole, Role } from './roles';
-import { AriaRole } from './roles/mapping';
+import { AriaRole, createElementFromRole, Role } from './roles';
 
 export type ViewportPixelBounds = {
   height: number;
   width: number;
-  top: number;
-  left: number;
+  y: number;
+  x: number;
 };
 
 export type AccessibleTreeNodeDOMView = {
@@ -34,6 +33,8 @@ export const Infer = {
   Disabled: ['disabled'],
   Visible: ['visible'],
 } as const;
+
+export type InferredState = Record<keyof typeof Infer, string | boolean>;
 
 export interface AccessibleTreeNodeOptions<ViewObjectType> {
   attributes?: Attributes;

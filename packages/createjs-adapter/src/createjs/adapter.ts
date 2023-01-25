@@ -1,22 +1,28 @@
 import {
   AccessibilityAdapter,
   AccessibleTreeNode,
-  Bounds,
-  InferableAccessibleTreeNodeState,
+  AccessibleTreeNodeDOMView,
+  InferredState,
 } from '@curriculumassociates/accessibility-core';
 
 export type Stage = createjs.Stage;
 export type DisplayObject = createjs.DisplayObject;
+export type Container = createjs.Container;
 
 export class CreateJsAccessibilitAdapter
-  implements AccessibilityAdapter<Stage, DisplayObject>
+  implements AccessibilityAdapter<DisplayObject | Container>
 {
-  dispatchEvent(evt: Event) {
+  dispatchEvent(event: Event, eventTarget: AccessibleTreeNode<DisplayObject>) {
     throw new Error('Method not implemented.');
   }
 
-  getViewBounds(view: Stage): Bounds {
-    const canvas = view.canvas as HTMLCanvasElement;
+  calcDOMViewForTreeRoot(displayObject: Container): AccessibleTreeNodeDOMView {
+    const domView = {
+      styles: {},
+      bounds: { height: 0, width: 0, y: 0, x: 0 },
+    };
+
+    const canvas = displayObject.stage.canvas as HTMLCanvasElement;
 
     const computedStyle = getComputedStyle(canvas);
     const width = parseInt(computedStyle.width, 10);
@@ -28,32 +34,39 @@ export class CreateJsAccessibilitAdapter
     const scaleX = width / attrWidth;
     const scaleY = height / attrHeight;
 
-    const bounds = {
+    domView.bounds = {
       height: attrHeight,
       width: attrWidth,
-      x: canvas.offsetLeft + attrWidth * scaleX,
       y: canvas.offsetTop,
+      x: canvas.offsetLeft + attrWidth * scaleX,
     };
 
-    return bounds;
+    return domView;
   }
 
-  getViewObjectBounds(node: AccessibleTreeNode<DisplayObject>): Bounds {
-    const { viewObject: displayObject } = node;
-
-    let posGlobalSpace: Partial<Bounds> = {
-      x: node.parent.bounds.x,
-      y: node.parent.bounds.y,
+  calcDOMViewForTreeNode(
+    displayObject: DisplayObject | Container
+  ): AccessibleTreeNodeDOMView {
+    const domView = {
+      styles: {},
+      bounds: { height: 0, width: 0, y: 0, x: 0 },
     };
 
-    const posParentSpace: Bounds = {
+    const parentBounds = displayObject.parent.getBounds();
+
+    let posGlobalSpace = {
+      x: parentBounds.x,
+      y: parentBounds.y,
+    };
+
+    const posParentSpace = {
       x: 0,
       y: 0,
       width: 1,
       height: 1,
     };
 
-    const bounds: Partial<Bounds> = displayObject.getBounds();
+    const bounds = displayObject.getBounds();
     posGlobalSpace = displayObject.localToGlobal(bounds.x, bounds.y);
     const lowerRight = displayObject.localToGlobal(
       bounds.x + bounds.width,
@@ -61,11 +74,11 @@ export class CreateJsAccessibilitAdapter
     );
 
     posParentSpace.x =
-      (posGlobalSpace.x - node.parent.bounds.x) *
+      (posGlobalSpace.x - parentBounds.x) *
       (1 / displayObject.stage.scaleX);
 
     posParentSpace.y =
-      (posGlobalSpace.y - node.parent.bounds.y) *
+      (posGlobalSpace.y - parentBounds.y) *
       (1 / displayObject.stage.scaleY);
 
     posParentSpace.width =
@@ -84,16 +97,14 @@ export class CreateJsAccessibilitAdapter
       posParentSpace.y -= posParentSpace.height;
     }
 
-    return posParentSpace;
+    domView.bounds = posParentSpace;
+
+    return domView;
   }
 
   inferAccessibleState(
-    node: AccessibleTreeNode<DisplayObject>
-  ): InferableAccessibleTreeNodeState {
-    throw new Error('Method not implemented.');
-  }
-
-  onViewResize() {
+    treeNode: DisplayObject
+  ): InferredState {
     throw new Error('Method not implemented.');
   }
 }

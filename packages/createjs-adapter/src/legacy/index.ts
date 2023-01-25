@@ -8,15 +8,15 @@ export function setupStage(
   onReady = () => {}
 ) {
   setupTree({
-    view: stage,
-    domRoot: parentElement,
+    viewObject: stage,
+    element: parentElement,
   });
 
   onReady();
 }
 
 export function releaseStage(stage) {
-  releaseTree({ view: stage });
+  releaseTree({ root: stage });
 }
 
 export function resize(stage) {}
