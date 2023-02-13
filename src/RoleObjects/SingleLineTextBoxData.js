@@ -1,13 +1,16 @@
 import _ from 'lodash';
+import KeyCodes from 'keycodes-enum';
 import InputTagData from './InputTagData';
 
 export default class SingleLineTextBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onChange', '_onSelect');
+    _.bindAll(this, '_onChange', '_onSelect', '_onInput', '_onKeyUp');
     this._reactProps.type = 'text';
     this._reactProps.onChange = this._onChange;
     this._reactProps.onSelect = this._onSelect;
+    this._reactProps.onInput = this._onInput;
+    this._reactProps.onKeyUp = this._onKeyUp;
   }
 
   /**
@@ -284,9 +287,28 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);
-    event.selectionStart = evt.currentTarget.selectionStart;
-    event.selectionEnd = evt.currentTarget.selectionEnd;
-    event.selectionDirection = evt.currentTarget.selectionDirection;
+    event.selectionStart = evt.target.selectionStart;
+    event.selectionEnd = evt.target.selectionEnd;
+    event.selectionDirection = evt.target.selectionDirection;
     this._displayObject.dispatchEvent(event);
+  }
+
+  /**
+   * event handler for when the element gets input
+   * @param {Event} evt
+   */
+  _onInput(evt) {
+    this._onChange(evt);
+    this._onSelect(evt);
+  }
+
+  /**
+   * event handler for when keyboard key is lifted Up
+   * @param {Event} evt
+   */
+  _onKeyUp(evt) {
+    if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
+      this._onSelect(evt);
+    }
   }
 }

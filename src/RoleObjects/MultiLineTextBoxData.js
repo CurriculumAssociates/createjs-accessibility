@@ -1,14 +1,17 @@
 import _ from 'lodash';
+import KeyCodes from 'keycodes-enum';
 import { ROLES } from '../Roles';
 import AccessibilityObject from './AccessibilityObject';
 
 export default class MultiLineTextBoxData extends AccessibilityObject {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onChange', '_onSelect');
+    _.bindAll(this, '_onChange', '_onSelect', '_onInput', '_onKeyUp');
     this._reactProps['aria-multiline'] = true;
     this._reactProps.onChange = this._onChange;
     this._reactProps.onSelect = this._onSelect;
+    this._reactProps.onInput = this._onInput;
+    this._reactProps.onKeyUp = this._onKeyUp;
   }
 
   /**
@@ -328,5 +331,29 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
     event.selectionEnd = evt.currentTarget.selectionEnd;
     event.selectionDirection = evt.currentTarget.selectionDirection;
     this._displayObject.dispatchEvent(event);
+  }
+
+  /**
+   * event handler for when the element gets input
+   * @param {Event} evt
+   */
+  _onInput(evt) {
+    this._onChange(evt);
+    this._onSelect(evt);
+  }
+
+  /**
+   * event handler for when keyboard key is lifted Up
+   * @param {Event} evt
+   */
+  _onKeyUp(evt) {
+    if (
+      evt.keyCode === KeyCodes.left ||
+      evt.keyCode === KeyCodes.right ||
+      evt.keyCode === KeyCodes.up ||
+      evt.keyCode === KeyCodes.down
+    ) {
+      this._onSelect(evt);
+    }
   }
 }
