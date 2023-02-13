@@ -287,9 +287,9 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   _onSelect(evt) {
     const event = new createjs.Event('selectionChanged', false, false);
-    event.selectionStart = evt.target.selectionStart;
-    event.selectionEnd = evt.target.selectionEnd;
-    event.selectionDirection = evt.target.selectionDirection;
+    event.selectionStart = evt.currentTarget.selectionStart;
+    event.selectionEnd = evt.currentTarget.selectionEnd;
+    event.selectionDirection = evt.currentTarget.selectionDirection;
     this._displayObject.dispatchEvent(event);
   }
 
