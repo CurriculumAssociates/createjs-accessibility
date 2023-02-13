@@ -29,6 +29,20 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
   }
 
   /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
+  }
+
+  /**
    * Sets the currently active descendant of a composite widget
    * @access public
    * @param {createjs.DisplayObject} displayObject - DisplayObject that is the active descendant
@@ -347,6 +361,13 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
    * @param {Event} evt
    */
   _onKeyUp(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyUp(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
     if (
       evt.keyCode === KeyCodes.left ||
       evt.keyCode === KeyCodes.right ||
