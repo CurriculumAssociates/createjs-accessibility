@@ -32,7 +32,8 @@ const config = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['@babel/preset-env',
+                [
+                  '@babel/preset-env',
                   {
                     modules: false,
                     targets: {
@@ -42,7 +43,7 @@ const config = {
                       firefox: '79',
                       safari: '13.1.3',
                     },
-                  }
+                  },
                 ],
               ],
             },
