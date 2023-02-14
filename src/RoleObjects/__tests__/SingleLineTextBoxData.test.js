@@ -1,4 +1,5 @@
 import * as createjs from 'createjs-module';
+import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -147,6 +148,54 @@ describe('SingleLineTextBoxData', () => {
         cjsInput.on('selectionChanged', selectEventHandler);
         inputEl.dispatchEvent(new Event('select'));
         expect(selectEventHandler).toBeCalledTimes(1);
+      });
+    });
+
+    describe('"onInput" and "onKeyUp" event handlers', () => {
+      it('can dispatch "valueChanged" and "selectionChanged" event with every Input ', () => {
+        const eventHandler = jest.fn();
+        cjsInput.on('valueChanged', eventHandler);
+        const selectEventHandler = jest.fn();
+        cjsInput.on('selectionChanged', selectEventHandler);
+
+        const updatedValue = 'updated value';
+        const inputEvent = new Event('input');
+        Object.defineProperty(inputEvent, 'target', {
+          value: { value: updatedValue },
+        });
+        inputEl.dispatchEvent(inputEvent);
+
+        expect(eventHandler).toBeCalledTimes(1);
+        const argument = eventHandler.mock.calls[0][0];
+        expect(argument.newValue).toBe(updatedValue);
+        expect(selectEventHandler).toBeCalledTimes(1);
+      });
+
+      it('can dispatch "selectionChanged" event when "left" or "right" arrow keys are pressed', () => {
+        const selectEventHandler = jest.fn();
+        cjsInput.on('selectionChanged', selectEventHandler);
+        let keyCode = KeyCodes.left;
+        let keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+        inputEl.dispatchEvent(keyUpEvent);
+        expect(selectEventHandler).toBeCalledTimes(1);
+
+        keyCode = KeyCodes.right;
+        keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+        inputEl.dispatchEvent(keyUpEvent);
+        expect(selectEventHandler).toBeCalledTimes(2);
+      });
+
+      it('does not dispatch "selectionChanged" event on Arrowkeys when default is prevented', () => {
+        const selectEventHandler = jest.fn();
+        cjsInput.accessible.enableKeyEvents = true;
+        cjsInput.on('selectionChanged', selectEventHandler);
+        const keyCode = KeyCodes.left;
+        const keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+        Object.defineProperty(keyUpEvent, 'defaultPrevented', {
+          value: true,
+        });
+        inputEl.dispatchEvent(keyUpEvent);
+        expect(selectEventHandler).toBeCalledTimes(0);
       });
     });
   });
