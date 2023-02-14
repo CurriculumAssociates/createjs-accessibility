@@ -32,6 +32,8 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   set enableKeyEvents(enable) {
     super.enableKeyEvents = enable;
+    // To make sure onKeyUp event listener is not removed by AccessibilityObject while enableKeyEvents is setted as false
+    this._reactProps.onKeyUp = this._onKeyUp;
   }
 
   /**
