@@ -374,7 +374,9 @@ export default class MultiLineTextBoxData extends AccessibilityObject {
       evt.keyCode === KeyCodes.left ||
       evt.keyCode === KeyCodes.right ||
       evt.keyCode === KeyCodes.up ||
-      evt.keyCode === KeyCodes.down
+      evt.keyCode === KeyCodes.down ||
+      evt.keyCode === KeyCodes.home ||
+      evt.keyCode === KeyCodes.end
     ) {
       this._onSelect(evt);
     }

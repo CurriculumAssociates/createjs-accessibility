@@ -171,18 +171,15 @@ describe('SingleLineTextBoxData', () => {
         expect(selectEventHandler).toBeCalledTimes(1);
       });
 
-      it('can dispatch "selectionChanged" event when "left" or "right" arrow keys are pressed', () => {
-        const selectEventHandler = jest.fn();
-        cjsInput.on('selectionChanged', selectEventHandler);
-        let keyCode = KeyCodes.left;
-        let keyUpEvent = new KeyboardEvent('keyup', { keyCode });
-        inputEl.dispatchEvent(keyUpEvent);
-        expect(selectEventHandler).toBeCalledTimes(1);
-
-        keyCode = KeyCodes.right;
-        keyUpEvent = new KeyboardEvent('keyup', { keyCode });
-        inputEl.dispatchEvent(keyUpEvent);
-        expect(selectEventHandler).toBeCalledTimes(2);
+      ['left', 'right', 'home', 'end'].forEach((key) => {
+        it(`can dispatch "selectionChanged" event when ${key} key is pressed`, () => {
+          const selectEventHandler = jest.fn();
+          cjsInput.on('selectionChanged', selectEventHandler);
+          const keyCode = KeyCodes[key];
+          const keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+          inputEl.dispatchEvent(keyUpEvent);
+          expect(selectEventHandler).toBeCalledTimes(1);
+        });
       });
 
       it('does not dispatch "selectionChanged" event on Arrowkeys when default is prevented', () => {

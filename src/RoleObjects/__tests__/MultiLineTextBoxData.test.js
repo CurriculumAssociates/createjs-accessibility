@@ -291,8 +291,8 @@ describe('MultiLineTextBoxData', () => {
         expect(selectEventHandler).toBeCalledTimes(1);
       });
 
-      ['left', 'right', 'up', 'down'].forEach((key) => {
-        it(`can dispatch "selectionChanged" event when ${key} arrow key is pressed`, () => {
+      ['left', 'right', 'up', 'down', 'home', 'end'].forEach((key) => {
+        it(`can dispatch "selectionChanged" event when ${key} key is pressed`, () => {
           const selectEventHandler = jest.fn();
           cjsTextarea.on('selectionChanged', selectEventHandler);
           const keyCode = KeyCodes[key];

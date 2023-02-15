@@ -330,7 +330,12 @@ export default class SingleLineTextBoxData extends InputTagData {
       }
     }
 
-    if (evt.keyCode === KeyCodes.left || evt.keyCode === KeyCodes.right) {
+    if (
+      evt.keyCode === KeyCodes.left ||
+      evt.keyCode === KeyCodes.right ||
+      evt.keyCode === KeyCodes.home ||
+      evt.keyCode === KeyCodes.end
+    ) {
       this._onSelect(evt);
     }
   }
