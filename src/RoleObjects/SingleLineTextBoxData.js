@@ -1,13 +1,16 @@
 import _ from 'lodash';
+import KeyCodes from 'keycodes-enum';
 import InputTagData from './InputTagData';
 
 export default class SingleLineTextBoxData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onChange', '_onSelect');
+    _.bindAll(this, '_onChange', '_onSelect', '_onInput', '_onKeyUp');
     this._reactProps.type = 'text';
     this._reactProps.onChange = this._onChange;
     this._reactProps.onSelect = this._onSelect;
+    this._reactProps.onInput = this._onInput;
+    this._reactProps.onKeyUp = this._onKeyUp;
   }
 
   /**
@@ -22,6 +25,22 @@ export default class SingleLineTextBoxData extends InputTagData {
    */
   addChildAt() {
     throw new Error(`${this.role} cannot have children`);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  set enableKeyEvents(enable) {
+    super.enableKeyEvents = enable;
+    // To make sure onKeyUp event listener is not removed by AccessibilityObject while enableKeyEvents is setted as false
+    this._reactProps.onKeyUp = this._onKeyUp;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  get enableKeyEvents() {
+    return super.enableKeyEvents;
   }
 
   /**
@@ -288,5 +307,36 @@ export default class SingleLineTextBoxData extends InputTagData {
     event.selectionEnd = evt.currentTarget.selectionEnd;
     event.selectionDirection = evt.currentTarget.selectionDirection;
     this._displayObject.dispatchEvent(event);
+  }
+
+  /**
+   * event handler for when the element gets input
+   * @param {Event} evt
+   */
+  _onInput(evt) {
+    this._onChange(evt);
+    this._onSelect(evt);
+  }
+
+  /**
+   * event handler for when keyboard key is lifted Up
+   * @param {Event} evt
+   */
+  _onKeyUp(evt) {
+    if (this.enableKeyEvents) {
+      super._onKeyUp(evt);
+      if (evt.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (
+      evt.keyCode === KeyCodes.left ||
+      evt.keyCode === KeyCodes.right ||
+      evt.keyCode === KeyCodes.home ||
+      evt.keyCode === KeyCodes.end
+    ) {
+      this._onSelect(evt);
+    }
   }
 }

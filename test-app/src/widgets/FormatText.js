@@ -103,7 +103,7 @@ export default class FormatText extends createjs.Container {
 
       case ROLES.FORMAT_TEXT_SMALL:
         this.label.font = 'smaller';
-        this.label.y += this.getTextHeight(this.label) * 0.5
+        this.label.y += this.getTextHeight(this.label) * 0.5;
         break;
 
       case ROLES.FORMAT_TEXT_SUBSCRIPT:

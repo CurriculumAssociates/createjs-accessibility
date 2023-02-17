@@ -1,4 +1,5 @@
 import * as createjs from 'createjs-module';
+import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
@@ -267,6 +268,51 @@ describe('MultiLineTextBoxData', () => {
         cjsTextarea.on('selectionChanged', selectEventHandler);
         textareaEl.dispatchEvent(new Event('select'));
         expect(selectEventHandler).toBeCalledTimes(1);
+      });
+    });
+
+    describe('"onInput" and "onKeyUp" event handlers', () => {
+      it('can dispatch "valueChanged" and "selectionChanged" event with every Input', () => {
+        const eventHandler = jest.fn();
+        cjsTextarea.on('valueChanged', eventHandler);
+        const selectEventHandler = jest.fn();
+        cjsTextarea.on('selectionChanged', selectEventHandler);
+
+        const updatedValue = 'updated value';
+        const inputEvent = new Event('input');
+        Object.defineProperty(inputEvent, 'target', {
+          value: { value: updatedValue },
+        });
+        textareaEl.dispatchEvent(inputEvent);
+
+        expect(eventHandler).toBeCalledTimes(1);
+        const argument = eventHandler.mock.calls[0][0];
+        expect(argument.newValue).toBe(updatedValue);
+        expect(selectEventHandler).toBeCalledTimes(1);
+      });
+
+      ['left', 'right', 'up', 'down', 'home', 'end'].forEach((key) => {
+        it(`can dispatch "selectionChanged" event when ${key} key is pressed`, () => {
+          const selectEventHandler = jest.fn();
+          cjsTextarea.on('selectionChanged', selectEventHandler);
+          const keyCode = KeyCodes[key];
+          const keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+          textareaEl.dispatchEvent(keyUpEvent);
+          expect(selectEventHandler).toBeCalledTimes(1);
+        });
+      });
+
+      it('does not dispatch "selectionChanged" event on Arrowkeys when default is prevented', () => {
+        const selectEventHandler = jest.fn();
+        cjsTextarea.accessible.enableKeyEvents = true;
+        cjsTextarea.on('selectionChanged', selectEventHandler);
+        const keyCode = KeyCodes.left;
+        const keyUpEvent = new KeyboardEvent('keyup', { keyCode });
+        Object.defineProperty(keyUpEvent, 'defaultPrevented', {
+          value: true,
+        });
+        textareaEl.dispatchEvent(keyUpEvent);
+        expect(selectEventHandler).toBeCalledTimes(0);
       });
     });
   });

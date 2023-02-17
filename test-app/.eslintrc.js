@@ -7,7 +7,7 @@ module.exports = {
     'no-unused-expressions': 'warn',
     'no-undef': 'warn',
     'no-param-reassign': 'warn',
-    'no-plusplus': 'warn'
+    'no-plusplus': 'warn',
   },
   extends: ['airbnb-base', 'prettier', 'prettier/prettier'],
   globals: {
