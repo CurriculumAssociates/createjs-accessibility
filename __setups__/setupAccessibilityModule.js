@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies,import/no-mutable-exports */
 import * as createjs from 'createjs-module';
-import AccessibilityModule from '../index';
+import AccessibilityModule from './src/index.ts';
 
 let canvasEl;
 let parentEl;
@@ -12,8 +12,6 @@ beforeEach(() => {
 
   canvasEl = document.createElement('canvas');
   parentEl = document.createElement('div');
-  document.body.appendChild(parentEl);
-  document.body.appendChild(canvasEl);
   stage = new createjs.Stage(canvasEl);
   container = new createjs.Container();
 
