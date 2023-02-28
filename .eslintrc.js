@@ -25,15 +25,7 @@ module.exports = {
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
+    'import/extensions': 'off',
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
     '@typescript-eslint/no-unused-expressions': [
