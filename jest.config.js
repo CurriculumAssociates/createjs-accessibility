@@ -27,8 +27,8 @@ module.exports = {
   // The paths to modules that run some code to configure or set up the testing environment before
   // each test
   setupFiles: [
-    './__setups__/setupAccessibilityModule.js',
     'jest-canvas-mock',
+    './__setups__/setupAccessibilityModule.js',
   ],
 
   // The test environment that will be used for testing

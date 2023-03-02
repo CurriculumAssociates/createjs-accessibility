@@ -1,6 +1,7 @@
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../../index';
-import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
+
+const { container, parentEl, stage } = global;
 
 describe('MultiSelectListBoxData', () => {
   describe('register role', () => {
