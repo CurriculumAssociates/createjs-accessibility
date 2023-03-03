@@ -13,6 +13,8 @@ window.createjs = createjs;
 
 canvasEl = document.createElement('canvas');
 parentEl = document.createElement('div');
+document.body.append(parentEl, canvasEl);
+
 stage = new createjs.Stage(canvasEl);
 container = new createjs.Container();
 
@@ -24,12 +26,6 @@ AccessibilityModule.register({
 AccessibilityModule.setupStage(stage, parentEl);
 stage.accessibilityTranslator.root = container;
 stage.addChild(container);
-
-if (parentEl.hasChildNodes()) {
-  do {
-    parentEl.removeChild(parentEl.firstChild);
-  } while (parentEl.firstChild);
-}
 
 
 global.canvasEl = canvasEl;
