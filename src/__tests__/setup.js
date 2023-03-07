@@ -34,4 +34,9 @@ beforeEach(() => {
 
 afterEach(() => {
   AccessibilityModule.releaseStage(stage, parentEl);
+  if (parentEl.hasChildNodes()) {
+    do {
+      parentEl.removeChild(parentEl.firstChild);
+    } while (parentEl.firstChild);
+  }
 });
