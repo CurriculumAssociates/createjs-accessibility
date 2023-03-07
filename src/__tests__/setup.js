@@ -1,5 +1,4 @@
 import * as createjs from 'createjs-module';
-import 'jest-canvas-mock';
 import AccessibilityModule from '../index';
 
 let canvasEl;
