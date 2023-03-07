@@ -28,11 +28,14 @@ module.exports = {
   // each test
   setupFiles: [
     'jest-canvas-mock',
-    './__setups__/setupAccessibilityModule.js',
   ],
 
   // The test environment that will be used for testing
   testEnvironment: 'jsdom',
+
+  setupFilesAfterEnv: [
+    '<rootDir>/src/__tests__/setup.js',
+  ],
 
   // Define what files are included as tests
   testRegex: '.*\\/.+\\.test.(js|ts|tsx)$',

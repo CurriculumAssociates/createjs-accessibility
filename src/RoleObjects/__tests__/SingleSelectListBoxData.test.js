@@ -1,8 +1,5 @@
-import * as createjs from 'createjs-module';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
-
-const { container, parentEl, stage } = global;
 
 describe('SingleSelectListBoxData', () => {
   describe('register role', () => {

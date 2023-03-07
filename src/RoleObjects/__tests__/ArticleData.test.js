@@ -1,7 +1,4 @@
-import * as createjs from 'createjs-module';
 import AccessibilityModule from '../../index';
-
-const { container, parentEl, stage } = global;
 
 describe('ArticleData', () => {
   describe('register role', () => {
@@ -14,8 +11,6 @@ describe('ArticleData', () => {
       cjsArticle = new createjs.Shape(); // dummy object
       positionVal = 7;
       sizeVal = 99;
-      // console.log(container, parentEl, stage, 'container, parentEl, stage');
-      console.log(parentEl, parentEl.insertAdjacentElement, 'beforeEach');
 
       AccessibilityModule.register({
         accessibleOptions: {

@@ -1,7 +1,4 @@
-import * as createjs from 'createjs-module';
 import AccessibilityModule from '../../index';
-
-const { container, parentEl, stage } = global;
 
 describe('MultiSelectListBoxData', () => {
   describe('register role', () => {

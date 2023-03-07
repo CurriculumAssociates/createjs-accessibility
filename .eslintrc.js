@@ -11,6 +11,17 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
     createjs: false,
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      globals: {
+        container: 'writable',
+        createjs: 'writable',
+        parentEl: 'writable',
+        stage: 'writable',
+      },
+    }
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -25,7 +36,15 @@ module.exports = {
   rules: {
     'array-bracket-newline': 'warn',
     'no-underscore-dangle': 'off',
-    'import/extensions': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'no-plusplus': 'off',
     'no-unused-expressions': 'off',
     '@typescript-eslint/no-unused-expressions': [
