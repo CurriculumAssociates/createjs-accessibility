@@ -1,7 +1,5 @@
-import * as createjs from 'createjs-module';
 import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
-import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
 describe('ScrollBarData', () => {
   describe('register role', () => {

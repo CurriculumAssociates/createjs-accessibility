@@ -1,4 +1,3 @@
-import * as createjs from 'createjs-module';
 import AccessibilityTranslator from '../AccessibilityTranslator';
 
 describe('AccessibilityTranslator', () => {

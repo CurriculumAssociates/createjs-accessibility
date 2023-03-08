@@ -1,4 +1,3 @@
-import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
 
 describe('AccessibilityModule', () => {

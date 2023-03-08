@@ -1,6 +1,4 @@
-import * as createjs from 'createjs-module';
 import AccessibilityModule from '../../index';
-import { parentEl, stage, container } from '../../__tests__/__jestSharedSetup';
 
 describe('SwitchData', () => {
   describe('register role', () => {

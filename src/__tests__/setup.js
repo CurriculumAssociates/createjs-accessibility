@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies,import/no-mutable-exports */
 import * as createjs from 'createjs-module';
 import AccessibilityModule from '../index';
 
@@ -7,13 +6,13 @@ let parentEl;
 let stage;
 let container;
 
-beforeEach(() => {
-  window.createjs = createjs;
+global.createjs = createjs;
 
+beforeEach(() => {
   canvasEl = document.createElement('canvas');
   parentEl = document.createElement('div');
-  document.body.appendChild(parentEl);
-  document.body.appendChild(canvasEl);
+  document.body.append(parentEl, canvasEl);
+
   stage = new createjs.Stage(canvasEl);
   container = new createjs.Container();
 
@@ -25,14 +24,18 @@ beforeEach(() => {
   AccessibilityModule.setupStage(stage, parentEl);
   stage.accessibilityTranslator.root = container;
   stage.addChild(container);
+
+  global.canvasEl = canvasEl;
+  global.parentEl = parentEl;
+  global.stage = stage;
+  global.container = container;
 });
 
 afterEach(() => {
+  AccessibilityModule.releaseStage(stage, parentEl);
   if (parentEl.hasChildNodes()) {
     do {
       parentEl.removeChild(parentEl.firstChild);
     } while (parentEl.firstChild);
   }
 });
-
-export { canvasEl, container, parentEl, stage };

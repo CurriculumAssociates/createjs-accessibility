@@ -11,6 +11,17 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
     createjs: false,
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      globals: {
+        container: 'writable',
+        createjs: 'writable',
+        parentEl: 'writable',
+        stage: 'writable',
+      },
+    }
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
