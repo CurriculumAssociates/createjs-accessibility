@@ -5,10 +5,10 @@ import InputTagData from './InputTagData';
 export default class RadioData extends InputTagData {
   constructor(displayObject, role, domIdPrefix) {
     super(displayObject, role, domIdPrefix);
-    _.bindAll(this, '_onKeyDown');
+    _.bindAll(this, '_onKeyDown', '_onChange');
     this._reactProps.type = 'radio';
     this._reactProps.onKeyDown = this._onKeyDown;
-    this._reactProps.onChange = this._onKeyDown;
+    this._reactProps.onChange = this._onChange;
   }
 
   /**
@@ -109,5 +109,14 @@ export default class RadioData extends InputTagData {
       const event = new createjs.Event('keyboardClick', false, evt.cancelable);
       this._displayObject.dispatchEvent(event);
     }
+  }
+
+  /**
+   * Event listener for change events
+   * @access protected
+   */
+  _onChange() {
+    const event = new createjs.Event('change');
+    this._displayObject.dispatchEvent(event);
   }
 }
