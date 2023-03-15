@@ -51,6 +51,7 @@ export default class RadioGroup extends createjs.Container {
     this.radioOption.forEach((radio) => {
       radio.addEventListener('click', this.onOptionClick);
       radio.addEventListener('keyboardClick', this.onOptionClick);
+      radio.addEventListener('change', this.onOptionClick);
       radio.addEventListener('focus', () => {
         radio.focus = true;
       });

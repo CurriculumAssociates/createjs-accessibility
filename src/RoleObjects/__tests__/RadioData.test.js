@@ -1,3 +1,4 @@
+import KeyCodes from 'keycodes-enum';
 import AccessibilityModule from '../../index';
 
 describe('RadioData', () => {
@@ -97,6 +98,32 @@ describe('RadioData', () => {
         const newVal = 99;
         cjsRadio.accessible.value = newVal;
         expect(cjsRadio.accessible.value).toEqual(newVal);
+      });
+    });
+
+    describe('"onKeydown" event listener', () => {
+      it('emits "keyboardClick" event on Enter and Space', () => {
+        const keyboardClickListener = jest.fn();
+        let keyCode = KeyCodes.enter;
+        cjsRadio.on('keyboardClick', keyboardClickListener);
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
+
+        expect(keyboardClickListener).toBeCalledTimes(1);
+
+        keyCode = KeyCodes.space;
+        inputEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode }));
+
+        expect(keyboardClickListener).toBeCalledTimes(2);
+      });
+    });
+
+    describe('"onChange" event listener', () => {
+      it('emits "change" event', () => {
+        const changeListener = jest.fn();
+        cjsRadio.on('change', changeListener);
+        inputEl.dispatchEvent(new KeyboardEvent('change'));
+
+        expect(changeListener).toBeCalledTimes(1);
       });
     });
   });
