@@ -25,7 +25,12 @@ const updateAttributesFromProps = (
       if (name === 'acceptCharset') {
         name = name.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
       }
-      if (value !== undefined) element.setAttribute(name, value.toString());
+
+      if (_.isUndefined(value) || _.isNull(value)) {
+        element.removeAttribute(name);
+      } else {
+        element.setAttribute(name, value.toString());
+      }
     }
   });
 };
